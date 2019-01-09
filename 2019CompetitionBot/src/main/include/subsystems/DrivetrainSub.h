@@ -9,18 +9,19 @@
 
 #include <Commands/Subsystem.h>
 #include <WPILib.h>
+#include <rev/CANSparkMax.h>
 //#include <rev/CANSparkMax.h>
 
 class DrivetrainSub : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-  std::shared_ptr <frc::Talon> leftMotor1;
-  std::shared_ptr <frc::Talon> leftMotor2;
-  std::shared_ptr <frc::Talon> leftMotor3;
-  std::shared_ptr <frc::Talon> rightMotor1;
-  std::shared_ptr <frc::Talon> rightMotor2;
-  std::shared_ptr <frc::Talon> rightMotor3;
+  std::shared_ptr <rev::CANSparkMax> leftMotor1;
+  std::shared_ptr <rev::CANSparkMax> leftMotor2;
+  std::shared_ptr <rev::CANSparkMax> leftMotor3;
+  std::shared_ptr <rev::CANSparkMax> rightMotor1;
+  std::shared_ptr <rev::CANSparkMax> rightMotor2;
+  std::shared_ptr <rev::CANSparkMax> rightMotor3;
 
  public:
   DrivetrainSub();
