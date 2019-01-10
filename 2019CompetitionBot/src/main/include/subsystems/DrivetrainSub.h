@@ -10,7 +10,8 @@
 #include <frc/Commands/Subsystem.h>
 #include <frc/WPILib.h>
 #include <rev/CANSparkMax.h>
-//#include <rev/CANSparkMax.h>
+#include <rev/CANSparkMaxLowLevel.h>
+#include <ctre/Phoenix.h>
 
 class DrivetrainSub : public frc::Subsystem {
  private:
@@ -22,6 +23,8 @@ class DrivetrainSub : public frc::Subsystem {
   std::shared_ptr <rev::CANSparkMax> rightMotor1;
   std::shared_ptr <rev::CANSparkMax> rightMotor2;
   std::shared_ptr <rev::CANSparkMax> rightMotor3;
+
+  std::shared_ptr <ctre::phoenix::motorcontrol::can::VictorSPX> extraMotor;
 
  public:
   DrivetrainSub();

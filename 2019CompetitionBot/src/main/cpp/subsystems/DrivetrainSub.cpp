@@ -7,7 +7,21 @@
 
 #include "subsystems/DrivetrainSub.h"
 
-DrivetrainSub::DrivetrainSub() : Subsystem("ExampleSubsystem") {}
+
+DrivetrainSub::DrivetrainSub() : Subsystem("ExampleSubsystem") {
+
+  // Todo - use proper CAN ID defines
+  leftMotor1.reset(new rev::CANSparkMax(1, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  leftMotor2.reset(new rev::CANSparkMax(2, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  leftMotor3.reset(new rev::CANSparkMax(3, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+
+  rightMotor1.reset(new rev::CANSparkMax(5, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  rightMotor2.reset(new rev::CANSparkMax(6, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  rightMotor3.reset(new rev::CANSparkMax(7, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+
+  // Todo - remove
+  extraMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(4));
+}
 
 void DrivetrainSub::InitDefaultCommand() {
   // Set the default command for a subsystem here.
@@ -16,13 +30,16 @@ void DrivetrainSub::InitDefaultCommand() {
 
 void DrivetrainSub::drive(double lSpeed, double rSpeed){
 
-  rightMotor1->Set(rSpeed);
-  rightMotor2->Set(rSpeed);
-  rightMotor3->Set(rSpeed);
   leftMotor1->Set(lSpeed);
-  leftMotor2->Set(lSpeed);
+  leftMotor2->Set(-lSpeed);
   leftMotor3->Set(lSpeed);
 
+  rightMotor1->Set(rSpeed);
+  rightMotor2->Set(-rSpeed);
+  rightMotor3->Set(rSpeed);
+  
+  // Todo - remove
+  extraMotor->Set(ControlMode::PercentOutput, lSpeed);
 }
 
 // Put methods for controlling this subsystem

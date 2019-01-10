@@ -5,12 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include <iostream>
 #include "Robot.h"
 
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
 ExampleSubsystem Robot::m_subsystem;
+DrivetrainSub Robot::m_drivetrainSub;
 OI Robot::m_oi;
 
 void Robot::RobotInit() {
@@ -76,6 +78,8 @@ void Robot::TeleopInit() {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
   }
+
+//  Robot::m_drivetrainSub.drive(0.25, 0.25);
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
