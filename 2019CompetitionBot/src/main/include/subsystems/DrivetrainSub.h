@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include <Commands/Subsystem.h>
-#include <WPILib.h>
+#include <frc/Commands/Subsystem.h>
+#include <frc/WPILib.h>
 #include <rev/CANSparkMax.h>
 //#include <rev/CANSparkMax.h>
 
