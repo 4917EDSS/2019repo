@@ -5,12 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include <iostream>
 #include "Robot.h"
 
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
 ExampleSubsystem Robot::m_subsystem;
+DrivetrainSub Robot::m_drivetrainSub;
 OI Robot::m_oi;
 
 void Robot::RobotInit() {
