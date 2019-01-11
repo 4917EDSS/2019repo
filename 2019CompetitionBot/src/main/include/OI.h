@@ -6,8 +6,15 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
+#include <WPILib.h>
+
+constexpr int DRIVER_CONTROLLER_PORT = 0;
 
 class OI {
  public:
   OI();
+  std::shared_ptr<frc::Joystick> getDriverController();
+
+ private:
+  std::shared_ptr<frc::Joystick> driverController;
 };
