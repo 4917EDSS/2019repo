@@ -23,3 +23,6 @@
 // number and the module. For example you with a rangefinder:
 // constexpr int kRangeFinderPort = 1;
 // constexpr int kRangeFinderModule = 1;
+
+// Pneumatic Control Module Outputs
+constexpr int HATCH_GRIPPER_PCM_ID = 0;
