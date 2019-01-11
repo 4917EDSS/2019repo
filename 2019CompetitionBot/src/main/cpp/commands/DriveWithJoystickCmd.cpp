@@ -26,23 +26,22 @@ void DriveWithJoystickCmd::Execute() {
     double leftStick = driverJoystick->GetY();
     rightStick = pow(rightStick, 3);
     leftStick = pow(leftStick, 3);
+    double fastSide = std::max(fabs(leftStick), fabs(rightStick));
+    double slowSide = -leftStick + fabs(rightStick) * leftStick;
+
 
     if (leftStick < 0) {
 			if (rightStick < 0) {
-				drivetrainSub->drive(-leftStick + fabs(rightStick) * leftStick / 1.5, std::max(fabs(leftStick), fabs(rightStick)));
-
+				Robot::drivetrainSub.drive(slowSide , fastSide);
 			} else {
-				drivetrainSub->drive(std::max(fabs(leftStick), fabs(rightStick)), -leftStick + fabs(rightStick) * leftStick / 1.5);
-
+			Robot::drivetrainSub.drive(fastSide, slowSide );
 			}
 		}
 		else {
 			if (rightStick > 0) {
-				drivetrainSub->drive(-leftStick + fabs(rightStick) * leftStick / 1.5, -std::max(fabs(leftStick), fabs(rightStick)));
-
+				Robot::drivetrainSub.drive(slowSide, -fastSide);
 			} else {
-				drivetrainSub->drive(-std::max(fabs(leftStick), fabs(rightStick)), -leftStick + fabs(rightStick) * leftStick / 1.5);
-
+				Robot::drivetrainSub.drive(-fastSide, slowSide);
 			}
 		}
 }

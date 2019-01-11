@@ -11,8 +11,8 @@
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-DrivetrainSub Robot::m_drivetrainSub;
-OI Robot::m_oi;
+DrivetrainSub Robot::drivetrainSub;
+OI Robot::oi;
 
 void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
