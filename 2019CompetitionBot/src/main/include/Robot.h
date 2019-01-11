@@ -16,8 +16,8 @@
 
 class Robot : public frc::TimedRobot {
  public:
-  static DrivetrainSub m_drivetrainSub;
-  static OI m_oi;
+  static DrivetrainSub drivetrainSub;
+  static OI oi;
 
   void RobotInit() override;
   void RobotPeriodic() override;

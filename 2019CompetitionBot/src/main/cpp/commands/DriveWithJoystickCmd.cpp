@@ -6,12 +6,13 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/DriveWithJoystickCmd.h"
+#include "OI.h"
 #include "Robot.h"
 
 DriveWithJoystickCmd::DriveWithJoystickCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  //Requires(&Robot::m_drivetrainSub);
+  Requires(&Robot::drivetrainSub);
 }
 
 // Called just before this Command runs the first time
@@ -19,7 +20,30 @@ void DriveWithJoystickCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void DriveWithJoystickCmd::Execute() {
-  //Robot::m_drivetrainSub.drive(0.5, 0.5);
+    std::shared_ptr<frc::Joystick> driverJoystick = Robot::oi.getDriverController();
+
+    double rightStick = driverJoystick->GetZ();
+    double leftStick = driverJoystick->GetY();
+    rightStick = pow(rightStick, 3);
+    leftStick = pow(leftStick, 3);
+    double fastSide = std::max(fabs(leftStick), fabs(rightStick));
+    double slowSide = -leftStick + fabs(rightStick) * leftStick;
+
+
+    if (leftStick < 0) {
+			if (rightStick < 0) {
+				Robot::drivetrainSub.drive(slowSide , fastSide);
+			} else {
+			Robot::drivetrainSub.drive(fastSide, slowSide );
+			}
+		}
+		else {
+			if (rightStick > 0) {
+				Robot::drivetrainSub.drive(slowSide, -fastSide);
+			} else {
+				Robot::drivetrainSub.drive(-fastSide, slowSide);
+			}
+		}
 }
 
 // Make this return true when this Command no longer needs to run execute()
