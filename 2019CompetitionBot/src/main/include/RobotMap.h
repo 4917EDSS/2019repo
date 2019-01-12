@@ -7,22 +7,16 @@
 
 #pragma once
 
-/**
- * The RobotMap is a mapping from the ports sensors and actuators are wired into
- * to a variable name. This provides flexibility changing wiring, makes checking
- * the wiring easier and significantly reduces the number of magic numbers
- * floating around.
- */
-
-// For example to map the left and right motors, you could define the
-// following variables to use with your drivetrain subsystem.
-// constexpr int kLeftMotor = 1;
-// constexpr int kRightMotor = 2;
-
-// If you are using multiple modules, make sure to define both the port
-// number and the module. For example you with a rangefinder:
-// constexpr int kRangeFinderPort = 1;
-// constexpr int kRangeFinderModule = 1;
-
 // Pneumatic Control Module Outputs
 constexpr int HATCH_GRIPPER_PCM_ID = 0;
+
+
+// CanIDs
+constexpr int RIGHT_DRIVE_MOTOR_1_CAN_ID = 1;
+constexpr int RIGHT_DRIVE_MOTOR_2_CAN_ID = 2;
+constexpr int RIGHT_DRIVE_MOTOR_3_CAN_ID = 3;
+
+constexpr int LEFT_DRIVE_MOTOR_1_CAN_ID = 5;
+constexpr int LEFT_DRIVE_MOTOR_2_CAN_ID = 6;
+constexpr int LEFT_DRIVE_MOTOR_3_CAN_ID = 7;
+
