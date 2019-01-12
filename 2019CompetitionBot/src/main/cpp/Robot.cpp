@@ -86,7 +86,9 @@ void Robot::TeleopInit() {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
   }
-
+  
+  frc::CameraServer::GetInstance()->StartAutomaticCapture("usbCam1", "/dev/video0");
+  frc::CameraServer::GetInstance()->StartAutomaticCapture("usbCam2", "/dev/video1");
 //  Robot::m_drivetrainSub.drive(0.25, 0.25);
 }
 
