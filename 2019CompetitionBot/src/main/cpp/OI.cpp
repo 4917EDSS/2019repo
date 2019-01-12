@@ -21,7 +21,7 @@ OI::OI() {
   driverController->SetThrottleChannel(3);
 
   hatchContractBtn.reset(new frc::JoystickButton(operatorController.get(), HATCH_CONTRACT_BTN));
-  hatchContractBtn->WhenPressed(new CloseHatchPickupCmd());
+  hatchContractBtn->WhileHeld(new CloseHatchPickupCmd());
 
   IntakeMotorSetBtn.reset(new frc::JoystickButton(operatorController.get(), SET_INTAKE_MOTOR_BTN));
   IntakeMotorSetBtn->WhileHeld(new IntakeWhileHeldCmd());
