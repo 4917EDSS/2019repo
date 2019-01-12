@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
-#include <WPILib.h>
+#include <frc/WPILib.h>
 
 constexpr int DRIVER_CONTROLLER_PORT = 0;
 
