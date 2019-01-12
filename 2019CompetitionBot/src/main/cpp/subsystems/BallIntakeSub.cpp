@@ -16,6 +16,7 @@ void BallIntakeSub::InitDefaultCommand() {
   // SetDefaultCommand(new MySpecialCommand());
 
   BallIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_MOTOR_CAN_ID));
+  intakeLimit.reset(new frc::DigitalInput(INTAKE_LIMIT_DIO));
 }
 
 // Put methods for controlling this subsystem
@@ -26,4 +27,6 @@ void BallIntakeSub::SetIntakeMotor(double speed){
   BallIntakeMotor->Set(ControlMode::PercentOutput, speed);
 }
 
-
+bool BallIntakeSub::isBallIn() {
+  intakeLimit.get();
+}

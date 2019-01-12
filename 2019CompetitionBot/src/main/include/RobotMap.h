@@ -20,3 +20,9 @@ constexpr int LEFT_DRIVE_MOTOR_2_CAN_ID = 6;
 constexpr int LEFT_DRIVE_MOTOR_3_CAN_ID = 7;
 
 constexpr int BALL_INTAKE_MOTOR_CAN_ID = 4;
+
+constexpr int ELEVATOR_MOTOR_CAN_ID = 8;
+
+//DIOs
+constexpr int INTAKE_LIMIT_DIO = 9;
+

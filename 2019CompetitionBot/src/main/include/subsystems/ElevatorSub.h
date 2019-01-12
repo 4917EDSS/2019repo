@@ -11,16 +11,14 @@
 #include <frc/WPILib.h>
 #include <ctre/Phoenix.h>
 #include <RobotMap.h>
-
-
-class BallIntakeSub : public frc::Subsystem {
+class ElevatorSub : public frc::Subsystem {
  private:
-  std::shared_ptr<ctre::phoenix::motorcontrol::can::VictorSPX> BallIntakeMotor;
-  std::shared_ptr<frc::DigitalInput> intakeLimit;
+   std::shared_ptr<ctre::phoenix::motorcontrol::can::VictorSPX> elevatorMotor;
+  // It's desirable that everything possible under private except
+  // for methods that implement subsystem capabilities
 
  public:
-  BallIntakeSub();
+  ElevatorSub();
+  void SetElevatorMotor(double speed);
   void InitDefaultCommand() override;
-  void SetIntakeMotor(double speed);
-  bool isBallIn();
 };

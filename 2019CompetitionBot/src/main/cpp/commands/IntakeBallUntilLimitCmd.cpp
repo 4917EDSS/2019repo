@@ -5,33 +5,35 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/IntakeWhileHeldCmd.h"
-#include "robot.h"
+#include "commands/IntakeBallUntilLimitCmd.h"
+#include "Robot.h"
 
-IntakeWhileHeldCmd::IntakeWhileHeldCmd() {
+IntakeBallUntilLimitCmd::IntakeBallUntilLimitCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  Requires(&Robot::ballIntakeSub);
 }
 
 // Called just before this Command runs the first time
-void IntakeWhileHeldCmd::Initialize() {}
-
-// Called repeatedly when this Command is scheduled to run
-void IntakeWhileHeldCmd::Execute() {
-  Robot::ballIntakeSub.SetIntakeMotor(-1.0);
+void IntakeBallUntilLimitCmd::Initialize() {
+  Robot::ballIntakeSub.SetIntakeMotor(1.0);
 }
 
+// Called repeatedly when this Command is scheduled to run
+void IntakeBallUntilLimitCmd::Execute() {}
 
-// Make this return true when this Command no longer needs to run execute()constexpr int ELEVATOR_MOTOR_CAN_ID = 8;
-bool IntakeWhileHeldCmd::IsFinished() { return false; }
+// Make this return true when this Command no longer needs to run execute()
+bool IntakeBallUntilLimitCmd::IsFinished() {
+  return Robot::ballIntakeSub.isBallIn();
+ }
 
 // Called once after isFinished returns true
-void IntakeWhileHeldCmd::End() {
+void IntakeBallUntilLimitCmd::End() {
   Robot::ballIntakeSub.SetIntakeMotor(0.0);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void IntakeWhileHeldCmd::Interrupted() {
-  IntakeWhileHeldCmd::End();
+void IntakeBallUntilLimitCmd::Interrupted() {
+  IntakeBallUntilLimitCmd::End();
 }
