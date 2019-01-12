@@ -36,6 +36,7 @@ constexpr int OPERATOR_CONTROLLER_PORT = 1;
 
 //Operator
 constexpr int HATCH_CONTRACT_BTN = 3;
+constexpr int SET_INTAKE_MOTOR_BTN = 2;
 class OI {
  public:
   OI();
@@ -47,5 +48,7 @@ class OI {
     std::shared_ptr<frc::Joystick> driverController;
     std::shared_ptr<frc::Joystick> operatorController;
   std::shared_ptr<frc::JoystickButton> hatchContractBtn;
+    std::shared_ptr<frc::JoystickButton> IntakeMotorSetBtn;
+
 
 };

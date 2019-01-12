@@ -9,6 +9,8 @@
 
 #include <frc/WPILib.h>
 #include "Commands/CloseHatchPickupCmd.h"
+#include "Commands/IntakeWhileHeldCmd.h"
+
 
 OI::OI() {
   // Process operator interface input here.
@@ -20,6 +22,9 @@ OI::OI() {
 
   hatchContractBtn.reset(new frc::JoystickButton(operatorController.get(), HATCH_CONTRACT_BTN));
   hatchContractBtn->WhenPressed(new CloseHatchPickupCmd());
+
+  IntakeMotorSetBtn.reset(new frc::JoystickButton(operatorController.get(), SET_INTAKE_MOTOR_BTN));
+  IntakeMotorSetBtn->WhileHeld(new IntakeWhileHeldCmd());
 }
 
 std::shared_ptr<frc::Joystick> OI::getDriverController() {

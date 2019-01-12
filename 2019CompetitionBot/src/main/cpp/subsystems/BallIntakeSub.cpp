@@ -25,3 +25,5 @@ void BallIntakeSub::InitDefaultCommand() {
 void BallIntakeSub::SetIntakeMotor(double speed){
   BallIntakeMotor->Set(ControlMode::PercentOutput, speed);
 }
+
+
