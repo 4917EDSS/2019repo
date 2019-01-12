@@ -20,7 +20,7 @@
 class Robot : public frc::TimedRobot {
  public:
   static DrivetrainSub drivetrainSub;
-  static BallIntakeSub ballintakeSub;
+  static BallIntakeSub ballIntakeSub;
   static HatchSub hatchSub;
   static OI oi;
 

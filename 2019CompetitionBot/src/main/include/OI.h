@@ -33,9 +33,15 @@ constexpr int DRIVER_CONTROLLER_PORT = 0;
 constexpr int OPERATOR_CONTROLLER_PORT = 1;
 
 //Driver
+constexpr int DRIVER_KILL_BUTTON_ONE = 11;
+constexpr int DRIVER_KILL_BUTTON_TWO = 12;
+
 //Operator
 constexpr int HATCH_CONTRACT_BTN = 3;
 constexpr int SET_INTAKE_MOTOR_BTN = 2;
+constexpr int OPERATOR_KILL_BUTTON_ONE = 11;
+constexpr int OPERATOR_KILL_BUTTON_TWO = 12;
+
 class OI {
  public:
   OI();
@@ -47,6 +53,10 @@ class OI {
     std::shared_ptr<frc::Joystick> driverController;
     std::shared_ptr<frc::Joystick> operatorController;
     std::shared_ptr<frc::JoystickButton> hatchContractBtn;
-    std::shared_ptr<frc::JoystickButton> IntakeMotorSetBtn;
+    std::shared_ptr<frc::JoystickButton> IntakeUntilLimitBtn;
+    std::shared_ptr<frc::JoystickButton> OperatorKillBtn1;
+    std::shared_ptr<frc::JoystickButton> OperatorKillBtn2;
+    std::shared_ptr<frc::JoystickButton> DriverKillBtn1;
+    std::shared_ptr<frc::JoystickButton> DriverKillBtn2;
 
 };
