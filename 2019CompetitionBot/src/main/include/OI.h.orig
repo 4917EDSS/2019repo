@@ -33,16 +33,22 @@ constexpr int DRIVER_CONTROLLER_PORT = 0;
 constexpr int OPERATOR_CONTROLLER_PORT = 1;
 
 //Driver
+<<<<<<< HEAD
 constexpr int DRIVER_KILL_BUTTON_ONE = 11;
 constexpr int DRIVER_KILL_BUTTON_TWO = 12;
+=======
+>>>>>>> 849cea67838150f75b43a22ba3a58243975a9c37
 
 //Operator
 constexpr int HATCH_CONTRACT_BTN = 3;
 constexpr int SET_INTAKE_MOTOR_BTN = 2;
+<<<<<<< HEAD
 constexpr int OPERATOR_KILL_BUTTON_ONE = 11;
 constexpr int OPERATOR_KILL_BUTTON_TWO = 12;
+=======
 
 constexpr int OPERATOR_ELEVATOR_AXIS = 3;
+>>>>>>> 849cea67838150f75b43a22ba3a58243975a9c37
 
 class OI {
  public:

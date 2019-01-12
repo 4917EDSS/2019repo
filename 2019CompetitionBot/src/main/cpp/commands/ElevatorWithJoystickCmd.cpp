@@ -5,33 +5,41 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/IntakeWhileHeldCmd.h"
-#include "robot.h"
+#include "commands/ElevatorWithJoystickCmd.h"
+#include "OI.h"
+#include "Robot.h"
 
-IntakeWhileHeldCmd::IntakeWhileHeldCmd() {
+ElevatorWithJoystickCmd::ElevatorWithJoystickCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  Requires(&Robot::elevatorSub);
 }
 
 // Called just before this Command runs the first time
-void IntakeWhileHeldCmd::Initialize() {}
+void ElevatorWithJoystickCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void IntakeWhileHeldCmd::Execute() {
-  Robot::ballIntakeSub.SetIntakeMotor(-1.0);
+void ElevatorWithJoystickCmd::Execute() {
+  std::shared_ptr<frc::Joystick> operatorJoystick = Robot::oi.getOperatorController();
+
+  double verticalStick = operatorJoystick->GetRawAxis(OPERATOR_ELEVATOR_AXIS);
+	verticalStick = pow(verticalStick, 3);
+
+  Robot::elevatorSub.SetElevatorMotor(verticalStick);
 }
 
-
-// Make this return true when this Command no longer needs to run execute()constexpr int ELEVATOR_MOTOR_CAN_ID = 8;
-bool IntakeWhileHeldCmd::IsFinished() { return false; }
+// Make this return true when this Command no longer needs to run execute()
+bool ElevatorWithJoystickCmd::IsFinished() { 
+  return false; 
+  }
 
 // Called once after isFinished returns true
-void IntakeWhileHeldCmd::End() {
-  Robot::ballIntakeSub.SetIntakeMotor(0.0);
+void ElevatorWithJoystickCmd::End() {
+  Robot::elevatorSub.SetElevatorMotor(0.0);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void IntakeWhileHeldCmd::Interrupted() {
-  IntakeWhileHeldCmd::End();
+void ElevatorWithJoystickCmd::Interrupted() {
+  ElevatorWithJoystickCmd::End();
 }
