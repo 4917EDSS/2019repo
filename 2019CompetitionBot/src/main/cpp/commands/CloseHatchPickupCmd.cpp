@@ -16,7 +16,7 @@ CloseHatchPickupCmd::CloseHatchPickupCmd() {
 
 // Called just before this Command runs the first time
 void CloseHatchPickupCmd::Initialize() {
-        Robot::hatchSub.ContractHatchGripper();
+  Robot::hatchSub.ContractHatchGripper();
 }
 // Called repeatedly when this Command is scheduled to run
 void CloseHatchPickupCmd::Execute() {}
