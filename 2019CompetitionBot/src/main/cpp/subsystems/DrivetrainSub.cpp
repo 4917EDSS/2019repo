@@ -19,8 +19,7 @@ DrivetrainSub::DrivetrainSub() : Subsystem("ExampleSubsystem") {
   rightMotor2.reset(new rev::CANSparkMax(6, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   rightMotor3.reset(new rev::CANSparkMax(7, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
 
-  // Todo - remove
-  extraMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(4));
+
 }
 
 void DrivetrainSub::InitDefaultCommand() {
@@ -38,8 +37,6 @@ void DrivetrainSub::drive(double lSpeed, double rSpeed){
   rightMotor2->Set(-rSpeed);
   rightMotor3->Set(rSpeed);
   
-  // Todo - remove
-  extraMotor->Set(ControlMode::PercentOutput, lSpeed);
 }
 
 // Put methods for controlling this subsystem

@@ -12,6 +12,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 DrivetrainSub Robot::drivetrainSub;
+BallIntakeSub Robot::ballintakeSub;
 OI Robot::oi;
 
 void Robot::RobotInit() {

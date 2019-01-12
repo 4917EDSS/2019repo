@@ -26,3 +26,4 @@
 
 // Pneumatic Control Module Outputs
 constexpr int HATCH_GRIPPER_PCM_ID = 0;
+constexpr int BALL_INTAKE_MOTOR_ID = 4;

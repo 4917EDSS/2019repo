@@ -7,27 +7,22 @@
 
 #pragma once
 
-#include <frc/Commands/Subsystem.h>
+#include <frc/commands/Subsystem.h>
 #include <frc/WPILib.h>
-#include <rev/CANSparkMax.h>
-#include <rev/CANSparkMaxLowLevel.h>
 #include <ctre/Phoenix.h>
+#include <RobotMap.h>
 
-class DrivetrainSub : public frc::Subsystem {
+
+class BallIntakeSub : public frc::Subsystem {
  private:
+  std::shared_ptr<ctre::phoenix::motorcontrol::can::VictorSPX> BallIntakeMotor;
+
+
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-  std::shared_ptr <rev::CANSparkMax> leftMotor1;
-  std::shared_ptr <rev::CANSparkMax> leftMotor2;
-  std::shared_ptr <rev::CANSparkMax> leftMotor3;
-  std::shared_ptr <rev::CANSparkMax> rightMotor1;
-  std::shared_ptr <rev::CANSparkMax> rightMotor2;
-  std::shared_ptr <rev::CANSparkMax> rightMotor3;
-
 
  public:
-  DrivetrainSub();
+  BallIntakeSub();
   void InitDefaultCommand() override;
-  void drive(double lSpeed, double rSpeed);
-
+  void SetIntakeMotor(double speed);
 };
