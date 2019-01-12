@@ -8,6 +8,7 @@
 #include "OI.h"
 
 #include <frc/WPILib.h>
+#include "Commands/CloseHatchPickupCmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -16,8 +17,15 @@ OI::OI() {
   driverController->SetYChannel(1);
   driverController->SetZChannel(2);
   driverController->SetThrottleChannel(3);
+
+  hatchContractBtn.reset(new frc::JoystickButton(operatorController.get(), HATCH_CONTRACT_BTN));
+  hatchContractBtn->WhenPressed(new CloseHatchPickupCmd());
 }
 
 std::shared_ptr<frc::Joystick> OI::getDriverController() {
 	return driverController;
+}
+
+std::shared_ptr<frc::Joystick> OI::getOperatorController() {
+  return driverController;
 }

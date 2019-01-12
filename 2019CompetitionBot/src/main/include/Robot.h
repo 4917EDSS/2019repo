@@ -13,10 +13,12 @@
 
 #include "OI.h"
 #include "subsystems/DrivetrainSub.h"
+#include "subsystems/hatchSub.h"
 
 class Robot : public frc::TimedRobot {
  public:
   static DrivetrainSub drivetrainSub;
+  static HatchSub hatchSub;
   static OI oi;
 
   void RobotInit() override;
