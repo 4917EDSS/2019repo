@@ -5,6 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include <iostream>
 #include "subsystems/ElevatorSub.h"
 #include <ctre/Phoenix.h>
 
@@ -15,6 +16,9 @@ elevatorMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(ELEVATOR_MOT
 void ElevatorSub::SetElevatorMotor(double speed){
 elevatorMotor->Set(ControlMode::PercentOutput, speed);
 }
+
+
+
 void ElevatorSub::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());

@@ -33,9 +33,13 @@ constexpr int DRIVER_CONTROLLER_PORT = 0;
 constexpr int OPERATOR_CONTROLLER_PORT = 1;
 
 //Driver
+
 //Operator
 constexpr int HATCH_CONTRACT_BTN = 3;
 constexpr int SET_INTAKE_MOTOR_BTN = 2;
+
+constexpr int OPERATOR_ELEVATOR_AXIS = 3;
+
 class OI {
  public:
   OI();

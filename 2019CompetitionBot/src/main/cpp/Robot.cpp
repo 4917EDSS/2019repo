@@ -14,6 +14,7 @@
 DrivetrainSub Robot::drivetrainSub;
 BallIntakeSub Robot::ballintakeSub;
 HatchSub Robot::hatchSub;
+ElevatorSub Robot::elevatorSub;
 OI Robot::oi;
 
 void Robot::RobotInit() {
