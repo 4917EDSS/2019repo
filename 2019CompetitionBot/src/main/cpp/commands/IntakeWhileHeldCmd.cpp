@@ -17,11 +17,11 @@ void IntakeWhileHeldCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void IntakeWhileHeldCmd::Execute() {
-  Robot::ballIntakeSub.SetIntakeMotor(0.5);
+  Robot::ballIntakeSub.SetIntakeMotor(-1.0);
 }
 
 
-// Make this return true when this Command no longer needs to run execute()
+// Make this return true when this Command no longer needs to run execute()constexpr int ELEVATOR_MOTOR_CAN_ID = 8;
 bool IntakeWhileHeldCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true

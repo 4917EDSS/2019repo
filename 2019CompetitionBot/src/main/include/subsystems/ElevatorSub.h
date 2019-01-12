@@ -7,22 +7,18 @@
 
 #pragma once
 
-// Pneumatic Control Module Outputs
-constexpr int HATCH_GRIPPER_PCM_ID = 0;
+#include <frc/commands/Subsystem.h>
+#include <frc/WPILib.h>
+#include <ctre/Phoenix.h>
+#include <RobotMap.h>
+class ElevatorSub : public frc::Subsystem {
+ private:
+   std::shared_ptr<ctre::phoenix::motorcontrol::can::VictorSPX> elevatorMotor;
+  // It's desirable that everything possible under private except
+  // for methods that implement subsystem capabilities
 
-// CanIDs
-constexpr int RIGHT_DRIVE_MOTOR_1_CAN_ID = 1;
-constexpr int RIGHT_DRIVE_MOTOR_2_CAN_ID = 2;
-constexpr int RIGHT_DRIVE_MOTOR_3_CAN_ID = 3;
-
-constexpr int LEFT_DRIVE_MOTOR_1_CAN_ID = 5;
-constexpr int LEFT_DRIVE_MOTOR_2_CAN_ID = 6;
-constexpr int LEFT_DRIVE_MOTOR_3_CAN_ID = 7;
-
-constexpr int BALL_INTAKE_MOTOR_CAN_ID = 4;
-
-constexpr int ELEVATOR_MOTOR_CAN_ID = 8;
-
-//DIOs
-constexpr int INTAKE_LIMIT_DIO = 9;
-
+ public:
+  ElevatorSub();
+  void SetElevatorMotor(double speed);
+  void InitDefaultCommand() override;
+};

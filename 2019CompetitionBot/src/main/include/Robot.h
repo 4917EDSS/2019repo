@@ -16,12 +16,14 @@
 #include "subsystems/DrivetrainSub.h"
 #include "subsystems/BallIntakeSub.h"
 #include "subsystems/HatchSub.h"
+#include "subsystems/ElevatorSub.h"
 
 class Robot : public frc::TimedRobot {
  public:
   static DrivetrainSub drivetrainSub;
   static BallIntakeSub ballIntakeSub;
   static HatchSub hatchSub;
+  static ElevatorSub elevatorSub;
   static OI oi;
 
   void RobotInit() override;
@@ -34,9 +36,12 @@ class Robot : public frc::TimedRobot {
   void TeleopPeriodic() override;
   void TestPeriodic() override;
 
+
+
  private:
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
   frc::Command* m_autonomousCommand = nullptr;
   frc::SendableChooser<frc::Command*> m_chooser;
+  void UpdateSmartDashboard();
 };
