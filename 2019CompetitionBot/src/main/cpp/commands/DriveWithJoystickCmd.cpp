@@ -29,21 +29,27 @@ void DriveWithJoystickCmd::Execute() {
     double fastSide = std::max(fabs(leftStick), fabs(rightStick));
     double slowSide = -leftStick + fabs(rightStick) * leftStick;
 
+	if (leftStick < 0.01 && leftStick > -0.01) {
 
-    if (leftStick < 0) {
+		Robot::drivetrainSub.drive(rightStick, -rightStick);
+
+	} else {
+
+		if (leftStick < 0) {
 			if (rightStick < 0) {
 				Robot::drivetrainSub.drive(slowSide , fastSide);
 			} else {
-			Robot::drivetrainSub.drive(fastSide, slowSide );
+			
+				Robot::drivetrainSub.drive(fastSide, slowSide );
 			}
-		}
-		else {
+		} else {
 			if (rightStick > 0) {
 				Robot::drivetrainSub.drive(slowSide, -fastSide);
 			} else {
 				Robot::drivetrainSub.drive(-fastSide, slowSide);
 			}
 		}
+	}
 }
 
 // Make this return true when this Command no longer needs to run execute()

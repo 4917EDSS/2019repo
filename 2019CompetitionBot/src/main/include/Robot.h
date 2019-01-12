@@ -7,6 +7,7 @@
 
 #pragma once
 
+
 #include <frc/TimedRobot.h>
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
@@ -14,11 +15,13 @@
 #include "OI.h"
 #include "subsystems/DrivetrainSub.h"
 #include "subsystems/BallIntakeSub.h"
+#include "subsystems/HatchSub.h"
 
 class Robot : public frc::TimedRobot {
  public:
   static DrivetrainSub drivetrainSub;
-   static BallIntakeSub ballintakeSub;
+  static BallIntakeSub ballintakeSub;
+  static HatchSub hatchSub;
   static OI oi;
 
   void RobotInit() override;

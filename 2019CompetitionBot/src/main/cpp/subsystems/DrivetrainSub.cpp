@@ -6,25 +6,26 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/DrivetrainSub.h"
-
+#include "commands/DriveWithJoystickCmd.h"
+#include <RobotMap.h>
 
 DrivetrainSub::DrivetrainSub() : Subsystem("ExampleSubsystem") {
 
   // Todo - use proper CAN ID defines
-  leftMotor1.reset(new rev::CANSparkMax(1, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
-  leftMotor2.reset(new rev::CANSparkMax(2, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
-  leftMotor3.reset(new rev::CANSparkMax(3, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  rightMotor1.reset(new rev::CANSparkMax(RIGHT_DRIVE_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  rightMotor2.reset(new rev::CANSparkMax(RIGHT_DRIVE_MOTOR_2_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  rightMotor3.reset(new rev::CANSparkMax(RIGHT_DRIVE_MOTOR_3_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
 
-  rightMotor1.reset(new rev::CANSparkMax(5, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
-  rightMotor2.reset(new rev::CANSparkMax(6, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
-  rightMotor3.reset(new rev::CANSparkMax(7, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  leftMotor1.reset(new rev::CANSparkMax(LEFT_DRIVE_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  leftMotor2.reset(new rev::CANSparkMax(LEFT_DRIVE_MOTOR_2_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  leftMotor3.reset(new rev::CANSparkMax(LEFT_DRIVE_MOTOR_3_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
 
 
 }
 
 void DrivetrainSub::InitDefaultCommand() {
   // Set the default command for a subsystem here.
-  // SetDefaultCommand(new MySpecialCommand());
+   SetDefaultCommand(new DriveWithJoystickCmd());
 }
 
 void DrivetrainSub::drive(double lSpeed, double rSpeed){
@@ -33,9 +34,9 @@ void DrivetrainSub::drive(double lSpeed, double rSpeed){
   leftMotor2->Set(-lSpeed);
   leftMotor3->Set(lSpeed);
 
-  rightMotor1->Set(rSpeed);
-  rightMotor2->Set(-rSpeed);
-  rightMotor3->Set(rSpeed);
+  rightMotor1->Set(-rSpeed);
+  rightMotor2->Set(rSpeed);
+  rightMotor3->Set(-rSpeed);
   
 }
 

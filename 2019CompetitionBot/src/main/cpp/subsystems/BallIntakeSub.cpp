@@ -15,7 +15,7 @@ void BallIntakeSub::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
 
-  BallIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_MOTOR_ID));
+  BallIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_MOTOR_CAN_ID));
 }
 
 // Put methods for controlling this subsystem
