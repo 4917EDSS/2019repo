@@ -25,8 +25,12 @@ void CloseHatchPickupCmd::Execute() {}
 bool CloseHatchPickupCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CloseHatchPickupCmd::End() {}
+void CloseHatchPickupCmd::End() {
+  Robot::hatchSub.ExpandHatchGripper();
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CloseHatchPickupCmd::Interrupted() {}
+void CloseHatchPickupCmd::Interrupted() {
+  End();
+}

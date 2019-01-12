@@ -19,7 +19,7 @@ OI::OI() {
   driverController->SetThrottleChannel(3);
 
   hatchContractBtn.reset(new frc::JoystickButton(operatorController.get(), HATCH_CONTRACT_BTN));
-  hatchContractBtn->WhenPressed(new CloseHatchPickupCmd());
+  hatchContractBtn->WhileHeld(new CloseHatchPickupCmd());
 }
 
 std::shared_ptr<frc::Joystick> OI::getDriverController() {
