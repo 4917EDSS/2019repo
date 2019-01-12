@@ -17,10 +17,6 @@ class BallIntakeSub : public frc::Subsystem {
  private:
   std::shared_ptr<ctre::phoenix::motorcontrol::can::VictorSPX> BallIntakeMotor;
 
-
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
-
  public:
   BallIntakeSub();
   void InitDefaultCommand() override;
