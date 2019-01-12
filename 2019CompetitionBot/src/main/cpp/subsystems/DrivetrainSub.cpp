@@ -8,8 +8,9 @@
 #include "subsystems/DrivetrainSub.h"
 #include "commands/DriveWithJoystickCmd.h"
 #include <RobotMap.h>
+#include <iostream>
 
-DrivetrainSub::DrivetrainSub() : Subsystem("ExampleSubsystem") {
+DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub") {
 
   // Todo - use proper CAN ID defines
   rightMotor1.reset(new rev::CANSparkMax(RIGHT_DRIVE_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
@@ -20,7 +21,16 @@ DrivetrainSub::DrivetrainSub() : Subsystem("ExampleSubsystem") {
   leftMotor2.reset(new rev::CANSparkMax(LEFT_DRIVE_MOTOR_2_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   leftMotor3.reset(new rev::CANSparkMax(LEFT_DRIVE_MOTOR_3_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
 
+  ahrs.reset(new AHRS(frc::SPI::kMXP));
+	ahrs->SetName("Drivetrain", "AHRS");
+}
 
+double DrivetrainSub::GetRightEncoder() {
+  return -(rightMotor1->GetEncoder().GetPosition());
+} 
+
+double DrivetrainSub::GetLeftEncoder() {
+  return leftMotor1->GetEncoder().GetPosition();
 }
 
 void DrivetrainSub::InitDefaultCommand() {
@@ -38,6 +48,18 @@ void DrivetrainSub::drive(double lSpeed, double rSpeed){
   rightMotor2->Set(rSpeed);
   rightMotor3->Set(-rSpeed);
   
+}
+
+void DrivetrainSub::resetAHRS() {
+	ahrs->Reset();
+}
+
+double DrivetrainSub::getAngle() {
+	return ahrs->GetAngle();
+}
+
+double DrivetrainSub::getRate() {
+	return ahrs->GetRate();
 }
 
 // Put methods for controlling this subsystem

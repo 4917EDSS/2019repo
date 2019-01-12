@@ -56,5 +56,7 @@
     "typeinfo": "cpp",
     "utility": "cpp",
     "cstdarg": "cpp"
+    "optional": "cpp",
+    "string_view": "cpp",
   }
 }

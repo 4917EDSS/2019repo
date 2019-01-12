@@ -5,32 +5,32 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CloseHatchPickupCmd.h"
+#include "commands/IntakeWhileHeldCmd.h"
 #include "robot.h"
-
-CloseHatchPickupCmd::CloseHatchPickupCmd() {
+IntakeWhileHeldCmd::IntakeWhileHeldCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::hatchSub);
 }
 
 // Called just before this Command runs the first time
-void CloseHatchPickupCmd::Initialize() {
-  Robot::hatchSub.ContractHatchGripper();
-}
+void IntakeWhileHeldCmd::Initialize() {}
+
 // Called repeatedly when this Command is scheduled to run
-void CloseHatchPickupCmd::Execute() {}
+void IntakeWhileHeldCmd::Execute() {
+  Robot::ballintakeSub.SetIntakeMotor(-1.0);
+}
+
 
 // Make this return true when this Command no longer needs to run execute()
-bool CloseHatchPickupCmd::IsFinished() { return false; }
+bool IntakeWhileHeldCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void CloseHatchPickupCmd::End() {
-  Robot::hatchSub.ExpandHatchGripper();
+void IntakeWhileHeldCmd::End() {
+  Robot::ballintakeSub.SetIntakeMotor(0.0);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CloseHatchPickupCmd::Interrupted() {
-  End();
+void IntakeWhileHeldCmd::Interrupted() {
+  IntakeWhileHeldCmd::End();
 }

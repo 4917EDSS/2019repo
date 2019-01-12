@@ -12,21 +12,25 @@
 #include <rev/CANSparkMax.h>
 #include <rev/CANSparkMaxLowLevel.h>
 #include <ctre/Phoenix.h>
+#include "AHRS.h"
 
 class DrivetrainSub : public frc::Subsystem {
  private:
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
   std::shared_ptr <rev::CANSparkMax> leftMotor1;
   std::shared_ptr <rev::CANSparkMax> leftMotor2;
   std::shared_ptr <rev::CANSparkMax> leftMotor3;
   std::shared_ptr <rev::CANSparkMax> rightMotor1;
   std::shared_ptr <rev::CANSparkMax> rightMotor2;
   std::shared_ptr <rev::CANSparkMax> rightMotor3;
-
+  std::shared_ptr<AHRS> ahrs;
 
  public:
   DrivetrainSub();
+  double GetLeftEncoder();
+  double GetRightEncoder();
+  void resetAHRS();
+  double getAngle();
+  double getRate();
   void InitDefaultCommand() override;
   void drive(double lSpeed, double rSpeed);
 

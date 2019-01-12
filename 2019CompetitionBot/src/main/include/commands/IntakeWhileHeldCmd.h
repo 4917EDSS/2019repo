@@ -7,18 +7,14 @@
 
 #pragma once
 
-#include <frc/commands/Subsystem.h>
-#include <frc/WPILib.h>
-#include <ctre/Phoenix.h>
-#include <RobotMap.h>
+#include <frc/commands/Command.h>
 
-
-class BallIntakeSub : public frc::Subsystem {
- private:
-  std::shared_ptr<ctre::phoenix::motorcontrol::can::VictorSPX> BallIntakeMotor;
-
+class IntakeWhileHeldCmd : public frc::Command {
  public:
-  BallIntakeSub();
-  void InitDefaultCommand() override;
-  void SetIntakeMotor(double speed);
+  IntakeWhileHeldCmd();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
 };
