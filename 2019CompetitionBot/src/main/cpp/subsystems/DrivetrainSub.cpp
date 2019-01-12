@@ -8,6 +8,7 @@
 #include "subsystems/DrivetrainSub.h"
 #include "commands/DriveWithJoystickCmd.h"
 #include <RobotMap.h>
+#include <iostream>
 
 DrivetrainSub::DrivetrainSub() : Subsystem("ExampleSubsystem") {
 
@@ -22,6 +23,14 @@ DrivetrainSub::DrivetrainSub() : Subsystem("ExampleSubsystem") {
 
   // Todo - remove
   extraMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(4));
+}
+
+double DrivetrainSub::GetRightEncoder() {
+  return -(rightMotor1->GetEncoder().GetPosition());
+} 
+
+double DrivetrainSub::GetLeftEncoder() {
+  return leftMotor1->GetEncoder().GetPosition();
 }
 
 void DrivetrainSub::InitDefaultCommand() {

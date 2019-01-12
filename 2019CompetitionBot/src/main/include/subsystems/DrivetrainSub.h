@@ -28,6 +28,8 @@ class DrivetrainSub : public frc::Subsystem {
 
  public:
   DrivetrainSub();
+  double GetLeftEncoder();
+  double GetRightEncoder();
   void InitDefaultCommand() override;
   void drive(double lSpeed, double rSpeed);
 
