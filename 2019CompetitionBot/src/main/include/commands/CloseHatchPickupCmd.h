@@ -7,16 +7,14 @@
 
 #pragma once
 
-// Pneumatic Control Module Outputs
-constexpr int HATCH_GRIPPER_PCM_ID = 0;
+#include <frc/commands/Command.h>
 
-// CanIDs
-constexpr int RIGHT_DRIVE_MOTOR_1_CAN_ID = 1;
-constexpr int RIGHT_DRIVE_MOTOR_2_CAN_ID = 2;
-constexpr int RIGHT_DRIVE_MOTOR_3_CAN_ID = 3;
-
-constexpr int LEFT_DRIVE_MOTOR_1_CAN_ID = 5;
-constexpr int LEFT_DRIVE_MOTOR_2_CAN_ID = 6;
-constexpr int LEFT_DRIVE_MOTOR_3_CAN_ID = 7;
-
-constexpr int BALL_INTAKE_MOTOR_CAN_ID = 4;
+class CloseHatchPickupCmd : public frc::Command {
+ public:
+  CloseHatchPickupCmd();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
+};
