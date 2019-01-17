@@ -37,8 +37,8 @@ void DriveWithJoystickCmd::Execute() {
 
 	} else {
 
-		if (leftStick < 0) {
-			if (rightStick < 0) {
+		if (leftStick < 0) { //if leftStick < 0, leftStick is pushed up
+			if (rightStick < 0) { // 
 				Robot::drivetrainSub.drive(slowSide , fastSide);
 			} else {
 			
