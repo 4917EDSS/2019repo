@@ -9,11 +9,16 @@
 #include "subsystems/ElevatorSub.h"
 #include <ctre/Phoenix.h>
 
+constexpr float ELEVATOR_POSITION_TOLERANCE = 5.0;
+constexpr float ELEVATOR_P = 0;
+constexpr float ELEVATOR_I = 0;
+constexpr float ELEVATOR_D = 0;
+
 ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
 elevatorMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(ELEVATOR_MOTOR_CAN_ID));
 }
 
-void ElevatorSub::SetElevatorMotor(double speed){
+void ElevatorSub::setElevatorMotor(double speed){
 elevatorMotor->Set(ControlMode::PercentOutput, speed);
 }
 
@@ -23,6 +28,22 @@ void ElevatorSub::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
    
+}
+
+void ElevatorSub::update(){
+//setElevatorMotor((target - getElevatorEncoder())* 0.1);
+}
+
+void ElevatorSub::setTarget(double newTarget){
+  target = newTarget;
+}
+
+bool ElevatorSub::isFinishedMove(){
+//if(fabs(target - getElevatorEncoder()) < ELEVATOR_POSITION_TOLERANCE && fabs(elevatorMotorEnc.GetRate()) < 45) {
+ // return true;
+//}else{
+  return false;
+//}
 }
 
 // Put methods for controlling this subsystem

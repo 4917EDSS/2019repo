@@ -5,41 +5,48 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ElevatorWithJoystickCmd.h"
-#include "OI.h"
+#include "commands/SetElevatorToHeightCmd.h"
 #include "Robot.h"
 
-ElevatorWithJoystickCmd::ElevatorWithJoystickCmd() {
+SetElevatorToHeightCmd::SetElevatorToHeightCmd(double height) : height(height)
+{
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::elevatorSub);
 }
 
 // Called just before this Command runs the first time
-void ElevatorWithJoystickCmd::Initialize() {}
+void SetElevatorToHeightCmd::Initialize()
+{
+  Robot::elevatorSub.setTarget(height);
+}
 
 // Called repeatedly when this Command is scheduled to run
-void ElevatorWithJoystickCmd::Execute() {
-  std::shared_ptr<frc::Joystick> operatorJoystick = Robot::oi.getOperatorController();
-
-  double verticalStick = operatorJoystick->GetRawAxis(OPERATOR_ELEVATOR_AXIS);
-	verticalStick = pow(verticalStick, 3);
-
-  Robot::elevatorSub.setElevatorMotor(verticalStick);
+void SetElevatorToHeightCmd::Execute()
+{
+  if (height == 0)
+  {
+    Robot::elevatorSub.setElevatorMotor(-1.0);
+  }
+  else
+  {
+    Robot::elevatorSub.update();
+  }
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool ElevatorWithJoystickCmd::IsFinished() { 
-  return false; 
+bool SetElevatorToHeightCmd::IsFinished()
+{
+  if (TimeSinceInitialized() > 5.0)
+  {
+    return true;
   }
+  return Robot::elevatorSub.isFinishedMove();
+}
 
 // Called once after isFinished returns true
-void ElevatorWithJoystickCmd::End() {
-  Robot::elevatorSub.setElevatorMotor(0.0);
-}
+void SetElevatorToHeightCmd::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ElevatorWithJoystickCmd::Interrupted() {
-  ElevatorWithJoystickCmd::End();
-}
+void SetElevatorToHeightCmd::Interrupted() {}

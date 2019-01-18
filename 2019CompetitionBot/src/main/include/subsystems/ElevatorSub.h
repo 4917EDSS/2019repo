@@ -14,6 +14,8 @@
 class ElevatorSub : public frc::Subsystem {
  private:
    std::shared_ptr<ctre::phoenix::motorcontrol::can::VictorSPX> elevatorMotor;
+   std::shared_ptr<frc::Encoder> elevatorMotorEnc;
+   double target;
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
 
@@ -21,4 +23,9 @@ class ElevatorSub : public frc::Subsystem {
   ElevatorSub();
   void SetElevatorMotor(double speed);
   void InitDefaultCommand() override;
+  void update();
+  double getElevatorEncoder();
+  void setElevatorMotor(double speed);
+  void setTarget(double newTarget);
+  bool isFinishedMove();
 };
