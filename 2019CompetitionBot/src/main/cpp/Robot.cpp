@@ -10,6 +10,9 @@
 
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include "networktables/NetworkTableInstance.h"
+
+
 
 DrivetrainSub Robot::drivetrainSub;
 BallIntakeSub Robot::ballIntakeSub;
@@ -109,3 +112,29 @@ void Robot::UpdateSmartDashboard(){
   frc::SmartDashboard::PutNumber("Left Drive Motor Enc", drivetrainSub.GetLeftEncoder());
   frc::SmartDashboard::PutNumber("Right Drive Motor Enc", drivetrainSub.GetRightEncoder());
 }
+
+  float Robot::GetVisionTarget()
+{
+  int TargetIndex = 0, widestTarget = 0;
+
+  std::shared_ptr<NetworkTable> gripTable = nt::NetworkTableInstance::GetDefault().GetTable("GRIP/myCountours");
+
+  std::vector<double> WidthArray = gripTable->GetNumberArray("width", std::vector<double>());
+
+  if (WidthArray.size() < 1)
+  {
+    return 0.0;
+  }
+
+  for (unsigned int i = 0; i < WidthArray.size(); i++) {
+    if (WidthArray[i] > widestTarget)
+    {
+      TargetIndex = i;
+      widestTarget = WidthArray[i];
+    }
+  }
+
+
+  return 1;
+}
+
