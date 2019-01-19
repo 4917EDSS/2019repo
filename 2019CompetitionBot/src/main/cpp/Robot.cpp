@@ -60,13 +60,12 @@ void Robot::DisabledPeriodic() {
  * the if-else structure below with additional strings & commands.
  */
 void Robot::AutonomousInit() {
-  // std::string autoSelected = frc::SmartDashboard::GetString(
-  //     "Auto Selector", "Default");
-  // if (autoSelected == "My Auto") {
-  //   m_autonomousCommand = &m_myAuto;
-  // } else {
-  //   m_autonomousCommand = &m_defaultAuto;
-  // }
+
+  nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 0);
+
+  nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
+
+  nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0);
 
   m_autonomousCommand = m_chooser.GetSelected();
 
@@ -113,28 +112,17 @@ void Robot::UpdateSmartDashboard(){
   frc::SmartDashboard::PutNumber("Right Drive Motor Enc", drivetrainSub.GetRightEncoder());
 }
 
-  float Robot::GetVisionTarget()
-{
-  int TargetIndex = 0, widestTarget = 0;
 
-  std::shared_ptr<NetworkTable> gripTable = nt::NetworkTableInstance::GetDefault().GetTable("GRIP/myCountours");
 
-  std::vector<double> WidthArray = gripTable->GetNumberArray("width", std::vector<double>());
+double Robot::GetVisionTarget() {
+  double xAngle = 9001;
+  // if over 9000, the vision target is not picking up anything.
+  double TargetMarked = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
 
-  if (WidthArray.size() < 1)
-  {
-    return 0.0;
+  if (TargetMarked > 0.5) {
+    xAngle = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx", 0.0);
   }
 
-  for (unsigned int i = 0; i < WidthArray.size(); i++) {
-    if (WidthArray[i] > widestTarget)
-    {
-      TargetIndex = i;
-      widestTarget = WidthArray[i];
-    }
-  }
-
-
-  return 1;
+  return xAngle;
 }
 
