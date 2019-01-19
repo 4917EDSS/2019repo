@@ -96,11 +96,12 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() { 
+  UpdateSmartDashboard();
   frc::Scheduler::GetInstance()->Run(); 
 }
 
 void Robot::TestPeriodic() {
-
+;
 }
 
 #ifndef RUNNING_FRC_TESTS
@@ -110,11 +111,41 @@ int main() { return frc::StartRobot<Robot>(); }
 void Robot::UpdateSmartDashboard(){
   frc::SmartDashboard::PutNumber("Left Drive Motor Enc", drivetrainSub.GetLeftEncoder());
   frc::SmartDashboard::PutNumber("Right Drive Motor Enc", drivetrainSub.GetRightEncoder());
+
+  //Limelight Data
+  std::shared_ptr<NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
+  double targetPerecentArea = table->GetNumber("ta", 0.0);
+  double targetSkew = table->GetNumber("ts", 0.0);
+  double targetHorizontalOffset = table->GetNumber("tx", 0.0);
+  double targetVerticalOffset = table -> GetNumber("ty", 0.0);
+  bool foundTarget = table->GetNumber("tv", 0.0);
+  double limelightLatency = table->GetNumber("tl", 0.0);
+  double targetShort = table->GetNumber("tshort", 0.0);
+  double targetLong =table->GetNumber("tlong", 0.0);
+  double targetHorizontalLength = table->GetNumber("thoriz", 0.0);
+  double targetVerticalLength =  table ->GetNumber("tvert", 0.0);
+
+  frc::SmartDashboard::PutNumber("Target Percent Area", targetPerecentArea);
+  frc::SmartDashboard::PutNumber("Target Skew", targetSkew);
+  frc::SmartDashboard::PutNumber("Target Horizontal Offset" ,targetHorizontalOffset);
+  frc::SmartDashboard::PutNumber("Target Vertical Offset" ,targetVerticalOffset);
+  frc::SmartDashboard::PutNumber("Target is in view", foundTarget);
+  frc::SmartDashboard::PutNumber("Limelight Latency", limelightLatency);
+  frc::SmartDashboard::PutNumber("Target's shortest side of fitted bounding box", targetShort);
+  frc::SmartDashboard::PutNumber("Target's longest side of fitted bounding box", targetLong);
+  frc::SmartDashboard::PutNumber("Target's horiz. sidelength of rough bounding box", targetHorizontalLength);
+  frc::SmartDashboard::PutNumber("Target's vert. sidelength of rough bounding box", targetVerticalLength);
+
+
+
+
+
 }
 
 
 
 double Robot::GetVisionTarget() {
+  
   double xAngle = 9001;
   // if over 9000, the vision target is not picking up anything.
   double TargetMarked = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
@@ -131,4 +162,20 @@ double Robot::GetDistanceFromVision() {
   double m=0;
   double b=0;
   return m*size+b;
+}
+
+double Robot::GetVisionTargetAngle() {
+  double RobotAngle = Robot::drivetrainSub.getAngle();
+  double TargetAngle[7] = {-151.25, -90, -21.75, 0, 21.75, 90, 151.25};
+  double SmallestAngleDifference = 1000;
+  int BestTarget;
+
+  for(int i = 0; i < 7; i++){
+    double AngleDifference = fabs(RobotAngle - TargetAngle[i]);
+    if(AngleDifference <= SmallestAngleDifference){
+      SmallestAngleDifference = AngleDifference;
+      BestTarget = i;
+    }
+  }
+  return TargetAngle[BestTarget];
 }
