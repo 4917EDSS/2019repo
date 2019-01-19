@@ -160,9 +160,9 @@ double Robot::GetVisionTarget() {
 double Robot::GetDistanceFromVision() {
   double size=nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("thori",0.0);
   double a=0.295;
-  double b=-70.6
-  double c=5234
-  return a*x*x+b*x+c;
+  double b=-70.6;
+  double c=5234;
+  return a*size*size+b*size+c;
 }
 
 double Robot::GetVisionTargetAngle() {
