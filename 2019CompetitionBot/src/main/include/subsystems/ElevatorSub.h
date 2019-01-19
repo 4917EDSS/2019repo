@@ -11,13 +11,16 @@
 #include <frc/WPILib.h>
 #include <ctre/Phoenix.h>
 #include <RobotMap.h>
+#include <rev/CANSparkMax.h>
+#include <rev/CANSparkMaxLowLevel.h>
+
 class ElevatorSub : public frc::Subsystem {
  private:
-   std::shared_ptr<ctre::phoenix::motorcontrol::can::VictorSPX> elevatorMotor;
    std::shared_ptr<frc::Encoder> elevatorMotorEnc;
+   std::shared_ptr <rev::CANSparkMax> elevatorMotor;
    double target;
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
+
+
 
  public:
   ElevatorSub();
@@ -28,4 +31,5 @@ class ElevatorSub : public frc::Subsystem {
   void setElevatorMotor(double speed);
   void setTarget(double newTarget);
   bool isFinishedMove();
+  bool isElevatorDown();
 };

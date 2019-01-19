@@ -15,11 +15,11 @@ constexpr float ELEVATOR_I = 0;
 constexpr float ELEVATOR_D = 0;
 
 ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
-elevatorMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(ELEVATOR_MOTOR_CAN_ID));
+  elevatorMotor.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
 }
 
 void ElevatorSub::setElevatorMotor(double speed){
-elevatorMotor->Set(ControlMode::PercentOutput, speed);
+  elevatorMotor->Set(speed);
 }
 
 
@@ -31,7 +31,7 @@ void ElevatorSub::InitDefaultCommand() {
 }
 
 void ElevatorSub::update(){
-//setElevatorMotor((target - getElevatorEncoder())* 0.1);
+  setElevatorMotor((target - elevatorMotor->GetEncoder().GetPosition())* 0.1);
 }
 
 void ElevatorSub::setTarget(double newTarget){
@@ -39,11 +39,15 @@ void ElevatorSub::setTarget(double newTarget){
 }
 
 bool ElevatorSub::isFinishedMove(){
-//if(fabs(target - getElevatorEncoder()) < ELEVATOR_POSITION_TOLERANCE && fabs(elevatorMotorEnc.GetRate()) < 45) {
- // return true;
-//}else{
-  return false;
-//}
+ if(fabs(target -elevatorMotor->GetEncoder().GetPosition()) < ELEVATOR_POSITION_TOLERANCE && fabs(elevatorMotor->GetEncoder().GetPosition()) < 45) {
+  return true;
+    }else{
+      return false;
+ }
+}
+
+bool ElevatorSub::isElevatorDown(){
+
 }
 
 // Put methods for controlling this subsystem

@@ -16,20 +16,15 @@ SetElevatorToHeightCmd::SetElevatorToHeightCmd(double height) : height(height)
 }
 
 // Called just before this Command runs the first time
-void SetElevatorToHeightCmd::Initialize()
-{
+void SetElevatorToHeightCmd::Initialize(){
   Robot::elevatorSub.setTarget(height);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void SetElevatorToHeightCmd::Execute()
-{
-  if (height == 0)
-  {
+void SetElevatorToHeightCmd::Execute(){
+  if (height == 0){
     Robot::elevatorSub.setElevatorMotor(-1.0);
-  }
-  else
-  {
+  }else{
     Robot::elevatorSub.update();
   }
 }
@@ -37,16 +32,31 @@ void SetElevatorToHeightCmd::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool SetElevatorToHeightCmd::IsFinished()
 {
-  if (TimeSinceInitialized() > 5.0)
-  {
+  if (TimeSinceInitialized() > 5.0){
     return true;
+
+  }
+  else {
+    if (height == 0) {
+      return Robot::elevatorSub.isElevatorDown();
+    }else{
+      return Robot::elevatorSub.isFinishedMove();
+    }
   }
   return Robot::elevatorSub.isFinishedMove();
 }
 
 // Called once after isFinished returns true
-void SetElevatorToHeightCmd::End() {}
+void SetElevatorToHeightCmd::End() {
+  if(Robot::elevatorSub.isElevatorDown()){
+Robot::elevatorSub.setElevatorMotor(0.0);
+  }else{
+    Robot::elevatorSub.setElevatorMotor(0.04);
+  }
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void SetElevatorToHeightCmd::Interrupted() {}
+void SetElevatorToHeightCmd::Interrupted() {
+  End();
+}

@@ -9,8 +9,9 @@
 
 #include <frc/commands/Command.h>
 
-class SetElevatorToHeightCmd : public frc::Command {
- public:
+class SetElevatorToHeightCmd : public frc::Command
+{
+public:
   SetElevatorToHeightCmd(double height);
   void Initialize() override;
   void Execute() override;
@@ -18,7 +19,6 @@ class SetElevatorToHeightCmd : public frc::Command {
   void End() override;
   void Interrupted() override;
 
- private:
+private:
   double height;
-
 };
