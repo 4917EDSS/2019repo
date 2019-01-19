@@ -157,3 +157,19 @@ double Robot::GetVisionTarget() {
   return xAngle;
 }
 
+double Robot::GetVisionTargetAngle() {
+  double RobotAngle = Robot::drivetrainSub.getAngle();
+  double TargetAngle[7] = {-151.25, -90, -21.75, 0, 21.75, 90, 151.25};
+  double SmallestAngleDifference = 1000;
+  int BestTarget;
+
+  for(int i = 0; i < 7; i++){
+    double AngleDifference = fabs(RobotAngle - TargetAngle[i]);
+    if(AngleDifference <= SmallestAngleDifference){
+      SmallestAngleDifference = AngleDifference;
+      BestTarget = i;
+    }
+  }
+
+  return TargetAngle[BestTarget];
+}
