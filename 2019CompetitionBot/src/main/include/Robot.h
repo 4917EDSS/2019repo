@@ -35,6 +35,7 @@ class Robot : public frc::TimedRobot {
   void TeleopPeriodic() override;
   void TestPeriodic() override;
   static double GetVisionTarget();
+static double GetDistanceFromVision();
   
 
 
