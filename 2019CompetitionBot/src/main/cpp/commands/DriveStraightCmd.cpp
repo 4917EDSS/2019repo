@@ -8,12 +8,8 @@ void DriveStraightCmd::Initialize() {
   Robot::drivetrainSub.resetAHRS();
 }
 void DriveStraightCmd::Execute() {
-  if (Robot::drivetrainSub.getAngle() > 0) {
-    Robot::drivetrainSub.drive(0,0.2);
-  }
-  else if( Robot::drivetrainSub.getAngle() < 0) {
-        Robot::drivetrainSub.drive(0.2,0);
-  }
+  double angle = Robot::drivetrainSub.getAngle();
+    Robot::drivetrainSub.drive(0.5 - angle,0.5 + angle);
 }
 bool DriveStraightCmd::IsFinished() {
   double distanceTraveled=(Robot::drivetrainSub.GetLeftEncoder()+Robot::drivetrainSub.GetRightEncoder())/2;

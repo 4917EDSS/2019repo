@@ -17,7 +17,6 @@
 #include "subsystems/BallIntakeSub.h"
 #include "subsystems/HatchSub.h"
 #include "subsystems/ElevatorSub.h"
-
 class Robot : public frc::TimedRobot {
  public:
   static DrivetrainSub drivetrainSub;
@@ -35,7 +34,7 @@ class Robot : public frc::TimedRobot {
   void TeleopInit() override;
   void TeleopPeriodic() override;
   void TestPeriodic() override;
-  float GetVisionTarget();
+  static double GetVisionTarget();
   
 
 
