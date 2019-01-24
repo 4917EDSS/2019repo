@@ -7,12 +7,9 @@
 
 #include <iostream>
 #include "Robot.h"
-
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "networktables/NetworkTableInstance.h"
-
-
 
 DrivetrainSub Robot::drivetrainSub;
 BallIntakeSub Robot::ballIntakeSub;
