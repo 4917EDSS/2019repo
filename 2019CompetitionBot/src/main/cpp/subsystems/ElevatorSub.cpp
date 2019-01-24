@@ -8,6 +8,7 @@
 #include <iostream>
 #include <RobotMap.h>
 #include "subsystems/ElevatorSub.h"
+#include "commands/ElevatorWithJoystickCmd.h"
 #include <ctre/Phoenix.h>
 
 constexpr float ELEVATOR_POSITION_TOLERANCE = 5.0;
@@ -28,6 +29,7 @@ void ElevatorSub::setElevatorMotor(double speed){
 void ElevatorSub::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
+  SetDefaultCommand(new ElevatorWithJoystickCmd());
    
 }
 
