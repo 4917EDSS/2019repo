@@ -23,6 +23,8 @@ constexpr int BALL_INTAKE_MOTOR_CAN_ID = 4;
 
 constexpr int ELEVATOR_MOTOR_CAN_ID = 8;
 
+constexpr int FLIPPER_MOTOR_CAN_ID = 10;
+
 //DIOs
 constexpr int INTAKE_LIMIT_DIO = 9;
 

@@ -8,11 +8,13 @@
 #include "OI.h"
 
 #include <frc/WPILib.h>
+#include "Robot.h"
+#include "subsystems/BallIntakeSub.h"
 #include "Commands/CloseHatchPickupCmd.h"
 #include "Commands/IntakeWhileHeldCmd.h"
 #include "commands/IntakeBallUntilLimitCmd.h"
 #include "commands/KillEverythingCmd.h"
-
+#include "commands/FlipFlipperCmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -45,6 +47,9 @@ OI::OI() {
 
   DriverKillBtn2.reset(new frc::JoystickButton(driverController.get(), DRIVER_KILL_BUTTON_TWO));
   DriverKillBtn2->WhenPressed(new KillEverythingCmd());
+
+  ballFlipperToggleBtn.reset(new frc::JoystickButton(operatorController.get(), FLIP_BALL_INTAKE_TOGGLE_BTN));
+  ballFlipperToggleBtn->WhenPressed(new FlipFlipperCmd(FlipFlipperCmd::FlipperDirection::toggle));
 }
 
 std::shared_ptr<frc::Joystick> OI::getDriverController() {
