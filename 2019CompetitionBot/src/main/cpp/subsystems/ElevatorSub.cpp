@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include <iostream>
+#include <RobotMap.h>
 #include "subsystems/ElevatorSub.h"
 #include <ctre/Phoenix.h>
 
