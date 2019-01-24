@@ -50,6 +50,8 @@ OI::OI() {
 
   ballFlipperToggleBtn.reset(new frc::JoystickButton(operatorController.get(), FLIP_BALL_INTAKE_TOGGLE_BTN));
   ballFlipperToggleBtn->WhenPressed(new FlipFlipperCmd(FlipFlipperCmd::FlipperDirection::toggle));
+  milkyMonipulaterBtn.reset(new frc::JoystickButton(driverController.get(),MILKY_MONIPULATER_BUTTON));
+  milkyMonipulaterBtn->WhileHeld( new MilkyMonipulaterCmd());
 }
 
 std::shared_ptr<frc::Joystick> OI::getDriverController() {
