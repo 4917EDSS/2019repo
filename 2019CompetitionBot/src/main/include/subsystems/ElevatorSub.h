@@ -17,7 +17,9 @@
 class ElevatorSub : public frc::Subsystem {
  private:
    std::shared_ptr<frc::Encoder> elevatorMotorEnc;
-   std::shared_ptr <rev::CANSparkMax> elevatorMotor;
+   std::shared_ptr<rev::CANSparkMax> elevatorMotor;
+   std::shared_ptr<frc::DigitalInput> lowerLimit;
+   std::shared_ptr<frc::DigitalInput> upperLimit;
    double target;
 
 
