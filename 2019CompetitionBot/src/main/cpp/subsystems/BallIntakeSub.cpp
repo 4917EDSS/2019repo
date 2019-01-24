@@ -17,6 +17,7 @@ void BallIntakeSub::InitDefaultCommand() {
 
   BallIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_MOTOR_CAN_ID));
   intakeLimit.reset(new frc::DigitalInput(INTAKE_LIMIT_DIO));
+  flipperMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(FLIPPER_MOTOR_CAN_ID));
 }
 
 // Put methods for controlling this subsystem
@@ -29,4 +30,8 @@ void BallIntakeSub::SetIntakeMotor(double speed){
 
 bool BallIntakeSub::isBallIn() {
   intakeLimit.get();
+}
+
+void BallIntakeSub::setFlipperPosition(bool flipOut) {
+
 }
