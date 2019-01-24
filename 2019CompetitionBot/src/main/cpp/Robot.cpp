@@ -162,9 +162,9 @@ double Robot::GetDistanceFromVision() {
   return a*size*size+b*size+c;
 }
 
-double Robot::GetVisionTargetAngle() {
+double Robot::GetScoringFaceAngle() {
   double RobotAngle = Robot::drivetrainSub.getAngle();
-  double TargetAngle[7] = {-151.25, -90, -21.75, 0, 21.75, 90, 151.25};
+  double TargetAngle[7] = {-151.25, -90, -28.75, 0, 28.75, 90, 151.25};
   double SmallestAngleDifference = 1000;
   int BestTarget;
 
