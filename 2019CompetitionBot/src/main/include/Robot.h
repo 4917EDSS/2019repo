@@ -38,7 +38,7 @@ class Robot : public frc::TimedRobot {
 
 static double GetDistanceFromVision();
 
-  static double GetVisionTargetAngle();
+  static double GetScoringFaceAngle();
 
 
 
