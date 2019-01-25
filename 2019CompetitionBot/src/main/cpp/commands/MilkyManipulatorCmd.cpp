@@ -5,39 +5,38 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/MilkyManipulatorWithJoystickCmd.h"
+#include "commands/MilkyManipulatorCmd.h"
 #include "OI.H"
+#include "Robot.h"
 #include <iostream>
 
-MilkyManipulatorWithJoystickCmd::MilkyManipulatorWithJoystickCmd() {
+MilkyManipulatorCmd::MilkyManipulatorCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  //Requires(MilkyManipulatorWithJoystickCmd.get());
+  //Requires(MilkyManipulatorCmd.get());
 }
 
 // Called just before this Command runs the first time
-void MilkyManipulatorWithJoystickCmd::Initialize() {}
+void MilkyManipulatorCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void MilkyManipulatorWithJoystickCmd::Execute() {
-  //std::share_ptr<frc::Joystick> operatorJoystick = oi->getOperatorController();
-  //MilkyManipulatorWithJoystickSub->isBallIn();
-
-  //double scaledVerticalStick = pow (verticalStick, 3);
-  
- // MilkyManipulatorWithJoystickCmd->milkyManipulator(scaledVerticalStick);
+void MilkyManipulatorCmd::Execute() {
+  double targetAngle=Robot::GetVisionTarget();
+  double distance=Robot::GetDistanceFromVision();
+  double robotAngle=Robot::drivetrainSub.getAngle();
+  double scoringFace=Robot::GetScoringFaceAngle();
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool MilkyManipulatorWithJoystickCmd::IsFinished() { return false; }
+bool MilkyManipulatorCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void MilkyManipulatorWithJoystickCmd::End() {
-  //MilkyManipulatorWithJoystickCmd->milkyManipulator(0.0);
+void MilkyManipulatorCmd::End() {
+  //MilkyManipulatorCmd->milkyManipulator(0.0);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void MilkyManipulatorWithJoystickCmd::Interrupted() {
+void MilkyManipulatorCmd::Interrupted() {
   End();
 }

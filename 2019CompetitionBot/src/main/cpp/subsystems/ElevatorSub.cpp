@@ -20,12 +20,6 @@ ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
   elevatorMotor.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
 }
 
-void ElevatorSub::setElevatorMotor(double speed){
-  elevatorMotor->Set(speed);
-}
-
-
-
 void ElevatorSub::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
@@ -51,6 +45,21 @@ bool ElevatorSub::isFinishedMove(){
 
 bool ElevatorSub::isElevatorDown(){
 
+}
+
+void ElevatorSub::setElevatorMotorRaw(double speed){
+elevatorMotor->Set(speed);
+}
+
+void ElevatorSub::setElevatorMotor(double speed){
+
+  if (isElevatorDown() && speed < 0){
+        speed = 0;
+  }
+
+  else if (elevatorMotor->GetEncoder().GetPosition() < 20 && speed <0){
+    speed = std::max(speed, -0.2);
+  }
 }
 
 // Put methods for controlling this subsystem
