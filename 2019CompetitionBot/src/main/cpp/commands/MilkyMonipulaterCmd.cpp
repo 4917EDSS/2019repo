@@ -7,6 +7,7 @@
 
 #include "commands/MilkyManipulatorWithJoystickCmd.h"
 #include "OI.H"
+#include "Robot.h"
 #include <iostream>
 
 MilkyManipulatorWithJoystickCmd::MilkyManipulatorWithJoystickCmd() {
@@ -20,12 +21,10 @@ void MilkyManipulatorWithJoystickCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void MilkyManipulatorWithJoystickCmd::Execute() {
-  //std::share_ptr<frc::Joystick> operatorJoystick = oi->getOperatorController();
-  //MilkyManipulatorWithJoystickSub->isBallIn();
-
-  //double scaledVerticalStick = pow (verticalStick, 3);
-  
- // MilkyManipulatorWithJoystickCmd->milkyManipulator(scaledVerticalStick);
+  double TargetAngle=Robot::GetVisionTarget();
+  double Distance=Robot::GetDistanceFromVision();
+  double RobotAngle=Robot::DrivetrainSub.getAngle();
+  double ScoringFace=Robot::GetScoringFaceAngle();
 }
 
 // Make this return true when this Command no longer needs to run execute()

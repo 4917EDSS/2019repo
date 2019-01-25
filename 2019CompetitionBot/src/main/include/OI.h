@@ -35,7 +35,7 @@ constexpr int OPERATOR_CONTROLLER_PORT = 1;
 //Driver
 constexpr int DRIVER_KILL_BUTTON_ONE = 11;
 constexpr int DRIVER_KILL_BUTTON_TWO = 12;
-constexpr int MILKY_MONIPULATER_BUTTON=13;
+constexpr int MILKY_MANIPULATOR_BUTTON=13;
 //Operator
 constexpr int HATCH_CONTRACT_BTN = 3;
 constexpr int SET_INTAKE_MOTOR_BTN = 2;
@@ -62,5 +62,5 @@ class OI {
     std::shared_ptr<frc::JoystickButton> DriverKillBtn1;
     std::shared_ptr<frc::JoystickButton> DriverKillBtn2;
     std::shared_ptr<frc::JoystickButton> ballFlipperToggleBtn;
-std::shared_ptr<frc::JoystickButton>MilkyMonipulaterBtn;
+std::shared_ptr<frc::JoystickButton>MilkyManipulatorBtn;
 };
