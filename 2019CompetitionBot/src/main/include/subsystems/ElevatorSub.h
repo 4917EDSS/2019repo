@@ -34,4 +34,5 @@ class ElevatorSub : public frc::Subsystem {
   void setTarget(double newTarget);
   bool isFinishedMove();
   bool isElevatorDown();
+  void setElevatorMotorRaw(double speed);
 };
