@@ -173,7 +173,18 @@ double Robot::GetScoringFaceAngle() {
     if(AngleDifference <= SmallestAngleDifference){
       SmallestAngleDifference = AngleDifference;
       BestTarget = i;
+      
     }
   }
   return TargetAngle[BestTarget];
+}
+
+double Robot::NormalizeAngle(double targetAngle){
+  while(targetAngle < -180) {
+    targetAngle = targetAngle + 360;
+  }
+  while(targetAngle > 180) {
+    targetAngle = targetAngle - 360;
+  }
+  return targetAngle;
 }
