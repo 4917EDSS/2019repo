@@ -1,16 +1,19 @@
+// Example program
+#include <iostream>
+#include <string>
 #include <utility>
 #include <cmath>
 
-double getCircleCentreX(double targetX, double targetY, double robotX, double robotY, double scoringFaceAngle){
-    return ((robotY*robotY) + (2*robotY * targetX * tan(-scoringFaceAngle)) - (2*robotY*targetY) - (2*targetX*targetY*tan(-scoringFaceAngle)) + (robotX*robotX) - (targetX*targetX) + (targetY*targetY))
-    / (2*((robotY*tan(-scoringFaceAngle)) - (targetY*tan(-scoringFaceAngle)) + robotX - targetX ));
-}
+using namespace std;
 
-double getCircleCentreY(double circleCentreX, double scoringFaceAngle, double targetX, double targetY){
-    return (tan(-scoringFaceAngle) * circleCentreX + (targetY - tan(-scoringFaceAngle) * targetX));
-}
+    double getCircleCentreX(double targetX, double targetY, double robotX, double robotY, double scoringFaceAngle){
+        return ((robotY*robotY) + (2*robotY * targetX * tan(-scoringFaceAngle)) - (2*robotY*targetY) - (2*targetX*targetY*tan(-scoringFaceAngle)) + (robotX*robotX) - (targetX*targetX) + (targetY*targetY))/ (2*((robotY*tan(-scoringFaceAngle)) - (targetY*tan(-scoringFaceAngle)) + robotX - targetX ));
+    }
 
-double GetRobotTargetAngle(double robotHeading, double cameraAngle, double distance, double scoringFaceAngle){
+    double getCircleCentreY(double circleCentreX, double scoringFaceAngle, double targetX, double targetY){
+        return (tan(-scoringFaceAngle) * circleCentreX + (targetY - tan(-scoringFaceAngle) * targetX));
+    }
+    double GetRobotTargetAngle(double robotHeading, double cameraAngle, double distance, double scoringFaceAngle){
         robotHeading = robotHeading *(M_PI/180);
         cameraAngle = cameraAngle *(M_PI/180);
         scoringFaceAngle = scoringFaceAngle*(M_PI/180);
@@ -37,3 +40,6 @@ double GetRobotTargetAngle(double robotHeading, double cameraAngle, double dista
         
         return (acos(((r*r)+(r*r) - sqrt(pow(robotX-circleX, 2) + pow(robotY-(circleY + r), 2)))/(2*r*r)));
     }
+int main(){
+    cout<<GetRobotTargetAngle(0.0,0.0,1000.0,0.0);
+}
