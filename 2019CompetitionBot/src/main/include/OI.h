@@ -62,5 +62,5 @@ class OI {
     std::shared_ptr<frc::JoystickButton> DriverKillBtn1;
     std::shared_ptr<frc::JoystickButton> DriverKillBtn2;
     std::shared_ptr<frc::JoystickButton> ballFlipperToggleBtn;
-std::shared_ptr<frc::JoystickButton>MilkyMonipulaterBtn;
+    std::shared_ptr<frc::JoystickButton> milkyManipulatorBtn;
 };
