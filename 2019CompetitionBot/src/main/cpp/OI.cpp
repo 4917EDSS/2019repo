@@ -15,6 +15,7 @@
 #include "commands/IntakeBallUntilLimitCmd.h"
 #include "commands/KillEverythingCmd.h"
 #include "commands/FlipFlipperCmd.h"
+#include "commands/MilkyManipulatorCmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -50,8 +51,8 @@ OI::OI() {
 
   ballFlipperToggleBtn.reset(new frc::JoystickButton(operatorController.get(), FLIP_BALL_INTAKE_TOGGLE_BTN));
   ballFlipperToggleBtn->WhenPressed(new FlipFlipperCmd(FlipFlipperCmd::FlipperDirection::toggle));
-  MilkyManipulatorBtn.reset(new frc::JoystickButton(driverController.get(),MILKY_MANIPULATOR_BUTTON));
-  MilkyManipulatorBtn->WhileHeld( new MilkyManipulatorCmd());
+  milkyManipulatorBtn.reset(new frc::JoystickButton(driverController.get(),MILKY_MANIPULATOR_BUTTON));
+  milkyManipulatorBtn->WhileHeld( new MilkyManipulatorCmd());
 }
 
 std::shared_ptr<frc::Joystick> OI::getDriverController() {

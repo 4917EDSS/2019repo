@@ -9,9 +9,9 @@
 
 #include <frc/commands/Command.h>
 
-class MilkyManipulatorWithJoystickCmd : public frc::Command {
+class MilkyManipulatorCmd : public frc::Command {
  public:
-  MilkyManipulatorWithJoystickCmd();
+  MilkyManipulatorCmd();
   void Initialize();
   void Execute();
   bool IsFinished();
