@@ -32,7 +32,7 @@ bool MilkyManipulatorCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void MilkyManipulatorCmd::End() {
-  //MilkyManipulatorCmd->milkyManipulator(0.0);
+  //MilkyManipulatorCmd.milkyManipulator(0.0);
 }
 
 // Called when another command which requires one or more of the same

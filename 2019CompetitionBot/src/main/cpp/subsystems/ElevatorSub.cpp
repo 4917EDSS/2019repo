@@ -44,7 +44,7 @@ bool ElevatorSub::isFinishedMove(){
 }
 
 bool ElevatorSub::isElevatorDown(){
-
+      return !lowerLimit.get() && elevatorMotor->GetEncoder().GetPosition();
 }
 
 void ElevatorSub::setElevatorMotorRaw(double speed){
