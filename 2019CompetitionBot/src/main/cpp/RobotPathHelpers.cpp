@@ -1,4 +1,5 @@
 #include <utility>
+#define _USE_MATH_DEFINES
 #include <cmath>
 
 double getCircleCentreX(double targetX, double targetY, double robotX, double robotY, double scoringFaceAngle){
