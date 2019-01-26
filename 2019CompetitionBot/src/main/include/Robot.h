@@ -17,6 +17,7 @@
 #include "subsystems/BallIntakeSub.h"
 #include "subsystems/HatchSub.h"
 #include "subsystems/ElevatorSub.h"
+#include "components/Log.h"
 class Robot : public frc::TimedRobot {
  public:
   static DrivetrainSub drivetrainSub;
