@@ -13,7 +13,7 @@
 MilkyManipulatorCmd::MilkyManipulatorCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  //Requires(MilkyManipulatorCmd.get());
+  Requires(&Robot::manipulatorSub);
 }
 
 // Called just before this Command runs the first time
@@ -21,6 +21,8 @@ void MilkyManipulatorCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void MilkyManipulatorCmd::Execute() {
+  logger.send(logger.DEBUGGING, "%s : %s\n", __FILE__, __FUNCTION__);
+
   double targetAngle=Robot::GetVisionTarget();
   double distance=Robot::GetDistanceFromVision();
   double robotAngle=Robot::drivetrainSub.getAngle();

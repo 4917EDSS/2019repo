@@ -22,6 +22,8 @@ void SetElevatorToHeightCmd::Initialize(){
 
 // Called repeatedly when this Command is scheduled to run
 void SetElevatorToHeightCmd::Execute(){
+  logger.send(logger.DEBUGGING, "%s : %s\n", __FILE__, __FUNCTION__);
+
   if (height == 0){
     Robot::elevatorSub.setElevatorMotor(-1.0);
   }else{

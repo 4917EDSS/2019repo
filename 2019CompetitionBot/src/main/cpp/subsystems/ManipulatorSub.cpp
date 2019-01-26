@@ -5,23 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/HatchSub.h"
+#include "subsystems/ManipulatorSub.h"
 
-HatchSub::HatchSub() : Subsystem("HatchSub") {
-  hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
-  hatchGripperSolenoid->Set(true);
-}
+ManipulatorSub::ManipulatorSub() : Subsystem("ManipulatorSub") {}
 
-void HatchSub::InitDefaultCommand() {
+void ManipulatorSub::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
+  hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
 }
 
-void HatchSub::ExpandHatchGripper(){
+void ManipulatorSub::ExpandHatchGripper(){
   hatchGripperSolenoid->Set(true);
 }
-void HatchSub::ContractHatchGripper(){
+
+void ManipulatorSub::ContractHatchGripper(){
   hatchGripperSolenoid->Set(false);
 }
+
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

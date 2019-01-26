@@ -11,11 +11,14 @@
 #include "frc/WPIlib.h"
 #include "RobotMap.h"
 
-class HatchSub : public frc::Subsystem {
+class ManipulatorSub : public frc::Subsystem {
  private:
   std::shared_ptr<frc::Solenoid> hatchGripperSolenoid;
+  // It's desirable that everything possible under private except
+  // for methods that implement subsystem capabilities
+
  public:
-  HatchSub();
+  ManipulatorSub();
   void InitDefaultCommand() override;
   void ExpandHatchGripper();
   void ContractHatchGripper();

@@ -15,15 +15,16 @@
 #include "OI.h"
 #include "subsystems/DrivetrainSub.h"
 #include "subsystems/BallIntakeSub.h"
-#include "subsystems/HatchSub.h"
 #include "subsystems/ElevatorSub.h"
+#include "subsystems/ManipulatorSub.h"
 #include "components/Log.h"
+
 class Robot : public frc::TimedRobot {
  public:
   static DrivetrainSub drivetrainSub;
   static BallIntakeSub ballIntakeSub;
-  static HatchSub hatchSub;
   static ElevatorSub elevatorSub;
+  static ManipulatorSub manipulatorSub;
   static OI oi;
 
   void RobotInit() override;

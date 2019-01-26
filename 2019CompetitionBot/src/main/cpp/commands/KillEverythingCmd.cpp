@@ -13,7 +13,7 @@ KillEverythingCmd::KillEverythingCmd() {
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::ballIntakeSub);
   Requires(&Robot::drivetrainSub);
-  Requires(&Robot::hatchSub);
+  Requires(&Robot::manipulatorSub);
   Requires(&Robot::elevatorSub);
 }
 
@@ -21,7 +21,9 @@ KillEverythingCmd::KillEverythingCmd() {
 void KillEverythingCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void KillEverythingCmd::Execute() {}
+void KillEverythingCmd::Execute() {
+  logger.send(logger.DEBUGGING, "%s : %s\n", __FILE__, __FUNCTION__);
+}
 
 // Make this return true when this Command no longer needs to run execute()
 bool KillEverythingCmd::IsFinished() {  

@@ -34,13 +34,15 @@ void FlipFlipperCmd::Initialize() {
     default:
       std::cout << "You goofed. You need to add a case in the FlipFlipperCmd." << std::endl;
   }
-
+ 
+  logger.send(logger.DEBUGGING, "%s : %s\n", __FILE__, __FUNCTION__);
   Robot::ballIntakeSub.setFlipperPosition(flipperPositionOut);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void FlipFlipperCmd::Execute() {
   //Might need PID or sensor here to slow down flipper
+  logger.send(logger.DEBUGGING, "%s : %s\n", __FILE__, __FUNCTION__);
 }
 
 // Make this return true when this Command no longer needs to run execute()

@@ -20,7 +20,9 @@ void ScoreBallCmd::Initialize() {
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ScoreBallCmd::Execute() {}
+void ScoreBallCmd::Execute() {
+  logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
+}
 
 // Make this return true when this Command no longer needs to run execute()
 bool ScoreBallCmd::IsFinished() { 

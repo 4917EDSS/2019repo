@@ -20,7 +20,9 @@ void IntakeBallUntilLimitCmd::Initialize() {
 }
 
 // Called repeatedly when this Command is scheduled to run
-void IntakeBallUntilLimitCmd::Execute() {}
+void IntakeBallUntilLimitCmd::Execute() {
+  logger.send(logger.DEBUGGING, "%s : %s\n", __FILE__, __FUNCTION__);
+}
 
 // Make this return true when this Command no longer needs to run execute()
 bool IntakeBallUntilLimitCmd::IsFinished() {

@@ -7,6 +7,7 @@
 
 #include "subsystems/BallIntakeSub.h"
 #include <ctre/Phoenix.h>
+#include "components/Log.h"
 //Canid4 and Set Intake
 
 BallIntakeSub::BallIntakeSub() : Subsystem("ExampleSubsystem") {}
@@ -26,12 +27,14 @@ void BallIntakeSub::InitDefaultCommand() {
 
 void BallIntakeSub::SetIntakeMotor(double speed){
   BallIntakeMotor->Set(ControlMode::PercentOutput, speed);
+  logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
 }
 
 bool BallIntakeSub::isBallIn() {
   intakeLimit.get();
+  logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
 }
 
 void BallIntakeSub::setFlipperPosition(bool flipOut) {
-
+  logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
 }

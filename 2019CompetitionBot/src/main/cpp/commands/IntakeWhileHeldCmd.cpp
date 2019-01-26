@@ -19,6 +19,7 @@ void IntakeWhileHeldCmd::Initialize() {}
 // Called repeatedly when this Command is scheduled to run
 void IntakeWhileHeldCmd::Execute() {
   Robot::ballIntakeSub.SetIntakeMotor(-1.0);
+  logger.send(logger.DEBUGGING, "%s : %s\n", __FILE__, __FUNCTION__);
 }
 
 

@@ -13,7 +13,7 @@
 
 DrivetrainSub Robot::drivetrainSub;
 BallIntakeSub Robot::ballIntakeSub;
-HatchSub Robot::hatchSub;
+ManipulatorSub Robot::manipulatorSub;
 ElevatorSub Robot::elevatorSub;
 OI Robot::oi;
 
@@ -23,8 +23,8 @@ void Robot::RobotInit() {
 		// Setup logging system
 		std::string syslogTargetAddress = (Preferences::GetInstance())->GetString("SyslogTargetAddress", "10.49.17.30");
 		logger.enableChannels(logger.WARNINGS | logger.ERRORS | logger.ASSERTS);	// These should stay on during competition
-		logger.enableChannels(logger.DEBUGGING | logger.DRIVETRAIN | logger.PERIODIC | logger.ELEVATOR);	// Should look at these during development
-		//logger.addOutputPath(new frc4917::ConsoleOutput());						// Enable console output and/or
+		logger.enableChannels(logger.DEBUGGING | logger.DRIVETRAIN | logger.PERIODIC | logger.ELEVATOR | logger.BALLINTAKE);	// Should look at these during development
+    //logger.addOutputPath(new frc4917::ConsoleOutput());						// Enable console output and/or
 		logger.addOutputPath(new frc4917::SyslogOutput(syslogTargetAddress));		// Enable syslog output
 		logger.send(logger.DEBUGGING, "Robot code started @ %f\n", GetTime());
 }
