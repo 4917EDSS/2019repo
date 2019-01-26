@@ -10,6 +10,8 @@
 #include "subsystems/ElevatorSub.h"
 #include "commands/ElevatorWithJoystickCmd.h"
 #include <ctre/Phoenix.h>
+#include "components/Log.h"
+#include "frc/WPILib.h"
 
 constexpr float ELEVATOR_POSITION_TOLERANCE = 5.0;
 constexpr float ELEVATOR_P = 0;
@@ -18,6 +20,7 @@ constexpr float ELEVATOR_D = 0;
 
 ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
   elevatorMotor.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+		logger.send(logger.ELEVATOR, "Elevator code started @ %f\n", 0.0);
 }
 
 void ElevatorSub::InitDefaultCommand() {

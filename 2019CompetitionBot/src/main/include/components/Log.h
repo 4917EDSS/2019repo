@@ -27,6 +27,7 @@ namespace frc4917 {
 		static constexpr unsigned long VISION		= 0x00000020;
 		static constexpr unsigned long PERIODIC		= 0x00000040;
 //		static constexpr unsigned long chan8		= 0x00000080;
+		static constexpr unsigned long ELEVATOR		= 0x00000100;
 
 		Log();
 		void addOutputPath(LogOutput *newOutput);
