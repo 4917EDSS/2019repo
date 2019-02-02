@@ -16,7 +16,9 @@ ElevatorWithJoystickCmd::ElevatorWithJoystickCmd() {
 }
 
 // Called just before this Command runs the first time
-void ElevatorWithJoystickCmd::Initialize() {}
+void ElevatorWithJoystickCmd::Initialize() {
+  logger.send(logger.DEBUGGING, "Joystick is the executive operator of elevator \n");
+}
 
 // Called repeatedly when this Command is scheduled to run
 void ElevatorWithJoystickCmd::Execute() {
@@ -24,6 +26,7 @@ void ElevatorWithJoystickCmd::Execute() {
 
   double verticalStick = operatorJoystick->GetRawAxis(OPERATOR_ELEVATOR_AXIS);
 	verticalStick = pow(verticalStick, 3);
+  logger.send(logger.DEBUGGING, "The elevator is being used @ %f\n", verticalStick);
 
   Robot::elevatorSub.setElevatorMotor(verticalStick);
 }
