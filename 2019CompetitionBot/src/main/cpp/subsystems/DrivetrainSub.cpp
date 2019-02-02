@@ -29,6 +29,9 @@ DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub"){
   ahrs.reset(new AHRS(frc::SPI::kMXP));
   ahrs->SetName("Drivetrain", "AHRS");
 
+  driveBalancer.reset(new frc4917::MotorBalancer());
+  driveBalancePID.reset(new frc::PIDController(DRIVE_BALANCE_P, DRIVE_BALANCE_I, DRIVE_BALANCE_D, ahrs.get(), driveBalancer.get()));
+
   shifters.reset(new frc::Solenoid(CLIMB_GEAR_PCM_ID));
 	shifters->SetName("Drivetrain", "Shifter");
 	setHighGear();
