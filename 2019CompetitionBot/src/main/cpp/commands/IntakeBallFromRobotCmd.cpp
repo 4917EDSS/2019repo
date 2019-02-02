@@ -17,7 +17,7 @@ IntakeBallFromRobotCmd::IntakeBallFromRobotCmd() {
 
 // Called just before this Command runs the first time
 void IntakeBallFromRobotCmd::Initialize() {
-  Robot::manipulatorSub.IntakeBall(0.5);
+  Robot::manipulatorSub.setWheels(0.5);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -30,7 +30,7 @@ bool IntakeBallFromRobotCmd::IsFinished() {
 
 // Called once after isFinished returns true
 void IntakeBallFromRobotCmd::End() {
-    Robot::manipulatorSub.IntakeBall(0.0);
+    Robot::manipulatorSub.setWheels(0.0);
 }
 
 // Called when another command which requires one or more of the same

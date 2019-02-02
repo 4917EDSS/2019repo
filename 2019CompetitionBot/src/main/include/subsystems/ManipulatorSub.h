@@ -34,7 +34,7 @@ class ManipulatorSub : public frc::Subsystem {
   void InitDefaultCommand() override;
   void ExpandHatchGripper();
   void ContractHatchGripper();
-  void IntakeBall(double speed);
+  void setWheels(double speed);
   bool isBallInManipulator();
   void flipManipulator(bool goForward);
   bool isManipulatorFlipped();

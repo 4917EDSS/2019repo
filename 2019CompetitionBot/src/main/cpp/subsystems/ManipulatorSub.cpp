@@ -31,7 +31,7 @@ void ManipulatorSub::ExpandHatchGripper(){
     hatchGripperSolenoid->Set(false);
 }
 
-void ManipulatorSub::IntakeBall(double speed) {
+void ManipulatorSub::setWheels(double speed) {
   manipulatorIntakeMotorLeft->Set(speed);
   manipulatorIntakeMotorRight->Set(speed);
 }
