@@ -30,10 +30,9 @@ void ManipulatorSub::ExpandHatchGripper(){
   void ManipulatorSub::ContractHatchGripper(){
     hatchGripperSolenoid->Set(false);
 }
-
-void ManipulatorSub::IntakeBall(double speed) {
-  manipulatorIntakeMotorLeft->Set(speed);
-  manipulatorIntakeMotorRight->Set(speed);
+void ManipulatorSub::setWheels(double lspeed, double rspeed) {
+  manipulatorIntakeMotorLeft->Set(lspeed);
+  manipulatorIntakeMotorRight->Set(rspeed);
 }
 
 bool ManipulatorSub::isBallInManipulator() {
