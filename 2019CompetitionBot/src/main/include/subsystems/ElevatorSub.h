@@ -26,6 +26,7 @@ class ElevatorSub : public frc::Subsystem {
 
  public:
   ElevatorSub();
+  // This is where we will set the default values for the go to height ability
   // Don't know why there are two functions, this one is not needed I (Jimmy) think???
   //void SetElevatorMotor(double speed);
   void InitDefaultCommand() override;
