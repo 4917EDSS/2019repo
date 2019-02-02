@@ -34,8 +34,8 @@ constexpr int OPERATOR_CONTROLLER_PORT = 1;
 
 //Driver
 <<<<<<< HEAD
-constexpr int DRIVER_KILL_BUTTON_ONE = 11;
-constexpr int DRIVER_KILL_BUTTON_TWO = 12;
+constexpr int DRIVER_KILL_ONE_BTN = 11;
+constexpr int DRIVER_KILL_TWO_BTN = 12;
 =======
 >>>>>>> 849cea67838150f75b43a22ba3a58243975a9c37
 
@@ -43,8 +43,8 @@ constexpr int DRIVER_KILL_BUTTON_TWO = 12;
 constexpr int HATCH_CONTRACT_BTN = 3;
 constexpr int SET_INTAKE_MOTOR_BTN = 2;
 <<<<<<< HEAD
-constexpr int OPERATOR_KILL_BUTTON_ONE = 11;
-constexpr int OPERATOR_KILL_BUTTON_TWO = 12;
+constexpr int OPERATOR_KILL_ONE_BTN = 11;
+constexpr int OPERATOR_KILL_TWO_BTN = 12;
 =======
 
 constexpr int OPERATOR_ELEVATOR_AXIS = 3;

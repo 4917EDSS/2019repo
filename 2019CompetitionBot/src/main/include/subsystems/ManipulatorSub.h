@@ -10,10 +10,21 @@
 #include <frc/commands/Subsystem.h>
 #include "frc/WPIlib.h"
 #include "RobotMap.h"
+#include <ctre/Phoenix.h>
+#include <rev/CANSparkMax.h>
+#include <rev/CANSparkMaxLowLevel.h>
 
 class ManipulatorSub : public frc::Subsystem {
  private:
   std::shared_ptr<frc::Solenoid> hatchGripperSolenoid;
+  std::shared_ptr<WPI_VictorSPX> manipulatorIntakeMotor;
+  std::shared_ptr<frc::DigitalInput> intakeFromRobotLimit;
+  std::shared_ptr<rev::CANSparkMax> manipulatorFlipperMotor;
+  std::shared_ptr<frc::DigitalInput> manipulatorFlipperLimit;
+  
+  int targetDegrees;
+  int currentState;
+  int currentDegrees;
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
 
@@ -22,4 +33,9 @@ class ManipulatorSub : public frc::Subsystem {
   void InitDefaultCommand() override;
   void ExpandHatchGripper();
   void ContractHatchGripper();
+  void IntakeBall(double speed);
+  bool isBallInManipulator();
+  void flipManipulator(bool goForward);
+  bool isManipulatorFlipped();
+  void executeStateMachine();
 };

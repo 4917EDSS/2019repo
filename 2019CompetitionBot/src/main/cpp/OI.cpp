@@ -17,6 +17,7 @@
 #include "commands/FlipFlipperCmd.h"
 #include "commands/MilkyScoreGrp.h"
 #include "commands/MilkyManipulatorCmd.h"
+#include "commands/IntakeBallFromRobotCmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -38,23 +39,26 @@ OI::OI() {
   IntakeUntilLimitBtn.reset(new frc::JoystickButton(operatorController.get(), SET_INTAKE_MOTOR_BTN));
   IntakeUntilLimitBtn->WhenPressed(new IntakeBallUntilLimitCmd());
 
-  OperatorKillBtn1.reset(new frc::JoystickButton(operatorController.get(), OPERATOR_KILL_BUTTON_ONE));
+  OperatorKillBtn1.reset(new frc::JoystickButton(operatorController.get(), OPERATOR_KILL_ONE_BTN));
   OperatorKillBtn1->WhenPressed(new KillEverythingCmd());
 
-  OperatorKillBtn2.reset(new frc::JoystickButton(operatorController.get(), OPERATOR_KILL_BUTTON_TWO));
+  OperatorKillBtn2.reset(new frc::JoystickButton(operatorController.get(), OPERATOR_KILL_TWO_BTN));
   OperatorKillBtn2->WhenPressed(new KillEverythingCmd());
 
-  DriverKillBtn1.reset(new frc::JoystickButton(driverController.get(), DRIVER_KILL_BUTTON_ONE));
+  DriverKillBtn1.reset(new frc::JoystickButton(driverController.get(), DRIVER_KILL_ONE_BTN));
   DriverKillBtn1->WhenPressed(new KillEverythingCmd());
 
-  DriverKillBtn2.reset(new frc::JoystickButton(driverController.get(), DRIVER_KILL_BUTTON_TWO));
+  DriverKillBtn2.reset(new frc::JoystickButton(driverController.get(), DRIVER_KILL_TWO_BTN));
   DriverKillBtn2->WhenPressed(new KillEverythingCmd());
 
   ballFlipperToggleBtn.reset(new frc::JoystickButton(operatorController.get(), FLIP_BALL_INTAKE_TOGGLE_BTN));
   ballFlipperToggleBtn->WhenPressed(new FlipFlipperCmd(FlipFlipperCmd::FlipperDirection::toggle));
   
-  milkyManipulatorBtn.reset(new frc::JoystickButton(driverController.get(),MILKY_MANIPULATOR_BUTTON));
+  milkyManipulatorBtn.reset(new frc::JoystickButton(driverController.get(),MILKY_MANIPULATOR_BTN));
   milkyManipulatorBtn->WhileHeld( new MilkyScoreGrp());
+
+  manipulatorIntakeBtn.reset(new frc::JoystickButton(operatorController.get(), MANIPULATOR_BALL_INTAKE_BTN));
+  manipulatorIntakeBtn->WhenPressed(new IntakeBallFromRobotCmd());
 }
 
 std::shared_ptr<frc::Joystick> OI::getDriverController() {
