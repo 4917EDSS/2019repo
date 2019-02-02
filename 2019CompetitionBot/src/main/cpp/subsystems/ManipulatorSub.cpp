@@ -7,21 +7,24 @@
 
 #include "subsystems/ManipulatorSub.h"
 
-ManipulatorSub::ManipulatorSub() : Subsystem("ManipulatorSub") {}
 
-void ManipulatorSub::InitDefaultCommand() {
-  // Set the default command for a subsystem here.
-  // SetDefaultCommand(new MySpecialCommand());
-  hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
-}
 
-void ManipulatorSub::ExpandHatchGripper(){
-  hatchGripperSolenoid->Set(true);
-}
+  ManipulatorSub::ManipulatorSub() : Subsystem("ManipulatorSub") {}
 
-void ManipulatorSub::ContractHatchGripper(){
-  hatchGripperSolenoid->Set(false);
-}
+  void ManipulatorSub::InitDefaultCommand() {
+    // Set the default command for a subsystem here.
+    // SetDefaultCommand(new MySpecialCommand());
+    hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
+  }
+
+  void ManipulatorSub::ExpandHatchGripper(){
+    hatchGripperSolenoid->Set(true);
+  }
+
+  void ManipulatorSub::ContractHatchGripper(){
+    hatchGripperSolenoid->Set(false);
+  }
+
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

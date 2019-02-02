@@ -30,12 +30,51 @@ void DriveWithJoystickCmd::Execute() {
     leftStick = pow(leftStick, 3);
     double fastSide = std::max(fabs(leftStick), fabs(rightStick));
     double slowSide = -leftStick + fabs(rightStick) * leftStick;
+	double maxPower = 1;
 
 	if (leftStick < 0.01 && leftStick > -0.01) {
 
 		Robot::drivetrainSub.drive(rightStick, -rightStick);
+		if (wasDrivingStraight > 0) {
+			Robot::drivetrainSub.disableBalancerPID();
+			wasDrivingStraight = 0;
+		}
+		if (rightStick >= 0){
+			rightStick = std:: min(rightStick, maxPower);
+		}
+		else{
+			rightStick = std::max(rightStick, -maxPower);
+		}
+		Robot::drivetrainSub.drive(rightStick, -rightStick);
+	} else if (rightStick < 0.01 && rightStick > -0.01) {
+		if (wasDrivingStraight == 0) {
+			timeSinceDrivingStraight = RobotController::GetFPGATime();
+			wasDrivingStraight = 1;
+		}
+		if (((RobotController::GetFPGATime() - timeSinceDrivingStraight) >= AHRS_DELAY_TIME) && wasDrivingStraight == 1) {
+			//Robot::drivetrainSub.resetAHRS();
+			Robot::drivetrainSub.enableBalancerPID(0);
+			wasDrivingStraight = 2;
+		}
 
+		if (leftStick >= 0){
+			leftStick = std:: min(leftStick, maxPower);
+		}
+		else{
+			leftStick = std::max(leftStick, -maxPower);
+		}
+		Robot::drivetrainSub.driverDriveStraight(-(leftStick));
 	} else {
+		if (wasDrivingStraight > 0) {
+			Robot::drivetrainSub.disableBalancerPID();
+			wasDrivingStraight = 0;
+		}
+		if (leftStick >= 0){
+			leftStick = std:: min(leftStick, maxPower);
+		}
+		else{
+			leftStick = std::max(leftStick, -maxPower);
+		}
 
 		if (leftStick < 0) { //if leftStick < 0, leftStick is pushed up
 			if (rightStick < 0) { // 

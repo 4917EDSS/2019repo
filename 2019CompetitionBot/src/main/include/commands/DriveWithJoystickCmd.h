@@ -9,6 +9,7 @@
 
 #include <frc/commands/Command.h>
 
+constexpr uint64_t AHRS_DELAY_TIME = 350000;
 class DriveWithJoystickCmd : public frc::Command {
  public:
   DriveWithJoystickCmd();
@@ -17,4 +18,8 @@ class DriveWithJoystickCmd : public frc::Command {
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+ private:
+    int wasDrivingStraight;
+	  uint64_t timeSinceDrivingStraight;
+
 };
