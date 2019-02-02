@@ -30,6 +30,7 @@
 
 void ManipulatorSub::IntakeBall(double speed) {
   manipulatorIntakeMotor->Set(speed);
+    manipulaterIntakeMotor2->set(speed);
 }
 
 bool ManipulatorSub::isBallInManipulator() {
