@@ -90,5 +90,15 @@ double DrivetrainSub::getRate()
   return ahrs->GetRate();
 }
 
+void DrivetrainSub::setHighGear() {
+
+}
+
+void DrivetrainSub::setLowGear() {
+
+}
+
+
+
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

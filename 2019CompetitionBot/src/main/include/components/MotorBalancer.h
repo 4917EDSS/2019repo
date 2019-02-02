@@ -8,7 +8,7 @@
 #ifndef SRC_COMPONENTS_MOTORBALANCER_H_
 #define SRC_COMPONENTS_MOTORBALANCER_H_
 
-#include <PIDOutput.h>
+#include <frc/PIDOutput.h>
 namespace frc4917{
 	class MotorBalancer : public frc::PIDOutput {
 	private:
