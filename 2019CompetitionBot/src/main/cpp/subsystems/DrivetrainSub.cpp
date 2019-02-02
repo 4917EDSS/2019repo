@@ -28,6 +28,10 @@ DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub"){
 
   ahrs.reset(new AHRS(frc::SPI::kMXP));
   ahrs->SetName("Drivetrain", "AHRS");
+
+  shifters.reset(new frc::Solenoid(CLIMB_GEAR_PCM_ID));
+	shifters->SetName("Drivetrain", "Shifter");
+	setHighGear();
 }
 
 double DrivetrainSub::GetRightEncoder()
@@ -91,11 +95,15 @@ double DrivetrainSub::getRate()
 }
 
 void DrivetrainSub::setHighGear() {
-
+	shifters->Set(true);
 }
 
 void DrivetrainSub::setLowGear() {
+	shifters->Set(false);
+}
 
+bool DrivetrainSub::getGear(){
+  return shifters->Get();
 }
 
 

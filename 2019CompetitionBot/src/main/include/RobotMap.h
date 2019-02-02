@@ -9,6 +9,7 @@
 
 // Pneumatic Control Module Outputs
 constexpr int HATCH_GRIPPER_PCM_ID = 0;
+constexpr int CLIMB_GEAR_PCM_ID = 1; // Change
 
 // CanIDs
 constexpr int RIGHT_DRIVE_MOTOR_1_CAN_ID = 1;

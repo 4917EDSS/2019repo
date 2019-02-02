@@ -8,6 +8,7 @@
 #include "commands/ClimbCmdGroup.h"
 #include "commands/FlipFlipperCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
+#include "commands/ChangeGearCmd.h"
 
 ClimbCmdGroup::ClimbCmdGroup() {
   // Add Commands here:
@@ -29,5 +30,6 @@ ClimbCmdGroup::ClimbCmdGroup() {
   AddParallel(new SetElevatorToHeightCmd(UP_CLIMB_POSITION));
   AddSequential(new FlipFlipperCmd(FlipFlipperCmd::out));
   //
+  AddSequential(new ChangeGearCmd());
   
 }
