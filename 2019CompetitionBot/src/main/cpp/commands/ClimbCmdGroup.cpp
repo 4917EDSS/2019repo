@@ -8,6 +8,10 @@
 #include "commands/ClimbCmdGroup.h"
 #include "commands/FlipFlipperCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
+#include "commands/ChangeGearCmd.h"
+#include "commands/DriveStraightCmd.h"
+
+constexpr double RAMP_DRIVE_DISTANCE = 3.5;
 
 ClimbCmdGroup::ClimbCmdGroup() {
   // Add Commands here:
@@ -27,7 +31,10 @@ ClimbCmdGroup::ClimbCmdGroup() {
   // a CommandGroup containing them would require both the chassis and the
   // arm.
   AddParallel(new SetElevatorToHeightCmd(UP_CLIMB_POSITION));
+  //lock foot
   AddSequential(new FlipFlipperCmd(FlipFlipperCmd::out));
   //
-  
+  AddSequential(new ChangeGearCmd());
+  AddSequential(new DriveStraightCmd(RAMP_DRIVE_DISTANCE));
+
 }

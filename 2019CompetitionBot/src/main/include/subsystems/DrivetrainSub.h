@@ -27,9 +27,11 @@ class DrivetrainSub : public frc::Subsystem {
   std::shared_ptr<frc::PIDController> driveBalancePID;
   std::shared_ptr<frc4917::MotorBalancer> driveBalancer;
   std::shared_ptr<frc4917::MotorBalancer> distanceBalancer;
+  std::shared_ptr<frc::Solenoid> shifters;
 
  public:
   DrivetrainSub();
+  bool getGear();
   double GetLeftEncoder();
   double GetRightEncoder();
   void resetAHRS();
@@ -40,5 +42,6 @@ class DrivetrainSub : public frc::Subsystem {
   void driverDriveStraight(float speed);
   void enableBalancerPID(float setPoint);
   void disableBalancerPID();
-
+	void setHighGear();
+	void setLowGear();
 };
