@@ -13,6 +13,7 @@
 #include <rev/CANSparkMaxLowLevel.h>
 #include <ctre/Phoenix.h>
 #include "AHRS.h"
+#include "components/MotorBalancer.h"
 
 class DrivetrainSub : public frc::Subsystem {
  private:
@@ -23,6 +24,9 @@ class DrivetrainSub : public frc::Subsystem {
   std::shared_ptr <rev::CANSparkMax> rightMotor2;
   std::shared_ptr <rev::CANSparkMax> rightMotor3;
   std::shared_ptr<AHRS> ahrs;
+  std::shared_ptr<frc::PIDController> driveBalancePID;
+  std::shared_ptr<frc4917::MotorBalancer> driveBalancer;
+  std::shared_ptr<frc4917::MotorBalancer> distanceBalancer;
 
  public:
   DrivetrainSub();
@@ -33,5 +37,8 @@ class DrivetrainSub : public frc::Subsystem {
   double getRate();
   void InitDefaultCommand() override;
   void drive(double lSpeed, double rSpeed);
+  void driverDriveStraight(float speed);
+  void enableBalancerPID(float setPoint);
+  void disableBalancerPID();
 
 };

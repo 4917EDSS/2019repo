@@ -7,23 +7,25 @@
 
 #include "subsystems/ManipulatorSub.h"
 
-ManipulatorSub::ManipulatorSub() : Subsystem("ManipulatorSub") {}
 
-void ManipulatorSub::InitDefaultCommand() {
-  // Set the default command for a subsystem here.
-  // SetDefaultCommand(new MySpecialCommand());
-  hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
+
+  ManipulatorSub::ManipulatorSub() : Subsystem("ManipulatorSub") {}
+
+  void ManipulatorSub::InitDefaultCommand() {
+    // Set the default command for a subsystem here.
+    // SetDefaultCommand(new MySpecialCommand());
+    hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
   targetDegrees = 90;
   currentState = 0;
   currentDegrees = 90;
-}
+  }
 
-void ManipulatorSub::ExpandHatchGripper(){
-  hatchGripperSolenoid->Set(true);
-}
+  void ManipulatorSub::ExpandHatchGripper(){
+    hatchGripperSolenoid->Set(true);
+  }
 
-void ManipulatorSub::ContractHatchGripper(){
-  hatchGripperSolenoid->Set(false);
+  void ManipulatorSub::ContractHatchGripper(){
+    hatchGripperSolenoid->Set(false);
 }
 
 void ManipulatorSub::IntakeBall(double speed) {
@@ -60,7 +62,8 @@ void ManipulatorSub::executeStateMachine() {
       }
       break;
   }
-}
+  }
+
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

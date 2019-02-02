@@ -26,7 +26,8 @@ class ElevatorSub : public frc::Subsystem {
 
  public:
   ElevatorSub();
-  void SetElevatorMotor(double speed);
+  // Don't know why there are two functions, this one is not needed I (Jimmy) think???
+  //void SetElevatorMotor(double speed);
   void InitDefaultCommand() override;
   void update();
   double getElevatorEncoder();

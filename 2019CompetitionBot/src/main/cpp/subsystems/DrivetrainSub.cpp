@@ -10,8 +10,12 @@
 #include <RobotMap.h>
 #include <iostream>
 
-DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub")
-{
+constexpr float DRIVE_BALANCE_TOLERANCE = 0.5;
+constexpr float DRIVE_BALANCE_P = 0;
+constexpr float DRIVE_BALANCE_I = 0;
+constexpr float DRIVE_BALANCE_D = 0;
+
+DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub"){
 
   // Todo - use proper CAN ID defines
   rightMotor1.reset(new rev::CANSparkMax(RIGHT_DRIVE_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
@@ -52,6 +56,23 @@ void DrivetrainSub::drive(double lSpeed, double rSpeed)
   rightMotor1->Set(-rSpeed);
   rightMotor2->Set(-rSpeed);
   rightMotor3->Set(-rSpeed);
+}
+
+void DrivetrainSub::enableBalancerPID(float setPoint){
+  Preferences *prefs = Preferences::GetInstance();
+	driveBalancePID->SetPID(prefs->GetFloat("DriveBalanceP", DRIVE_BALANCE_P), prefs->GetFloat("DriveBalanceI", DRIVE_BALANCE_I), prefs->GetFloat("DriveBalanceD", DRIVE_BALANCE_D));
+	driveBalancePID->SetAbsoluteTolerance(prefs->GetFloat("DriveBalanceTolerance", DRIVE_BALANCE_TOLERANCE));
+	driveBalancePID->SetSetpoint(setPoint);
+	driveBalancer->Reset();
+	driveBalancePID->Enable();
+}
+
+void DrivetrainSub::disableBalancerPID(){
+	distanceBalancer->Reset();
+	driveBalancePID->Disable();
+}
+void DrivetrainSub::driverDriveStraight(float speed) {
+	drive(speed + driveBalancer->GetDifference(), speed - driveBalancer->GetDifference());
 }
 
 void DrivetrainSub::resetAHRS()
