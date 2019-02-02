@@ -18,7 +18,7 @@ class ManipulatorSub : public frc::Subsystem {
  private:
   std::shared_ptr<frc::Solenoid> hatchGripperSolenoid;
   std::shared_ptr<WPI_VictorSPX> manipulatorIntakeMotor;
-std::shared_ptr<WPI_VictorSPX>manipulaterIntakeMotor2;
+  std::shared_ptr<WPI_VictorSPX> manipulaterIntakeMotor2;
   std::shared_ptr<frc::DigitalInput> intakeFromRobotLimit;
   std::shared_ptr<rev::CANSparkMax> manipulatorFlipperMotor;
   std::shared_ptr<frc::DigitalInput> manipulatorFlipperLimit;

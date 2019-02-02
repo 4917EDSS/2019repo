@@ -9,20 +9,21 @@
 
 
 
-  ManipulatorSub::ManipulatorSub() : Subsystem("ManipulatorSub") {}
-
-  void ManipulatorSub::InitDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // SetDefaultCommand(new MySpecialCommand());
-    hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
+ManipulatorSub::ManipulatorSub() : Subsystem("ManipulatorSub") {
+  hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
   targetDegrees = 90;
   currentState = 0;
   currentDegrees = 90;
-  }
+}
 
-  void ManipulatorSub::ExpandHatchGripper(){
-    hatchGripperSolenoid->Set(true);
-  }
+void ManipulatorSub::InitDefaultCommand() {
+  // Set the default command for a subsystem here.
+  // SetDefaultCommand(new MySpecialCommand());
+}
+
+void ManipulatorSub::ExpandHatchGripper(){
+  hatchGripperSolenoid->Set(true);
+}
 
   void ManipulatorSub::ContractHatchGripper(){
     hatchGripperSolenoid->Set(false);
@@ -30,7 +31,7 @@
 
 void ManipulatorSub::IntakeBall(double speed) {
   manipulatorIntakeMotor->Set(speed);
-    manipulaterIntakeMotor2->set(speed);
+  manipulaterIntakeMotor2->Set(speed);
 }
 
 bool ManipulatorSub::isBallInManipulator() {
