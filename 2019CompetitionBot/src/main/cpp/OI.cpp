@@ -18,6 +18,7 @@
 #include "commands/MilkyScoreGrp.h"
 #include "commands/MilkyManipulatorCmd.h"
 #include "commands/IntakeBallFromRobotCmd.h"
+#include "commands/ClimbCmdGroup.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -59,6 +60,9 @@ OI::OI() {
 
   manipulatorIntakeBtn.reset(new frc::JoystickButton(operatorController.get(), MANIPULATOR_BALL_INTAKE_BTN));
   manipulatorIntakeBtn->WhenPressed(new IntakeBallFromRobotCmd());
+
+  climbModeBtn.reset(new frc::JoystickButton(operatorController.get(), CLIMB_MODE_BTN));
+  climbModeBtn->WhenPressed(new ClimbCmdGroup());
 }
 
 std::shared_ptr<frc::Joystick> OI::getDriverController() {
