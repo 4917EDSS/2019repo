@@ -23,7 +23,7 @@ void IntakeWhileHeldCmd::Execute() {
 }
 
 
-// Make this return true when this Command no longer needs to run execute()constexpr int ELEVATOR_MOTOR_CAN_ID = 8;
+// Make this return true when this Command no longer needs to run execute()constexpr int ELEVATOR_MOTOR_1_CAN_ID = 8;
 bool IntakeWhileHeldCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true

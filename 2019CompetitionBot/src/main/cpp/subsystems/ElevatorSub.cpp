@@ -19,7 +19,7 @@ constexpr float ELEVATOR_I = 0;
 constexpr float ELEVATOR_D = 0;
 
 ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
-  elevatorMotor.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  elevatorMotor.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
 	logger.send(logger.ELEVATOR, "Elevator code started \n", 0.0);
 }
 

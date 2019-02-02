@@ -16,9 +16,9 @@ void BallIntakeSub::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
 
-  BallIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_MOTOR_CAN_ID));
+  BallIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_WHEELS_MOTOR_CAN_ID));
   intakeLimit.reset(new frc::DigitalInput(INTAKE_LIMIT_DIO));
-  flipperMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(FLIPPER_MOTOR_CAN_ID));
+  flipperMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(MANIPULATOR_FLIPPER_MOTOR_CAN_ID));
 }
 
 // Put methods for controlling this subsystem
