@@ -18,10 +18,14 @@ class BallIntakeSub : public frc::Subsystem {
   std::shared_ptr<ctre::phoenix::motorcontrol::can::VictorSPX> BallIntakeMotor;
   std::shared_ptr<ctre::phoenix::motorcontrol::can::VictorSPX> flipperMotor;
   std::shared_ptr<frc::DigitalInput> intakeLimit;
+  std::shared_ptr<frc::Solenoid>leftRearBallIntakeSolenoid;
+    std::shared_ptr<frc::Solenoid>rightRearBallIntakeSolenoid;
+
 
  public:
   BallIntakeSub();
   void InitDefaultCommand() override;
+  void ExtendRearIntakeSolenoids();
   void SetIntakeMotor(double speed);
   void setFlipperPosition(bool flipOut);
   bool isBallIn();

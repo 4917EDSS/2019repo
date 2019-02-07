@@ -10,7 +10,13 @@
 #include "components/Log.h"
 //Canid4 and Set Intake
 
-BallIntakeSub::BallIntakeSub() : Subsystem("ExampleSubsystem") {}
+BallIntakeSub::BallIntakeSub() : Subsystem("ExampleSubsystem") {
+    leftRearBallIntakeSolenoid.reset(new frc::Solenoid(REAR_BALL_INTAKE_1_PCM_ID));
+    leftRearBallIntakeSolenoid->Set(true);
+    rightRearBallIntakeSolenoid.reset(new frc::Solenoid(REAR_BALL_INTAKE_2_PCM_ID));
+    rightRearBallIntakeSolenoid->Set(true);
+
+}
 
 void BallIntakeSub::InitDefaultCommand() {
   // Set the default command for a subsystem here.
@@ -24,6 +30,11 @@ void BallIntakeSub::InitDefaultCommand() {
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
 
+void BallIntakeSub::ExtendRearIntakeSolenoids(){
+  leftRearBallIntakeSolenoid->Set(false);
+  rightRearBallIntakeSolenoid->Set(false);
+
+}
 
 void BallIntakeSub::SetIntakeMotor(double speed){
   BallIntakeMotor->Set(ControlMode::PercentOutput, speed);

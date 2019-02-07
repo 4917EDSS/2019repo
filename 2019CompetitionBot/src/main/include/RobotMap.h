@@ -23,6 +23,8 @@ constexpr int LEFT_DRIVE_MOTOR_3_CAN_ID = 7;
 constexpr int BALL_INTAKE_WHEELS_MOTOR_CAN_ID = 4;
 constexpr int BALL_INTAKE_FLIP_MOTOR_1_CAN_ID = 8;
 constexpr int BALL_INTAKE_FLIP_MOTOR_2_CAN_ID = 9;
+constexpr int REAR_BALL_INTAKE_1_PCM_ID = 15;
+constexpr int REAR_BALL_INTAKE_2_PCM_ID = 16;
 
 constexpr int ELEVATOR_MOTOR_1_CAN_ID = 10;
 constexpr int ELEVATOR_MOTOR_2_CAN_ID = 11;
