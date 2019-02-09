@@ -52,7 +52,7 @@ void DriveWithJoystickCmd::Execute() {
 			wasDrivingStraight = 1;
 		}
 		if (((RobotController::GetFPGATime() - timeSinceDrivingStraight) >= AHRS_DELAY_TIME) && wasDrivingStraight == 1) {
-			Robot::drivetrainSub.enableBalancerPID(Robot::drivetrainSub.getAngle()); //getAngle() should 
+			Robot::drivetrainSub.enableBalancerPID(Robot::drivetrainSub.getAngle()); //getAngle() should display above 360
 			wasDrivingStraight = 2;
 		}
 
