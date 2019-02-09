@@ -7,20 +7,9 @@
 
 #pragma once
 
-#include <frc/commands/Command.h>
+#include <frc/commands/CommandGroup.h>
 
-class FlipFlipperCmd : public frc::Command {
+class intakeBallGrp : public frc::CommandGroup {
  public:
-  enum FlipperDirection {out, in, toggle};
-
-  FlipFlipperCmd(enum FlipperDirection flipperDirection);
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
-
-private:
-  enum FlipperDirection currentFlipperDirection;
-  bool flipperPositionOut;
+  intakeBallGrp();
 };
