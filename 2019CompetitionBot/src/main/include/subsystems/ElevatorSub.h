@@ -27,10 +27,8 @@ class ElevatorSub : public frc::Subsystem {
   std::shared_ptr<rev::CANSparkMax> manipulatorFlipperMotor;
   std::shared_ptr<frc::DigitalInput> manipulatorFlipperLimit;
   
-  int targetDegrees;
-  int currentState;
-  int currentDegrees;
-  double target;
+  double targetDegrees;
+  double targetHeight;
 
 
 
@@ -49,10 +47,12 @@ class ElevatorSub : public frc::Subsystem {
   void setElevatorMotorRaw(double speed);
   
   void ExpandHatchGripper();
+  double getManipulatorEncoder();
   void ContractHatchGripper();
   void setWheels(double lspeed, double rspeed);
   bool isBallInManipulator();
   void flipManipulator(bool goForward);
   bool isManipulatorFlipped();
   void executeStateMachine();
+  void zeroEverything();
 };

@@ -14,9 +14,11 @@
 #include "commands/IntakeBallUntilLimitCmd.h"
 #include "commands/KillEverythingCmd.h"
 #include "commands/FlipManipulatorCmd.h"
+#include "commands/TestButtonCmd.h"
 #include "commands/MilkyScoreGrp.h"
 #include "commands/MilkyManipulatorCmd.h"
 #include "commands/ClimbCmdGroup.h"
+
 
 OI::OI() {
   // Process operator interface input here.
@@ -58,6 +60,9 @@ OI::OI() {
 
   climbModeBtn.reset(new frc::JoystickButton(operatorController.get(), CLIMB_MODE_BTN));
   climbModeBtn->WhenPressed(new ClimbCmdGroup());
+
+  TestBtn.reset(new frc::JoystickButton(operatorController.get(), TEST_BTN));
+  TestBtn->WhileHeld(new TestButtonCmd());
 }
 
 std::shared_ptr<frc::Joystick> OI::getDriverController() {
