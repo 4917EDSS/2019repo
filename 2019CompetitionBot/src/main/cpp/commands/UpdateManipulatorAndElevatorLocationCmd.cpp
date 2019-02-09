@@ -5,36 +5,36 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ElevatorAndManipulatorToTargetCmd.h"
+#include "commands/UpdateManipulatorAndElevatorLocationCmd.h"
 #include "Robot.h"
 
-ElevatorAndManipulatorToTargetCmd::ElevatorAndManipulatorToTargetCmd(double targetHeight, double targetAngle) {
+UpdateManipulatorAndElevatorLocationCmd::UpdateManipulatorAndElevatorLocationCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::elevatorSub);
 }
 
 // Called just before this Command runs the first time
-void ElevatorAndManipulatorToTargetCmd::Initialize() {
+void UpdateManipulatorAndElevatorLocationCmd::Initialize() {
 
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ElevatorAndManipulatorToTargetCmd::Execute() {
+void UpdateManipulatorAndElevatorLocationCmd::Execute() {
   Robot::elevatorSub.executeStateMachine();
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool ElevatorAndManipulatorToTargetCmd::IsFinished() { 
+bool UpdateManipulatorAndElevatorLocationCmd::IsFinished() { 
   return false; }
 
 // Called once after isFinished returns true
-void ElevatorAndManipulatorToTargetCmd::End() {
+void UpdateManipulatorAndElevatorLocationCmd::End() {
   Robot::elevatorSub.zeroEverything();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ElevatorAndManipulatorToTargetCmd::Interrupted() {
-  ElevatorAndManipulatorToTargetCmd::End();
+void UpdateManipulatorAndElevatorLocationCmd::Interrupted() {
+  UpdateManipulatorAndElevatorLocationCmd::End();
 }

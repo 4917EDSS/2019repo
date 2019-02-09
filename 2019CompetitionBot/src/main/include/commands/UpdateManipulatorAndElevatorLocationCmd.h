@@ -9,9 +9,9 @@
 
 #include <frc/commands/Command.h>
 
-class ElevatorAndManipulatorToTargetCmd : public frc::Command {
+class UpdateManipulatorAndElevatorLocationCmd : public frc::Command {
  public:
-  ElevatorAndManipulatorToTargetCmd(double targetHeight, double targetAngle);
+  UpdateManipulatorAndElevatorLocationCmd();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
