@@ -21,6 +21,10 @@ constexpr float ELEVATOR_D = 0;
 ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
   elevatorMotor.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
 	logger.send(logger.ELEVATOR, "Elevator code started \n", 0.0);
+
+  hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
+  manipulatorIntakeMotorLeft.reset(new WPI_VictorSPX(MANIPULATOR_LEFT_INTAKE_MOTOR_CAN_ID));
+  manipulatorIntakeMotorRight.reset(new WPI_VictorSPX(MANIPULATOR_RIGHT_INTAKE_MOTOR_CAN_ID));
 }
 
 void ElevatorSub::InitDefaultCommand() {
@@ -30,17 +34,69 @@ void ElevatorSub::InitDefaultCommand() {
 }
 
 void ElevatorSub::update(){
-  setElevatorMotor((target - elevatorMotor->GetEncoder().GetPosition())* 0.1);
+  setElevatorMotor((targetHeight - elevatorMotor->GetEncoder().GetPosition())* 0.1);
+}
+
+void ElevatorSub::ExpandHatchGripper(){
+  hatchGripperSolenoid->Set(true);
+}
+
+void ElevatorSub::ContractHatchGripper(){
+    hatchGripperSolenoid->Set(false);
+}
+
+void ElevatorSub::zeroEverything(){
+  elevatorMotor->Set(0.0);
+  manipulatorIntakeMotorLeft->Set(0.0);
+  manipulatorIntakeMotorRight->Set(0.0);
+  manipulatorFlipperMotor->Set(0.0);
+}
+
+void ElevatorSub::setWheels(double lspeed, double rspeed) {
+  manipulatorIntakeMotorLeft->Set(lspeed);
+  manipulatorIntakeMotorRight->Set(rspeed);
+}
+
+bool ElevatorSub::isBallInManipulator() {
+  intakeFromRobotLimit.get();
+}
+
+ double ElevatorSub::getManipulatorEncoder() {
+  return manipulatorFlipperMotor->GetEncoder().GetPosition();
+ }
+
+void ElevatorSub::flipManipulator(bool goForward) {
+  if (goForward) {
+    targetDegrees = 180;
+  } else {
+    targetDegrees = 0;
+  }
+}
+
+bool ElevatorSub::isManipulatorFlipped() {
+  manipulatorFlipperLimit.get();
+}
+
+void ElevatorSub::executeStateMachine() {
+  double currentDegrees = getManipulatorEncoder();
+
+  if (fabs(targetDegrees - currentDegrees) <= 2.5) {
+    //Do nothing
+  } else if (targetDegrees < currentDegrees) {
+    manipulatorFlipperMotor->Set(-0.5);
+  } else {
+    manipulatorFlipperMotor->Set(0.5);
+  }
 }
 
 void ElevatorSub::setTarget(double newTarget){
-  target = newTarget;
+  targetHeight = newTarget;
 }
 
-bool ElevatorSub::isFinishedMove(){
- if(fabs(target -elevatorMotor->GetEncoder().GetPosition()) < ELEVATOR_POSITION_TOLERANCE && fabs(elevatorMotor->GetEncoder().GetPosition()) < 45) {
+bool ElevatorSub::isFinishedMove() {
+ if (fabs(targetHeight -elevatorMotor->GetEncoder().GetPosition()) < ELEVATOR_POSITION_TOLERANCE && fabs(elevatorMotor->GetEncoder().GetPosition()) < 45) {
   return true;
-    }else{
+    } else {
       return false;
  }
 }

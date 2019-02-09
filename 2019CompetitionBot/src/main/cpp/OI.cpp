@@ -11,14 +11,14 @@
 #include "Robot.h"
 #include "subsystems/BallIntakeSub.h"
 #include "Commands/CloseHatchPickupCmd.h"
-#include "Commands/IntakeWhileHeldCmd.h"
 #include "commands/IntakeBallUntilLimitCmd.h"
 #include "commands/KillEverythingCmd.h"
-#include "commands/FlipFlipperCmd.h"
+#include "commands/FlipManipulatorCmd.h"
+#include "commands/TestButtonCmd.h"
 #include "commands/MilkyScoreGrp.h"
 #include "commands/MilkyManipulatorCmd.h"
-#include "commands/IntakeBallFromRobotCmd.h"
 #include "commands/ClimbCmdGroup.h"
+
 
 OI::OI() {
   // Process operator interface input here.
@@ -53,16 +53,16 @@ OI::OI() {
   DriverKillBtn2->WhenPressed(new KillEverythingCmd());
 
   ballFlipperToggleBtn.reset(new frc::JoystickButton(operatorController.get(), FLIP_BALL_INTAKE_TOGGLE_BTN));
-  ballFlipperToggleBtn->WhenPressed(new FlipFlipperCmd(FlipFlipperCmd::FlipperDirection::toggle));
+  ballFlipperToggleBtn->WhenPressed(new FlipManipulatorCmd(FlipManipulatorCmd::FlipperDirection::toggle));
   
   milkyManipulatorBtn.reset(new frc::JoystickButton(driverController.get(),MILKY_MANIPULATOR_BTN));
   milkyManipulatorBtn->WhileHeld( new MilkyScoreGrp());
 
-  manipulatorIntakeBtn.reset(new frc::JoystickButton(operatorController.get(), MANIPULATOR_BALL_INTAKE_BTN));
-  manipulatorIntakeBtn->WhenPressed(new IntakeBallFromRobotCmd());
-
   climbModeBtn.reset(new frc::JoystickButton(operatorController.get(), CLIMB_MODE_BTN));
   climbModeBtn->WhenPressed(new ClimbCmdGroup());
+
+  TestBtn.reset(new frc::JoystickButton(operatorController.get(), TEST_BTN));
+  TestBtn->WhileHeld(new TestButtonCmd());
 }
 
 std::shared_ptr<frc::Joystick> OI::getDriverController() {

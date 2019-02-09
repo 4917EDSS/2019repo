@@ -16,11 +16,19 @@
 
 class ElevatorSub : public frc::Subsystem {
  private:
-   std::shared_ptr<frc::Encoder> elevatorMotorEnc;
-   std::shared_ptr<rev::CANSparkMax> elevatorMotor;
-   std::shared_ptr<frc::DigitalInput> lowerLimit;
-   std::shared_ptr<frc::DigitalInput> upperLimit;
-   double target;
+  std::shared_ptr<frc::Encoder> elevatorMotorEnc;
+  std::shared_ptr<rev::CANSparkMax> elevatorMotor;
+  std::shared_ptr<frc::DigitalInput> lowerLimit;
+  std::shared_ptr<frc::DigitalInput> upperLimit;
+  std::shared_ptr<frc::Solenoid> hatchGripperSolenoid;
+  std::shared_ptr<WPI_VictorSPX> manipulatorIntakeMotorLeft;
+  std::shared_ptr<WPI_VictorSPX> manipulatorIntakeMotorRight;
+  std::shared_ptr<frc::DigitalInput> intakeFromRobotLimit;
+  std::shared_ptr<rev::CANSparkMax> manipulatorFlipperMotor;
+  std::shared_ptr<frc::DigitalInput> manipulatorFlipperLimit;
+  
+  double targetDegrees;
+  double targetHeight;
 
 
 
@@ -37,4 +45,14 @@ class ElevatorSub : public frc::Subsystem {
   bool isFinishedMove();
   bool isElevatorDown();
   void setElevatorMotorRaw(double speed);
+  
+  void ExpandHatchGripper();
+  double getManipulatorEncoder();
+  void ContractHatchGripper();
+  void setWheels(double lspeed, double rspeed);
+  bool isBallInManipulator();
+  void flipManipulator(bool goForward);
+  bool isManipulatorFlipped();
+  void executeStateMachine();
+  void zeroEverything();
 };

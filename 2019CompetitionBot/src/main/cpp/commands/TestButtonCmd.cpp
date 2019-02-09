@@ -5,34 +5,35 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/IntakeBallFromRobotCmd.h"
-#include "subsystems/BallIntakeSub.h"
+#include "commands/TestButtonCmd.h"
 #include "Robot.h"
 
-IntakeBallFromRobotCmd::IntakeBallFromRobotCmd() {
+TestButtonCmd::TestButtonCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::ballIntakeSub);
+  Requires(&Robot::drivetrainSub);
+  Requires(&Robot::elevatorSub);
 }
 
 // Called just before this Command runs the first time
-void IntakeBallFromRobotCmd::Initialize() {
-  //Robot::ballIntakeSub.setWheels(0.5, 0.5);
+void TestButtonCmd::Initialize() {
+   Robot::ballIntakeSub.SetIntakeMotor(0.05);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void IntakeBallFromRobotCmd::Execute() {}
+void TestButtonCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool IntakeBallFromRobotCmd::IsFinished() { 
-  //return Robot::ballIntakeSub.isBallInManipulator();
-}
+bool TestButtonCmd::IsFinished() { return false; }
 
-// Called once after isFinished returns true
-void IntakeBallFromRobotCmd::End() {
-  //Robot::ballIntakeSub.setWheels(0.0, 0.0);
+
+void TestButtonCmd::End() {
+  Robot::ballIntakeSub.SetIntakeMotor(0.0);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void IntakeBallFromRobotCmd::Interrupted() {}
+void TestButtonCmd::Interrupted() {
+  End();
+}

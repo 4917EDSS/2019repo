@@ -9,18 +9,12 @@
 
 #include <frc/commands/Command.h>
 
-class FlipFlipperCmd : public frc::Command {
+class UpdateManipulatorAndElevatorLocationCmd : public frc::Command {
  public:
-  enum FlipperDirection {out, in, toggle};
-
-  FlipFlipperCmd(enum FlipperDirection flipperDirection);
+  UpdateManipulatorAndElevatorLocationCmd();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
-
-private:
-  enum FlipperDirection currentFlipperDirection;
-  bool flipperPositionOut;
 };

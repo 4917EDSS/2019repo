@@ -5,34 +5,36 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/IntakeBallFromRobotCmd.h"
-#include "subsystems/BallIntakeSub.h"
+#include "commands/UpdateManipulatorAndElevatorLocationCmd.h"
 #include "Robot.h"
 
-IntakeBallFromRobotCmd::IntakeBallFromRobotCmd() {
+UpdateManipulatorAndElevatorLocationCmd::UpdateManipulatorAndElevatorLocationCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::ballIntakeSub);
+  Requires(&Robot::elevatorSub);
 }
 
 // Called just before this Command runs the first time
-void IntakeBallFromRobotCmd::Initialize() {
-  //Robot::ballIntakeSub.setWheels(0.5, 0.5);
+void UpdateManipulatorAndElevatorLocationCmd::Initialize() {
+
 }
 
 // Called repeatedly when this Command is scheduled to run
-void IntakeBallFromRobotCmd::Execute() {}
-
-// Make this return true when this Command no longer needs to run execute()
-bool IntakeBallFromRobotCmd::IsFinished() { 
-  //return Robot::ballIntakeSub.isBallInManipulator();
+void UpdateManipulatorAndElevatorLocationCmd::Execute() {
+  Robot::elevatorSub.executeStateMachine();
 }
 
+// Make this return true when this Command no longer needs to run execute()
+bool UpdateManipulatorAndElevatorLocationCmd::IsFinished() { 
+  return false; }
+
 // Called once after isFinished returns true
-void IntakeBallFromRobotCmd::End() {
-  //Robot::ballIntakeSub.setWheels(0.0, 0.0);
+void UpdateManipulatorAndElevatorLocationCmd::End() {
+  Robot::elevatorSub.zeroEverything();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void IntakeBallFromRobotCmd::Interrupted() {}
+void UpdateManipulatorAndElevatorLocationCmd::Interrupted() {
+  UpdateManipulatorAndElevatorLocationCmd::End();
+}

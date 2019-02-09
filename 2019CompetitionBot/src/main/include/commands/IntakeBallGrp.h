@@ -7,14 +7,9 @@
 
 #pragma once
 
-#include <frc/commands/Command.h>
+#include <frc/commands/CommandGroup.h>
 
-class IntakeWhileHeldCmd : public frc::Command {
+class intakeBallGrp : public frc::CommandGroup {
  public:
-  IntakeWhileHeldCmd();
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
+  intakeBallGrp();
 };

@@ -13,7 +13,6 @@
 
 DrivetrainSub Robot::drivetrainSub;
 BallIntakeSub Robot::ballIntakeSub;
-ManipulatorSub Robot::manipulatorSub;
 ElevatorSub Robot::elevatorSub;
 OI Robot::oi;
 
@@ -113,8 +112,7 @@ int main() { return frc::StartRobot<Robot>(); }
 #endif
 
 void Robot::UpdateSmartDashboard(){
-  frc::SmartDashboard::PutNumber("Left Drive Motor Enc", drivetrainSub.GetLeftEncoder());
-  frc::SmartDashboard::PutNumber("Right Drive Motor Enc", drivetrainSub.GetRightEncoder());
+ 
 
   //Limelight Data
   std::shared_ptr<NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
@@ -139,8 +137,9 @@ void Robot::UpdateSmartDashboard(){
   frc::SmartDashboard::PutNumber("Target's longest side of fitted bounding box", targetLong);
   frc::SmartDashboard::PutNumber("Target's horiz. sidelength of rough bounding box", targetHorizontalLength);
   frc::SmartDashboard::PutNumber("Target's vert. sidelength of rough bounding box", targetVerticalLength);
-
-
+  frc::SmartDashboard::PutNumber("Left Drive Motor Enc", drivetrainSub.GetLeftEncoder());
+  frc::SmartDashboard::PutNumber("Right Drive Motor Enc", drivetrainSub.GetRightEncoder());
+  frc::SmartDashboard::PutNumber("Gyro's Angle", drivetrainSub.getAngle());
 
 
 
