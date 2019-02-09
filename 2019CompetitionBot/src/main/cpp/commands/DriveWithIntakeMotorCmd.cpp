@@ -8,7 +8,9 @@ void DriveWithIntakeMotorCmd::Initialize() {
 }
 void DriveWithIntakeMotorCmd::Execute() {}
 bool DriveWithIntakeMotorCmd::IsFinished() { return false; }
-void DriveWithIntakeMotorCmd::End() {}
+void DriveWithIntakeMotorCmd::End() {
+  Robot::ballIntakeSub.setIntakeMotor(0.0);
+}
 void DriveWithIntakeMotorCmd::Interrupted() {
   End();
 }
