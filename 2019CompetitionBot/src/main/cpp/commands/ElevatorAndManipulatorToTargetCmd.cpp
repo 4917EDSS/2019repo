@@ -8,7 +8,7 @@
 #include "commands/ElevatorAndManipulatorToTargetCmd.h"
 #include "Robot.h"
 
-ElevatorAndManipulatorToTargetCmd::ElevatorAndManipulatorToTargetCmd(double targetHeight, double targetAngle) {
+ElevatorAndManipulatorToTargetCmd::ElevatorAndManipulatorToTargetCmd(double targetHeight, double targetAngle) : targetHeight(targetHeight), targetAngle(targetAngle) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::elevatorSub);
@@ -16,7 +16,8 @@ ElevatorAndManipulatorToTargetCmd::ElevatorAndManipulatorToTargetCmd(double targ
 
 // Called just before this Command runs the first time
 void ElevatorAndManipulatorToTargetCmd::Initialize() {
-
+  Robot::elevatorSub.setTargetHeight(targetHeight);
+  Robot::elevatorSub.setTargetAngle(targetAngle);
 }
 
 // Called repeatedly when this Command is scheduled to run

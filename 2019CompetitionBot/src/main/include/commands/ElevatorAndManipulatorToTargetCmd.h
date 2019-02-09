@@ -17,4 +17,8 @@ class ElevatorAndManipulatorToTargetCmd : public frc::Command {
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+
+  private:
+  double targetAngle;
+  double targetHeight;
 };

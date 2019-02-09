@@ -8,8 +8,7 @@
 #include "commands/SetElevatorToHeightCmd.h"
 #include "Robot.h"
 
-SetElevatorToHeightCmd::SetElevatorToHeightCmd(double height) : height(height)
-{
+SetElevatorToHeightCmd::SetElevatorToHeightCmd(double height) : height(height) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::elevatorSub);
@@ -17,7 +16,7 @@ SetElevatorToHeightCmd::SetElevatorToHeightCmd(double height) : height(height)
 
 // Called just before this Command runs the first time
 void SetElevatorToHeightCmd::Initialize(){
-  Robot::elevatorSub.setTarget(height);
+  Robot::elevatorSub.setTargetHeight(height);
 }
 
 // Called repeatedly when this Command is scheduled to run

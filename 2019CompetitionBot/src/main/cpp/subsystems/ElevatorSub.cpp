@@ -89,8 +89,12 @@ void ElevatorSub::executeStateMachine() {
   }
 }
 
-void ElevatorSub::setTarget(double newTarget){
-  targetHeight = newTarget;
+void ElevatorSub::setTargetHeight(double newHeight){
+  targetHeight = newHeight;
+}
+
+void ElevatorSub::setTargetAngle(double newAngle) {
+  targetDegrees = newAngle;
 }
 
 bool ElevatorSub::isFinishedMove() {

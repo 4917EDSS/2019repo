@@ -41,7 +41,8 @@ class ElevatorSub : public frc::Subsystem {
   void update();
   double getElevatorEncoder();
   void setElevatorMotor(double speed);
-  void setTarget(double newTarget);
+  void setTargetHeight(double newTarget);
+  void setTargetAngle(double newAngle);
   bool isFinishedMove();
   bool isElevatorDown();
   void setElevatorMotorRaw(double speed);
