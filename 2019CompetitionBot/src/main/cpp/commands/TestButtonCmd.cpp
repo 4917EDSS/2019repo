@@ -18,7 +18,7 @@ TestButtonCmd::TestButtonCmd() {
 
 // Called just before this Command runs the first time
 void TestButtonCmd::Initialize() {
-   Robot::ballIntakeSub.setIntakeMotor(0.05);
+   Robot::ballIntakeSub.setIntakeArmMotor(0.05);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -29,7 +29,8 @@ bool TestButtonCmd::IsFinished() { return false; }
 
 
 void TestButtonCmd::End() {
-  Robot::ballIntakeSub.setIntakeMotor(0.0);
+  Robot::ballIntakeSub.setIntakeArmMotor(0.0);
+
 }
 
 // Called when another command which requires one or more of the same
