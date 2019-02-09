@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/UpdateManipulatorAndElevatorLocationCmd.h"
+#include "commands/ElevatorAndManipulatorToTargetCmd.h"
 #include "Robot.h"
 
 ElevatorAndManipulatorToTargetCmd::ElevatorAndManipulatorToTargetCmd(double targetHeight, double targetAngle) : targetHeight(targetHeight), targetAngle(targetAngle) {
@@ -21,21 +21,21 @@ void ElevatorAndManipulatorToTargetCmd::Initialize() {
 }
 
 // Called repeatedly when this Command is scheduled to run
-void UpdateManipulatorAndElevatorLocationCmd::Execute() {
+void ElevatorAndManipulatorToTargetCmd::Execute() {
   Robot::elevatorSub.executeStateMachine();
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool UpdateManipulatorAndElevatorLocationCmd::IsFinished() { 
+bool ElevatorAndManipulatorToTargetCmd::IsFinished() { 
   return false; }
 
 // Called once after isFinished returns true
-void UpdateManipulatorAndElevatorLocationCmd::End() {
+void ElevatorAndManipulatorToTargetCmd::End() {
   Robot::elevatorSub.zeroEverything();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void UpdateManipulatorAndElevatorLocationCmd::Interrupted() {
-  UpdateManipulatorAndElevatorLocationCmd::End();
+void ElevatorAndManipulatorToTargetCmd::Interrupted() {
+  ElevatorAndManipulatorToTargetCmd::End();
 }

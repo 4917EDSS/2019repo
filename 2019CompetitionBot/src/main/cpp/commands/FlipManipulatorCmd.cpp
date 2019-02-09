@@ -36,7 +36,7 @@ void FlipManipulatorCmd::Initialize() {
   }
  
   logger.send(logger.DEBUGGING, "%s : %s\n", __FILE__, __FUNCTION__);
-  Robot::ballIntakeSub.setFlipperPosition(flipperPositionOut);
+  Robot::ballIntakeSub.setFlipperOut(flipperPositionOut);
 }
 
 // Called repeatedly when this Command is scheduled to run
