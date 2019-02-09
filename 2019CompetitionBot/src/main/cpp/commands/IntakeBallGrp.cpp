@@ -5,22 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
+#include "commands/IntakeBallGrp.h"
+#include "commands/IntakeBallUntilLimitCmd.h"
+#include "commands/IntakeBallFromRobotCmd.h"
 
-#include <frc/commands/Command.h>
+intakeBallGrp::intakeBallGrp() {
 
-class FlipManipulatorCmd : public frc::Command {
- public:
-  enum FlipperDirection {out, in, toggle};
-
-  FlipManipulatorCmd(FlipperDirection flipperDirection);
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
-
-private:
-  FlipperDirection currentFlipperDirection;
-  bool flipperPositionOut;
-};
+  AddParallel(new IntakeBallUntilLimitCmd());
+  //AddParallel(new SetIntakeAngleCmd());
+  AddParallel(new IntakeBallFromRobotCmd());
+}

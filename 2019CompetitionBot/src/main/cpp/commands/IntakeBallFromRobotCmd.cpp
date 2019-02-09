@@ -5,37 +5,34 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ElevatorAndManipulatorToTargetCmd.h"
+#include "commands/IntakeBallFromRobotCmd.h"
+#include "subsystems/BallIntakeSub.h"
 #include "Robot.h"
 
-ElevatorAndManipulatorToTargetCmd::ElevatorAndManipulatorToTargetCmd(double targetHeight, double targetAngle) : targetHeight(targetHeight), targetAngle(targetAngle) {
+IntakeBallFromRobotCmd::IntakeBallFromRobotCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::elevatorSub);
+  Requires(&Robot::ballIntakeSub);
 }
 
 // Called just before this Command runs the first time
-void ElevatorAndManipulatorToTargetCmd::Initialize() {
-  Robot::elevatorSub.setTargetHeight(targetHeight);
-  Robot::elevatorSub.setTargetAngle(targetAngle);
+void IntakeBallFromRobotCmd::Initialize() {
+  //Robot::ballIntakeSub.setWheels(0.5, 0.5);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ElevatorAndManipulatorToTargetCmd::Execute() {
-  Robot::elevatorSub.executeStateMachine();
-}
+void IntakeBallFromRobotCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool ElevatorAndManipulatorToTargetCmd::IsFinished() { 
-  return false; }
+bool IntakeBallFromRobotCmd::IsFinished() { 
+  //return Robot::ballIntakeSub.isBallInManipulator();
+}
 
 // Called once after isFinished returns true
-void ElevatorAndManipulatorToTargetCmd::End() {
-  Robot::elevatorSub.zeroEverything();
+void IntakeBallFromRobotCmd::End() {
+  //Robot::ballIntakeSub.setWheels(0.0, 0.0);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ElevatorAndManipulatorToTargetCmd::Interrupted() {
-  ElevatorAndManipulatorToTargetCmd::End();
-}
+void IntakeBallFromRobotCmd::Interrupted() {}

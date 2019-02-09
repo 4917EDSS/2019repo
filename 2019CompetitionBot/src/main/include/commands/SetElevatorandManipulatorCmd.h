@@ -9,18 +9,16 @@
 
 #include <frc/commands/Command.h>
 
-class FlipManipulatorCmd : public frc::Command {
+class setElevatorandManipulaterCmd : public frc::Command {
  public:
-  enum FlipperDirection {out, in, toggle};
-
-  FlipManipulatorCmd(FlipperDirection flipperDirection);
+  setElevatorandManipulaterCmd();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
 
-private:
-  FlipperDirection currentFlipperDirection;
-  bool flipperPositionOut;
+  private:
+  double targetAngle;
+  double targetHeight;
 };

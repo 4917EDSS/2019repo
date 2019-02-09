@@ -44,6 +44,7 @@ constexpr int FLIP_BALL_INTAKE_TOGGLE_BTN = 1;
 constexpr int OPERATOR_KILL_ONE_BTN = 11;
 constexpr int OPERATOR_KILL_TWO_BTN = 12;
 constexpr int OPERATOR_ELEVATOR_AXIS = 3;
+constexpr int OPERATOR_MANIPULATOR_AXIS = 1;
 constexpr int MANIPULATOR_BALL_INTAKE_BTN = 4;
 constexpr int CLIMB_MODE_BTN = 5;
 constexpr int TEST_BTN = 6;

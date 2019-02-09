@@ -13,7 +13,7 @@
 #include "Commands/CloseHatchPickupCmd.h"
 #include "commands/IntakeBallUntilLimitCmd.h"
 #include "commands/KillEverythingCmd.h"
-#include "commands/FlipFlipperCmd.h"
+#include "commands/FlipManipulatorCmd.h"
 #include "commands/TestButtonCmd.h"
 #include "commands/MilkyScoreGrp.h"
 #include "commands/MilkyManipulatorCmd.h"
@@ -53,7 +53,7 @@ OI::OI() {
   DriverKillBtn2->WhenPressed(new KillEverythingCmd());
 
   ballFlipperToggleBtn.reset(new frc::JoystickButton(operatorController.get(), FLIP_BALL_INTAKE_TOGGLE_BTN));
-  ballFlipperToggleBtn->WhenPressed(new FlipFlipperCmd(FlipFlipperCmd::FlipperDirection::toggle));
+  ballFlipperToggleBtn->WhenPressed(new FlipManipulatorCmd(FlipManipulatorCmd::FlipperDirection::toggle));
   
   milkyManipulatorBtn.reset(new frc::JoystickButton(driverController.get(),MILKY_MANIPULATOR_BTN));
   milkyManipulatorBtn->WhileHeld( new MilkyScoreGrp());

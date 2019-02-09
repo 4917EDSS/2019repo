@@ -16,7 +16,7 @@ IntakeBallUntilLimitCmd::IntakeBallUntilLimitCmd() {
 
 // Called just before this Command runs the first time
 void IntakeBallUntilLimitCmd::Initialize() {
-  Robot::ballIntakeSub.SetIntakeMotor(1.0);
+  Robot::ballIntakeSub.setIntakeMotor(1.0);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -31,7 +31,7 @@ bool IntakeBallUntilLimitCmd::IsFinished() {
 
 // Called once after isFinished returns true
 void IntakeBallUntilLimitCmd::End() {
-  Robot::ballIntakeSub.SetIntakeMotor(0.0);
+  Robot::ballIntakeSub.setIntakeMotor(0.0);
 }
 
 // Called when another command which requires one or more of the same

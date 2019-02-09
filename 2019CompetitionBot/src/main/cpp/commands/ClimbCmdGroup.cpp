@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 #include "Robot.h"
 #include "commands/ClimbCmdGroup.h"
-#include "commands/FlipFlipperCmd.h"
+#include "commands/FlipManipulatorCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
 #include "commands/ChangeGearCmd.h"
 #include "commands/DriveStraightCmd.h"
@@ -32,7 +32,7 @@ ClimbCmdGroup::ClimbCmdGroup() {
   // arm.
   AddParallel(new SetElevatorToHeightCmd(UP_CLIMB_POSITION));
   //lock foot
-  AddSequential(new FlipFlipperCmd(FlipFlipperCmd::out));
+  AddSequential(new FlipManipulatorCmd(FlipManipulatorCmd::out));
   //
   AddSequential(new ChangeGearCmd());
   AddSequential(new DriveStraightCmd(RAMP_DRIVE_DISTANCE));

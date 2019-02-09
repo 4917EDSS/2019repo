@@ -27,7 +27,7 @@ void TestButtonCmd::Execute() {}
 // Make this return true when this Command no longer needs to run execute()
 bool TestButtonCmd::IsFinished() { return false; }
 
-// Called once after isFinished returns true
+
 void TestButtonCmd::End() {
   Robot::ballIntakeSub.SetIntakeMotor(0.0);
 }

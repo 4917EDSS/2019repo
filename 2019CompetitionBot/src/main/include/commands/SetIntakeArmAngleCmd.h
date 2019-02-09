@@ -9,18 +9,14 @@
 
 #include <frc/commands/Command.h>
 
-class FlipManipulatorCmd : public frc::Command {
+class SetIntakeArmAngleCmd : public frc::Command {
  public:
-  enum FlipperDirection {out, in, toggle};
-
-  FlipManipulatorCmd(FlipperDirection flipperDirection);
+  SetIntakeArmAngleCmd();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
-
 private:
-  FlipperDirection currentFlipperDirection;
-  bool flipperPositionOut;
+  double angle;
 };
