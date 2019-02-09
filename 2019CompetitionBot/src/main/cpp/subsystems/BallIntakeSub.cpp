@@ -13,9 +13,9 @@
 BallIntakeSub::BallIntakeSub() : Subsystem("ExampleSubsystem") {
   ballIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_WHEELS_MOTOR_CAN_ID));
   intakeLimit.reset(new frc::DigitalInput(INTAKE_LIMIT_DIO));
-  flipperMotorOne.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(MANIPULATOR_FLIPPER_MOTOR_ONE_CAN_ID));
-  flipperMotorTwo.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(MANIPULATOR_FLIPPER_MOTOR_TWO_CAN_ID));
-  intakeFolderSolenoid.reset(new frc::Solenoid(MANIPULATOR_INTAKE_FOLDER_CAN_ID));
+  flipperMotorOne.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_FLIP_MOTOR_1_CAN_ID));
+  flipperMotorTwo.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_FLIP_MOTOR_2_CAN_ID));
+  intakeFolderSolenoid.reset(new frc::Solenoid(MANIPULATOR_INTAKE_FOLDER_PCM_ID));
 }
 
 void BallIntakeSub::InitDefaultCommand() {
