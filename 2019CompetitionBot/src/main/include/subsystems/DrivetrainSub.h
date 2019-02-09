@@ -26,7 +26,6 @@ class DrivetrainSub : public frc::Subsystem {
   std::shared_ptr<AHRS> ahrs;
   std::shared_ptr<frc::PIDController> driveBalancePID;
   std::shared_ptr<frc4917::MotorBalancer> driveBalancer;
-  std::shared_ptr<frc4917::MotorBalancer> distanceBalancer;
   std::shared_ptr<frc::Solenoid> shifters;
 
  public:

@@ -9,6 +9,7 @@
 #include "commands/DriveWithJoystickCmd.h"
 #include <RobotMap.h>
 #include <iostream>
+#include <hal/HAL.h>
 
 constexpr float DRIVE_BALANCE_TOLERANCE = 0.5;
 constexpr float DRIVE_BALANCE_P = 0;
@@ -55,6 +56,8 @@ void DrivetrainSub::InitDefaultCommand()
 
 void DrivetrainSub::drive(double lSpeed, double rSpeed)
 {
+  std::cout<<"gyro "<<getAngle()<<"\n";
+
 
   leftMotor1->Set(lSpeed);
   leftMotor2->Set(lSpeed);
@@ -63,6 +66,7 @@ void DrivetrainSub::drive(double lSpeed, double rSpeed)
   rightMotor1->Set(-rSpeed);
   rightMotor2->Set(-rSpeed);
   rightMotor3->Set(-rSpeed);
+  
 }
 
 void DrivetrainSub::enableBalancerPID(float setPoint){
@@ -75,7 +79,7 @@ void DrivetrainSub::enableBalancerPID(float setPoint){
 }
 
 void DrivetrainSub::disableBalancerPID(){
-	distanceBalancer->Reset();
+	driveBalancer->Reset();
 	driveBalancePID->Disable();
 }
 void DrivetrainSub::driverDriveStraight(float speed) {
