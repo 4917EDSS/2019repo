@@ -46,6 +46,7 @@ constexpr int OPERATOR_KILL_TWO_BTN = 12;
 constexpr int OPERATOR_ELEVATOR_AXIS = 3;
 constexpr int MANIPULATOR_BALL_INTAKE_BTN = 4;
 constexpr int CLIMB_MODE_BTN = 5;
+constexpr int TEST_BTN = 6;
 
 class OI {
  public:
@@ -67,4 +68,5 @@ class OI {
     std::shared_ptr<frc::JoystickButton> milkyManipulatorBtn;
     std::shared_ptr<frc::JoystickButton> manipulatorIntakeBtn;
     std::shared_ptr<frc::JoystickButton> climbModeBtn;
+    std::shared_ptr<frc::JoystickButton> TestBtn;
 };
