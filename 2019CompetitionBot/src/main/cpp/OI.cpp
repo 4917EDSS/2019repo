@@ -11,13 +11,11 @@
 #include "Robot.h"
 #include "subsystems/BallIntakeSub.h"
 #include "Commands/CloseHatchPickupCmd.h"
-#include "Commands/IntakeWhileHeldCmd.h"
 #include "commands/IntakeBallUntilLimitCmd.h"
 #include "commands/KillEverythingCmd.h"
 #include "commands/FlipFlipperCmd.h"
 #include "commands/MilkyScoreGrp.h"
 #include "commands/MilkyManipulatorCmd.h"
-#include "commands/IntakeBallFromRobotCmd.h"
 #include "commands/ClimbCmdGroup.h"
 
 OI::OI() {
@@ -57,9 +55,6 @@ OI::OI() {
   
   milkyManipulatorBtn.reset(new frc::JoystickButton(driverController.get(),MILKY_MANIPULATOR_BTN));
   milkyManipulatorBtn->WhileHeld( new MilkyScoreGrp());
-
-  manipulatorIntakeBtn.reset(new frc::JoystickButton(operatorController.get(), MANIPULATOR_BALL_INTAKE_BTN));
-  manipulatorIntakeBtn->WhenPressed(new IntakeBallFromRobotCmd());
 
   climbModeBtn.reset(new frc::JoystickButton(operatorController.get(), CLIMB_MODE_BTN));
   climbModeBtn->WhenPressed(new ClimbCmdGroup());
