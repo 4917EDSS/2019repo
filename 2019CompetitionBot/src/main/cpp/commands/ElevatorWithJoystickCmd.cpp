@@ -13,6 +13,7 @@ ElevatorWithJoystickCmd::ElevatorWithJoystickCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::elevatorSub);
+  
 }
 
 // Called just before this Command runs the first time
@@ -28,7 +29,6 @@ void ElevatorWithJoystickCmd::Execute() {
 	verticalStick = pow(verticalStick, 3);
   logger.send(logger.DEBUGGING, "The elevator is being used @ %f\n", verticalStick);
 
-  Robot::elevatorSub.setElevatorMotor(verticalStick);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -39,6 +39,7 @@ bool ElevatorWithJoystickCmd::IsFinished() {
 // Called once after isFinished returns true
 void ElevatorWithJoystickCmd::End() {
   Robot::elevatorSub.setElevatorMotor(0.0);
+  Robot::elevatorSub.setWheels(0.0, 0.0);
 }
 
 // Called when another command which requires one or more of the same

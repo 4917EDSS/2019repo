@@ -138,6 +138,8 @@ void Robot::UpdateSmartDashboard(){
   frc::SmartDashboard::PutNumber("Target's horiz. sidelength of rough bounding box", targetHorizontalLength);
   frc::SmartDashboard::PutNumber("Target's vert. sidelength of rough bounding box", targetVerticalLength);
   frc::SmartDashboard::PutNumber("Left Drive Motor Enc", drivetrainSub.GetLeftEncoder());
+  frc::SmartDashboard::PutNumber("Right Drive Motor Enc", drivetrainSub.GetRightEncoder());
+  frc::SmartDashboard::PutNumber("Gyro's Angle", drivetrainSub.getAngle());
 
 
 
