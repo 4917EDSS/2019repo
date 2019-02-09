@@ -16,7 +16,6 @@
 #include "subsystems/DrivetrainSub.h"
 #include "subsystems/BallIntakeSub.h"
 #include "subsystems/ElevatorSub.h"
-#include "subsystems/ManipulatorSub.h"
 #include "components/Log.h"
 
 class Robot : public frc::TimedRobot {
@@ -24,7 +23,6 @@ class Robot : public frc::TimedRobot {
   static DrivetrainSub drivetrainSub;
   static BallIntakeSub ballIntakeSub;
   static ElevatorSub elevatorSub;
-  static ManipulatorSub manipulatorSub;
   static OI oi;
 
   void RobotInit() override;

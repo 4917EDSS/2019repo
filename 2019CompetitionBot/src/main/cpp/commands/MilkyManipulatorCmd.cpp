@@ -13,7 +13,7 @@
 MilkyManipulatorCmd::MilkyManipulatorCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::manipulatorSub);
+  Requires(&Robot::elevatorSub);
 }
 
 // Called just before this Command runs the first time

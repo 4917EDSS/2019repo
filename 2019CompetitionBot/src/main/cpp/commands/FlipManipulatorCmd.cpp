@@ -6,13 +6,13 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/FlipManipulatorCmd.h"
-#include "subsystems/ManipulatorSub.h"
+#include "subsystems/ElevatorSub.h"
 #include "Robot.h"
 
 FlipManipulatorCmd::FlipManipulatorCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::manipulatorSub);
+  Requires(&Robot::elevatorSub);
 }
 
 // Called just before this Command runs the first time
@@ -25,12 +25,12 @@ void FlipManipulatorCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
 bool FlipManipulatorCmd::IsFinished() { 
-  return Robot::manipulatorSub.isManipulatorFlipped();
+  return Robot::elevatorSub.isManipulatorFlipped();
 }
 
 // Called once after isFinished returns true
 void FlipManipulatorCmd::End() {
-  Robot::manipulatorSub.flipManipulator(0.0);
+  Robot::elevatorSub.flipManipulator(0.0);
 }
 
 // Called when another command which requires one or more of the same

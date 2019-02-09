@@ -13,7 +13,6 @@
 
 DrivetrainSub Robot::drivetrainSub;
 BallIntakeSub Robot::ballIntakeSub;
-ManipulatorSub Robot::manipulatorSub;
 ElevatorSub Robot::elevatorSub;
 OI Robot::oi;
 
