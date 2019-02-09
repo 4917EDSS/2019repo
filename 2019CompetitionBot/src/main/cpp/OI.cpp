@@ -59,7 +59,7 @@ OI::OI() {
   milkyManipulatorBtn->WhileHeld( new MilkyScoreGrp());
 
   climbModeBtn.reset(new frc::JoystickButton(operatorController.get(), CLIMB_MODE_BTN));
-  climbModeBtn->WhenPressed(new ClimbCmdGroup());
+  climbModeBtn->WhileHeld(new ClimbCmdGroup());
 
   TestBtn.reset(new frc::JoystickButton(operatorController.get(), TEST_BTN));
   TestBtn->WhileHeld(new TestButtonCmd());

@@ -9,7 +9,7 @@
 #include "commands/IntakeBallUntilLimitCmd.h"
 #include "commands/IntakeBallFromRobotCmd.h"
 
-intakeBallGrp::intakeBallGrp() {
+IntakeBallGrp::IntakeBallGrp() {
 
   AddParallel(new IntakeBallUntilLimitCmd());
   //AddParallel(new SetIntakeAngleCmd());

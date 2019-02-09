@@ -9,7 +9,7 @@
 
 #include <frc/commands/CommandGroup.h>
 
-class intakeBallGrp : public frc::CommandGroup {
+class IntakeBallGrp : public frc::CommandGroup {
  public:
-  intakeBallGrp();
+  IntakeBallGrp();
 };
