@@ -78,18 +78,14 @@ bool ElevatorSub::isManipulatorFlipped() {
 }
 
 void ElevatorSub::executeStateMachine() {
-  switch (currentState) {
-    case 0:
-      if (targetDegrees == currentDegrees) {
-        //Do nothing
-      } else if (targetDegrees < currentDegrees) {
-        manipulatorFlipperMotor->Set(-0.5);
-        currentState = 1;
-      } else {
-        manipulatorFlipperMotor->Set(0.5);
-        currentState = 1;
-      }
-      break;
+  double currentDegrees = getManipulatorEncoder();
+
+  if (fabs(targetDegrees - currentDegrees) <= 2.5) {
+    //Do nothing
+  } else if (targetDegrees < currentDegrees) {
+    manipulatorFlipperMotor->Set(-0.5);
+  } else {
+    manipulatorFlipperMotor->Set(0.5);
   }
 }
 
