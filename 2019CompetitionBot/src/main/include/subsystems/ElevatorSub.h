@@ -56,4 +56,5 @@ class ElevatorSub : public frc::Subsystem {
   bool isManipulatorFlipped();
   void executeStateMachine();
   void zeroEverything();
+  void setManipulatorFlipperMotor(double speed);
 };

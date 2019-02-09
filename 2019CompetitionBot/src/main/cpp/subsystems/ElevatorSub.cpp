@@ -111,9 +111,13 @@ bool ElevatorSub::isElevatorDown(){
 }
 
 void ElevatorSub::setElevatorMotorRaw(double speed){
-elevatorMotor->Set(speed);
+  elevatorMotor->Set(speed);
 }
 
+void ElevatorSub::setManipulatorFlipperMotor(double speed){
+  manipulatorFlipperMotor->Set(speed);
+
+}
 void ElevatorSub::setElevatorMotor(double speed){
 
   if (isElevatorDown() && speed < 0){
