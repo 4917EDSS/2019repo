@@ -11,12 +11,12 @@
 CloseHatchPickupCmd::CloseHatchPickupCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::manipulatorSub);
+  Requires(&Robot::elevatorSub);
 }
 
 // Called just before this Command runs the first time
 void CloseHatchPickupCmd::Initialize() {
-  Robot::manipulatorSub.ContractHatchGripper();
+  Robot::elevatorSub.ContractHatchGripper();
 }
 // Called repeatedly when this Command is scheduled to run
 void CloseHatchPickupCmd::Execute() {
@@ -28,7 +28,7 @@ bool CloseHatchPickupCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void CloseHatchPickupCmd::End() {
-  Robot::manipulatorSub.ExpandHatchGripper();
+  Robot::elevatorSub.ExpandHatchGripper();
 }
 
 // Called when another command which requires one or more of the same

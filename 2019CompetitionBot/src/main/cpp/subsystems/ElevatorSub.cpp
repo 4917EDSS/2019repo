@@ -21,6 +21,13 @@ constexpr float ELEVATOR_D = 0;
 ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
   elevatorMotor.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
 	logger.send(logger.ELEVATOR, "Elevator code started \n", 0.0);
+
+  hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
+  manipulatorIntakeMotorLeft.reset(new WPI_VictorSPX(MANIPULATOR_LEFT_INTAKE_MOTOR_CAN_ID));
+  manipulatorIntakeMotorRight.reset(new WPI_VictorSPX(MANIPULATOR_RIGHT_INTAKE_MOTOR_CAN_ID));
+  targetDegrees = 90;
+  currentState = 0;
+  currentDegrees = 90;
 }
 
 void ElevatorSub::InitDefaultCommand() {
@@ -31,6 +38,51 @@ void ElevatorSub::InitDefaultCommand() {
 
 void ElevatorSub::update(){
   setElevatorMotor((target - elevatorMotor->GetEncoder().GetPosition())* 0.1);
+}
+
+void ElevatorSub::ExpandHatchGripper(){
+  hatchGripperSolenoid->Set(true);
+}
+
+void ElevatorSub::ContractHatchGripper(){
+    hatchGripperSolenoid->Set(false);
+}
+
+void ElevatorSub::setWheels(double lspeed, double rspeed) {
+  manipulatorIntakeMotorLeft->Set(lspeed);
+  manipulatorIntakeMotorRight->Set(rspeed);
+}
+
+bool ElevatorSub::isBallInManipulator() {
+  intakeFromRobotLimit.get();
+}
+
+void ElevatorSub::flipManipulator(bool goForward) {
+  if (goForward) {
+    targetDegrees = 180;
+  } else {
+    targetDegrees = 0;
+  }
+}
+
+bool ElevatorSub::isManipulatorFlipped() {
+  manipulatorFlipperLimit.get();
+}
+
+void ElevatorSub::executeStateMachine() {
+  switch (currentState) {
+    case 0:
+      if (targetDegrees == currentDegrees) {
+        //Do nothing
+      } else if (targetDegrees < currentDegrees) {
+        manipulatorFlipperMotor->Set(-0.5);
+        currentState = 1;
+      } else {
+        manipulatorFlipperMotor->Set(0.5);
+        currentState = 1;
+      }
+      break;
+  }
 }
 
 void ElevatorSub::setTarget(double newTarget){

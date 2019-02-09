@@ -13,7 +13,6 @@ KillEverythingCmd::KillEverythingCmd() {
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::ballIntakeSub);
   Requires(&Robot::drivetrainSub);
-  Requires(&Robot::manipulatorSub);
   Requires(&Robot::elevatorSub);
 }
 
