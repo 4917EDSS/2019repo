@@ -8,7 +8,7 @@
 #include "commands/UpdateManipulatorAndElevatorLocationCmd.h"
 #include "Robot.h"
 
-ElevatorAndManipulatorToTargetCmd::ElevatorAndManipulatorToTargetCmd(double targetHeight, double targetAngle) : targetHeight(targetHeight),
+ElevatorAndManipulatorToTargetCmd::ElevatorAndManipulatorToTargetCmd(double targetHeight, double targetAngle) : targetHeight(targetHeight), targetAngle(targetAngle) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::elevatorSub);
