@@ -25,9 +25,6 @@ ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
   hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
   manipulatorIntakeMotorLeft.reset(new WPI_VictorSPX(MANIPULATOR_LEFT_INTAKE_MOTOR_CAN_ID));
   manipulatorIntakeMotorRight.reset(new WPI_VictorSPX(MANIPULATOR_RIGHT_INTAKE_MOTOR_CAN_ID));
-  targetDegrees = 90;
-  currentState = 0;
-  currentDegrees = 90;
 }
 
 void ElevatorSub::InitDefaultCommand() {
@@ -37,7 +34,7 @@ void ElevatorSub::InitDefaultCommand() {
 }
 
 void ElevatorSub::update(){
-  setElevatorMotor((target - elevatorMotor->GetEncoder().GetPosition())* 0.1);
+  setElevatorMotor((targetHeight - elevatorMotor->GetEncoder().GetPosition())* 0.1);
 }
 
 void ElevatorSub::ExpandHatchGripper(){
@@ -48,6 +45,13 @@ void ElevatorSub::ContractHatchGripper(){
     hatchGripperSolenoid->Set(false);
 }
 
+void ElevatorSub::zeroEverything(){
+  elevatorMotor->Set(0.0);
+  manipulatorIntakeMotorLeft->Set(0.0);
+  manipulatorIntakeMotorRight->Set(0.0);
+  manipulatorFlipperMotor->Set(0.0);
+}
+
 void ElevatorSub::setWheels(double lspeed, double rspeed) {
   manipulatorIntakeMotorLeft->Set(lspeed);
   manipulatorIntakeMotorRight->Set(rspeed);
@@ -56,6 +60,10 @@ void ElevatorSub::setWheels(double lspeed, double rspeed) {
 bool ElevatorSub::isBallInManipulator() {
   intakeFromRobotLimit.get();
 }
+
+ double ElevatorSub::getManipulatorEncoder() {
+  return manipulatorFlipperMotor->GetEncoder().GetPosition();
+ }
 
 void ElevatorSub::flipManipulator(bool goForward) {
   if (goForward) {
@@ -86,13 +94,13 @@ void ElevatorSub::executeStateMachine() {
 }
 
 void ElevatorSub::setTarget(double newTarget){
-  target = newTarget;
+  targetHeight = newTarget;
 }
 
-bool ElevatorSub::isFinishedMove(){
- if(fabs(target -elevatorMotor->GetEncoder().GetPosition()) < ELEVATOR_POSITION_TOLERANCE && fabs(elevatorMotor->GetEncoder().GetPosition()) < 45) {
+bool ElevatorSub::isFinishedMove() {
+ if (fabs(targetHeight -elevatorMotor->GetEncoder().GetPosition()) < ELEVATOR_POSITION_TOLERANCE && fabs(elevatorMotor->GetEncoder().GetPosition()) < 45) {
   return true;
-    }else{
+    } else {
       return false;
  }
 }
