@@ -5,42 +5,31 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ScoreBallCmd.h"
+#include "commands/SetIntakeArmAngleCmd.h"
 #include "Robot.h"
 
-ScoreBallCmd::ScoreBallCmd() {
+SetIntakeArmAngleCmd::SetIntakeArmAngleCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::ballIntakeSub);
 }
 
 // Called just before this Command runs the first time
-void ScoreBallCmd::Initialize() {
-  Robot::ballIntakeSub.setIntakeMotor(-1.0);
+void SetIntakeArmAngleCmd::Initialize() {
+  
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ScoreBallCmd::Execute() {
-  logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
+void SetIntakeArmAngleCmd::Execute() {
+
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool ScoreBallCmd::IsFinished() { 
-  if(TimeSinceInitialized() > 0.6) {
-    return true;
-  }
-  else {
-    return false;
-  }
- }
+bool SetIntakeArmAngleCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void ScoreBallCmd::End() {
-   Robot::ballIntakeSub.setIntakeMotor(0.0);
-}
+void SetIntakeArmAngleCmd::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ScoreBallCmd::Interrupted() {
-  End();
-}
+void SetIntakeArmAngleCmd::Interrupted() {}

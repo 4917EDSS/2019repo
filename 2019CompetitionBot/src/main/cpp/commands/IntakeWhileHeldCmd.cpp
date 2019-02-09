@@ -18,7 +18,7 @@ void IntakeWhileHeldCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void IntakeWhileHeldCmd::Execute() {
-  Robot::ballIntakeSub.SetIntakeMotor(-1.0);
+  Robot::ballIntakeSub.setIntakeMotor(-1.0);
   logger.send(logger.DEBUGGING, "%s : %s\n", __FILE__, __FUNCTION__);
 }
 
@@ -28,7 +28,7 @@ bool IntakeWhileHeldCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void IntakeWhileHeldCmd::End() {
-  Robot::ballIntakeSub.SetIntakeMotor(0.0);
+  Robot::ballIntakeSub.setIntakeMotor(0.0);
 }
 
 // Called when another command which requires one or more of the same

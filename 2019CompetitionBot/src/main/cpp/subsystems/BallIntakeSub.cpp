@@ -11,33 +11,38 @@
 //Canid4 and Set Intake
 
 BallIntakeSub::BallIntakeSub() : Subsystem("ExampleSubsystem") {
-    leftRearBallIntakeSolenoid.reset(new frc::Solenoid(REAR_BALL_INTAKE_1_PCM_ID));
-    leftRearBallIntakeSolenoid->Set(true);
-    rightRearBallIntakeSolenoid.reset(new frc::Solenoid(REAR_BALL_INTAKE_2_PCM_ID));
-    rightRearBallIntakeSolenoid->Set(true);
-
+  ballIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_WHEELS_MOTOR_CAN_ID));
+  intakeLimit.reset(new frc::DigitalInput(INTAKE_LIMIT_DIO));
+  flipperMotorOne.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(MANIPULATOR_FLIPPER_MOTOR_ONE_CAN_ID));
+  flipperMotorTwo.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(MANIPULATOR_FLIPPER_MOTOR_TWO_CAN_ID));
+  intakeFolderSolenoid.reset(new frc::Solenoid(MANIPULATOR_INTAKE_FOLDER_CAN_ID));
 }
 
 void BallIntakeSub::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
-
-  BallIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_WHEELS_MOTOR_CAN_ID));
-  intakeLimit.reset(new frc::DigitalInput(INTAKE_LIMIT_DIO));
-  flipperMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(MANIPULATOR_FLIPPER_MOTOR_CAN_ID));
 }
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
-
-void BallIntakeSub::ExtendRearIntakeSolenoids(){
-  leftRearBallIntakeSolenoid->Set(false);
-  rightRearBallIntakeSolenoid->Set(false);
-
+/*
+needs to work on the SetIntakeArmAngle
+void BallIntakeSub::setIn(){
+  flipperMotorOne.SetAngle(0.0);
+  flipperMotorTwo.SetAngle(0.0);
 }
 
-void BallIntakeSub::SetIntakeMotor(double speed){
-  BallIntakeMotor->Set(ControlMode::PercentOutput, speed);
+void BallIntakeSub::setOut(){
+  flipperMotorOne.SetAngle(90.0);
+  flipperMotorTwo.SetAngle(90.0);
+}
+*/
+void BallIntakeSub::setArmPosition(double targetAngle){
+ angle = targetAngle;
+}
+
+void BallIntakeSub::setIntakeMotor(double speed){
+  ballIntakeMotor->Set(ControlMode::PercentOutput, speed);
   logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
 }
 
@@ -46,6 +51,19 @@ bool BallIntakeSub::isBallIn() {
   logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
 }
 
-void BallIntakeSub::setFlipperPosition(bool flipOut) {
+double BallIntakeSub::getIntakeArmEncoder() {
+  return intakeArmEnc->GetDistance();
+}
+
+void BallIntakeSub::setFlipperOut(bool flipOut) {
   logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
+}
+
+void BallIntakeSub::setIntakeArmMotor(double speed){
+  flipperMotorOne->Set(ControlMode::PercentOutput, speed);
+  flipperMotorTwo->Set(ControlMode::PercentOutput, speed);
+}
+
+void BallIntakeSub::update(){
+  setIntakeArmMotor((angle - getIntakeArmEncoder()) * 0.01);
 }
