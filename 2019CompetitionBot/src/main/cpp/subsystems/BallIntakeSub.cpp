@@ -38,7 +38,7 @@ void BallIntakeSub::setOut(){
 }
 */
 void BallIntakeSub::setArmPosition(double targetAngle){
- angle = targetAngle;
+  angle = targetAngle;
 }
 
 void BallIntakeSub::setIntakeMotor(double speed){
@@ -56,6 +56,7 @@ double BallIntakeSub::getIntakeArmEncoder() {
 }
 
 void BallIntakeSub::setFlipperOut(bool flipOut) {
+  intakeFolderSolenoid -> Set(flipOut);
   logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
 }
 

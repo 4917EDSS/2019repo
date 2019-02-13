@@ -16,19 +16,24 @@ SetIntakeArmAngleCmd::SetIntakeArmAngleCmd() {
 
 // Called just before this Command runs the first time
 void SetIntakeArmAngleCmd::Initialize() {
-  
+  //These values need testing
+  Robot::ballIntakeSub.setFlipperOut(true);
+  Robot::ballIntakeSub.setIntakeArmMotor(0.25);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void SetIntakeArmAngleCmd::Execute() {
-
+  Robot::ballIntakeSub.update();
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool SetIntakeArmAngleCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void SetIntakeArmAngleCmd::End() {}
+void SetIntakeArmAngleCmd::End() {
+  Robot::ballIntakeSub.setFlipperOut(false);
+  Robot::ballIntakeSub.setIntakeArmMotor(0.0);
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
