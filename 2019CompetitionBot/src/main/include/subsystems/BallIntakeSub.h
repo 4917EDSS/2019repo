@@ -21,7 +21,7 @@ class BallIntakeSub : public frc::Subsystem {
   std::shared_ptr<frc::DigitalInput> intakeLimit;
   std::shared_ptr<frc::Solenoid> intakeFolderSolenoid;
   std::shared_ptr<frc::Encoder> intakeArmEnc;
-  double angle;
+  double targetAngle;
 
 
  public:
@@ -31,11 +31,12 @@ class BallIntakeSub : public frc::Subsystem {
   void setIntakeMotor(double speed);
   void setFlipperOut(bool flipOut);
   bool isBallIn();
-  double getIntakeArmEncoder();
+  double getIntakeArmEncoderAngle();
   void setIn();
   void setOut();
   void setDown();
-  void setArmPosition(double targetAngle);
+  void setArmTargetPosition(double angle);
   void setIntakeArmMotor(double speed);
   void update();
+  bool doneFlipping();
 };
