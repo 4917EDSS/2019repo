@@ -127,7 +127,18 @@ void ElevatorSub::setElevatorMotor(double speed){
   else if (elevatorMotor->GetEncoder().GetPosition() < 20 && speed <0){
     speed = std::max(speed, -0.2);
   }
+
+  else if (250 && speed < 0){
+    speed = 0;
+  }
+  //Change 250 to max elevator height.
+
+  else if (elevatorMotor->GetEncoder().GetPosition() > 100 && speed > 0){
+    speed = std::min(speed, 0.2);
+  }
 }
+
+
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
