@@ -14,6 +14,7 @@
 #include "frc/WPILib.h"
 
 constexpr float ELEVATOR_POSITION_TOLERANCE = 5.0;
+constexpr float MANIPULATOR_POSITION_TOLERANCE = 1.0;
 constexpr float ELEVATOR_P = 0;
 constexpr float ELEVATOR_I = 0;
 constexpr float ELEVATOR_D = 0;
@@ -36,6 +37,7 @@ void ElevatorSub::InitDefaultCommand() {
 
 void ElevatorSub::update(){
   setElevatorMotor((targetHeight - elevatorMotor->GetEncoder().GetPosition())* 0.1);
+  setManipulatorFlipperMotor((targetDegrees -  manipulatorFlipperMotor->GetEncoder().GetPosition())* 0.1);
 }
 
 void ElevatorSub::ExpandHatchGripper(){
@@ -99,10 +101,14 @@ void ElevatorSub::setTargetAngle(double newAngle) {
 }
 
 bool ElevatorSub::isFinishedMove() {
- if (fabs(targetHeight -elevatorMotor->GetEncoder().GetPosition()) < ELEVATOR_POSITION_TOLERANCE && fabs(elevatorMotor->GetEncoder().GetPosition()) < 45) {
-  return true;
-    } else {
-      return false;
+ if (fabs(targetHeight -elevatorMotor->GetEncoder().GetPosition()) < ELEVATOR_POSITION_TOLERANCE && fabs(elevatorMotor->GetEncoder().GetVelocity()) < 45) {
+   if (fabs(targetDegrees -manipulatorFlipperMotor->GetEncoder().GetPosition()) < MANIPULATOR_POSITION_TOLERANCE && fabs(manipulatorFlipperMotor->GetEncoder().GetVelocity()) < 45) {
+      return true;
+   } else {
+     return false;
+   }
+ } else{
+   return false;
  }
 }
 
@@ -117,17 +123,44 @@ void ElevatorSub::setElevatorMotorRaw(double speed){
 void ElevatorSub::setManipulatorFlipperMotor(double speed){
   manipulatorFlipperMotor->Set(speed);
 
-}
+  if (getManipulatorEncoder() < -180 && speed < 0){
+    speed = 0;
+  }
+
+  else if (getManipulatorEncoder() > 180 && speed > 0){
+    speed = 0;
+  }
+
+   else if (getManipulatorEncoder() > 170 && speed > 0){
+    speed = std::min(speed, 0.2);
+  }
+
+
+  else if (getManipulatorEncoder() < -170 && speed < 0){
+    speed = std::max(speed, -0.2);
+  }
+
+} 
 void ElevatorSub::setElevatorMotor(double speed){
 
   if (isElevatorDown() && speed < 0){
         speed = 0;
   }
 
-  else if (elevatorMotor->GetEncoder().GetPosition() < 20 && speed <0){
+   else if (elevatorMotor->GetEncoder().GetPosition() > 150 && speed > 0){
+    speed = 0;
+  }
+
+  else if (elevatorMotor->GetEncoder().GetPosition() < 20 && speed < 0){
     speed = std::max(speed, -0.2);
   }
+
+
+  else if (elevatorMotor->GetEncoder().GetPosition() > 100 && speed > 0){
+    speed = std::min(speed, 0.2);
+  }
 }
+
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

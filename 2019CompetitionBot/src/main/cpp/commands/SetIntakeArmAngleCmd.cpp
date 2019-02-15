@@ -8,26 +8,37 @@
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "Robot.h"
 
-SetIntakeArmAngleCmd::SetIntakeArmAngleCmd() {
+SetIntakeArmAngleCmd::SetIntakeArmAngleCmd(bool isClimbing) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::ballIntakeSub);
+  isClimbing = isClimbing;
+}
+
+SetIntakeArmAngleCmd::SetIntakeArmAngleCmd() {
+  SetIntakeArmAngleCmd(false);
 }
 
 // Called just before this Command runs the first time
 void SetIntakeArmAngleCmd::Initialize() {
   //These values need testing
+  Robot::ballIntakeSub.setArmTargetPosition(90);
   Robot::ballIntakeSub.setFlipperOut(true);
-  Robot::ballIntakeSub.setIntakeArmMotor(0.25);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void SetIntakeArmAngleCmd::Execute() {
-  Robot::ballIntakeSub.update();
+  if (isClimbing) {
+    Robot::ballIntakeSub.update(true);
+  } else {
+    Robot::ballIntakeSub.update(false);
+  }
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool SetIntakeArmAngleCmd::IsFinished() { return false; }
+bool SetIntakeArmAngleCmd::IsFinished() {  
+    return Robot::ballIntakeSub.doneFlipping(); 
+}
 
 // Called once after isFinished returns true
 void SetIntakeArmAngleCmd::End() {

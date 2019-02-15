@@ -37,8 +37,8 @@ void BallIntakeSub::setOut(){
   flipperMotorTwo.SetAngle(90.0);
 }
 */
-void BallIntakeSub::setArmPosition(double targetAngle){
-  angle = targetAngle;
+void BallIntakeSub::setArmTargetPosition(double angle){
+  targetAngle = angle;
 }
 
 void BallIntakeSub::setIntakeMotor(double speed){
@@ -51,8 +51,9 @@ bool BallIntakeSub::isBallIn() {
   logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
 }
 
-double BallIntakeSub::getIntakeArmEncoder() {
-  return intakeArmEnc->GetDistance();
+double BallIntakeSub::getIntakeArmEncoderAngle() {
+  //This assumes 5 encoder ticks per degree, this will need to be tested
+  return intakeArmEnc->GetDistance() / 5;
 }
 
 void BallIntakeSub::setFlipperOut(bool flipOut) {
@@ -65,6 +66,22 @@ void BallIntakeSub::setIntakeArmMotor(double speed){
   flipperMotorTwo->Set(ControlMode::PercentOutput, speed);
 }
 
-void BallIntakeSub::update(){
-  setIntakeArmMotor((angle - getIntakeArmEncoder()) * 0.01);
+void BallIntakeSub::update(bool isClimbing){
+
+  speed = targetAngle - getIntakeArmEncoderAngle() * 0.1;
+  
+  if (!isClimbing) {
+    speed = std::min(speed, 0.25);
+    speed = std::max(speed, -0.25);
+  }
+
+  setIntakeArmMotor(speed);
+}
+
+bool BallIntakeSub::doneFlipping() {
+  if (((fabs(targetAngle - getIntakeArmEncoderAngle())) < 2) && (fabs(intakeArmEnc->GetRate()) < 5))  {
+    return true;
+  }  else {
+    return false;
+  }
 }
