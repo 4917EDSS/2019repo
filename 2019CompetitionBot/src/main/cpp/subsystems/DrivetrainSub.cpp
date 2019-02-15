@@ -56,9 +56,6 @@ void DrivetrainSub::InitDefaultCommand()
 
 void DrivetrainSub::drive(double lSpeed, double rSpeed)
 {
-  std::cout<<"gyro "<<getAngle()<<"\n";
-
-
   leftMotor1->Set(lSpeed);
   leftMotor2->Set(lSpeed);
   leftMotor3->Set(lSpeed);
