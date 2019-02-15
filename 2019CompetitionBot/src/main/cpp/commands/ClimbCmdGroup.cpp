@@ -4,7 +4,7 @@
 #include "commands/DriveWithIntakeMotorCmd.h"
 
 ClimbCmdGroup::ClimbCmdGroup() {
-  AddSequential(new SetIntakeArmAngleCmd());
+  AddSequential(new SetIntakeArmAngleCmd(true));
   AddParallel(new DriveStraightCmd(1000000000.0));
   AddSequential(new DriveWithIntakeMotorCmd());
 }
