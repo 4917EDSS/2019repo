@@ -6,24 +6,33 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/SetElevatorandManipulatorCmd.h"
+#include "robot.h"
 
-setElevatorandManipulaterCmd::setElevatorandManipulaterCmd() {
+SetElevatorandManipulatorCmd::SetElevatorandManipulatorCmd(double targetAngle, double targetHeight) : targetAngle(targetAngle), targetHeight(targetHeight){
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  Requires(&Robot::elevatorSub);
 }
 
 // Called just before this Command runs the first time
-void setElevatorandManipulaterCmd::Initialize() {}
+void SetElevatorandManipulatorCmd::Initialize() {
+  Robot::elevatorSub.setTargetAngle(targetAngle);
+  Robot::elevatorSub.setTargetHeight(targetHeight);
+}
 
 // Called repeatedly when this Command is scheduled to run
-void setElevatorandManipulaterCmd::Execute() {}
+void SetElevatorandManipulatorCmd::Execute() {
+  
+}
 
 // Make this return true when this Command no longer needs to run execute()
-bool setElevatorandManipulaterCmd::IsFinished() { return false; }
+bool SetElevatorandManipulatorCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void setElevatorandManipulaterCmd::End() {}
+void SetElevatorandManipulatorCmd::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void setElevatorandManipulaterCmd::Interrupted() {}
+void SetElevatorandManipulatorCmd::Interrupted() {
+  End();
+}

@@ -14,6 +14,7 @@
 #include "frc/WPILib.h"
 
 constexpr float ELEVATOR_POSITION_TOLERANCE = 5.0;
+constexpr float MANIPULATOR_POSITION_TOLERANCE = 1.0;
 constexpr float ELEVATOR_P = 0;
 constexpr float ELEVATOR_I = 0;
 constexpr float ELEVATOR_D = 0;
@@ -36,6 +37,7 @@ void ElevatorSub::InitDefaultCommand() {
 
 void ElevatorSub::update(){
   setElevatorMotor((targetHeight - elevatorMotor->GetEncoder().GetPosition())* 0.1);
+  setManipulatorFlipperMotor((targetDegrees -  manipulatorFlipperMotor->GetEncoder().GetPosition())* 0.1);
 }
 
 void ElevatorSub::ExpandHatchGripper(){
@@ -99,10 +101,14 @@ void ElevatorSub::setTargetAngle(double newAngle) {
 }
 
 bool ElevatorSub::isFinishedMove() {
- if (fabs(targetHeight -elevatorMotor->GetEncoder().GetPosition()) < ELEVATOR_POSITION_TOLERANCE && fabs(elevatorMotor->GetEncoder().GetPosition()) < 45) {
-  return true;
-    } else {
-      return false;
+ if (fabs(targetHeight -elevatorMotor->GetEncoder().GetPosition()) < ELEVATOR_POSITION_TOLERANCE && fabs(elevatorMotor->GetEncoder().GetVelocity()) < 45) {
+   if (fabs(targetDegrees -manipulatorFlipperMotor->GetEncoder().GetPosition()) < MANIPULATOR_POSITION_TOLERANCE && fabs(manipulatorFlipperMotor->GetEncoder().GetVelocity()) < 45) {
+      return true;
+   } else {
+     return false;
+   }
+ } else{
+   return false;
  }
 }
 
