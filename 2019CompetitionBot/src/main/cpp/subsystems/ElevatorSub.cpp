@@ -117,27 +117,43 @@ void ElevatorSub::setElevatorMotorRaw(double speed){
 void ElevatorSub::setManipulatorFlipperMotor(double speed){
   manipulatorFlipperMotor->Set(speed);
 
-}
+  if (getManipulatorEncoder() < -180 && speed < 0){
+    speed = 0;
+  }
+
+  else if (getManipulatorEncoder() > 180 && speed > 0){
+    speed = 0;
+  }
+
+   else if (getManipulatorEncoder() > 170 && speed > 0){
+    speed = std::min(speed, 0.2);
+  }
+
+
+  else if (getManipulatorEncoder() < -170 && speed < 0){
+    speed = std::max(speed, -0.2);
+  }
+
+} 
 void ElevatorSub::setElevatorMotor(double speed){
 
   if (isElevatorDown() && speed < 0){
         speed = 0;
   }
 
-  else if (elevatorMotor->GetEncoder().GetPosition() < 20 && speed <0){
+   else if (elevatorMotor->GetEncoder().GetPosition() > 150 && speed > 0){
+    speed = 0;
+  }
+
+  else if (elevatorMotor->GetEncoder().GetPosition() < 20 && speed < 0){
     speed = std::max(speed, -0.2);
   }
 
-  else if (250 && speed < 0){
-    speed = 0;
-  }
-  //Change 250 to max elevator height.
 
   else if (elevatorMotor->GetEncoder().GetPosition() > 100 && speed > 0){
     speed = std::min(speed, 0.2);
   }
 }
-
 
 
 // Put methods for controlling this subsystem
