@@ -40,7 +40,7 @@ void ElevatorSub::InitDefaultCommand() {
 
 void ElevatorSub::update(){
   setElevatorMotorSpeed((targetHeight - elevatorMotor1->GetEncoder().GetPosition())* 0.1);
-  setManipulatorFlipperMotorSpeed((targetDegrees -  manipulatorFlipperMotor->GetEncoder().GetPosition())* 0.1);
+  setManipulatorFlipperMotorSpeed((targetDegrees -  manipulatorFlipperMotor->GetEncoder().GetPosition())* 0.04);
 }
 
 void ElevatorSub::ExpandHatchGripper(){
@@ -117,7 +117,7 @@ void ElevatorSub::setElevatorMotorRaw(double speed){
 }
 
 void ElevatorSub::setManipulatorFlipperMotorSpeed(double speed){
-  manipulatorFlipperMotor->Set(speed);
+  
 
   if (getManipulatorEncoder() < -90 && speed < 0){
     speed = 0;
@@ -135,6 +135,8 @@ void ElevatorSub::setManipulatorFlipperMotorSpeed(double speed){
   else if (getManipulatorEncoder() < -80 && speed < 0){
     speed = std::max(speed, -0.2);
   }
+
+  manipulatorFlipperMotor->Set(speed);
 
 } 
 void ElevatorSub::setElevatorMotorSpeed(double speed){
