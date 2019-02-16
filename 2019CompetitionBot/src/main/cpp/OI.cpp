@@ -18,6 +18,7 @@
 #include "commands/MilkyScoreGrp.h"
 #include "commands/MilkyManipulatorCmd.h"
 #include "commands/ClimbCmdGroup.h"
+#include "commands/SetIntakeArmAngleCmd.h"
 
 
 OI::OI() {
@@ -57,7 +58,8 @@ OI::OI() {
   
   milkyManipulatorBtn.reset(new frc::JoystickButton(driverController.get(),MILKY_MANIPULATOR_BTN));
   milkyManipulatorBtn->WhileHeld( new MilkyScoreGrp());
-
+  resetIntakeBtn.reset(new frc::JoystickButton(operatorController.get(),RESET_INTAKE_BTN));
+  resetIntakeBtn->WhenPressed(new SetIntakeArmAngleCmd(0));
   climbModeBtn.reset(new frc::JoystickButton(operatorController.get(), CLIMB_MODE_BTN));
   climbModeBtn->WhileHeld(new ClimbCmdGroup());
 
