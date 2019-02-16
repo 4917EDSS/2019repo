@@ -37,6 +37,6 @@ constexpr int MANIPULATOR_RIGHT_INTAKE_MOTOR_CAN_ID = 14;
 //DIOs
 constexpr int INTAKE_LIMIT_DIO = 9;
 
-constexpr int INTAKE_MOTOR_RIGHT_ENC1_DIO = 7;
-constexpr int INTAKE_MOTOR_LEFT_ENC2_DIO = 8;
+constexpr int INTAKE_MOTOR_RIGHT_ENC1_DIO = 2;
+constexpr int INTAKE_MOTOR_LEFT_ENC2_DIO = 3;
 
