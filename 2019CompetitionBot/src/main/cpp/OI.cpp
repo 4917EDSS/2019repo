@@ -18,8 +18,8 @@
 #include "commands/MilkyScoreGrp.h"
 #include "commands/MilkyManipulatorCmd.h"
 #include "commands/ClimbCmdGroup.h"
+#include "commands/SetElevatorandManipulatorCmd.h"
 #include "commands/SetIntakeArmAngleCmd.h"
-
 
 OI::OI() {
   // Process operator interface input here.
@@ -58,13 +58,18 @@ OI::OI() {
   
   milkyManipulatorBtn.reset(new frc::JoystickButton(driverController.get(),MILKY_MANIPULATOR_BTN));
   milkyManipulatorBtn->WhileHeld( new MilkyScoreGrp());
+
   resetIntakeBtn.reset(new frc::JoystickButton(operatorController.get(),RESET_INTAKE_BTN));
   resetIntakeBtn->WhenPressed(new SetIntakeArmAngleCmd(0));
+  
   climbModeBtn.reset(new frc::JoystickButton(operatorController.get(), CLIMB_MODE_BTN));
   climbModeBtn->WhileHeld(new ClimbCmdGroup());
 
   TestBtn.reset(new frc::JoystickButton(operatorController.get(), TEST_BTN));
   TestBtn->WhileHeld(new TestButtonCmd());
+
+  setManipulatorEncoderZeroBtn.reset(new frc::JoystickButton(operatorController.get(), SET_MANIPULATOR_ENCODER_ZERO_BTN));
+  setManipulatorEncoderZeroBtn->WhenPressed(new SetElevatorandManipulatorCmd(0.0, 0.0));
 }
 
 std::shared_ptr<frc::Joystick> OI::getDriverController() {
