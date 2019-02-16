@@ -17,7 +17,8 @@
 class ElevatorSub : public frc::Subsystem {
  private:
   std::shared_ptr<frc::Encoder> elevatorMotorEnc;
-  std::shared_ptr<rev::CANSparkMax> elevatorMotor;
+  std::shared_ptr<rev::CANSparkMax> elevatorMotor1;
+  std::shared_ptr<rev::CANSparkMax> elevatorMotor2;
   std::shared_ptr<frc::DigitalInput> lowerLimit;
   std::shared_ptr<frc::DigitalInput> upperLimit;
   std::shared_ptr<frc::Solenoid> hatchGripperSolenoid;
@@ -40,17 +41,17 @@ class ElevatorSub : public frc::Subsystem {
   void InitDefaultCommand() override;
   void update();
   double getElevatorEncoder();
-  void setElevatorMotor(double speed);
-  void setTargetHeight(double newTarget);
-  void setTargetAngle(double newAngle);
+  void setElevatorMotorSpeed(double speed);
+  void setElevatorTargetHeight(double newTarget);
+  void setManipulatorTargetAngle(double newAngle);
   bool isFinishedMove();
   bool isElevatorDown();
   void setElevatorMotorRaw(double speed);
   
-  void ExpandHatchGripper();
-  double getManipulatorEncoder();
+  void ExpandHatchGripper();  
   void ContractHatchGripper();
-  void setWheels(double lspeed, double rspeed);
+  double getManipulatorEncoder();
+  void setManipulatorWheelSpeed(double lspeed, double rspeed);
   bool isBallInManipulator();
   void flipManipulator(bool goForward);
   bool isManipulatorFlipped();
