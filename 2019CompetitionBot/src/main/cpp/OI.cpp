@@ -53,9 +53,7 @@ OI::OI() {
   DriverKillBtn2.reset(new frc::JoystickButton(driverController.get(), DRIVER_KILL_TWO_BTN));
   DriverKillBtn2->WhenPressed(new KillEverythingCmd());
 
-  ballFlipperToggleBtn.reset(new frc::JoystickButton(operatorController.get(), FLIP_BALL_INTAKE_TOGGLE_BTN));
-  ballFlipperToggleBtn->WhenPressed(new FlipManipulatorCmd(FlipManipulatorCmd::FlipperDirection::toggle));
-  
+
   milkyManipulatorBtn.reset(new frc::JoystickButton(driverController.get(),MILKY_MANIPULATOR_BTN));
   milkyManipulatorBtn->WhileHeld( new MilkyScoreGrp());
 
