@@ -5,17 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/IntakeBallGrp.h"
-#include "commands/IntakeBallUntilLimitCmd.h"
-#include "commands/IntakeBallFromRobotCmd.h"
-#include "commands/SetIntakeArmAngleCmd.h"
-#include "commands/FoldIntakeCmd.h"
-#include "commands/SetElevatorToHeightCmd.h"
+#pragma once
 
-IntakeBallGrp::IntakeBallGrp() {
+#include <frc/commands/Command.h>
 
-  AddParallel(new FoldIntakeCmd(true));
-  AddSequential(new SetIntakeArmAngleCmd(false,90));
-  AddSequential(new SetElevatorToHeightCmd(0.0));
-  AddSequential(new IntakeBallUntilLimitCmd());
-}
+class FoldIntakeCmd : public frc::Command {
+ public:
+  FoldIntakeCmd(bool flipOut);
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
+
+private:
+  bool flipOut;
+};

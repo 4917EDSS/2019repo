@@ -12,11 +12,13 @@ IntakeBallUntilLimitCmd::IntakeBallUntilLimitCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::ballIntakeSub);
+  Requires(&Robot::elevatorSub);
 }
 
 // Called just before this Command runs the first time
 void IntakeBallUntilLimitCmd::Initialize() {
   Robot::ballIntakeSub.setIntakeMotor(1.0);
+  Robot::elevatorSub.setManipulatorWheelSpeed(-0.5, -0.5);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -26,12 +28,13 @@ void IntakeBallUntilLimitCmd::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool IntakeBallUntilLimitCmd::IsFinished() {
-  return Robot::ballIntakeSub.isBallIn();
+  return Robot::elevatorSub.isBallInManipulator();
  }
 
 // Called once after isFinished returns true
 void IntakeBallUntilLimitCmd::End() {
   Robot::ballIntakeSub.setIntakeMotor(0.0);
+  Robot::elevatorSub.setManipulatorWheelSpeed(0.0, 0.0);
 }
 
 // Called when another command which requires one or more of the same

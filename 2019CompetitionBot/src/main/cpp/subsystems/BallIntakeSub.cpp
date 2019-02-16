@@ -13,7 +13,6 @@
 
 BallIntakeSub::BallIntakeSub() : Subsystem("ExampleSubsystem") {
   ballIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_WHEELS_MOTOR_CAN_ID));
-  intakeLimit.reset(new frc::DigitalInput(INTAKE_LIMIT_DIO));
   flipperMotorOne.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_TOP_FLIP_MOTOR_1_CAN_ID));
   flipperMotorTwo.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_BOTTOM_FLIP_MOTOR_2_CAN_ID));
   intakeFolderSolenoid.reset(new frc::Solenoid(MANIPULATOR_INTAKE_FOLDER_PCM_ID));
@@ -45,11 +44,6 @@ void BallIntakeSub::setArmTargetPosition(double angle){
 
 void BallIntakeSub::setIntakeMotor(double speed){
   ballIntakeMotor->Set(ControlMode::PercentOutput, speed);
-  logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
-}
-
-bool BallIntakeSub::isBallIn() {
-  intakeLimit.get();
   logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
 }
 
