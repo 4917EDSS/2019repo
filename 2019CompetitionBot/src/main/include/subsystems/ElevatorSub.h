@@ -31,30 +31,29 @@ class ElevatorSub : public frc::Subsystem {
   double targetDegrees;
   double targetHeight;
 
-
-
  public:
   ElevatorSub();
-  // This is where we will set the default values for the go to height ability
-  // Don't know why there are two functions, this one is not needed I (Jimmy) think???
-  //void SetElevatorMotor(double speed);
   void InitDefaultCommand() override;
-  void update();
-  double getElevatorEncoder();
+
   void setElevatorMotorSpeed(double speed);
   void setElevatorTargetHeight(double newTarget);
-  void setManipulatorTargetAngle(double newAngle);
-  bool isFinishedMove();
+  double getElevatorEncoder();
   bool isElevatorDown();
   void setElevatorMotorRaw(double speed);
-  
-  void ExpandHatchGripper();  
-  void ContractHatchGripper();
+
+  void setManipulatorFlipperMotorSpeed(double speed);
+  void setManipulatorTargetAngle(double newAngle);
   double getManipulatorEncoder();
+  bool isManipulatorAtLimit();
+
   void setManipulatorWheelSpeed(double lspeed, double rspeed);
   bool isBallInManipulator();
+
+  void ExpandHatchGripper();  
+  void ContractHatchGripper();
+
+  void update();
   void executeStateMachine();
-  bool isManipulatorAtLimit();
+  bool isFinishedMove();
   void zeroEverything();
-  void setManipulatorFlipperMotorSpeed(double speed);
 };
