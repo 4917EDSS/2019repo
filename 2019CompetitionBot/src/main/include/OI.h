@@ -35,7 +35,7 @@ constexpr int OPERATOR_CONTROLLER_PORT = 1;
 //Driver
 constexpr int DRIVER_KILL_ONE_BTN = 11;
 constexpr int DRIVER_KILL_TWO_BTN = 12;
-constexpr int MILKY_MANIPULATOR_BTN= 13;
+constexpr int MILKY_MANIPULATOR_BTN= 9;
 
 //Operator
 constexpr int HATCH_CONTRACT_BTN = 3;
@@ -48,7 +48,7 @@ constexpr int OPERATOR_MANIPULATOR_AXIS = 1;
 constexpr int MANIPULATOR_BALL_INTAKE_BTN = 4;
 constexpr int CLIMB_MODE_BTN = 5;
 constexpr int TEST_BTN = 6;
-constexpr int SET_MANIPULATOR_ENCODER_ZERO_BTN = 14;
+constexpr int SET_MANIPULATOR_ENCODER_ZERO_BTN = 8;
 constexpr int RESET_INTAKE_BTN=7;
 
 class OI {
