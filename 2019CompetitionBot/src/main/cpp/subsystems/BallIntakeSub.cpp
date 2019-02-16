@@ -59,13 +59,13 @@ void BallIntakeSub::setFlipperOut(bool flipOut) {
 }
 
 void BallIntakeSub::setIntakeArmMotor(double speed){
-  flipperMotorOne->Set(ControlMode::PercentOutput, speed);
-  flipperMotorTwo->Set(ControlMode::PercentOutput, speed);
+  flipperMotorOne->Set(ControlMode::PercentOutput, -speed);
+  flipperMotorTwo->Set(ControlMode::PercentOutput, -speed);
 }
 
 void BallIntakeSub::update(bool isClimbing){
 
-  speed = targetAngle - getIntakeArmEncoderAngle() * 0.1;
+  speed = targetAngle - getIntakeArmEncoderAngle() * 0.04;
   
   if (!isClimbing) {
     speed = std::min(speed, 0.25);

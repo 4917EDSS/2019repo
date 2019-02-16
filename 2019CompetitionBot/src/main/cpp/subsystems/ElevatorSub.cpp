@@ -12,6 +12,7 @@
 #include <ctre/Phoenix.h>
 #include "components/Log.h"
 #include "frc/WPILib.h"
+#include "rev/CANSparkMax.h"
 
 constexpr float ELEVATOR_POSITION_TOLERANCE = 5.0;
 constexpr float MANIPULATOR_POSITION_TOLERANCE = 1.0;
@@ -23,6 +24,7 @@ constexpr float FLIPPER_TICK_TO_DEGREE_FACTOR = (90/44.1900);
 ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
   elevatorMotor1.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   elevatorMotor2.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_2_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  elevatorMotor1->GetEncoder().SetPosition(0);
 	logger.send(logger.ELEVATOR, "Elevator code started \n", 0.0);
 
   hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
@@ -39,7 +41,7 @@ void ElevatorSub::InitDefaultCommand() {
 }
 
 void ElevatorSub::update(){
-  setElevatorMotorSpeed((targetHeight - elevatorMotor1->GetEncoder().GetPosition())* 0.1);
+  //setElevatorMotorSpeed((targetHeight - elevatorMotor1->GetEncoder().GetPosition())* 0.1);
   setManipulatorFlipperMotorSpeed((targetDegrees -  manipulatorFlipperMotor->GetEncoder().GetPosition())* 0.04);
 }
 
@@ -60,13 +62,17 @@ void ElevatorSub::zeroEverything(){
 }
 
 void ElevatorSub::setManipulatorWheelSpeed(double lspeed, double rspeed) {
-  manipulatorIntakeMotorLeft->Set(lspeed);
+  manipulatorIntakeMotorLeft->Set(-lspeed);
   manipulatorIntakeMotorRight->Set(rspeed);
 }
 
 bool ElevatorSub::isBallInManipulator() {
   intakeFromRobotLimit.get();
 }
+
+ double ElevatorSub::getElevatorEncoder() {
+  return elevatorMotor1->GetEncoder().GetPosition();
+ }
 
  double ElevatorSub::getManipulatorEncoder() {
   return manipulatorFlipperMotor->GetEncoder().GetPosition();
@@ -112,7 +118,7 @@ bool ElevatorSub::isElevatorDown(){
 }
 
 void ElevatorSub::setElevatorMotorRaw(double speed){
-  elevatorMotor1->Set(speed);
+  elevatorMotor1->Set(-speed);
   elevatorMotor2->Set(speed);
 }
 
@@ -158,7 +164,3 @@ void ElevatorSub::setElevatorMotorSpeed(double speed){
     speed = std::min(speed, 0.2);
   }
 }
-
-
-// Put methods for controlling this subsystem
-// here. Call these from Commands.

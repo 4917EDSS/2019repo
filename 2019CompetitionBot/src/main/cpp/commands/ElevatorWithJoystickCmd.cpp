@@ -29,7 +29,8 @@ void ElevatorWithJoystickCmd::Execute() {
 	elevatorStick = pow(elevatorStick, 3);
   logger.send(logger.DEBUGGING, "The elevator is being used @ %f\n", elevatorStick);
 
-  Robot::elevatorSub.setElevatorMotorSpeed(elevatorStick);
+  // TODO: Replace with non-raw version
+  Robot::elevatorSub.setElevatorMotorRaw(-elevatorStick);
 
   double manipulatorStick = operatorJoystick->GetRawAxis(OPERATOR_MANIPULATOR_AXIS);
   manipulatorStick = pow(manipulatorStick, 3);
