@@ -9,7 +9,7 @@
 #include <ctre/Phoenix.h>
 #include "components/Log.h"
 //Canid4 and Set Intake
-#define ENCODER_SCALE (90.0/32.0);
+#define ENCODER_SCALE (90.0/32.0)
 
 BallIntakeSub::BallIntakeSub() : Subsystem("ExampleSubsystem") {
   ballIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_WHEELS_MOTOR_CAN_ID));
