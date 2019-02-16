@@ -68,6 +68,10 @@ bool ElevatorSub::isBallInManipulator() {
   intakeFromRobotLimit.get();
 }
 
+ double ElevatorSub::getElevatorEncoder() {
+  return elevatorMotor1->GetEncoder().GetPosition();
+ }
+
  double ElevatorSub::getManipulatorEncoder() {
   return manipulatorFlipperMotor->GetEncoder().GetPosition();
  }
@@ -112,7 +116,7 @@ bool ElevatorSub::isElevatorDown(){
 }
 
 void ElevatorSub::setElevatorMotorRaw(double speed){
-  elevatorMotor1->Set(speed);
+  elevatorMotor1->Set(-speed);
   elevatorMotor2->Set(speed);
 }
 
@@ -156,7 +160,3 @@ void ElevatorSub::setElevatorMotorSpeed(double speed){
     speed = std::min(speed, 0.2);
   }
 }
-
-
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
