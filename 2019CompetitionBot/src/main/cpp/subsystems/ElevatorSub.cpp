@@ -39,7 +39,7 @@ void ElevatorSub::InitDefaultCommand() {
 }
 
 void ElevatorSub::update(){
-  setElevatorMotorSpeed((targetHeight - elevatorMotor1->GetEncoder().GetPosition())* 0.1);
+  //setElevatorMotorSpeed((targetHeight - elevatorMotor1->GetEncoder().GetPosition())* 0.1);
   setManipulatorFlipperMotorSpeed((targetDegrees -  manipulatorFlipperMotor->GetEncoder().GetPosition())* 0.04);
 }
 
@@ -60,7 +60,7 @@ void ElevatorSub::zeroEverything(){
 }
 
 void ElevatorSub::setManipulatorWheelSpeed(double lspeed, double rspeed) {
-  manipulatorIntakeMotorLeft->Set(lspeed);
+  manipulatorIntakeMotorLeft->Set(-lspeed);
   manipulatorIntakeMotorRight->Set(rspeed);
 }
 
