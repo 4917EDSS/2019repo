@@ -65,9 +65,7 @@ void Robot::DisabledPeriodic() {
 void Robot::AutonomousInit() {
 
   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 0);
-
   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
-
   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0);
 
   m_autonomousCommand = m_chooser.GetSelected();
@@ -94,8 +92,6 @@ void Robot::TeleopInit() {
   }
   
   frc::CameraServer::GetInstance()->StartAutomaticCapture("usbCam1", "/dev/video0");
-  frc::CameraServer::GetInstance()->StartAutomaticCapture("usbCam2", "/dev/video1");
-//  Robot::m_drivetrainSub.drive(0.25, 0.25);
 }
 
 void Robot::TeleopPeriodic() { 
