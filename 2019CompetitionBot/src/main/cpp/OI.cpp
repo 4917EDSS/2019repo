@@ -18,6 +18,7 @@
 #include "commands/MilkyScoreGrp.h"
 #include "commands/MilkyManipulatorCmd.h"
 #include "commands/ClimbCmdGroup.h"
+#include "commands/SetElevatorandManipulatorCmd.h"
 
 
 OI::OI() {
@@ -63,6 +64,9 @@ OI::OI() {
 
   TestBtn.reset(new frc::JoystickButton(operatorController.get(), TEST_BTN));
   TestBtn->WhileHeld(new TestButtonCmd());
+
+  setManipulatorEncoderZeroBtn.reset(new frc::JoystickButton(operatorController.get(), SET_MANIPULATOR_ENCODER_ZERO_BTN));
+  setManipulatorEncoderZeroBtn->WhenPressed(new SetElevatorandManipulatorCmd(0.0, 0.0));
 }
 
 std::shared_ptr<frc::Joystick> OI::getDriverController() {
