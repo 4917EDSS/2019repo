@@ -61,7 +61,7 @@ OI::OI() {
 
   resetIntakeBtn.reset(new frc::JoystickButton(operatorController.get(),RESET_INTAKE_BTN));
   resetIntakeBtn->WhenPressed(new SetIntakeArmAngleCmd(0));
-  
+      
   climbModeBtn.reset(new frc::JoystickButton(operatorController.get(), CLIMB_MODE_BTN));
   climbModeBtn->WhileHeld(new ClimbCmdGroup());
 
