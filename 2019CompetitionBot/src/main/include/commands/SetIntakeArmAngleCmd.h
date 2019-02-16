@@ -11,8 +11,8 @@
 
 class SetIntakeArmAngleCmd : public frc::Command {
  public:
-  SetIntakeArmAngleCmd(bool isClimbing);
-  SetIntakeArmAngleCmd();
+  SetIntakeArmAngleCmd(bool isClimbing, double angle);
+  SetIntakeArmAngleCmd(double angle);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
