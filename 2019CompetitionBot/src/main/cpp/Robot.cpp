@@ -140,6 +140,8 @@ void Robot::UpdateSmartDashboard(){
   frc::SmartDashboard::PutNumber("Left Drive Motor Enc", drivetrainSub.GetLeftEncoder());
   frc::SmartDashboard::PutNumber("Right Drive Motor Enc", drivetrainSub.GetRightEncoder());
   frc::SmartDashboard::PutNumber("Gyro's Angle", drivetrainSub.getAngle());
+  frc::SmartDashboard::PutNumber("Manipulator Position", elevatorSub.getManipulatorEncoder());
+
   
 
 

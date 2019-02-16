@@ -22,14 +22,18 @@ void SetElevatorandManipulatorCmd::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void SetElevatorandManipulatorCmd::Execute() {
-  
+  Robot::elevatorSub.update();
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool SetElevatorandManipulatorCmd::IsFinished() { return false; }
+bool SetElevatorandManipulatorCmd::IsFinished() { 
+  return Robot::elevatorSub.isFinishedMove(); 
+  }
 
 // Called once after isFinished returns true
-void SetElevatorandManipulatorCmd::End() {}
+void SetElevatorandManipulatorCmd::End() {
+  Robot::elevatorSub.zeroEverything();
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
