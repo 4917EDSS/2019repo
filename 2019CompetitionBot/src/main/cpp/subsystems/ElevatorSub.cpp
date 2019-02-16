@@ -70,14 +70,6 @@ bool ElevatorSub::isBallInManipulator() {
   return manipulatorFlipperMotor->GetEncoder().GetPosition();
  }
 
-void ElevatorSub::flipManipulator(bool goForward) {
-  if (goForward) {
-    targetDegrees = 180;
-  } else {
-    targetDegrees = 0;
-  }
-}
-
 bool ElevatorSub::isManipulatorFlipped() {
   manipulatorFlipperLimit.get();
 }
@@ -125,20 +117,20 @@ void ElevatorSub::setElevatorMotorRaw(double speed){
 void ElevatorSub::setManipulatorFlipperMotor(double speed){
   manipulatorFlipperMotor->Set(speed);
 
-  if (getManipulatorEncoder() < -180 && speed < 0){
+  if (getManipulatorEncoder() < -90 && speed < 0){
     speed = 0;
   }
 
-  else if (getManipulatorEncoder() > 180 && speed > 0){
+  else if (getManipulatorEncoder() > 90 && speed > 0){
     speed = 0;
   }
 
-   else if (getManipulatorEncoder() > 170 && speed > 0){
+   else if (getManipulatorEncoder() > 80 && speed > 0){
     speed = std::min(speed, 0.2);
   }
 
 
-  else if (getManipulatorEncoder() < -170 && speed < 0){
+  else if (getManipulatorEncoder() < -80 && speed < 0){
     speed = std::max(speed, -0.2);
   }
 
