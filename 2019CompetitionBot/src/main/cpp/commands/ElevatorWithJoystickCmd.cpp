@@ -29,13 +29,13 @@ void ElevatorWithJoystickCmd::Execute() {
 	elevatorStick = pow(elevatorStick, 3);
   logger.send(logger.DEBUGGING, "The elevator is being used @ %f\n", elevatorStick);
 
-  Robot::elevatorSub.setElevatorMotor(elevatorStick);
+  Robot::elevatorSub.setElevatorMotorSpeed(elevatorStick);
 
   double manipulatorStick = operatorJoystick->GetRawAxis(OPERATOR_MANIPULATOR_AXIS);
   manipulatorStick = pow(manipulatorStick, 3);
   logger.send(logger.DEBUGGING, "The manipulator is being used @ %f\n", manipulatorStick);
 
-  Robot::elevatorSub.setWheels(manipulatorStick, manipulatorStick);
+  Robot::elevatorSub.setManipulatorWheelSpeed(manipulatorStick, manipulatorStick);
 
 }
 
@@ -46,8 +46,8 @@ bool ElevatorWithJoystickCmd::IsFinished() {
 
 // Called once after isFinished returns true
 void ElevatorWithJoystickCmd::End() {
-  Robot::elevatorSub.setElevatorMotor(0.0);
-  Robot::elevatorSub.setWheels(0.0, 0.0);
+  Robot::elevatorSub.setElevatorMotorSpeed(0.0);
+  Robot::elevatorSub.setManipulatorWheelSpeed(0.0, 0.0);
 }
 
 // Called when another command which requires one or more of the same

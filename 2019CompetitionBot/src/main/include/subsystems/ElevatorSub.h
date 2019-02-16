@@ -53,9 +53,8 @@ class ElevatorSub : public frc::Subsystem {
   double getManipulatorEncoder();
   void setManipulatorWheelSpeed(double lspeed, double rspeed);
   bool isBallInManipulator();
-  void flipManipulator(bool goForward);
-  bool isManipulatorFlipped();
   void executeStateMachine();
+  bool isManipulatorAtLimit();
   void zeroEverything();
-  void setManipulatorFlipperMotor(double speed);
+  void setManipulatorFlipperMotorSpeed(double speed);
 };

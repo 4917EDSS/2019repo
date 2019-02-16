@@ -18,7 +18,7 @@ TestButtonCmd::TestButtonCmd() {
 
 // Called just before this Command runs the first time
 void TestButtonCmd::Initialize() {
-   Robot::elevatorSub.setManipulatorFlipperMotor(0.05);
+   Robot::elevatorSub.setManipulatorFlipperMotorSpeed(0.05);
 }
 
 // Called repeatedly when this Command is scheduled to run

@@ -39,8 +39,8 @@ void ElevatorSub::InitDefaultCommand() {
 }
 
 void ElevatorSub::update(){
-  setElevatorMotor((targetHeight - elevatorMotor1->GetEncoder().GetPosition())* 0.1);
-  setManipulatorFlipperMotor((targetDegrees -  manipulatorFlipperMotor->GetEncoder().GetPosition())* 0.1);
+  setElevatorMotorSpeed((targetHeight - elevatorMotor1->GetEncoder().GetPosition())* 0.1);
+  setManipulatorFlipperMotorSpeed((targetDegrees -  manipulatorFlipperMotor->GetEncoder().GetPosition())* 0.1);
 }
 
 void ElevatorSub::ExpandHatchGripper(){
@@ -59,7 +59,7 @@ void ElevatorSub::zeroEverything(){
   manipulatorFlipperMotor->Set(0.0);
 }
 
-void ElevatorSub::setWheels(double lspeed, double rspeed) {
+void ElevatorSub::setManipulatorWheelSpeed(double lspeed, double rspeed) {
   manipulatorIntakeMotorLeft->Set(lspeed);
   manipulatorIntakeMotorRight->Set(rspeed);
 }
@@ -72,7 +72,7 @@ bool ElevatorSub::isBallInManipulator() {
   return manipulatorFlipperMotor->GetEncoder().GetPosition();
  }
 
-bool ElevatorSub::isManipulatorFlipped() {
+bool ElevatorSub::isManipulatorAtLimit() {
   manipulatorFlipperLimit.get();
 }
 
@@ -87,12 +87,11 @@ void ElevatorSub::executeStateMachine() {
     manipulatorFlipperMotor->Set(0.5);
   }
 }
-
-void ElevatorSub::setTargetHeight(double newHeight){
+void ElevatorSub::setElevatorTargetHeight(double newHeight){
   targetHeight = newHeight;
 }
 
-void ElevatorSub::setTargetAngle(double newAngle) {
+void ElevatorSub::setManipulatorTargetAngle(double newAngle) {
   targetDegrees = newAngle;
 }
 
@@ -117,7 +116,7 @@ void ElevatorSub::setElevatorMotorRaw(double speed){
   elevatorMotor2->Set(speed);
 }
 
-void ElevatorSub::setManipulatorFlipperMotor(double speed){
+void ElevatorSub::setManipulatorFlipperMotorSpeed(double speed){
   manipulatorFlipperMotor->Set(speed);
 
   if (getManipulatorEncoder() < -90 && speed < 0){
@@ -138,7 +137,7 @@ void ElevatorSub::setManipulatorFlipperMotor(double speed){
   }
 
 } 
-void ElevatorSub::setElevatorMotor(double speed){
+void ElevatorSub::setElevatorMotorSpeed(double speed){
 
   if (isElevatorDown() && speed < 0){
         speed = 0;

@@ -16,8 +16,8 @@ SetElevatorandManipulatorCmd::SetElevatorandManipulatorCmd(double targetAngle, d
 
 // Called just before this Command runs the first time
 void SetElevatorandManipulatorCmd::Initialize() {
-  Robot::elevatorSub.setTargetAngle(targetAngle);
-  Robot::elevatorSub.setTargetHeight(targetHeight);
+  Robot::elevatorSub.setElevatorTargetHeight(targetHeight);
+  Robot::elevatorSub.setManipulatorTargetAngle(targetAngle);
 }
 
 // Called repeatedly when this Command is scheduled to run

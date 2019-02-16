@@ -16,7 +16,7 @@ SetElevatorToHeightCmd::SetElevatorToHeightCmd(double height) : height(height) {
 
 // Called just before this Command runs the first time
 void SetElevatorToHeightCmd::Initialize(){
-  Robot::elevatorSub.setTargetHeight(height);
+  Robot::elevatorSub.setElevatorTargetHeight(height);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -24,7 +24,7 @@ void SetElevatorToHeightCmd::Execute(){
   logger.send(logger.DEBUGGING, "%s : %s\n", __FILE__, __FUNCTION__);
 
   if (height == 0){
-    Robot::elevatorSub.setElevatorMotor(-1.0);
+    Robot::elevatorSub.setElevatorMotorSpeed(-1.0);
   }else{
     Robot::elevatorSub.update();
   }
@@ -50,9 +50,9 @@ bool SetElevatorToHeightCmd::IsFinished()
 // Called once after isFinished returns true
 void SetElevatorToHeightCmd::End() {
   if(Robot::elevatorSub.isElevatorDown()){
-Robot::elevatorSub.setElevatorMotor(0.0);
+    Robot::elevatorSub.setElevatorMotorSpeed(0.0);
   }else{
-    Robot::elevatorSub.setElevatorMotor(0.04);
+    Robot::elevatorSub.setElevatorMotorSpeed(0.04);
   }
 }
 

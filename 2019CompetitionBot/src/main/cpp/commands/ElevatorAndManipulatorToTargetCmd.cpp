@@ -16,8 +16,8 @@ ElevatorAndManipulatorToTargetCmd::ElevatorAndManipulatorToTargetCmd(double targ
 
 // Called just before this Command runs the first time
 void ElevatorAndManipulatorToTargetCmd::Initialize() {
-  Robot::elevatorSub.setTargetHeight(targetHeight);
-  Robot::elevatorSub.setTargetAngle(targetAngle);
+  Robot::elevatorSub.setElevatorTargetHeight(targetHeight);
+  Robot::elevatorSub.setManipulatorTargetAngle(targetAngle);
 }
 
 // Called repeatedly when this Command is scheduled to run
