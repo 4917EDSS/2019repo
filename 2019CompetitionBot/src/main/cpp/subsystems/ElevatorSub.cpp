@@ -18,6 +18,7 @@ constexpr float MANIPULATOR_POSITION_TOLERANCE = 1.0;
 constexpr float ELEVATOR_P = 0;
 constexpr float ELEVATOR_I = 0;
 constexpr float ELEVATOR_D = 0;
+constexpr float FLIPPER_TICK_TO_DEGREE_FACTOR = (90/44.1900);
 
 ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
   elevatorMotor.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
@@ -27,6 +28,7 @@ ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
   manipulatorIntakeMotorLeft.reset(new WPI_VictorSPX(MANIPULATOR_LEFT_INTAKE_MOTOR_CAN_ID));
   manipulatorIntakeMotorRight.reset(new WPI_VictorSPX(MANIPULATOR_RIGHT_INTAKE_MOTOR_CAN_ID));
   manipulatorFlipperMotor.reset(new rev::CANSparkMax(MANIPULATOR_FLIPPER_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  manipulatorFlipperMotor->GetEncoder().SetPositionConversionFactor(FLIPPER_TICK_TO_DEGREE_FACTOR);
 }
 
 void ElevatorSub::InitDefaultCommand() {
