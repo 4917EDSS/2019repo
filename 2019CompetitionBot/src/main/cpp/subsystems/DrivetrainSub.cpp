@@ -32,10 +32,6 @@ DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub"){
 
   driveBalancer.reset(new frc4917::MotorBalancer());
   driveBalancePID.reset(new frc::PIDController(DRIVE_BALANCE_P, DRIVE_BALANCE_I, DRIVE_BALANCE_D, ahrs.get(), driveBalancer.get()));
-
-  shifters.reset(new frc::Solenoid(CLIMB_GEAR_PCM_ID));
-	shifters->SetName("Drivetrain", "Shifter");
-	setHighGear();
 }
 
 double DrivetrainSub::GetRightEncoder()
@@ -98,17 +94,7 @@ double DrivetrainSub::getRate()
   return ahrs->GetRate();
 }
 
-void DrivetrainSub::setHighGear() {
-	shifters->Set(true);
-}
 
-void DrivetrainSub::setLowGear() {
-	shifters->Set(false);
-}
-
-bool DrivetrainSub::getGear(){
-  return shifters->Get();
-}
 
 
 

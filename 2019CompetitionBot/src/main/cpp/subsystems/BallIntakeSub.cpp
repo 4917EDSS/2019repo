@@ -16,6 +16,7 @@ BallIntakeSub::BallIntakeSub() : Subsystem("ExampleSubsystem") {
   flipperMotorOne.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_TOP_FLIP_MOTOR_1_CAN_ID));
   flipperMotorTwo.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_BOTTOM_FLIP_MOTOR_2_CAN_ID));
   intakeFolderSolenoid.reset(new frc::Solenoid(BALL_INTAKE_FOLDER_PCM_ID));
+  setFlipperOut(true);
   intakeArmEnc.reset(new frc::Encoder(INTAKE_MOTOR_ENC1_DIO, INTAKE_MOTOR_ENC2_DIO));
 }
 
@@ -54,7 +55,7 @@ double BallIntakeSub::getIntakeArmEncoderAngle() {
 }
 
 void BallIntakeSub::setFlipperOut(bool flipOut) {
-  intakeFolderSolenoid -> Set(flipOut);
+  intakeFolderSolenoid->Set(!flipOut);
   logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
 }
 
@@ -65,11 +66,11 @@ void BallIntakeSub::setIntakeArmMotor(double speed){
 
 void BallIntakeSub::update(bool isClimbing){
 
-  speed = (targetAngle - getIntakeArmEncoderAngle()) * 0.01;
+  speed = (targetAngle - getIntakeArmEncoderAngle()) * 0.03;
   
   if (!isClimbing) {
-    speed = std::min(speed, 0.25);
-    speed = std::max(speed, -0.25);
+    speed = std::min(speed, 0.3);
+    speed = std::max(speed, -0.3);
   }
 
   setIntakeArmMotor(speed);

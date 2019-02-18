@@ -9,16 +9,12 @@
 
 #include <frc/commands/Command.h>
 
-class ElevatorAndManipulatorToTargetCmd : public frc::Command {
+class SetLowGearWhileHeldCmd : public frc::Command {
  public:
-  ElevatorAndManipulatorToTargetCmd(double targetHeight, double targetAngle);
+  SetLowGearWhileHeldCmd();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
-
-  private:
-  double targetHeight;
-  double targetAngle;
 };

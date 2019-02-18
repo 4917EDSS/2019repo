@@ -43,6 +43,7 @@ class ElevatorSub : public frc::Subsystem {
   void setElevatorMotorRaw(double speed);
 
   void setShifterHigh(bool highGear);
+  bool isShifterHigh();
 
   void setManipulatorFlipperMotorSpeed(double speed);
   void setManipulatorTargetAngle(double newAngle);
@@ -56,7 +57,6 @@ class ElevatorSub : public frc::Subsystem {
   void contractHatchGripper();
 
   void update();
-  void executeStateMachine();
   bool isFinishedMove();
   void zeroEverything();
 };

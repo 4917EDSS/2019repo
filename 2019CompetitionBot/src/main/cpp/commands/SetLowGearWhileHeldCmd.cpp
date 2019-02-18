@@ -5,37 +5,32 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ElevatorAndManipulatorToTargetCmd.h"
+#include "commands/SetLowGearWhileHeldCmd.h"
 #include "Robot.h"
 
-ElevatorAndManipulatorToTargetCmd::ElevatorAndManipulatorToTargetCmd(double targetHeight, double targetAngle) : targetHeight(targetHeight), targetAngle(targetAngle) {
+SetLowGearWhileHeldCmd::SetLowGearWhileHeldCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::elevatorSub);
 }
 
 // Called just before this Command runs the first time
-void ElevatorAndManipulatorToTargetCmd::Initialize() {
-  Robot::elevatorSub.setElevatorTargetHeight(targetHeight);
-  Robot::elevatorSub.setManipulatorTargetAngle(targetAngle);
+void SetLowGearWhileHeldCmd::Initialize() {
+  Robot::elevatorSub.setShifterHigh(false);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ElevatorAndManipulatorToTargetCmd::Execute() {
-  Robot::elevatorSub.executeStateMachine();
-}
+void SetLowGearWhileHeldCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool ElevatorAndManipulatorToTargetCmd::IsFinished() { 
-  return false; }
+bool SetLowGearWhileHeldCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void ElevatorAndManipulatorToTargetCmd::End() {
-  Robot::elevatorSub.zeroEverything();
+void SetLowGearWhileHeldCmd::End() {
+  Robot::elevatorSub.setShifterHigh(true);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ElevatorAndManipulatorToTargetCmd::Interrupted() {
-  ElevatorAndManipulatorToTargetCmd::End();
+void SetLowGearWhileHeldCmd::Interrupted() {
+  End();
 }

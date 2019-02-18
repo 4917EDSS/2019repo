@@ -38,7 +38,7 @@ ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
   manipulatorIntakeMotorRight.reset(new WPI_VictorSPX(MANIPULATOR_RIGHT_INTAKE_MOTOR_CAN_ID));
 
   hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
-  contractHatchGripper();
+  expandHatchGripper();
 }
 
 void ElevatorSub::InitDefaultCommand() {
@@ -57,12 +57,16 @@ void ElevatorSub::setShifterHigh(bool highGear){
   shifterSolenoid->Set(highGear);
 }
 
+bool ElevatorSub::isShifterHigh(){
+  return shifterSolenoid->Get();
+}
+
 void ElevatorSub::expandHatchGripper(){
   hatchGripperSolenoid->Set(false);
 }
 
 void ElevatorSub::contractHatchGripper(){
-    hatchGripperSolenoid->Set(true);
+  hatchGripperSolenoid->Set(true);
 }
 
 void ElevatorSub::zeroEverything(){
@@ -75,12 +79,12 @@ void ElevatorSub::zeroEverything(){
 
 // Positive speed is out, negative is in
 void ElevatorSub::setManipulatorWheelSpeed(double lspeed, double rspeed) {
-  manipulatorIntakeMotorLeft->Set(-lspeed);
-  manipulatorIntakeMotorRight->Set(rspeed);
+  manipulatorIntakeMotorLeft->Set(lspeed);
+  manipulatorIntakeMotorRight->Set(-rspeed);
 }
 
 bool ElevatorSub::isBallInManipulator() {
-  intakeFromRobotLimit->Get();
+  return !intakeFromRobotLimit->Get();
 }
 
  double ElevatorSub::getElevatorEncoder() {
@@ -95,17 +99,6 @@ bool ElevatorSub::isManipulatorAtLimit() {
   return !manipulatorFlipperLimit->Get();
 }
 
-void ElevatorSub::executeStateMachine() {
-  double currentDegrees = getManipulatorEncoder();
-
-  if (fabs(targetDegrees - currentDegrees) <= 2.5) {
-    //Do nothing
-  } else if (targetDegrees < currentDegrees) {
-    manipulatorFlipperMotor->Set(-0.5);
-  } else {
-    manipulatorFlipperMotor->Set(0.5);
-  }
-}
 void ElevatorSub::setElevatorTargetHeight(double newHeight){
   targetHeight = newHeight;
 }

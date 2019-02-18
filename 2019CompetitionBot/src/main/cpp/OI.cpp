@@ -11,7 +11,6 @@
 #include "Robot.h"
 #include "subsystems/BallIntakeSub.h"
 #include "Commands/CloseHatchPickupCmd.h"
-#include "commands/IntakeBallUntilLimitCmd.h"
 #include "commands/KillEverythingCmd.h"
 #include "commands/TestButtonCmd.h"
 #include "commands/MilkyScoreGrp.h"
@@ -20,6 +19,9 @@
 #include "commands/SetElevatorandManipulatorCmd.h"
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/ExpandHatchGripperWhileHeldCmd.h"
+#include "commands/IntakeBallFromRobotCmd.h"
+#include "commands/SetLowGearWhileHeldCmd.h"
+#include "commands/IntakeBallGrp.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -39,7 +41,7 @@ OI::OI() {
   hatchContractBtn->WhileHeld(new CloseHatchPickupCmd());
 
   IntakeUntilLimitBtn.reset(new frc::JoystickButton(operatorController.get(), SET_INTAKE_MOTOR_BTN));
-  IntakeUntilLimitBtn->WhenPressed(new IntakeBallUntilLimitCmd());
+  IntakeUntilLimitBtn->WhenPressed(new IntakeBallFromRobotCmd());
 
   OperatorKillBtn1.reset(new frc::JoystickButton(operatorController.get(), OPERATOR_KILL_ONE_BTN));
   OperatorKillBtn1->WhenPressed(new KillEverythingCmd());
@@ -59,10 +61,14 @@ OI::OI() {
 
   resetIntakeBtn.reset(new frc::JoystickButton(operatorController.get(),RESET_INTAKE_BTN));
   resetIntakeBtn->WhenPressed(new SetIntakeArmAngleCmd(0));
-      
+
+  intakeBallBtn.reset(new frc::JoystickButton(operatorController.get(), INTAKE_BALL_BTN));
+  intakeBallBtn->WhenPressed(new IntakeBallGrp());
+
+   /*   
   climbModeBtn.reset(new frc::JoystickButton(operatorController.get(), CLIMB_MODE_BTN));
   climbModeBtn->WhileHeld(new ClimbCmdGroup());
-
+*/
   TestBtn.reset(new frc::JoystickButton(operatorController.get(), TEST_BTN));
   TestBtn->WhileHeld(new TestButtonCmd());
 
@@ -71,6 +77,9 @@ OI::OI() {
 
   toggleHatchPanelGrabberBtn.reset(new frc::JoystickButton(operatorController.get(), TOGGLE_HATCH_PANEL_GRABBER));
   toggleHatchPanelGrabberBtn->WhileHeld(new ExpandHatchGripperWhileHeldCmd());
+
+  shifterLowWhileHeldBtn.reset(new frc::JoystickButton(operatorController.get(), SHIFTER_LOW_WHILE_HELD));
+  shifterLowWhileHeldBtn->WhileHeld(new SetLowGearWhileHeldCmd());
 }
 
 std::shared_ptr<frc::Joystick> OI::getDriverController() {
