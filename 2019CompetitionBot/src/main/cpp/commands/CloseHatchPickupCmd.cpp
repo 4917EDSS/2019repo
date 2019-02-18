@@ -16,7 +16,7 @@ CloseHatchPickupCmd::CloseHatchPickupCmd() {
 
 // Called just before this Command runs the first time
 void CloseHatchPickupCmd::Initialize() {
-  Robot::elevatorSub.ContractHatchGripper();
+  Robot::elevatorSub.contractHatchGripper();
 }
 // Called repeatedly when this Command is scheduled to run
 void CloseHatchPickupCmd::Execute() {
@@ -28,7 +28,7 @@ bool CloseHatchPickupCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void CloseHatchPickupCmd::End() {
-  Robot::elevatorSub.ExpandHatchGripper();
+  Robot::elevatorSub.expandHatchGripper();
 }
 
 // Called when another command which requires one or more of the same

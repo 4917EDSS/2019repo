@@ -8,12 +8,10 @@
 #pragma once
 
 // Pneumatic Control Module Outputs
-constexpr int HATCH_GRIPPER_PCM_ID = 0;
-constexpr int CLIMB_GEAR_PCM_ID = 1; // Change
-constexpr int EXTEND_FOOT_PCM_ID = 2; //change
-constexpr int REAR_BALL_INTAKE_1_PCM_ID = 3;
-constexpr int REAR_BALL_INTAKE_2_PCM_ID = 4;
-constexpr int MANIPULATOR_INTAKE_FOLDER_PCM_ID = 5; 
+constexpr int HATCH_GRIPPER_PCM_ID = 1;
+constexpr int CLIMB_GEAR_PCM_ID = 2; // Change
+constexpr int EXTEND_FOOT_PCM_ID = 4; // Change
+constexpr int BALL_INTAKE_FOLDER_PCM_ID = 3; 
 
 // CanIDs
 constexpr int RIGHT_DRIVE_MOTOR_1_CAN_ID = 1;

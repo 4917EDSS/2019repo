@@ -49,8 +49,8 @@ class ElevatorSub : public frc::Subsystem {
   void setManipulatorWheelSpeed(double lspeed, double rspeed);
   bool isBallInManipulator();
 
-  void ExpandHatchGripper();  
-  void ContractHatchGripper();
+  void expandHatchGripper();  
+  void contractHatchGripper();
 
   void update();
   void executeStateMachine();
