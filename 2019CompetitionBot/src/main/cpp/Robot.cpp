@@ -139,9 +139,7 @@ void Robot::UpdateSmartDashboard(){
   frc::SmartDashboard::PutNumber("Intake Arm Angle ENC",ballIntakeSub.getIntakeArmEncoderAngle());
   frc::SmartDashboard::PutNumber("Manipulator Position", elevatorSub.getManipulatorEncoder());
   frc::SmartDashboard::PutNumber("Elevator Position", elevatorSub.getElevatorEncoder());
-
-
-
+  frc::SmartDashboard::PutNumber("Ball In Sensor", elevatorSub.isBallInManipulator());
 }
 
 

@@ -33,8 +33,7 @@ constexpr int MANIPULATOR_LEFT_INTAKE_MOTOR_CAN_ID = 13;
 constexpr int MANIPULATOR_RIGHT_INTAKE_MOTOR_CAN_ID = 14;
 
 //DIOs
-constexpr int INTAKE_LIMIT_DIO = 9;
-
+constexpr int BALL_SENSOR_DIO = 9;
 constexpr int INTAKE_MOTOR_ENC1_DIO = 2;
 constexpr int INTAKE_MOTOR_ENC2_DIO = 3;
 

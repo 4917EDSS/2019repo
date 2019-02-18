@@ -32,6 +32,7 @@ ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
   manipulatorIntakeMotorRight.reset(new WPI_VictorSPX(MANIPULATOR_RIGHT_INTAKE_MOTOR_CAN_ID));
   manipulatorFlipperMotor.reset(new rev::CANSparkMax(MANIPULATOR_FLIPPER_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   manipulatorFlipperMotor->GetEncoder().SetPositionConversionFactor(FLIPPER_TICK_TO_DEGREE_FACTOR);
+  intakeFromRobotLimit.reset(new frc::DigitalInput(BALL_SENSOR_DIO));
 }
 
 void ElevatorSub::InitDefaultCommand() {
@@ -61,13 +62,14 @@ void ElevatorSub::zeroEverything(){
   manipulatorFlipperMotor->Set(0.0);
 }
 
+// Positive speed is out, negative is in
 void ElevatorSub::setManipulatorWheelSpeed(double lspeed, double rspeed) {
   manipulatorIntakeMotorLeft->Set(-lspeed);
   manipulatorIntakeMotorRight->Set(rspeed);
 }
 
 bool ElevatorSub::isBallInManipulator() {
-  intakeFromRobotLimit.get();
+  intakeFromRobotLimit->Get();
 }
 
  double ElevatorSub::getElevatorEncoder() {
@@ -79,7 +81,7 @@ bool ElevatorSub::isBallInManipulator() {
  }
 
 bool ElevatorSub::isManipulatorAtLimit() {
-  manipulatorFlipperLimit.get();
+  return !manipulatorFlipperLimit->Get();
 }
 
 void ElevatorSub::executeStateMachine() {
