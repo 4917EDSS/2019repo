@@ -21,6 +21,7 @@
 #include "commands/ExpandHatchGripperWhileHeldCmd.h"
 #include "commands/IntakeBallFromRobotCmd.h"
 #include "commands/SetLowGearWhileHeldCmd.h"
+#include "commands/IntakeBallGrp.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -60,6 +61,10 @@ OI::OI() {
 
   resetIntakeBtn.reset(new frc::JoystickButton(operatorController.get(),RESET_INTAKE_BTN));
   resetIntakeBtn->WhenPressed(new SetIntakeArmAngleCmd(0));
+
+  intakeBallBtn.reset(new frc::JoystickButton(operatorController.get(), INTAKE_BALL_BTN));
+  intakeBallBtn->WhenPressed(new IntakeBallGrp());
+
    /*   
   climbModeBtn.reset(new frc::JoystickButton(operatorController.get(), CLIMB_MODE_BTN));
   climbModeBtn->WhileHeld(new ClimbCmdGroup());
