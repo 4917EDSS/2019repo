@@ -13,7 +13,6 @@ ElevatorWithJoystickCmd::ElevatorWithJoystickCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::elevatorSub);
-  Requires(&Robot::ballIntakeSub);
 }
 
 
@@ -43,9 +42,6 @@ void ElevatorWithJoystickCmd::Execute() {
   double intakeArmStick = operatorJoystick->GetRawAxis(OPERATOR_INTAKE_ARM_AXIS);
   intakeArmStick = pow(intakeArmStick, 3);
   logger.send(logger.DEBUGGING, "The intake arm is being used @ %f\n", intakeArmStick);
-
-  Robot::ballIntakeSub.setIntakeArmMotor(intakeArmStick/3);
-
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -57,7 +53,6 @@ bool ElevatorWithJoystickCmd::IsFinished() {
 void ElevatorWithJoystickCmd::End() {
   Robot::elevatorSub.setElevatorMotorSpeed(0.0);
   Robot::elevatorSub.setManipulatorWheelSpeed(0.0, 0.0);
-  Robot::ballIntakeSub.setIntakeArmMotor(0.0);
 }
 
 // Called when another command which requires one or more of the same
