@@ -43,7 +43,8 @@ constexpr int SET_INTAKE_MOTOR_BTN = 2;
 constexpr int OPERATOR_KILL_ONE_BTN = 11;
 constexpr int OPERATOR_KILL_TWO_BTN = 12;
 
-constexpr int CLIMB_MODE_BTN = 5;
+//constexpr int CLIMB_MODE_BTN = 5;
+constexpr int SHIFTER_LOW_WHILE_HELD = 5;
 constexpr int TEST_BTN = 9;
 constexpr int SET_MANIPULATOR_ENCODER_ZERO_BTN = 8;
 constexpr int RESET_INTAKE_BTN = 7;
@@ -76,5 +77,5 @@ class OI {
     std::shared_ptr<frc::JoystickButton> TestBtn;
     std::shared_ptr<frc::JoystickButton> setManipulatorEncoderZeroBtn;
     std::shared_ptr<frc::JoystickButton> toggleHatchPanelGrabberBtn;
-    
+    std::shared_ptr<frc::JoystickButton> shifterLowWhileHeldBtn;
 };

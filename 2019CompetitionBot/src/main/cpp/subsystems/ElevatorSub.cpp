@@ -27,6 +27,9 @@ ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
   elevatorMotor1->GetEncoder().SetPosition(0);
   elevatorMotor2->GetEncoder().SetPosition(0);  // Not used but good to have as a backup
 
+  shifterSolenoid.reset(new frc::Solenoid(CLIMB_GEAR_PCM_ID));
+  setShifterHigh(true);
+
   manipulatorFlipperMotor.reset(new rev::CANSparkMax(MANIPULATOR_FLIPPER_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   manipulatorFlipperMotor->GetEncoder().SetPositionConversionFactor(FLIPPER_TICK_TO_DEGREE_FACTOR);
   intakeFromRobotLimit.reset(new frc::DigitalInput(BALL_SENSOR_DIO));
@@ -47,6 +50,11 @@ void ElevatorSub::InitDefaultCommand() {
 void ElevatorSub::update(){
   //setElevatorMotorSpeed((targetHeight - elevatorMotor1->GetEncoder().GetPosition())* 0.1);
   setManipulatorFlipperMotorSpeed((targetDegrees -  manipulatorFlipperMotor->GetEncoder().GetPosition())* 0.04);
+}
+
+// Set true for High Gear, false for Low Gear
+void ElevatorSub::setShifterHigh(bool highGear){
+  shifterSolenoid->Set(highGear);
 }
 
 void ElevatorSub::expandHatchGripper(){
