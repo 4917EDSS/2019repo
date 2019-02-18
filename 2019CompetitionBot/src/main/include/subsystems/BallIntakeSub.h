@@ -21,7 +21,6 @@ class BallIntakeSub : public frc::Subsystem {
   std::shared_ptr<frc::Solenoid> intakeFolderSolenoid;
   std::shared_ptr<frc::Encoder> intakeArmEnc;
   double targetAngle;
-  double speed;
 
 
  public:

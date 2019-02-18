@@ -10,6 +10,9 @@
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "networktables/NetworkTableInstance.h"
+#include <iostream>
+
+
 
 DrivetrainSub Robot::drivetrainSub;
 BallIntakeSub Robot::ballIntakeSub;
@@ -26,6 +29,7 @@ void Robot::RobotInit() {
 //    logger.addOutputPath(new frc4917::ConsoleOutput());						// Enable console output and/or
 		logger.addOutputPath(new frc4917::SyslogOutput(syslogTargetAddress));		// Enable syslog output
 		logger.send(logger.DEBUGGING, "Robot code started @ %f\n", GetTime());
+    std::cout<<"starting version 1.0\n";
 }
 
 /**

@@ -8,6 +8,7 @@
 #include "subsystems/BallIntakeSub.h"
 #include <ctre/Phoenix.h>
 #include "components/Log.h"
+#include <iostream>
 //Canid4 and Set Intake
 #define ENCODER_SCALE (90.0/32.0)
 
@@ -56,6 +57,7 @@ double BallIntakeSub::getIntakeArmEncoderAngle() {
 
 void BallIntakeSub::setFlipperOut(bool flipOut) {
   intakeFolderSolenoid->Set(!flipOut);
+ 
   logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
 }
 
@@ -64,16 +66,20 @@ void BallIntakeSub::setIntakeArmMotor(double speed){
   flipperMotorTwo->Set(ControlMode::PercentOutput, -speed);
 }
 
-void BallIntakeSub::update(bool isClimbing){
-
-  speed = (targetAngle - getIntakeArmEncoderAngle()) * 0.015;
-  
+void BallIntakeSub::update(bool isClimbing){  
+  double currentAngle = getIntakeArmEncoderAngle();
+  double pValue =  0.015;
+ 
+  double speed = (targetAngle - currentAngle) * pValue;
+  std::cout << "Speed: " << speed << " target angle " << targetAngle << " Current angle: " << currentAngle << "\n";
+  //speed += (53 - currentAngle) * 0.0001;
+  /*
   if (!isClimbing) {
     speed = std::min(speed, 0.35);
     speed = std::max(speed, -0.35);
   }
-
-  setIntakeArmMotor(speed);
+*/
+  //setIntakeArmMotor(speed);
 }
 
 bool BallIntakeSub::doneFlipping() {

@@ -19,6 +19,6 @@ class SetIntakeArmAngleCmd : public frc::Command {
   void End() override;
   void Interrupted() override;
 private:
-  double angle;
-  bool isClimbing;
+  double targetAngle;
+  bool isClimbingNow;
 };

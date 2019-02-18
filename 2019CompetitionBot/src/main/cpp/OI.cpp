@@ -60,7 +60,7 @@ OI::OI() {
   milkyManipulatorBtn->WhileHeld( new MilkyScoreGrp());
 
   resetIntakeBtn.reset(new frc::JoystickButton(operatorController.get(),RESET_INTAKE_BTN));
-  resetIntakeBtn->WhenPressed(new SetIntakeArmAngleCmd(0));
+  resetIntakeBtn->WhenPressed(new SetIntakeArmAngleCmd(110));
 
   intakeBallBtn.reset(new frc::JoystickButton(operatorController.get(), INTAKE_BALL_BTN));
   intakeBallBtn->WhenPressed(new IntakeBallGrp());
