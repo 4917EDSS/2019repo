@@ -95,17 +95,6 @@ bool ElevatorSub::isManipulatorAtLimit() {
   return !manipulatorFlipperLimit->Get();
 }
 
-void ElevatorSub::executeStateMachine() {
-  double currentDegrees = getManipulatorEncoder();
-
-  if (fabs(targetDegrees - currentDegrees) <= 2.5) {
-    //Do nothing
-  } else if (targetDegrees < currentDegrees) {
-    manipulatorFlipperMotor->Set(-0.5);
-  } else {
-    manipulatorFlipperMotor->Set(0.5);
-  }
-}
 void ElevatorSub::setElevatorTargetHeight(double newHeight){
   targetHeight = newHeight;
 }

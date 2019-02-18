@@ -56,7 +56,6 @@ class ElevatorSub : public frc::Subsystem {
   void contractHatchGripper();
 
   void update();
-  void executeStateMachine();
   bool isFinishedMove();
   void zeroEverything();
 };
