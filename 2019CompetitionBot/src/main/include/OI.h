@@ -49,6 +49,7 @@ constexpr int TEST_BTN = 9;
 constexpr int SET_MANIPULATOR_ENCODER_ZERO_BTN = 8;
 constexpr int RESET_INTAKE_BTN = 7;
 constexpr int TOGGLE_HATCH_PANEL_GRABBER = 10;
+constexpr int INTAKE_BALL_BTN=4;
 
 constexpr int OPERATOR_MANIPULATOR_AXIS = 1;
 constexpr int OPERATOR_INTAKE_ARM_AXIS = 2;
@@ -73,6 +74,7 @@ class OI {
     std::shared_ptr<frc::JoystickButton> ballFlipperToggleBtn;
     std::shared_ptr<frc::JoystickButton> milkyManipulatorBtn;
     std::shared_ptr<frc::JoystickButton> resetIntakeBtn;
+    std::shared_ptr<frc::JoystickButton> intakeBallBtn;
     std::shared_ptr<frc::JoystickButton> climbModeBtn;
     std::shared_ptr<frc::JoystickButton> TestBtn;
     std::shared_ptr<frc::JoystickButton> setManipulatorEncoderZeroBtn;
