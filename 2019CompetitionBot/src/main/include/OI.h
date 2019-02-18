@@ -18,7 +18,7 @@
  * RB = 6
  * LT = 7
  * RT = 8
- * Select = 9
+ * Select/Back = 9
  * Start = 10
  * L3 = 11
  * R3 = 12
