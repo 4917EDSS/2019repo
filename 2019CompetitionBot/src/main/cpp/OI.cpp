@@ -11,7 +11,6 @@
 #include "Robot.h"
 #include "subsystems/BallIntakeSub.h"
 #include "Commands/CloseHatchPickupCmd.h"
-#include "commands/IntakeBallUntilLimitCmd.h"
 #include "commands/KillEverythingCmd.h"
 #include "commands/TestButtonCmd.h"
 #include "commands/MilkyScoreGrp.h"
@@ -20,6 +19,7 @@
 #include "commands/SetElevatorandManipulatorCmd.h"
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/ExpandHatchGripperWhileHeldCmd.h"
+#include "commands/IntakeBallFromRobotCmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -39,7 +39,7 @@ OI::OI() {
   hatchContractBtn->WhileHeld(new CloseHatchPickupCmd());
 
   IntakeUntilLimitBtn.reset(new frc::JoystickButton(operatorController.get(), SET_INTAKE_MOTOR_BTN));
-  IntakeUntilLimitBtn->WhenPressed(new IntakeBallUntilLimitCmd());
+  IntakeUntilLimitBtn->WhenPressed(new IntakeBallFromRobotCmd());
 
   OperatorKillBtn1.reset(new frc::JoystickButton(operatorController.get(), OPERATOR_KILL_ONE_BTN));
   OperatorKillBtn1->WhenPressed(new KillEverythingCmd());

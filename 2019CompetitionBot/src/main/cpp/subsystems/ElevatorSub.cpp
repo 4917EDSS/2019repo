@@ -67,12 +67,12 @@ void ElevatorSub::zeroEverything(){
 
 // Positive speed is out, negative is in
 void ElevatorSub::setManipulatorWheelSpeed(double lspeed, double rspeed) {
-  manipulatorIntakeMotorLeft->Set(-lspeed);
-  manipulatorIntakeMotorRight->Set(rspeed);
+  manipulatorIntakeMotorLeft->Set(lspeed);
+  manipulatorIntakeMotorRight->Set(-rspeed);
 }
 
 bool ElevatorSub::isBallInManipulator() {
-  intakeFromRobotLimit->Get();
+  return !intakeFromRobotLimit->Get();
 }
 
  double ElevatorSub::getElevatorEncoder() {

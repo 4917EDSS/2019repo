@@ -6,7 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/IntakeBallGrp.h"
-#include "commands/IntakeBallUntilLimitCmd.h"
 #include "commands/IntakeBallFromRobotCmd.h"
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/FoldIntakeCmd.h"
@@ -17,5 +16,5 @@ IntakeBallGrp::IntakeBallGrp() {
   AddParallel(new FoldIntakeCmd(true));
   AddSequential(new SetIntakeArmAngleCmd(false,90));
   AddSequential(new SetElevatorToHeightCmd(0.0));
-  AddSequential(new IntakeBallUntilLimitCmd());
+  AddSequential(new IntakeBallFromRobotCmd());
 }
