@@ -25,14 +25,17 @@ ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
   elevatorMotor1.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   elevatorMotor2.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_2_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   elevatorMotor1->GetEncoder().SetPosition(0);
-	logger.send(logger.ELEVATOR, "Elevator code started \n", 0.0);
+  elevatorMotor2->GetEncoder().SetPosition(0);  // Not used but good to have as a backup
 
-  hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
-  manipulatorIntakeMotorLeft.reset(new WPI_VictorSPX(MANIPULATOR_LEFT_INTAKE_MOTOR_CAN_ID));
-  manipulatorIntakeMotorRight.reset(new WPI_VictorSPX(MANIPULATOR_RIGHT_INTAKE_MOTOR_CAN_ID));
   manipulatorFlipperMotor.reset(new rev::CANSparkMax(MANIPULATOR_FLIPPER_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   manipulatorFlipperMotor->GetEncoder().SetPositionConversionFactor(FLIPPER_TICK_TO_DEGREE_FACTOR);
   intakeFromRobotLimit.reset(new frc::DigitalInput(BALL_SENSOR_DIO));
+
+  manipulatorIntakeMotorLeft.reset(new WPI_VictorSPX(MANIPULATOR_LEFT_INTAKE_MOTOR_CAN_ID));
+  manipulatorIntakeMotorRight.reset(new WPI_VictorSPX(MANIPULATOR_RIGHT_INTAKE_MOTOR_CAN_ID));
+
+  hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
+  contractHatchGripper();
 }
 
 void ElevatorSub::InitDefaultCommand() {
@@ -46,12 +49,12 @@ void ElevatorSub::update(){
   setManipulatorFlipperMotorSpeed((targetDegrees -  manipulatorFlipperMotor->GetEncoder().GetPosition())* 0.04);
 }
 
-void ElevatorSub::ExpandHatchGripper(){
-  hatchGripperSolenoid->Set(true);
+void ElevatorSub::expandHatchGripper(){
+  hatchGripperSolenoid->Set(false);
 }
 
-void ElevatorSub::ContractHatchGripper(){
-    hatchGripperSolenoid->Set(false);
+void ElevatorSub::contractHatchGripper(){
+    hatchGripperSolenoid->Set(true);
 }
 
 void ElevatorSub::zeroEverything(){

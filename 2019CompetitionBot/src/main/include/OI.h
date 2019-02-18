@@ -42,13 +42,16 @@ constexpr int HATCH_CONTRACT_BTN = 3;
 constexpr int SET_INTAKE_MOTOR_BTN = 2;
 constexpr int OPERATOR_KILL_ONE_BTN = 11;
 constexpr int OPERATOR_KILL_TWO_BTN = 12;
-constexpr int OPERATOR_ELEVATOR_AXIS = 3;
-constexpr int OPERATOR_MANIPULATOR_AXIS = 1;
+
 constexpr int CLIMB_MODE_BTN = 5;
 constexpr int TEST_BTN = 9;
 constexpr int SET_MANIPULATOR_ENCODER_ZERO_BTN = 8;
 constexpr int RESET_INTAKE_BTN = 7;
+constexpr int TOGGLE_HATCH_PANEL_GRABBER = 10;
 
+constexpr int OPERATOR_MANIPULATOR_AXIS = 1;
+constexpr int OPERATOR_INTAKE_ARM_AXIS = 2;
+constexpr int OPERATOR_ELEVATOR_AXIS = 3;
 
 class OI {
  public:
@@ -72,5 +75,6 @@ class OI {
     std::shared_ptr<frc::JoystickButton> climbModeBtn;
     std::shared_ptr<frc::JoystickButton> TestBtn;
     std::shared_ptr<frc::JoystickButton> setManipulatorEncoderZeroBtn;
+    std::shared_ptr<frc::JoystickButton> toggleHatchPanelGrabberBtn;
     
 };
