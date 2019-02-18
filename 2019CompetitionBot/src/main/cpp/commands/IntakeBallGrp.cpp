@@ -14,7 +14,7 @@
 IntakeBallGrp::IntakeBallGrp() {
 
   AddParallel(new FoldIntakeCmd(true));
-  AddSequential(new SetIntakeArmAngleCmd(false,90));
+  AddSequential(new SetIntakeArmAngleCmd(false,110));
   AddSequential(new SetElevatorandManipulatorCmd(-90,0));
   AddSequential(new IntakeBallFromRobotCmd());
 }
