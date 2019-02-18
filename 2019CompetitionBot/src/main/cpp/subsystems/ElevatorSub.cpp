@@ -24,7 +24,7 @@ constexpr float FLIPPER_TICK_TO_DEGREE_FACTOR = (90/44.1900);
 ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
   elevatorMotor1.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   elevatorMotor2.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_2_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
-  elevatorMotor1->GetEncoder().SetPosition(0);
+  elevatorMotor1->GetEncoder().SetPosition(0);  // Positive means rotating towards front9
   elevatorMotor2->GetEncoder().SetPosition(0);  // Not used but good to have as a backup
 
   shifterSolenoid.reset(new frc::Solenoid(CLIMB_GEAR_PCM_ID));
