@@ -41,7 +41,7 @@ bool SetIntakeArmAngleCmd::IsFinished() {
 
 // Called once after isFinished returns true
 void SetIntakeArmAngleCmd::End() {
-  Robot::ballIntakeSub.setFlipperOut(false);
+  Robot::ballIntakeSub.setFolderOut(false);
   Robot::ballIntakeSub.setIntakeArmMotor(0.0);
 }
 

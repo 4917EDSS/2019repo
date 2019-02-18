@@ -29,7 +29,7 @@ class BallIntakeSub : public frc::Subsystem {
   void InitDefaultCommand() override;
   void ExtendRearIntakeSolenoids();
   void setIntakeMotor(double speed);
-  void setFlipperOut(bool flipOut);
+  void setFolderOut(bool flipOut);
   double getIntakeArmEncoderAngle();
   void setIn();
   void setOut();

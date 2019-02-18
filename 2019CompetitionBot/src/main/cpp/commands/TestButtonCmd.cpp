@@ -17,7 +17,7 @@ TestButtonCmd::TestButtonCmd() {
 // Called just before this Command runs the first time
 void TestButtonCmd::Initialize() {
    Robot::ballIntakeSub.setIntakeMotor(1.0);
-   Robot::ballIntakeSub.setFlipperOut(true);
+   Robot::ballIntakeSub.setFolderOut(true);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -29,7 +29,7 @@ bool TestButtonCmd::IsFinished() { return false; }
 
 void TestButtonCmd::End() {
   Robot::ballIntakeSub.setIntakeMotor(0.0);
-  Robot::ballIntakeSub.setFlipperOut(false);
+  Robot::ballIntakeSub.setFolderOut(false);
 }
 
 // Called when another command which requires one or more of the same
