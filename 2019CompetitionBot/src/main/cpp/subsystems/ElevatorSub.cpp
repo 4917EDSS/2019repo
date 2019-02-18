@@ -38,7 +38,7 @@ ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
   manipulatorIntakeMotorRight.reset(new WPI_VictorSPX(MANIPULATOR_RIGHT_INTAKE_MOTOR_CAN_ID));
 
   hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
-  contractHatchGripper();
+  expandHatchGripper();
 }
 
 void ElevatorSub::InitDefaultCommand() {
@@ -57,12 +57,16 @@ void ElevatorSub::setShifterHigh(bool highGear){
   shifterSolenoid->Set(highGear);
 }
 
+bool ElevatorSub::isShifterHigh(){
+  return shifterSolenoid->Get();
+}
+
 void ElevatorSub::expandHatchGripper(){
   hatchGripperSolenoid->Set(false);
 }
 
 void ElevatorSub::contractHatchGripper(){
-    hatchGripperSolenoid->Set(true);
+  hatchGripperSolenoid->Set(true);
 }
 
 void ElevatorSub::zeroEverything(){

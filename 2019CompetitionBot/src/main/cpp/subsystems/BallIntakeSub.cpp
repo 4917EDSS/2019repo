@@ -55,7 +55,7 @@ double BallIntakeSub::getIntakeArmEncoderAngle() {
 }
 
 void BallIntakeSub::setFlipperOut(bool flipOut) {
-  intakeFolderSolenoid -> Set(flipOut);
+  intakeFolderSolenoid->Set(!flipOut);
   logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
 }
 
