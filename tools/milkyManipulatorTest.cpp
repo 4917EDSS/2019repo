@@ -1,7 +1,3 @@
-//clang 3.8.0
-
-// Example program
-// Example program
 #include <iostream>
 #include <string>
 #include <utility>
@@ -16,7 +12,6 @@ using namespace std;
     double getCircleCentreY(double circleCentreX, double scoringFaceAngle, double targetX, double targetY){
         if(tan(fabs(scoringFaceAngle)) > 600000){
         //vertical scoring face
-            cout<<"yep"<<endl;
             return ((targetY/2)-((circleCentreX*circleCentreX)/(2*targetY)));
         }
         return (tan(-scoringFaceAngle) * circleCentreX + (targetY - tan(-scoringFaceAngle) * targetX));
@@ -42,20 +37,30 @@ using namespace std;
         cout<<"Circle X "<<circleX<< endl;
         cout<<"Circle Y "<<circleY<< endl;
         cout<<"R "<<r<< endl;
-        cout<<"top half: "<< (r*r)+(r*r)- sqrt(pow(robotX-circleX, 2) + pow(robotY-(circleY + r), 2))<< endl;
-        cout<<"everything but inverse cos "<<((r*r)+(r*r) - sqrt(pow(robotX-circleX, 2) + pow(robotY-(circleY + r), 2)))/(2*r*r)<<endl;
-        cout<<"Final Angle"<<endl;
+        cout<<"(r*r)+(r*r) "<<(r*r)+(r*r)<<endl;
+        cout<<"pow(robotX-circleX, 2) "<<pow(robotX-circleX, 2)<<endl;
+        cout<<"pow(robotY-(circleY + r), 2) "<<pow(robotY-(circleY + r), 2)<<endl;
+        cout<<"(pow(robotX-circleX, 2) + pow(robotY-(circleY + r), 2)) "<<(pow(robotX-circleX, 2) + pow(robotY-(circleY + r), 2))<<endl;
+        cout<<"top half: "<< (r*r)+(r*r)- (pow(robotX-circleX, 2) + pow(robotY-(circleY + r), 2))<< endl;
+        cout<<"everything but inverse cos "<<((r*r)+(r*r) - (pow(robotX-circleX, 2) + pow(robotY-(circleY + r), 2)))/(2*r*r)<<endl;
         }
-        return 90+(((acos(((r*r)+(r*r) - sqrt(pow(robotX-circleX, 2) + pow(robotY-(circleY + r), 2)))/(2*r*r))))*(180/M_PI)); //in degrees
-        //return 90+(acos((pow(robotX-targetX, 2) + pow(robotY-targetY, 2) - 2*(r*r))/-(2*r*r)))*(180/M_PI);
-        //return 90+sqrt()
+        cout<<"Final Angle"<<endl;
+        double finalAngle = (((acos(((r*r)+(r*r) - (pow(robotX-circleX, 2) + pow(robotY-(circleY + r), 2)))/(2*r*r))))*(180/M_PI));
+        if (circleX > 0){
+            return 270-finalAngle;
+        }else{
+            return finalAngle-90;
+        }
     }
     
 int main(){
-    cout<<tan(3*M_PI/2)<<endl;
 
-    getRobotTargetAngle(35.0,0.0,1000.0,151.25, true);
-    for(int i = 500; i > 0; i = i-10){
-    cout<<getRobotTargetAngle(120.0,0.0,i,90.0, false)<<endl;
-    }
+    cout<<getRobotTargetAngle(10.0,-5.0,500.0,0.0, false)<<endl;
+    cout<<getRobotTargetAngle(120.0,0.0,500.0,90.0, false)<<endl;
+    cout<<getRobotTargetAngle(-123.0,0.0,500.0,90.0, false)<<endl;
+
+
+   // for(int i = 500; i > 0; i = i-10){
+   // cout<<getRobotTargetAngle(10.0,-5.0,i,0.0, false)<<endl;
+    //}
 }

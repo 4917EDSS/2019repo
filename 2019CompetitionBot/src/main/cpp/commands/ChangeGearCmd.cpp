@@ -7,31 +7,31 @@
 
 #include "commands/ChangeGearCmd.h"
 #include "Robot.h"
-bool gear;
+bool highGear;
 
 ChangeGearCmd::ChangeGearCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::drivetrainSub);
+  Requires(&Robot::elevatorSub);
 }
 
 // Called just before this Command runs the first time
 void ChangeGearCmd::Initialize() {
-gear = Robot::drivetrainSub.getGear();
+highGear = Robot::elevatorSub.isShifterHigh();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ChangeGearCmd::Execute() {
-  if(gear){
-    Robot::drivetrainSub.setLowGear();
+  if(highGear){
+    Robot::elevatorSub.setShifterHigh(false);
   } else {
-    Robot::drivetrainSub.setHighGear();
+    Robot::elevatorSub.setShifterHigh(true);
   }
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool ChangeGearCmd::IsFinished() { 
-   if(gear != Robot::drivetrainSub.getGear()){
+   if(highGear != Robot::elevatorSub.isShifterHigh()){
       return true;
     } else {
       return false;
@@ -43,4 +43,6 @@ void ChangeGearCmd::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ChangeGearCmd::Interrupted() {}
+void ChangeGearCmd::Interrupted() {
+  End();
+}
