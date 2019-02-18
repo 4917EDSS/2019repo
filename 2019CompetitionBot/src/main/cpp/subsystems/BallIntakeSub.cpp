@@ -66,11 +66,11 @@ void BallIntakeSub::setIntakeArmMotor(double speed){
 
 void BallIntakeSub::update(bool isClimbing){
 
-  speed = (targetAngle - getIntakeArmEncoderAngle()) * 0.03;
+  speed = (targetAngle - getIntakeArmEncoderAngle()) * 0.015;
   
   if (!isClimbing) {
-    speed = std::min(speed, 0.3);
-    speed = std::max(speed, -0.3);
+    speed = std::min(speed, 0.35);
+    speed = std::max(speed, -0.35);
   }
 
   setIntakeArmMotor(speed);
