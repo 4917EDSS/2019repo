@@ -21,6 +21,7 @@ class ElevatorSub : public frc::Subsystem {
   std::shared_ptr<rev::CANSparkMax> elevatorMotor2;
   std::shared_ptr<frc::DigitalInput> lowerLimit;
   std::shared_ptr<frc::DigitalInput> upperLimit;
+  std::shared_ptr<frc::Solenoid> shifterSolenoid;
   std::shared_ptr<frc::Solenoid> hatchGripperSolenoid;
   std::shared_ptr<WPI_VictorSPX> manipulatorIntakeMotorLeft;
   std::shared_ptr<WPI_VictorSPX> manipulatorIntakeMotorRight;
@@ -40,6 +41,8 @@ class ElevatorSub : public frc::Subsystem {
   double getElevatorEncoder();
   bool isElevatorDown();
   void setElevatorMotorRaw(double speed);
+
+  void setShifterHigh(bool highGear);
 
   void setManipulatorFlipperMotorSpeed(double speed);
   void setManipulatorTargetAngle(double newAngle);

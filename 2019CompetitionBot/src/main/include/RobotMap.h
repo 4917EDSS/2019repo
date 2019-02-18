@@ -9,7 +9,7 @@
 
 // Pneumatic Control Module Outputs
 constexpr int HATCH_GRIPPER_PCM_ID = 1;
-constexpr int CLIMB_GEAR_PCM_ID = 2; // Change
+constexpr int CLIMB_GEAR_PCM_ID = 2;
 constexpr int EXTEND_FOOT_PCM_ID = 4; // Change
 constexpr int BALL_INTAKE_FOLDER_PCM_ID = 3; 
 
