@@ -140,6 +140,8 @@ void Robot::UpdateSmartDashboard(){
   frc::SmartDashboard::PutNumber("Manipulator Position", elevatorSub.getManipulatorEncoder());
   frc::SmartDashboard::PutNumber("Elevator Position", elevatorSub.getElevatorEncoder());
   frc::SmartDashboard::PutNumber("Ball In Sensor", elevatorSub.isBallInManipulator());
+
+  frc::SmartDashboard::PutNumber("O POV", Robot::oi.getOperatorController()->GetPOV());
 }
 
 
