@@ -17,7 +17,7 @@ FoldIntakeCmd::FoldIntakeCmd(bool flipOut) {
 
 // Called just before this Command runs the first time
 void FoldIntakeCmd::Initialize() {
-  Robot::ballIntakeSub.setFlipperOut(flipOut);
+  Robot::ballIntakeSub.setFolderOut(flipOut);
 }
 
 // Called repeatedly when this Command is scheduled to run

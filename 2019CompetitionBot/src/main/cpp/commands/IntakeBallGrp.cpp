@@ -9,12 +9,12 @@
 #include "commands/IntakeBallFromRobotCmd.h"
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/FoldIntakeCmd.h"
-#include "commands/SetElevatorToHeightCmd.h"
+#include "commands/SetElevatorandManipulatorCmd.h"
 
 IntakeBallGrp::IntakeBallGrp() {
 
   AddParallel(new FoldIntakeCmd(true));
-  AddSequential(new SetIntakeArmAngleCmd(false,90));
-  AddSequential(new SetElevatorToHeightCmd(0.0));
+  AddSequential(new SetIntakeArmAngleCmd(false,110));
+  AddSequential(new SetElevatorandManipulatorCmd(-90,0));
   AddSequential(new IntakeBallFromRobotCmd());
 }

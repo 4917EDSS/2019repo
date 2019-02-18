@@ -17,7 +17,7 @@ BallIntakeSub::BallIntakeSub() : Subsystem("ExampleSubsystem") {
   flipperMotorOne.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_TOP_FLIP_MOTOR_1_CAN_ID));
   flipperMotorTwo.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_BOTTOM_FLIP_MOTOR_2_CAN_ID));
   intakeFolderSolenoid.reset(new frc::Solenoid(BALL_INTAKE_FOLDER_PCM_ID));
-  setFlipperOut(true);
+  setFolderOut(true);
   intakeArmEnc.reset(new frc::Encoder(INTAKE_MOTOR_ENC1_DIO, INTAKE_MOTOR_ENC2_DIO));
 }
 
@@ -55,7 +55,7 @@ double BallIntakeSub::getIntakeArmEncoderAngle() {
   return -(intakeArmEnc->GetDistance() * ENCODER_SCALE);
 }
 
-void BallIntakeSub::setFlipperOut(bool flipOut) {
+void BallIntakeSub::setFolderOut(bool flipOut) {
   intakeFolderSolenoid->Set(!flipOut);
  
   logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
