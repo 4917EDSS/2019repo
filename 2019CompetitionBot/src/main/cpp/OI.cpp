@@ -19,6 +19,7 @@
 #include "commands/ClimbCmdGroup.h"
 #include "commands/SetElevatorandManipulatorCmd.h"
 #include "commands/SetIntakeArmAngleCmd.h"
+#include "commands/ExpandHatchGripperWhileHeldCmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -67,6 +68,9 @@ OI::OI() {
 
   setManipulatorEncoderZeroBtn.reset(new frc::JoystickButton(operatorController.get(), SET_MANIPULATOR_ENCODER_ZERO_BTN));
   setManipulatorEncoderZeroBtn->WhenPressed(new SetElevatorandManipulatorCmd(0.0, 0.0));
+
+  toggleHatchPanelGrabberBtn.reset(new frc::JoystickButton(operatorController.get(), TOGGLE_HATCH_PANEL_GRABBER));
+  toggleHatchPanelGrabberBtn->WhileHeld(new ExpandHatchGripperWhileHeldCmd());
 }
 
 std::shared_ptr<frc::Joystick> OI::getDriverController() {

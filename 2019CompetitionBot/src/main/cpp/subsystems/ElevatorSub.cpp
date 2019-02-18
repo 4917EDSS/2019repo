@@ -45,11 +45,11 @@ void ElevatorSub::update(){
   setManipulatorFlipperMotorSpeed((targetDegrees -  manipulatorFlipperMotor->GetEncoder().GetPosition())* 0.04);
 }
 
-void ElevatorSub::ExpandHatchGripper(){
+void ElevatorSub::expandHatchGripper(){
   hatchGripperSolenoid->Set(true);
 }
 
-void ElevatorSub::ContractHatchGripper(){
+void ElevatorSub::contractHatchGripper(){
     hatchGripperSolenoid->Set(false);
 }
 

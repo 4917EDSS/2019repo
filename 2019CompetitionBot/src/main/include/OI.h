@@ -48,6 +48,7 @@ constexpr int CLIMB_MODE_BTN = 5;
 constexpr int TEST_BTN = 6;
 constexpr int SET_MANIPULATOR_ENCODER_ZERO_BTN = 8;
 constexpr int RESET_INTAKE_BTN = 7;
+constexpr int TOGGLE_HATCH_PANEL_GRABBER = 10;
 
 
 class OI {
@@ -72,5 +73,6 @@ class OI {
     std::shared_ptr<frc::JoystickButton> climbModeBtn;
     std::shared_ptr<frc::JoystickButton> TestBtn;
     std::shared_ptr<frc::JoystickButton> setManipulatorEncoderZeroBtn;
+    std::shared_ptr<frc::JoystickButton> toggleHatchPanelGrabberBtn;
     
 };
