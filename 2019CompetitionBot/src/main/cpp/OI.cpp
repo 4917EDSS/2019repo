@@ -20,6 +20,7 @@
 #include "commands/SetElevatorandManipulatorCmd.h"
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/ExpandHatchGripperWhileHeldCmd.h"
+#include "commands/SetLowGearWhileHeldCmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -59,10 +60,10 @@ OI::OI() {
 
   resetIntakeBtn.reset(new frc::JoystickButton(operatorController.get(),RESET_INTAKE_BTN));
   resetIntakeBtn->WhenPressed(new SetIntakeArmAngleCmd(0));
-      
+   /*   
   climbModeBtn.reset(new frc::JoystickButton(operatorController.get(), CLIMB_MODE_BTN));
   climbModeBtn->WhileHeld(new ClimbCmdGroup());
-
+*/
   TestBtn.reset(new frc::JoystickButton(operatorController.get(), TEST_BTN));
   TestBtn->WhileHeld(new TestButtonCmd());
 
@@ -71,6 +72,9 @@ OI::OI() {
 
   toggleHatchPanelGrabberBtn.reset(new frc::JoystickButton(operatorController.get(), TOGGLE_HATCH_PANEL_GRABBER));
   toggleHatchPanelGrabberBtn->WhileHeld(new ExpandHatchGripperWhileHeldCmd());
+
+  shifterLowWhileHeldBtn.reset(new frc::JoystickButton(operatorController.get(), SHIFTER_LOW_WHILE_HELD));
+  shifterLowWhileHeldBtn->WhileHeld(new SetLowGearWhileHeldCmd());
 }
 
 std::shared_ptr<frc::Joystick> OI::getDriverController() {
