@@ -31,6 +31,7 @@ ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
   setShifterHigh(true);
 
   manipulatorFlipperMotor.reset(new rev::CANSparkMax(MANIPULATOR_FLIPPER_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  manipulatorFlipperMotor->GetEncoder().SetPosition(0);
   manipulatorFlipperMotor->GetEncoder().SetPositionConversionFactor(FLIPPER_TICK_TO_DEGREE_FACTOR);
   intakeFromRobotLimit.reset(new frc::DigitalInput(BALL_SENSOR_DIO));
 
@@ -67,6 +68,10 @@ void ElevatorSub::expandHatchGripper(){
 
 void ElevatorSub::contractHatchGripper(){
   hatchGripperSolenoid->Set(true);
+}
+
+bool ElevatorSub::isGripperExpanded() {
+  return !hatchGripperSolenoid->Get();
 }
 
 void ElevatorSub::zeroEverything(){
@@ -120,7 +125,7 @@ bool ElevatorSub::isFinishedMove() {
 }
 
 bool ElevatorSub::isElevatorDown(){
-      return !lowerLimit.get() && elevatorMotor1->GetEncoder().GetPosition();
+  return !lowerLimit.get() && elevatorMotor1->GetEncoder().GetPosition();
 }
 
 void ElevatorSub::setElevatorMotorRaw(double speed){

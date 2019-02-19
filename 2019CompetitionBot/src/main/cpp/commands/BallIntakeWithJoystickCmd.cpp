@@ -15,7 +15,9 @@ BallIntakeWithJoystickCmd::BallIntakeWithJoystickCmd() {
 }
 
 // Called just before this Command runs the first time
-void BallIntakeWithJoystickCmd::Initialize() {}
+void BallIntakeWithJoystickCmd::Initialize() {
+  logger.send(logger.WITH_JOYSTICK_TRACE, "Joystick is the executive operator of ball intake \n");
+}
 
 // Called repeatedly when this Command is scheduled to run
 void BallIntakeWithJoystickCmd::Execute() {
@@ -34,8 +36,8 @@ void BallIntakeWithJoystickCmd::Execute() {
     break;
 
   case 1: // Ball intake in/out flipper
-    Robot::ballIntakeSub.setIntakeArmMotor(verticalStick);
-    logger.send(logger.CMD_TRACE, "The ball intake flipper is being controlled @ %f\n", verticalStick);
+    Robot::ballIntakeSub.setIntakeArmMotor(verticalStick * 0.5);  // Limit power to 50%
+    logger.send(logger.WITH_JOYSTICK_TRACE, "The ball intake flipper is being controlled @ %f\n", verticalStick);
     break;
 
   case 2: // Manipulator flip forward/backward (handled in ElevatorWithJoystickCmd)

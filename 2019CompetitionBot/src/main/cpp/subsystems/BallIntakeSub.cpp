@@ -9,6 +9,7 @@
 #include <ctre/Phoenix.h>
 #include "components/Log.h"
 #include <iostream>
+#include "commands/BallIntakeWithJoystickCmd.h"
 //Canid4 and Set Intake
 #define ENCODER_SCALE (90.0/32.0)
 
@@ -25,6 +26,7 @@ BallIntakeSub::BallIntakeSub() : Subsystem("ExampleSubsystem") {
 void BallIntakeSub::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
+  SetDefaultCommand(new BallIntakeWithJoystickCmd());
 }
 
 // Put methods for controlling this subsystem
@@ -57,12 +59,12 @@ void BallIntakeSub::setFolderOut(bool flipOut) {
 }
 
 bool BallIntakeSub::isFolderOut() {
-  return intakeFolderSolenoid->Get();
+  return !intakeFolderSolenoid->Get();
 }
 
 void BallIntakeSub::setIntakeArmMotor(double speed){
   flipperMotorOne->Set(ControlMode::PercentOutput, -speed);
-  flipperMotorTwo->Set(ControlMode::PercentOutput, -speed);
+//  flipperMotorTwo->Set(ControlMode::PercentOutput, -speed);  
 }
 
 void BallIntakeSub::update(bool isClimbing){  

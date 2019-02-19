@@ -18,7 +18,7 @@
 #include "commands/ClimbCmdGroup.h"
 #include "commands/SetElevatorandManipulatorCmd.h"
 #include "commands/SetIntakeArmAngleCmd.h"
-#include "commands/ExpandHatchGripperWhileHeldCmd.h"
+#include "commands/ToggleHatchGripperCmd.h"
 #include "commands/IntakeBallFromRobotCmd.h"
 #include "commands/SetLowGearWhileHeldCmd.h"
 #include "commands/IntakeBallGrp.h"
@@ -77,7 +77,7 @@ OI::OI() {
   setManipulatorEncoderZeroBtn->WhenPressed(new SetElevatorandManipulatorCmd(0.0, 0.0));
 
   toggleHatchPanelGrabberBtn.reset(new frc::JoystickButton(operatorController.get(), TOGGLE_HATCH_PANEL_GRABBER));
-  toggleHatchPanelGrabberBtn->WhileHeld(new ExpandHatchGripperWhileHeldCmd());
+  toggleHatchPanelGrabberBtn->WhenPressed(new ToggleHatchGripperCmd());
 
   shifterLowWhileHeldBtn.reset(new frc::JoystickButton(operatorController.get(), SHIFTER_LOW_WHILE_HELD));
   shifterLowWhileHeldBtn->WhileHeld(new SetLowGearWhileHeldCmd());

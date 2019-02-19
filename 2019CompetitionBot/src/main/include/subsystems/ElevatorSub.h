@@ -55,6 +55,7 @@ class ElevatorSub : public frc::Subsystem {
 
   void expandHatchGripper();  
   void contractHatchGripper();
+  bool isGripperExpanded();
 
   void update();
   bool isFinishedMove();

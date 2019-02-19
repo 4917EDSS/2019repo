@@ -17,7 +17,7 @@ ElevatorWithJoystickCmd::ElevatorWithJoystickCmd() {
 
 // Called just before this Command runs the first time
 void ElevatorWithJoystickCmd::Initialize() {
-  logger.send(logger.DEBUGGING, "Joystick is the executive operator of elevator \n");
+  logger.send(logger.WITH_JOYSTICK_TRACE, "Joystick is the executive operator of elevator \n");
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -34,9 +34,9 @@ void ElevatorWithJoystickCmd::Execute() {
   switch(shift) {
   case 0: // No shift, normal elevator operation
     // TODO: Replace with non-raw version (with slowdowns and limits)
-    Robot::elevatorSub.setElevatorMotorRaw(verticalStick);
+    Robot::elevatorSub.setElevatorMotorRaw(verticalStick * 0.5);  // Limit power to 50%
     Robot::elevatorSub.setManipulatorFlipperMotorSpeed(0.0);
-    logger.send(logger.CMD_TRACE, "The elevator is being controlled @ %f\n", verticalStick);
+    logger.send(logger.WITH_JOYSTICK_TRACE, "The elevator is being controlled @ %f\n", verticalStick);
     break;
 
   case 1: // Ball intake in/out flipper (handled in BallintakeWithJoystickCmd)  
@@ -46,8 +46,8 @@ void ElevatorWithJoystickCmd::Execute() {
 
   case 2: // Manipulator flip forward/backward
     Robot::elevatorSub.setElevatorMotorRaw(0.0); 
-    Robot::elevatorSub.setManipulatorFlipperMotorSpeed(verticalStick);
-    logger.send(logger.CMD_TRACE, "The manipulator flipper is being controlled @ %f\n", verticalStick);
+    Robot::elevatorSub.setManipulatorFlipperMotorSpeed(verticalStick * 0.5);  // Limit power to 50%
+    logger.send(logger.WITH_JOYSTICK_TRACE, "The manipulator flipper is being controlled @ %f\n", verticalStick);
     break;
 
   default:
@@ -61,7 +61,7 @@ void ElevatorWithJoystickCmd::Execute() {
   // Manipulator wheels in/out
   double manipulatorStick = operatorJoystick->GetRawAxis(OPERATOR_MANIPULATOR_AXIS);
   manipulatorStick = pow(manipulatorStick, 3);
-  logger.send(logger.CMD_TRACE, "The manipulator wheels are being controlled @ %f\n", manipulatorStick);
+  logger.send(logger.WITH_JOYSTICK_TRACE, "The manipulator wheels are being controlled @ %f\n", manipulatorStick);
   Robot::elevatorSub.setManipulatorWheelSpeed(manipulatorStick, manipulatorStick);
 }
 
