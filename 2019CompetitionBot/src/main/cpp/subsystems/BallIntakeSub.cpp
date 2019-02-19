@@ -14,6 +14,7 @@
 
 BallIntakeSub::BallIntakeSub() : Subsystem("ExampleSubsystem") {
   ballIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_WHEELS_MOTOR_CAN_ID));
+  currentSpeed = 0;
   flipperMotorOne.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_TOP_FLIP_MOTOR_1_CAN_ID));
   flipperMotorTwo.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_BOTTOM_FLIP_MOTOR_2_CAN_ID));
   intakeFolderSolenoid.reset(new frc::Solenoid(BALL_INTAKE_FOLDER_PCM_ID));
@@ -28,25 +29,19 @@ void BallIntakeSub::InitDefaultCommand() {
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
-/*
-needs to work on the SetIntakeArmAngle
-void BallIntakeSub::setIn(){
-  flipperMotorOne.SetAngle(0.0);
-  flipperMotorTwo.SetAngle(0.0);
-}
 
-void BallIntakeSub::setOut(){
-  flipperMotorOne.SetAngle(90.0);
-  flipperMotorTwo.SetAngle(90.0);
-}
-*/
 void BallIntakeSub::setArmTargetPosition(double angle){
   targetAngle = angle;
 }
 
-void BallIntakeSub::setIntakeMotor(double speed){
+void BallIntakeSub::setIntakeWheelsMotorSpeed(double speed){
   ballIntakeMotor->Set(ControlMode::PercentOutput, speed);
+  currentSpeed = speed;
   logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
+}
+
+double BallIntakeSub::getIntakeWheelsMotorSpeed() {
+  return currentSpeed;
 }
 
 double BallIntakeSub::getIntakeArmEncoderAngle() {
@@ -59,6 +54,10 @@ void BallIntakeSub::setFolderOut(bool flipOut) {
   intakeFolderSolenoid->Set(!flipOut);
  
   logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
+}
+
+bool BallIntakeSub::isFolderOut() {
+  return intakeFolderSolenoid->Get();
 }
 
 void BallIntakeSub::setIntakeArmMotor(double speed){

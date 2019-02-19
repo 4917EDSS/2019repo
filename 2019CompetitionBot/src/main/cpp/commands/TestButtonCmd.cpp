@@ -16,7 +16,7 @@ TestButtonCmd::TestButtonCmd() {
 
 // Called just before this Command runs the first time
 void TestButtonCmd::Initialize() {
-   Robot::ballIntakeSub.setIntakeMotor(1.0);
+   Robot::ballIntakeSub.setIntakeWheelsMotorSpeed(1.0);
    Robot::ballIntakeSub.setFolderOut(true);
 }
 
@@ -28,7 +28,7 @@ bool TestButtonCmd::IsFinished() { return false; }
 
 
 void TestButtonCmd::End() {
-  Robot::ballIntakeSub.setIntakeMotor(0.0);
+  Robot::ballIntakeSub.setIntakeWheelsMotorSpeed(0.0);
   Robot::ballIntakeSub.setFolderOut(false);
 }
 

@@ -15,8 +15,6 @@ ElevatorWithJoystickCmd::ElevatorWithJoystickCmd() {
   Requires(&Robot::elevatorSub);
 }
 
-
-
 // Called just before this Command runs the first time
 void ElevatorWithJoystickCmd::Initialize() {
   logger.send(logger.DEBUGGING, "Joystick is the executive operator of elevator \n");
@@ -25,23 +23,46 @@ void ElevatorWithJoystickCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void ElevatorWithJoystickCmd::Execute() {
   std::shared_ptr<frc::Joystick> operatorJoystick = Robot::oi.getOperatorController();
+  int shift = Robot::oi.getOperatorShiftState();
 
-  double elevatorStick = operatorJoystick->GetRawAxis(OPERATOR_ELEVATOR_AXIS);
-	elevatorStick = pow(elevatorStick, 3);
-  logger.send(logger.DEBUGGING, "The elevator is being used @ %f\n", elevatorStick);
+  // Right operator joystick vertical axis
+  // In normal operation, this controls the elevator but when 'shift' buttons are selected,
+  // it operates other mechanisms
+  double verticalStick = operatorJoystick->GetRawAxis(OPERATOR_ELEVATOR_AXIS) * (-1); // Up is negative
+  verticalStick = pow(verticalStick, 3);
 
-  // TODO: Replace with non-raw version
-  Robot::elevatorSub.setElevatorMotorRaw(-elevatorStick);
+  switch(shift) {
+  case 0: // No shift, normal elevator operation
+    // TODO: Replace with non-raw version (with slowdowns and limits)
+    Robot::elevatorSub.setElevatorMotorRaw(verticalStick);
+    Robot::elevatorSub.setManipulatorFlipperMotorSpeed(0.0);
+    logger.send(logger.CMD_TRACE, "The elevator is being controlled @ %f\n", verticalStick);
+    break;
 
+  case 1: // Ball intake in/out flipper (handled in BallintakeWithJoystickCmd)  
+    Robot::elevatorSub.setElevatorMotorRaw(0.0); 
+    Robot::elevatorSub.setManipulatorFlipperMotorSpeed(0.0);
+    break;
+
+  case 2: // Manipulator flip forward/backward
+    Robot::elevatorSub.setElevatorMotorRaw(0.0); 
+    Robot::elevatorSub.setManipulatorFlipperMotorSpeed(verticalStick);
+    logger.send(logger.CMD_TRACE, "The manipulator flipper is being controlled @ %f\n", verticalStick);
+    break;
+
+  default:
+    Robot::elevatorSub.setElevatorMotorRaw(0.0); 
+    Robot::elevatorSub.setManipulatorFlipperMotorSpeed(0.0);
+    break;
+  }
+
+
+  // Left operator joystick vertical axis
+  // Manipulator wheels in/out
   double manipulatorStick = operatorJoystick->GetRawAxis(OPERATOR_MANIPULATOR_AXIS);
   manipulatorStick = pow(manipulatorStick, 3);
-  logger.send(logger.DEBUGGING, "The manipulator is being used @ %f\n", manipulatorStick);
-
+  logger.send(logger.CMD_TRACE, "The manipulator wheels are being controlled @ %f\n", manipulatorStick);
   Robot::elevatorSub.setManipulatorWheelSpeed(manipulatorStick, manipulatorStick);
-
-  double intakeArmStick = operatorJoystick->GetRawAxis(OPERATOR_INTAKE_ARM_AXIS);
-  intakeArmStick = pow(intakeArmStick, 3);
-  logger.send(logger.DEBUGGING, "The intake arm is being used @ %f\n", intakeArmStick);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -52,11 +73,12 @@ bool ElevatorWithJoystickCmd::IsFinished() {
 // Called once after isFinished returns true
 void ElevatorWithJoystickCmd::End() {
   Robot::elevatorSub.setElevatorMotorSpeed(0.0);
+  Robot::elevatorSub.setManipulatorFlipperMotorSpeed(0.0);
   Robot::elevatorSub.setManipulatorWheelSpeed(0.0, 0.0);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void ElevatorWithJoystickCmd::Interrupted() {
-  ElevatorWithJoystickCmd::End();
+  End();
 }

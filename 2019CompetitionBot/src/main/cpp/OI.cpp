@@ -22,6 +22,7 @@
 #include "commands/IntakeBallFromRobotCmd.h"
 #include "commands/SetLowGearWhileHeldCmd.h"
 #include "commands/IntakeBallGrp.h"
+#include "commands/MultiButton1Cmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -80,6 +81,9 @@ OI::OI() {
 
   shifterLowWhileHeldBtn.reset(new frc::JoystickButton(operatorController.get(), SHIFTER_LOW_WHILE_HELD));
   shifterLowWhileHeldBtn->WhileHeld(new SetLowGearWhileHeldCmd());
+
+  multiCommand1Btn.reset(new frc::JoystickButton(operatorController.get(), MULTI_COMMAND_1_BUTTON));
+  multiCommand1Btn->WhenPressed(new MultiButton1Cmd());
 }
 
 std::shared_ptr<frc::Joystick> OI::getDriverController() {
@@ -88,4 +92,31 @@ std::shared_ptr<frc::Joystick> OI::getDriverController() {
 
 std::shared_ptr<frc::Joystick> OI::getOperatorController() {
   return operatorController;
+}
+
+// Use the POV (i.e. D-Pad) as a command modifier
+int OI::getOperatorShiftState() {
+  int shift = 0;
+
+  // POV position is reported in degrees with 0 deg being up and increasing clockwise
+  // Positions between Up/down/left/right are ignored (i.e. 45 deg)
+  switch(operatorController->GetPOV()) {
+  case -1: // D-pad not pressed
+    shift = 0;
+    break;
+  case 0:    // Up
+    shift = 1;
+    break; 
+  case 90:  // Right
+    shift = 2;
+    break;
+  case 180: // Down
+    shift = 3;
+    break;
+  case 270: // Left
+    shift = 4;
+    break;
+  }
+
+  return shift;
 }

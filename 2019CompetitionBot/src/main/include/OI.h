@@ -22,6 +22,7 @@
  * Start = 10
  * L3 = 11
  * R3 = 12
+ * 
  * Left Vertical = 1
  * Left Horizontal = 0
  * Right Vertical = 3
@@ -29,31 +30,36 @@
  *
  */
 
+// Controllers (aka Joysticks)
 constexpr int DRIVER_CONTROLLER_PORT = 0;
 constexpr int OPERATOR_CONTROLLER_PORT = 1;
 
-//Driver
+// Driver Buttons
+constexpr int MILKY_MANIPULATOR_BTN= 9;
 constexpr int DRIVER_KILL_ONE_BTN = 11;
 constexpr int DRIVER_KILL_TWO_BTN = 12;
-constexpr int MILKY_MANIPULATOR_BTN= 9;
 
-//Operator
-constexpr int HATCH_CONTRACT_BTN = 3;
+// Driver Axes
+//...
+
+// Operator Buttons
+constexpr int TEST_BTN = 1;
 constexpr int SET_INTAKE_MOTOR_BTN = 2;
+constexpr int HATCH_CONTRACT_BTN = 3;
+constexpr int INTAKE_BALL_BTN=4;
+constexpr int SHIFTER_LOW_WHILE_HELD = 5;
+constexpr int RESET_INTAKE_BTN = 7;
+constexpr int SET_MANIPULATOR_ENCODER_ZERO_BTN = 8;
+constexpr int TOGGLE_HATCH_PANEL_GRABBER = 9;
+constexpr int MULTI_COMMAND_1_BUTTON = 10;
 constexpr int OPERATOR_KILL_ONE_BTN = 11;
 constexpr int OPERATOR_KILL_TWO_BTN = 12;
 
-//constexpr int CLIMB_MODE_BTN = 5;
-constexpr int SHIFTER_LOW_WHILE_HELD = 5;
-constexpr int TEST_BTN = 9;
-constexpr int SET_MANIPULATOR_ENCODER_ZERO_BTN = 8;
-constexpr int RESET_INTAKE_BTN = 7;
-constexpr int TOGGLE_HATCH_PANEL_GRABBER = 10;
-constexpr int INTAKE_BALL_BTN=4;
-
+// Operator Axes
 constexpr int OPERATOR_MANIPULATOR_AXIS = 1;
 constexpr int OPERATOR_INTAKE_ARM_AXIS = 2;
 constexpr int OPERATOR_ELEVATOR_AXIS = 3;
+
 
 class OI {
  public:
@@ -61,6 +67,7 @@ class OI {
 
   std::shared_ptr<frc::Joystick> getDriverController();
   std::shared_ptr<frc::Joystick> getOperatorController();
+  int getOperatorShiftState();
 
  private:
     std::shared_ptr<frc::Joystick> driverController;
@@ -80,4 +87,5 @@ class OI {
     std::shared_ptr<frc::JoystickButton> setManipulatorEncoderZeroBtn;
     std::shared_ptr<frc::JoystickButton> toggleHatchPanelGrabberBtn;
     std::shared_ptr<frc::JoystickButton> shifterLowWhileHeldBtn;
+    std::shared_ptr<frc::JoystickButton> multiCommand1Btn;
 };

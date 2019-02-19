@@ -21,14 +21,17 @@ class BallIntakeSub : public frc::Subsystem {
   std::shared_ptr<frc::Solenoid> intakeFolderSolenoid;
   std::shared_ptr<frc::Encoder> intakeArmEnc;
   double targetAngle;
+  double currentSpeed;
 
 
  public:
   BallIntakeSub();
   void InitDefaultCommand() override;
   void ExtendRearIntakeSolenoids();
-  void setIntakeMotor(double speed);
+  void setIntakeWheelsMotorSpeed(double speed);
+  double getIntakeWheelsMotorSpeed();
   void setFolderOut(bool flipOut);
+  bool isFolderOut();
   double getIntakeArmEncoderAngle();
   void setIn();
   void setOut();

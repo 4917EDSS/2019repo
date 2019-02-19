@@ -7,7 +7,7 @@ DriveWithIntakeMotorCmd::DriveWithIntakeMotorCmd() {
 }
 
 void DriveWithIntakeMotorCmd::Initialize() {
-  Robot::ballIntakeSub.setIntakeMotor(1.0);
+  Robot::ballIntakeSub.setIntakeWheelsMotorSpeed(1.0);
 }
 
 void DriveWithIntakeMotorCmd::Execute() {}
@@ -15,7 +15,7 @@ void DriveWithIntakeMotorCmd::Execute() {}
 bool DriveWithIntakeMotorCmd::IsFinished() { return false; }
 
 void DriveWithIntakeMotorCmd::End() {
-  Robot::ballIntakeSub.setIntakeMotor(0.0);
+  Robot::ballIntakeSub.setIntakeWheelsMotorSpeed(0.0);
 }
 
 void DriveWithIntakeMotorCmd::Interrupted() {
