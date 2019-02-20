@@ -30,7 +30,7 @@ void Robot::RobotInit() {
 		logger.addOutputPath(new frc4917::SyslogOutput(syslogTargetAddress));		  // Enable syslog output
 		logger.send(logger.DEBUGGING, "Robot code started @ %f\n", GetTime());
 
-    std::cout<<"Starting version 1.0\n";
+    std::cout<<"Starting version 1.2\n";
 }
 
 /**

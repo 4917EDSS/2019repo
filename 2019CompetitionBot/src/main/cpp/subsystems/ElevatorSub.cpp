@@ -20,6 +20,7 @@ constexpr float ELEVATOR_P = 0;
 constexpr float ELEVATOR_I = 0;
 constexpr float ELEVATOR_D = 0;
 constexpr float FLIPPER_TICK_TO_DEGREE_FACTOR = (90/44.1900);
+constexpr float ELEVATOR_MAX_HEIGHT = 150;
 
 ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
   elevatorMotor1.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
@@ -125,7 +126,7 @@ bool ElevatorSub::isFinishedMove() {
 }
 
 bool ElevatorSub::isElevatorDown(){
-  return !lowerLimit.get() && elevatorMotor1->GetEncoder().GetPosition();
+  return !lowerLimit.get() && elevatorMotor1->GetEncoder().GetPosition() < 20;
 }
 
 void ElevatorSub::setElevatorMotorRaw(double speed){
@@ -162,7 +163,7 @@ void ElevatorSub::setElevatorMotorSpeed(double speed){
         speed = 0;
   }
 
-   else if (elevatorMotor1->GetEncoder().GetPosition() > 150 && speed > 0){
+   else if (elevatorMotor1->GetEncoder().GetPosition() > ELEVATOR_MAX_HEIGHT && speed > 0){
     speed = 0;
   }
 

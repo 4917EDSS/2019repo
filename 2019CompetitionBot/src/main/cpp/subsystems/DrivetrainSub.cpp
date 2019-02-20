@@ -52,13 +52,13 @@ void DrivetrainSub::InitDefaultCommand()
 
 void DrivetrainSub::drive(double lSpeed, double rSpeed)
 {
-  leftMotor1->Set(lSpeed);
+//  leftMotor1->Set(lSpeed);
   leftMotor2->Set(lSpeed);
-  leftMotor3->Set(lSpeed);
+//  leftMotor3->Set(lSpeed);
 
-  rightMotor1->Set(-rSpeed);
+//  rightMotor1->Set(-rSpeed);
   rightMotor2->Set(-rSpeed);
-  rightMotor3->Set(-rSpeed);
+//  rightMotor3->Set(-rSpeed);
   
 }
 
