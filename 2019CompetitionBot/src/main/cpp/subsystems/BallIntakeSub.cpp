@@ -13,7 +13,7 @@
 //Canid4 and Set Intake
 #define ENCODER_SCALE (90.0/32.0)
 
-BallIntakeSub::BallIntakeSub() : Subsystem("ExampleSubsystem") {
+BallIntakeSub::BallIntakeSub() : Subsystem("BallIntakeSub") {
   ballIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_WHEELS_MOTOR_CAN_ID));
   currentSpeed = 0;
   flipperMotorOne.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_TOP_FLIP_MOTOR_1_CAN_ID));

@@ -21,7 +21,7 @@ constexpr float ELEVATOR_I = 0;
 constexpr float ELEVATOR_D = 0;
 constexpr float FLIPPER_TICK_TO_DEGREE_FACTOR = (90/44.1900);
 
-ElevatorSub::ElevatorSub() : Subsystem("ExampleSubsystem") {
+ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
   elevatorMotor1.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   elevatorMotor2.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_2_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   elevatorMotor1->GetEncoder().SetPosition(0);  // Positive means rotating towards front9

@@ -98,8 +98,12 @@ void DriveWithJoystickCmd::Execute() {
 bool DriveWithJoystickCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void DriveWithJoystickCmd::End() {}
+void DriveWithJoystickCmd::End() {
+	Robot::drivetrainSub.drive(0, 0);
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void DriveWithJoystickCmd::Interrupted() {}
+void DriveWithJoystickCmd::Interrupted() {
+	End();
+}
