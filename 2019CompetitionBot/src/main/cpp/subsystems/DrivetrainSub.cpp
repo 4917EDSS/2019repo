@@ -15,6 +15,7 @@ constexpr float DRIVE_BALANCE_TOLERANCE = 0.5;
 constexpr float DRIVE_BALANCE_P = 0;
 constexpr float DRIVE_BALANCE_I = 0;
 constexpr float DRIVE_BALANCE_D = 0;
+constexpr float MOTOR_POWER_SCALING_FACTOR = 0.8;  // TODO:  Is this necessary?
 
 DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub"){
 
@@ -26,6 +27,15 @@ DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub"){
   leftMotor1.reset(new rev::CANSparkMax(LEFT_DRIVE_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   leftMotor2.reset(new rev::CANSparkMax(LEFT_DRIVE_MOTOR_2_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   leftMotor3.reset(new rev::CANSparkMax(LEFT_DRIVE_MOTOR_3_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+
+  // TODO: Determine if this is necessary
+  rightMotor1->SetSmartCurrentLimit(50);
+  rightMotor2->SetSmartCurrentLimit(50);
+  rightMotor3->SetSmartCurrentLimit(50);
+
+  leftMotor1->SetSmartCurrentLimit(50);
+  leftMotor2->SetSmartCurrentLimit(50);
+  leftMotor3->SetSmartCurrentLimit(50);
 
   ahrs.reset(new AHRS(frc::SPI::kMXP));
   ahrs->SetName("Drivetrain", "AHRS");
@@ -52,13 +62,13 @@ void DrivetrainSub::InitDefaultCommand()
 
 void DrivetrainSub::drive(double lSpeed, double rSpeed)
 {
-  leftMotor1->Set(lSpeed);
-  leftMotor2->Set(lSpeed);
-  leftMotor3->Set(lSpeed);
+  leftMotor1->Set(-lSpeed * MOTOR_POWER_SCALING_FACTOR);
+  leftMotor2->Set(-lSpeed * MOTOR_POWER_SCALING_FACTOR);
+  leftMotor3->Set(-lSpeed * MOTOR_POWER_SCALING_FACTOR);
 
-  rightMotor1->Set(-rSpeed);
-  rightMotor2->Set(-rSpeed);
-  rightMotor3->Set(-rSpeed);
+  rightMotor1->Set(rSpeed * MOTOR_POWER_SCALING_FACTOR);
+  rightMotor2->Set(rSpeed * MOTOR_POWER_SCALING_FACTOR);
+  rightMotor3->Set(rSpeed * MOTOR_POWER_SCALING_FACTOR);
   
 }
 
