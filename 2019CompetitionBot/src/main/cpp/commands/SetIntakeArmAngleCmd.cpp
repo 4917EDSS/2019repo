@@ -31,11 +31,7 @@ void SetIntakeArmAngleCmd::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void SetIntakeArmAngleCmd::Execute() {
-  if (isClimbingNow) {
-    Robot::ballIntakeSub.update(true);
-  } else {
-    Robot::ballIntakeSub.update(false);
-  }
+    Robot::ballIntakeSub.update(isClimbingNow);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -45,7 +41,7 @@ bool SetIntakeArmAngleCmd::IsFinished() {
 
 // Called once after isFinished returns true
 void SetIntakeArmAngleCmd::End() {
-  Robot::ballIntakeSub.setIntakeArmMotor(0.0);
+  Robot::ballIntakeSub.setIntakeArmMotor(0.0, false);
 }
 
 // Called when another command which requires one or more of the same

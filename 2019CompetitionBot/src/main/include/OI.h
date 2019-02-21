@@ -44,16 +44,16 @@ constexpr int DRIVER_KILL_TWO_BTN = 12;
 
 // Operator Buttons
 constexpr int TEST_BTN = 1;
-constexpr int SET_INTAKE_MOTOR_BTN = 2;
+constexpr int SET_INTAKE_MOTOR_BTN = 4;
 constexpr int HATCH_CONTRACT_BTN = 3;
-constexpr int INTAKE_BALL_BTN=4;
+constexpr int INTAKE_BALL_BTN=2;
 constexpr int SHIFTER_LOW_WHILE_HELD = 5;
-constexpr int RESET_INTAKE_BTN = 7;
 constexpr int SET_MANIPULATOR_ENCODER_ZERO_BTN = 8;
 constexpr int TOGGLE_HATCH_PANEL_GRABBER = 9;
 constexpr int MULTI_COMMAND_1_BUTTON = 10;
 constexpr int OPERATOR_KILL_ONE_BTN = 11;
 constexpr int OPERATOR_KILL_TWO_BTN = 12;
+constexpr int CLIMB_MODE_BTN = 7;
 
 // Operator Axes
 constexpr int OPERATOR_MANIPULATOR_AXIS = 1;

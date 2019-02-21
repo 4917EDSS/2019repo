@@ -41,8 +41,8 @@ OI::OI() {
   hatchContractBtn.reset(new frc::JoystickButton(operatorController.get(), HATCH_CONTRACT_BTN));
   hatchContractBtn->WhileHeld(new CloseHatchPickupCmd());
 
-  IntakeUntilLimitBtn.reset(new frc::JoystickButton(operatorController.get(), SET_INTAKE_MOTOR_BTN));
-  IntakeUntilLimitBtn->WhenPressed(new IntakeBallFromRobotCmd());
+  //IntakeUntilLimitBtn.reset(new frc::JoystickButton(operatorController.get(), SET_INTAKE_MOTOR_BTN));
+  //IntakeUntilLimitBtn->WhenPressed(new IntakeBallFromRobotCmd());
 
   OperatorKillBtn1.reset(new frc::JoystickButton(operatorController.get(), OPERATOR_KILL_ONE_BTN));
   OperatorKillBtn1->WhenPressed(new KillEverythingCmd());
@@ -60,16 +60,13 @@ OI::OI() {
   milkyManipulatorBtn.reset(new frc::JoystickButton(driverController.get(),MILKY_MANIPULATOR_BTN));
   milkyManipulatorBtn->WhileHeld( new MilkyScoreGrp());
 
-  resetIntakeBtn.reset(new frc::JoystickButton(operatorController.get(),RESET_INTAKE_BTN));
-  resetIntakeBtn->WhenPressed(new SetIntakeArmAngleCmd(110));
-
   intakeBallBtn.reset(new frc::JoystickButton(operatorController.get(), INTAKE_BALL_BTN));
   intakeBallBtn->WhenPressed(new IntakeBallGrp());
 
-   /*   
+  
   climbModeBtn.reset(new frc::JoystickButton(operatorController.get(), CLIMB_MODE_BTN));
   climbModeBtn->WhileHeld(new ClimbCmdGroup());
-*/
+
   TestBtn.reset(new frc::JoystickButton(operatorController.get(), TEST_BTN));
   TestBtn->WhileHeld(new TestButtonCmd());
 

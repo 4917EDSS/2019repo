@@ -32,20 +32,20 @@ void BallIntakeWithJoystickCmd::Execute() {
 
   switch(shift) {
   case 0: // No shift, normal elevator operation (handled in ElevatorWithJoystickCmd)
-    Robot::ballIntakeSub.setIntakeArmMotor(0.0);
+    Robot::ballIntakeSub.setIntakeArmMotor(0.0, false);
     break;
 
   case 1: // Ball intake in/out flipper
-    Robot::ballIntakeSub.setIntakeArmMotor(verticalStick * 0.5);  // Limit power to 50%
+    Robot::ballIntakeSub.setIntakeArmMotor(verticalStick * 0.5, false);  // Limit power to 50%
     logger.send(logger.WITH_JOYSTICK_TRACE, "The ball intake flipper is being controlled @ %f\n", verticalStick);
     break;
 
   case 2: // Manipulator flip forward/backward (handled in ElevatorWithJoystickCmd)
-    Robot::ballIntakeSub.setIntakeArmMotor(0.0);
+    Robot::ballIntakeSub.setIntakeArmMotor(0.0, false);
     break;
 
   default:
-    Robot::ballIntakeSub.setIntakeArmMotor(0.0);
+    Robot::ballIntakeSub.setIntakeArmMotor(0.0, false);
     break;
   }
 }
@@ -55,7 +55,7 @@ bool BallIntakeWithJoystickCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void BallIntakeWithJoystickCmd::End() {
-  Robot::ballIntakeSub.setIntakeArmMotor(0.0);
+  Robot::ballIntakeSub.setIntakeArmMotor(0.0, false);
 }
 
 // Called when another command which requires one or more of the same
