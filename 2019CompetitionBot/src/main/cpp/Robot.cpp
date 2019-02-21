@@ -25,10 +25,11 @@ void Robot::RobotInit() {
 		// Setup logging system
 		std::string syslogTargetAddress = (Preferences::GetInstance())->GetString("SyslogTargetAddress", "10.49.17.30");
 		logger.enableChannels(logger.WARNINGS | logger.ERRORS | logger.ASSERTS);	// These should stay on during competition
-		logger.enableChannels(logger.CMD_TRACE /*logger.DEBUGGING | logger.DRIVETRAIN | logger.PERIODIC | logger.ELEVATOR | logger.BALLINTAKE*/);	// Should look at these during development
+		logger.enableChannels(logger.CMD_TRACE /*logger.DEBUGGING | logger.DRIVETRAIN | logger.PERIODIC*/ | logger.ELEVATOR /*| logger.BALLINTAKE*/);	// Should look at these during development
     logger.addOutputPath(new frc4917::ConsoleOutput());						            // Enable console output and/or
 		logger.addOutputPath(new frc4917::SyslogOutput(syslogTargetAddress));		  // Enable syslog output
 		logger.send(logger.DEBUGGING, "Robot code started @ %f\n", GetTime());
+		logger.send(logger.ELEVATOR, "Robot code started @ %f\n", GetTime());
 
     std::cout<<"Starting version 1.3\n";
 }

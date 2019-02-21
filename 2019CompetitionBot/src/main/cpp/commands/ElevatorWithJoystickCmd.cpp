@@ -17,7 +17,8 @@ ElevatorWithJoystickCmd::ElevatorWithJoystickCmd() {
 
 // Called just before this Command runs the first time
 void ElevatorWithJoystickCmd::Initialize() {
-  logger.send(logger.WITH_JOYSTICK_TRACE, "Joystick is the executive operator of elevator \n");
+  currentManipulatorPosition = Robot::elevatorSub.getManipulatorEncoder(); 
+  logger.send(logger.ELEVATOR, "Robot flipper starting position is at %f \n", currentManipulatorPosition);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -34,6 +35,8 @@ void ElevatorWithJoystickCmd::Execute() {
   switch(shift) {
   case 0: // No shift, normal elevator operation
     // TODO: Replace with non-raw version (with slowdowns and limits)
+    //logger.send(logger.ELEVATOR, "Call holdManFlip\n");
+    Robot::elevatorSub.holdManipulatorFlipper(currentManipulatorPosition);
     Robot::elevatorSub.setElevatorMotorRaw(verticalStick * 0.5);  // Limit power to 50%
     Robot::elevatorSub.setManipulatorFlipperMotorSpeed(0.0);
     logger.send(logger.WITH_JOYSTICK_TRACE, "The elevator is being controlled @ %f\n", verticalStick);
@@ -47,12 +50,13 @@ void ElevatorWithJoystickCmd::Execute() {
   case 2: // Manipulator flip forward/backward
     Robot::elevatorSub.setElevatorMotorRaw(0.0); 
     Robot::elevatorSub.setManipulatorFlipperMotorSpeed(verticalStick * 0.5);  // Limit power to 50%
-    logger.send(logger.WITH_JOYSTICK_TRACE, "The manipulator flipper is being controlled @ %f\n", verticalStick);
+    currentManipulatorPosition = Robot::elevatorSub.getManipulatorEncoder();
+    //logger.send(logger.ELEVATOR, "The manipulator flipper is being controlled @ %f\n", verticalStick);
     break;
 
   default:
     Robot::elevatorSub.setElevatorMotorRaw(0.0); 
-    Robot::elevatorSub.setManipulatorFlipperMotorSpeed(0.0);
+    // Robot::elevatorSub.setManipulatorFlipperMotorSpeed(0.0);
     break;
   }
 

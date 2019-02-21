@@ -51,9 +51,15 @@ void ElevatorSub::InitDefaultCommand() {
 
 void ElevatorSub::update(){
   //setElevatorMotorSpeed((targetHeight - elevatorMotor1->GetEncoder().GetPosition())* 0.1);
-  setManipulatorFlipperMotorSpeed((targetDegrees -  manipulatorFlipperMotor->GetEncoder().GetPosition())* 0.04);
+  //holdManipulatorFlipper();
 }
 
+void ElevatorSub::holdManipulatorFlipper(double position){
+  //setElevatorMotorSpeed((targetHeight - elevatorMotor1->GetEncoder().GetPosition())* 0.1);
+  double holdvalue = (position -  manipulatorFlipperMotor->GetEncoder().GetPosition());
+  // logger.send(logger.ELEVATOR, "Flipper motor at target %f, position %f\n", position, manipulatorFlipperMotor->GetEncoder().GetPosition());
+  setManipulatorFlipperMotorSpeed(holdvalue*0.1); 
+}
 // Set true for High Gear, false for Low Gear
 void ElevatorSub::setShifterHigh(bool highGear){
   shifterSolenoid->Set(highGear);
