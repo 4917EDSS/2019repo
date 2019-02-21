@@ -10,6 +10,8 @@
 #include <RobotMap.h>
 #include <iostream>
 #include <hal/HAL.h>
+#include <frc/shuffleboard/Shuffleboard.h>
+#include "frc/shuffleboard/BuiltInLayouts.h"
 
 constexpr float DRIVE_BALANCE_TOLERANCE = 0.5;
 constexpr float DRIVE_BALANCE_P = 0;
@@ -42,6 +44,23 @@ DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub"){
 
   driveBalancer.reset(new frc4917::MotorBalancer());
   driveBalancePID.reset(new frc::PIDController(DRIVE_BALANCE_P, DRIVE_BALANCE_I, DRIVE_BALANCE_D, ahrs.get(), driveBalancer.get()));
+
+  frc::ShuffleboardTab& shuffleTab = frc::Shuffleboard::GetTab("Drivetrain");
+  shuffleTab.Add("Test", 123);
+  nte = (shuffleTab.Add("Set Power", 0).GetEntry());
+
+  for(int motorId = 0; motorId < 6; motorId++)
+  {
+    std::string listName = "Motor " + std::to_string(motorId) + " Data";
+    frc::ShuffleboardLayout& shuffleList = shuffleTab.GetLayout(listName, frc::BuiltInLayouts::kList);
+
+    nteSparks[motorId].setPower = (shuffleList.Add("Set Power", 0).GetEntry());
+    nteSparks[motorId].outputCurrent = (shuffleList.Add("Current Out", 0).GetEntry());
+    nteSparks[motorId].encoderPosition = (shuffleList.Add("Position", 0).GetEntry());
+    nteSparks[motorId].encoderVelocity = (shuffleList.Add("Velocity", 0).GetEntry());
+    nteSparks[motorId].motorTemperature = (shuffleList.Add("Motor Temp", 0).GetEntry());
+  }
+
 }
 
 double DrivetrainSub::GetRightEncoder()
@@ -69,7 +88,8 @@ void DrivetrainSub::drive(double lSpeed, double rSpeed)
   rightMotor1->Set(rSpeed * MOTOR_POWER_SCALING_FACTOR);
   rightMotor2->Set(rSpeed * MOTOR_POWER_SCALING_FACTOR);
   rightMotor3->Set(rSpeed * MOTOR_POWER_SCALING_FACTOR);
-  
+  nte.SetDouble(lSpeed);
+  nteSparks[0].setPower.SetDouble(leftMotor1->Get());
 }
 
 void DrivetrainSub::enableBalancerPID(float setPoint){

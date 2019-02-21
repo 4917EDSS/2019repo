@@ -15,6 +15,14 @@
 #include "AHRS.h"
 #include "components/MotorBalancer.h"
 
+struct SparkShuffleboardEntrySet {
+  nt::NetworkTableEntry setPower;
+  nt::NetworkTableEntry outputCurrent;
+  nt::NetworkTableEntry encoderPosition;
+  nt::NetworkTableEntry encoderVelocity;
+  nt::NetworkTableEntry motorTemperature;
+};
+
 class DrivetrainSub : public frc::Subsystem {
  private:
   std::shared_ptr <rev::CANSparkMax> leftMotor1;
@@ -26,6 +34,9 @@ class DrivetrainSub : public frc::Subsystem {
   std::shared_ptr<AHRS> ahrs;
   std::shared_ptr<frc::PIDController> driveBalancePID;
   std::shared_ptr<frc4917::MotorBalancer> driveBalancer;
+
+  struct SparkShuffleboardEntrySet nteSparks[6];
+  nt::NetworkTableEntry nte;
 
  public:
   DrivetrainSub();
