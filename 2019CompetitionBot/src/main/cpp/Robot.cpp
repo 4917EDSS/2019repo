@@ -18,6 +18,7 @@ DrivetrainSub Robot::drivetrainSub;
 BallIntakeSub Robot::ballIntakeSub;
 ElevatorSub Robot::elevatorSub;
 OI Robot::oi;
+bool Robot::inBallMode;
 
 void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
@@ -32,13 +33,15 @@ void Robot::RobotInit() {
 		logger.send(logger.ELEVATOR, "Robot code started @ %f\n", GetTime());
 
     std::cout<<"Starting version 1.3\n";
+
+    Robot::inBallMode = true;
 }
 
 /**
  * This function is called every robot packet, no matter the mode. Use
  * this for items like diagnostics that you want ran during disabled,
  * autonomous, teleoperated and test.
- *This runs after the mode specific periodic functions, but before
+ * This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
 void Robot::RobotPeriodic() {
