@@ -20,9 +20,10 @@
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/ToggleHatchGripperCmd.h"
 #include "commands/IntakeBallFromRobotCmd.h"
-#include "commands/SetLowGearWhileHeldCmd.h"
 #include "commands/IntakeBallGrp.h"
 #include "commands/MultiButton1Cmd.h"
+#include "commands/HatchModeGrp.h"
+#include "commands/CargoModeGrp.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -40,6 +41,12 @@ OI::OI() {
 
   hatchContractBtn.reset(new frc::JoystickButton(operatorController.get(), HATCH_CONTRACT_BTN));
   hatchContractBtn->WhileHeld(new CloseHatchPickupCmd());
+
+  hatchModeBtn.reset(new frc::JoystickButton(operatorController.get(), HATCH_MODE_BTN));
+  hatchModeBtn->WhenPressed(new HatchModeGrp());
+
+  cargoModeBtn.reset(new frc::JoystickButton(operatorController.get(), CARGO_MODE_BTN));
+  cargoModeBtn->WhenPressed(new CargoModeGrp());
 
   //IntakeUntilLimitBtn.reset(new frc::JoystickButton(operatorController.get(), SET_INTAKE_MOTOR_BTN));
   //IntakeUntilLimitBtn->WhenPressed(new IntakeBallFromRobotCmd());
@@ -75,9 +82,6 @@ OI::OI() {
 
   toggleHatchPanelGrabberBtn.reset(new frc::JoystickButton(operatorController.get(), TOGGLE_HATCH_PANEL_GRABBER));
   toggleHatchPanelGrabberBtn->WhenPressed(new ToggleHatchGripperCmd());
-
-  shifterLowWhileHeldBtn.reset(new frc::JoystickButton(operatorController.get(), SHIFTER_LOW_WHILE_HELD));
-  shifterLowWhileHeldBtn->WhileHeld(new SetLowGearWhileHeldCmd());
 
   multiCommand1Btn.reset(new frc::JoystickButton(operatorController.get(), MULTI_COMMAND_1_BUTTON));
   multiCommand1Btn->WhenPressed(new MultiButton1Cmd());
