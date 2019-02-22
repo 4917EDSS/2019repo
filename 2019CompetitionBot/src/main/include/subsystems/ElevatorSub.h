@@ -5,6 +5,31 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+/*
+Encoder Heights
+
+  Loading Station
+    Hatch = -5.140
+    Ball = -20.071
+
+  Rocket Ship
+    Ball
+      Low = -11.714
+      Medium = -36.21
+      High = -52.524
+    Hatch
+      Low = -5.140
+      Medium = -25.499
+      High = -49.47
+  
+  Cargo Ship
+    Hatch = -5.140
+    Ball = -24.92
+
+  Loading Station
+    Hatch = -5.140
+*/
+
 #pragma once
 
 #include <frc/commands/Subsystem.h>
