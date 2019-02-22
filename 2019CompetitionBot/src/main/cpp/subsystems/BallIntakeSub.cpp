@@ -59,6 +59,10 @@ double BallIntakeSub::getIntakeArmEncoderAngle()
   return -(intakeArmEnc->GetDistance() * ENCODER_SCALE);
 }
 
+bool BallIntakeSub::getIntakeArmLimit(){
+return !ballIntakeArmLimit->Get();
+}
+
 void BallIntakeSub::setFolderOut(bool flipOut)
 {
   intakeFolderSolenoid->Set(!flipOut);
@@ -83,12 +87,17 @@ void BallIntakeSub::setIntakeArmMotor(double speed, bool isClimbing)
 void BallIntakeSub::update(bool isClimbing)
 {
   double currentAngle = getIntakeArmEncoderAngle();
-  double pValue = 0.003;
-  double nValue = 0.01; //apply higher power if the motors are fighting gravity
+  double pValueFlipOut = 0.003;
+  double nValueFlipOut = 0.01; //apply higher power if the motors are fighting gravity
+  double pValueFlipIn = 0.003;
+  double nValueFlipIn = 0.01;
   double speed = 0; //will be changed
+  bool flipPosition = isFolderOut();
+  std::cout << "The flipper is out: " << flipPosition << std::endl;
+  std::cout << "The limit is hit: " << getIntakeArmLimit() << std::endl;
   if (isClimbing)
   {
-    speed = (targetAngle - currentAngle) * pValue * 0.001;
+    speed = (targetAngle - currentAngle) * 0.01;
   }
   else
   {
@@ -97,41 +106,37 @@ void BallIntakeSub::update(bool isClimbing)
 
   if (speed < 0)
   {
-    speed = speed * nValue;
+    if(flipPosition){
+    speed = speed * nValueFlipOut;
+    } else {
+    speed = speed * nValueFlipIn;
+    }
   }
   else
   {
-    speed = speed * pValue;
+    if(flipPosition){
+    speed = speed * pValueFlipOut;
+    } else {
+    speed = speed * pValueFlipIn;
+    }
   }
-  std::cout << "Speed: " << speed << " target angle " << targetAngle << " Current angle: " << currentAngle << "\n";
-  //speed += (53 - currentAngle) * 0.0001;
-  /*
-  if (!isClimbing) {
-    speed = std::min(speed, 0.35);
-    speed = std::max(speed, -0.35);
-  }
-*/
+  //std::cout << "Speed: " << speed << " target angle " << targetAngle << " Current angle: " << currentAngle << "\n";
+    //speed = std::min(speed, 0.35);
+    //speed = std::max(speed, -0.35);
+if(speed > 0 && currentAngle > 150){
+  speed = 0;
+}
+if(speed < 0 && getIntakeArmLimit()){
+  speed = 0;
+}
 
   if (!(fabs(targetAngle - currentAngle) < 2))
   {
-    keepArmAtTarget(speed, isClimbing);
+    setIntakeArmMotor(speed, isClimbing);
   }
-}
-
-void BallIntakeSub::keepArmAtTarget(double speed, bool isClimbing)
-{
-  setIntakeArmMotor(speed, isClimbing);
 }
 
 bool BallIntakeSub::doneFlipping()
 {
-
-  /*
-  if (((fabs(targetAngle - getIntakeArmEncoderAngle())) < 2) && (fabs(intakeArmEnc->GetRate()) < 5))  {
-    return true;
-  }  else {
-    return false;
-  }
-  */
   return false;
 }
