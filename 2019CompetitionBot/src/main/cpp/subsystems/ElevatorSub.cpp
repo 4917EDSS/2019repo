@@ -116,12 +116,14 @@ void ElevatorSub::setElevatorTargetHeight(double newHeight){
 }
 
 void ElevatorSub::setManipulatorTargetAngle(double newAngle) {
-  targetDegrees = newAngle;
+  targetAngle = newAngle;
 }
-
+double ElevatorSub::getManipulatorAngle(){
+  return  targetAngle;
+}
 bool ElevatorSub::isFinishedMove() {
  if (fabs(targetHeight -elevatorMotor1->GetEncoder().GetPosition()) < ELEVATOR_POSITION_TOLERANCE && fabs(elevatorMotor1->GetEncoder().GetVelocity()) < 45) {
-   if (fabs(targetDegrees -manipulatorFlipperMotor->GetEncoder().GetPosition()) < MANIPULATOR_POSITION_TOLERANCE && fabs(manipulatorFlipperMotor->GetEncoder().GetVelocity()) < 45) {
+   if (fabs(targetAngle -manipulatorFlipperMotor->GetEncoder().GetPosition()) < MANIPULATOR_POSITION_TOLERANCE && fabs(manipulatorFlipperMotor->GetEncoder().GetVelocity()) < 45) {
       return true;
    } else {
      return false;
