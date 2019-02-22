@@ -13,7 +13,7 @@
 
 #include <iostream>
 IntakeBallGrp::IntakeBallGrp() {
-
+  
   AddParallel(new FoldIntakeCmd(true));
   AddSequential(new SetIntakeArmAngleCmd(false,110));
   //std::cout << "intake ball group working";
