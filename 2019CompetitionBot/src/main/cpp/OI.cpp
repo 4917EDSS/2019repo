@@ -12,13 +12,11 @@
 #include "subsystems/BallIntakeSub.h"
 #include "Commands/CloseHatchPickupCmd.h"
 #include "commands/KillEverythingCmd.h"
-#include "commands/TestButtonCmd.h"
 #include "commands/MilkyScoreGrp.h"
 #include "commands/MilkyManipulatorCmd.h"
 #include "commands/ClimbCmdGroup.h"
 #include "commands/SetElevatorandManipulatorCmd.h"
 #include "commands/SetIntakeArmAngleCmd.h"
-#include "commands/ToggleHatchGripperCmd.h"
 #include "commands/IntakeBallFromRobotCmd.h"
 #include "commands/IntakeBallGrp.h"
 #include "commands/MultiButton1Cmd.h"
@@ -74,14 +72,8 @@ OI::OI() {
   climbModeBtn.reset(new frc::JoystickButton(operatorController.get(), CLIMB_MODE_BTN));
   climbModeBtn->WhileHeld(new ClimbCmdGroup());
 
-  TestBtn.reset(new frc::JoystickButton(operatorController.get(), TEST_BTN));
-  TestBtn->WhileHeld(new TestButtonCmd());
-
   setManipulatorEncoderZeroBtn.reset(new frc::JoystickButton(operatorController.get(), SET_MANIPULATOR_ENCODER_ZERO_BTN));
   setManipulatorEncoderZeroBtn->WhenPressed(new SetElevatorandManipulatorCmd(0.0, 0.0));
-
-  toggleHatchPanelGrabberBtn.reset(new frc::JoystickButton(operatorController.get(), TOGGLE_HATCH_PANEL_GRABBER));
-  toggleHatchPanelGrabberBtn->WhenPressed(new ToggleHatchGripperCmd());
 
   multiCommand1Btn.reset(new frc::JoystickButton(operatorController.get(), MULTI_COMMAND_1_BUTTON));
   multiCommand1Btn->WhenPressed(new MultiButton1Cmd());

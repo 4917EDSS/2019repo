@@ -48,7 +48,6 @@ constexpr int SET_INTAKE_MOTOR_BTN = 4;
 constexpr int HATCH_CONTRACT_BTN = 3;
 constexpr int INTAKE_BALL_BTN=2;
 constexpr int SET_MANIPULATOR_ENCODER_ZERO_BTN = 8;
-constexpr int TOGGLE_HATCH_PANEL_GRABBER = 9;
 constexpr int MULTI_COMMAND_1_BUTTON = 10;
 constexpr int OPERATOR_KILL_ONE_BTN = 11;
 constexpr int OPERATOR_KILL_TWO_BTN = 12;
@@ -84,10 +83,7 @@ class OI {
     std::shared_ptr<frc::JoystickButton> resetIntakeBtn;
     std::shared_ptr<frc::JoystickButton> intakeBallBtn;
     std::shared_ptr<frc::JoystickButton> climbModeBtn;
-    std::shared_ptr<frc::JoystickButton> TestBtn;
     std::shared_ptr<frc::JoystickButton> setManipulatorEncoderZeroBtn;
-    std::shared_ptr<frc::JoystickButton> toggleHatchPanelGrabberBtn;
-    std::shared_ptr<frc::JoystickButton> shifterLowWhileHeldBtn;
     std::shared_ptr<frc::JoystickButton> multiCommand1Btn;
     std::shared_ptr<frc::JoystickButton> hatchModeBtn;
     std::shared_ptr<frc::JoystickButton> cargoModeBtn;
