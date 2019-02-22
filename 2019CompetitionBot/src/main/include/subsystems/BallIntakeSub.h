@@ -34,6 +34,7 @@ class BallIntakeSub : public frc::Subsystem {
   void setFolderOut(bool flipOut);
   bool isFolderOut();
   double getIntakeArmEncoderAngle();
+  bool getIntakeArmLimit();
   void setIn();
   void setOut();
   void setDown();
