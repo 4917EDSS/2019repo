@@ -26,6 +26,7 @@
 #include "commands/ExpandHatchGripperCmd.h"
 #include "commands/frc4917Cmd.h"
 #include "commands/frc4917Grp.h"
+#include "commands/SetElevatorToHeightCmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -53,16 +54,16 @@ OI::OI() {
 
   // Operator controller buttons
   elevatorToCargoShipHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_CARGO_SHIP_HEIGHT_BTN));
-  //elevatorToCargoShipHeightBtn->WhenPressed(new );
+  elevatorToCargoShipHeightBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Cmd, frc4917Cmd>(new SetElevatorToHeightCmd(ELEVATOR_CARGO_SHIP_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM)));
 
   elevatorToLowHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_LOW_HEIGHT_BTN));
-  //elevatorToLowHeightBtn->WhenPressed(new );
+  elevatorToLowHeightBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Cmd, frc4917Cmd>(new SetElevatorToHeightCmd(ELEVATOR_ROCKET_LOW_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM)));
   
   elevatorToMediumHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_MEDIUM_HEIGHT_BTN));
-  //elevatorToMediumHeightBtn->WhenPressed(new );
+  elevatorToMediumHeightBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Cmd, frc4917Cmd>(new SetElevatorToHeightCmd(ELEVATOR_ROCKET_MEDIUM_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_MEDIUM_HATCH_HEIGHT_MM)));
 
   elevatorToHighHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_HIGH_HEIGHT_BTN));
-  //elevatorToHighHeightBtn->WhenPressed(new );
+  elevatorToHighHeightBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Cmd, frc4917Cmd>(new SetElevatorToHeightCmd(ELEVATOR_ROCKET_HIGH_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_HIGH_HATCH_HEIGHT_MM)));
 
   hatchModeBtn.reset(new frc::JoystickButton(operatorController.get(), HATCH_MODE_BTN));
   hatchModeBtn->WhenPressed(new HatchModeGrp());

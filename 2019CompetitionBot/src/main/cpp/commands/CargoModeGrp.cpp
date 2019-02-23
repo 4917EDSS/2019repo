@@ -6,11 +6,12 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/CargoModeGrp.h"
-#include "commands/manipulatorInCmd.h"
+#include "commands/ManipulatorInCmd.h"
 #include "commands/CloseHatchPickupCmd.h"
+#include "Robot.h"
 
 CargoModeGrp::CargoModeGrp() {
-  AddSequential(new manipulatorInCmd());
+  AddSequential(new ManipulatorInCmd());
   AddSequential(new CloseHatchPickupCmd());
   // Add Commands here:
   // e.g. AddSequential(new Command1());
