@@ -26,7 +26,7 @@
 #include "commands/ExpandHatchGripperWhileHeldCmd.h"
 #include "commands/frc4917Cmd.h"
 #include "commands/frc4917Grp.h"
-
+#include "commands/TogglePipeLineCmd.h"
 OI::OI() {
   // Process operator interface input here.
   driverController.reset(new frc::Joystick(DRIVER_CONTROLLER_PORT));
@@ -50,6 +50,9 @@ OI::OI() {
 
   driverKillBtn2.reset(new frc::JoystickButton(driverController.get(), DRIVER_KILL_TWO_BTN));
   driverKillBtn2->WhenPressed(new KillEverythingCmd());
+
+  togglePipeLineBtn.reset(new frc::JoystickButton(driverController.get(),TOGGLE_PIPELINE_BTN));
+  togglePipeLineBtn->WhenPressed(new TogglePipeLineCmd());
 
   // Operator controller buttons
   elevatorToCargoShipHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_CARGO_SHIP_HEIGHT_BTN));
