@@ -5,33 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ExpandHatchGripperWhileHeldCmd.h"
+#include "commands/ExpandHatchGripperCmd.h"
 #include "Robot.h"
 
-ExpandHatchGripperWhileHeldCmd::ExpandHatchGripperWhileHeldCmd() {
+ExpandHatchGripperCmd::ExpandHatchGripperCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::elevatorSub);
 }
 
 // Called just before this Command runs the first time
-void ExpandHatchGripperWhileHeldCmd::Initialize() {
+void ExpandHatchGripperCmd::Initialize() {
   Robot::elevatorSub.expandHatchGripper();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ExpandHatchGripperWhileHeldCmd::Execute() {}
+void ExpandHatchGripperCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool ExpandHatchGripperWhileHeldCmd::IsFinished() { return false; }
+bool ExpandHatchGripperCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void ExpandHatchGripperWhileHeldCmd::End() {
+void ExpandHatchGripperCmd::End() {
   Robot::elevatorSub.contractHatchGripper();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ExpandHatchGripperWhileHeldCmd::Interrupted() {
+void ExpandHatchGripperCmd::Interrupted() {
   End();
 }
