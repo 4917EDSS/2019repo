@@ -58,10 +58,11 @@ ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
 
   frc::ShuffleboardTab& shuffleTab = frc::Shuffleboard::GetTab("Elevator");
 
-  for (int index = 0; index < 3; index++){
+  for (int index = 0; index < 2; index++){
     std::string listName = "Motor " + std::to_string(index) + " Data";
     frc::ShuffleboardLayout& shuffleList = shuffleTab.GetLayout(listName, frc::BuiltInLayouts::kList);
-
+    shuffleList.WithSize(1,3);
+    shuffleList.WithPosition(index,0);
     nteSparksTwo[index].setPower = (shuffleList.Add("Set Power", 0).GetEntry());
     nteSparksTwo[index].outputCurrent = (shuffleList.Add("Current Out", 0).GetEntry());
     nteSparksTwo[index].encoderPosition = (shuffleList.Add("Position", 0).GetEntry());
