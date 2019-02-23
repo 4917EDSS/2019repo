@@ -11,19 +11,26 @@
 #include <frc/WPILib.h>
 #include <ctre/Phoenix.h>
 #include <RobotMap.h>
+#include "SparkShuffleboardEntrySet.h"
 
 
 class BallIntakeSub : public frc::Subsystem {
  private:
-  std::shared_ptr<ctre::phoenix::motorcontrol::can::VictorSPX> ballIntakeMotor;
-  std::shared_ptr<ctre::phoenix::motorcontrol::can::VictorSPX> flipperMotorOne;
-  std::shared_ptr<ctre::phoenix::motorcontrol::can::VictorSPX> flipperMotorTwo;
+  std::shared_ptr<ctre::phoenix::motorcontrol::can::WPI_VictorSPX> ballIntakeMotor;
+  std::shared_ptr<ctre::phoenix::motorcontrol::can::WPI_VictorSPX> flipperMotorOne;
+  std::shared_ptr<ctre::phoenix::motorcontrol::can::WPI_VictorSPX> flipperMotorTwo;
   std::shared_ptr<frc::Solenoid> intakeFolderSolenoid;
   std::shared_ptr<frc::Encoder> intakeArmEnc;
   std::shared_ptr<frc::DigitalInput> ballIntakeArmLimit;
   double targetAngle;
   double currentSpeed;
 
+  nt::NetworkTableEntry nteBallIntakeMotor;
+  nt::NetworkTableEntry nteFlipperMotorOne;
+  nt::NetworkTableEntry nteFlipperMotorTwo;
+  nt::NetworkTableEntry nteIntakeFolderSolenoid;
+  nt::NetworkTableEntry nteBallIntakeArmLimit;
+  nt::NetworkTableEntry nteIntakeArmEncPosition;
 
  public:
   BallIntakeSub();
@@ -43,4 +50,5 @@ class BallIntakeSub : public frc::Subsystem {
   void update(bool isClimbing);
   void keepArmAtTarget(double speed, bool isClimbing);
   bool doneFlipping();
+  void updateShuffleBoard();
 };

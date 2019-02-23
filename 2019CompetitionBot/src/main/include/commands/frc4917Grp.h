@@ -7,20 +7,15 @@
 
 #pragma once
 
-#include <frc/commands/Command.h>
+#include <frc/commands/CommandGroup.h>
 #include "commands/frc4917Cmd.h"
 
-template <typename CBall, typename CHatch>
-class DynamicCommandPickerCmd : public frc4917Cmd {
+class frc4917Grp : public virtual frc::CommandGroup  {
  public:
-  DynamicCommandPickerCmd(CBall* ballMode, CHatch* hatchMode);
+  frc4917Grp();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
-
-private:
-  CBall* ballModeCmd;
-  CHatch* hatchModeCmd;
 };

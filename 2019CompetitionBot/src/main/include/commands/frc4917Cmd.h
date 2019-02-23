@@ -9,12 +9,11 @@
 
 #include <frc/commands/Command.h>
 
-class ExpandHatchGripperWhileHeldCmd : public frc::Command {
+class frc4917Cmd : public virtual frc::Command {
  public:
-  ExpandHatchGripperWhileHeldCmd();
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
+  virtual void Initialize() override = 0;
+  virtual void Execute() override = 0;
+  virtual bool IsFinished() override = 0;
+  virtual void End() override = 0;
+  virtual void Interrupted() override = 0;
 };

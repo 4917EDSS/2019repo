@@ -8,8 +8,9 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "commands/frc4917Cmd.h"
 
-class ScoreBallCmd : public frc::Command {
+class ScoreBallCmd : public frc4917Cmd {
  public:
   ScoreBallCmd();
   void Initialize() override;

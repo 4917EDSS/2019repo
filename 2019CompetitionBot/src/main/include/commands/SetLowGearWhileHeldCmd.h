@@ -8,8 +8,9 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "commands/frc4917Cmd.h"
 
-class SetLowGearWhileHeldCmd : public frc::Command {
+class SetLowGearWhileHeldCmd : public frc4917Cmd {
  public:
   SetLowGearWhileHeldCmd();
   void Initialize() override;

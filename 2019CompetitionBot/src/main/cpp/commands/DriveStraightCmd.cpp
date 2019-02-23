@@ -22,6 +22,6 @@ bool DriveStraightCmd::IsFinished() {
 void DriveStraightCmd::End() {
   Robot::drivetrainSub.drive(0,0);
 }
-void DriveStraightCmd::Interrupt() {
+void DriveStraightCmd::Interrupted() {
   End();
 }

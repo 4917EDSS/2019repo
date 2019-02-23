@@ -10,17 +10,12 @@
 #include <frc/commands/Command.h>
 #include "commands/frc4917Cmd.h"
 
-template <typename CBall, typename CHatch>
-class DynamicCommandPickerCmd : public frc4917Cmd {
+class ExpandHatchGripperCmd : public frc4917Cmd {
  public:
-  DynamicCommandPickerCmd(CBall* ballMode, CHatch* hatchMode);
+  ExpandHatchGripperCmd();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
-
-private:
-  CBall* ballModeCmd;
-  CHatch* hatchModeCmd;
 };

@@ -22,6 +22,10 @@
 #include "commands/MultiButton1Cmd.h"
 #include "commands/HatchModeGrp.h"
 #include "commands/CargoModeGrp.h"
+#include "commands/DynamicCommandPickerCmd.h"
+#include "commands/ExpandHatchGripperCmd.h"
+#include "commands/frc4917Cmd.h"
+#include "commands/frc4917Grp.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -70,7 +74,7 @@ OI::OI() {
   //elevatorToHighHeightBtn->WhenPressed(new );
 
   intakeHatchOrCargoBtn.reset(new frc::JoystickButton(operatorController.get(), INTAKE_HATCH_OR_CARGO_BTN));
-  //intakeHatchOrCargoBtn->WhenPressed(new );
+  intakeHatchOrCargoBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Grp, frc4917Cmd>(new IntakeBallGrp(), new ExpandHatchGripperCmd()));
 
   multiCommand1Btn.reset(new frc::JoystickButton(operatorController.get(), MULTI_COMMAND_1_BTN));
   multiCommand1Btn->WhenPressed(new MultiButton1Cmd());

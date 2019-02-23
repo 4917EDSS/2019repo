@@ -12,6 +12,9 @@
 #include "subsystems/ElevatorSub.h"
 #include "commands/ElevatorWithJoystickCmd.h"
 #include "components/Log.h"
+#include <frc/shuffleboard/Shuffleboard.h>
+#include <frc/shuffleboard/BuiltInLayouts.h>
+#include "SparkShuffleboardEntrySet.h"
 
 
 constexpr float ELEVATOR_POSITION_TOLERANCE = 5.0;
@@ -53,7 +56,24 @@ ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
   hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
   expandHatchGripper();
 
-  // Initialize elevator state machine
+  frc::ShuffleboardTab& shuffleTab = frc::Shuffleboard::GetTab("Elevator");
+
+  for (int index = 0; index < 3; index++){
+    std::string listName = "Motor " + std::to_string(index) + " Data";
+    frc::ShuffleboardLayout& shuffleList = shuffleTab.GetLayout(listName, frc::BuiltInLayouts::kList);
+
+    nteSparksTwo[index].setPower = (shuffleList.Add("Set Power", 0).GetEntry());
+    nteSparksTwo[index].outputCurrent = (shuffleList.Add("Current Out", 0).GetEntry());
+    nteSparksTwo[index].encoderPosition = (shuffleList.Add("Position", 0).GetEntry());
+    nteSparksTwo[index].encoderVelocity = (shuffleList.Add("Velocity", 0).GetEntry());
+    nteSparksTwo[index].motorTemperature = (shuffleList.Add("Motor Temp", 0).GetEntry());
+  }
+
+  nteHatchGripperSolenoid = (shuffleTab.Add("Gripper", 0).GetEntry());
+  nteShifterSolenoid = (shuffleTab.Add("Shiffter", 0).GetEntry());
+  nteIntakeFromRobotLimit = (shuffleTab.Add("Intake Limit", 0).GetEntry());
+
+    // Initialize elevator state machine
   elevatorNewStateParameters = false;
   elevatorNewControlMode = ELEVATOR_MODE_DISABLED;
   elevatorNewMaxPower = 0.0;
@@ -65,6 +85,28 @@ ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
   elevatorState = ELEVATOR_STATE_IDLE;
    elevatorLastPower = 0.0;
   elevatorBlockedHeightMm = 0.0;
+}
+
+
+void ElevatorSub::updateShuffleBoard(){
+
+  nteHatchGripperSolenoid.SetBoolean(hatchGripperSolenoid->Get());
+  nteShifterSolenoid.SetBoolean(shifterSolenoid->Get());
+  nteIntakeFromRobotLimit.SetBoolean(intakeFromRobotLimit->Get());
+
+
+  nteSparksTwo[0].setPower.SetDouble(elevatorMotor1->Get());
+  nteSparksTwo[0].outputCurrent.SetDouble(elevatorMotor1->GetOutputCurrent());
+  nteSparksTwo[0].encoderPosition.SetDouble(elevatorMotor1->GetEncoder().GetPosition());
+  nteSparksTwo[0].encoderVelocity.SetDouble(elevatorMotor1->GetEncoder().GetVelocity());
+  nteSparksTwo[0].motorTemperature.SetDouble(elevatorMotor1->GetMotorTemperature());
+
+  nteSparksTwo[1].setPower.SetDouble(elevatorMotor2->Get());
+  nteSparksTwo[1].outputCurrent.SetDouble(elevatorMotor2->GetOutputCurrent());
+  nteSparksTwo[1].encoderPosition.SetDouble(elevatorMotor2->GetEncoder().GetPosition());
+  nteSparksTwo[1].encoderVelocity.SetDouble(elevatorMotor2->GetEncoder().GetVelocity());
+  nteSparksTwo[1].motorTemperature.SetDouble(elevatorMotor2->GetMotorTemperature());
+
 }
 
 void ElevatorSub::InitDefaultCommand() {
@@ -163,7 +205,10 @@ bool ElevatorSub::isElevatorDown(){
 
 void ElevatorSub::setElevatorMotorRaw(double speed){
   elevatorMotor1->Set(-speed);
+  
+
   elevatorMotor2->Set(speed);
+  
 }
 
 void ElevatorSub::setManipulatorFlipperMotorSpeed(double speed){
@@ -187,7 +232,11 @@ void ElevatorSub::setManipulatorFlipperMotorSpeed(double speed){
   }
 
   manipulatorFlipperMotor->Set(speed);
-
+  nteSparksTwo[2].setPower.SetDouble(manipulatorFlipperMotor->Get());
+  nteSparksTwo[2].outputCurrent.SetDouble(manipulatorFlipperMotor->GetOutputCurrent());
+  nteSparksTwo[2].encoderPosition.SetDouble(manipulatorFlipperMotor->GetEncoder().GetPosition());
+  nteSparksTwo[2].encoderVelocity.SetDouble(manipulatorFlipperMotor->GetEncoder().GetVelocity());
+  nteSparksTwo[2].motorTemperature.SetDouble(manipulatorFlipperMotor->GetMotorTemperature());
 } 
 void ElevatorSub::setElevatorMotorSpeed(double speed){
 

@@ -8,9 +8,10 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "commands/frc4917Cmd.h"
 
 constexpr uint64_t AHRS_DELAY_TIME = 350000;
-class DriveWithJoystickCmd : public frc::Command {
+class DriveWithJoystickCmd : public frc4917Cmd {
  public:
   DriveWithJoystickCmd();
   void Initialize() override;

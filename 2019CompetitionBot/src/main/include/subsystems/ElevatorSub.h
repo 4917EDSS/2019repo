@@ -35,6 +35,8 @@ Encoder Heights
 #include <RobotMap.h>
 #include <rev/CANSparkMax.h>
 #include <rev/CANSparkMaxLowLevel.h>
+#include "components/MotorBalancer.h"
+#include "SparkShuffleboardEntrySet.h"
 
 // Elevator heights
 // TODO:  Update these values to real ones.
@@ -71,6 +73,12 @@ class ElevatorSub : public frc::Subsystem {
   double targetAngle;
   double targetHeight;
 
+
+  struct SparkShuffleboardEntrySet nteSparksTwo[3];
+  nt::NetworkTableEntry nteHatchGripperSolenoid;
+  nt::NetworkTableEntry nteIntakeFromRobotLimit;
+  nt::NetworkTableEntry nteShifterSolenoid;
+
   // Elevator state machine variables and functions
   bool elevatorNewStateParameters;
   int elevatorNewControlMode;
@@ -90,6 +98,7 @@ class ElevatorSub : public frc::Subsystem {
   double calcElevatorHoldPower(double currentHeightMm, double targetHeightMm);
   double calcElevatorMovePower(double currentHeightMm, double targetHeightMm, double maxElevatorPower);
   bool isElevatorBlocked(double currentHeightMm);
+
 
  public:
   ElevatorSub();
@@ -127,4 +136,6 @@ class ElevatorSub : public frc::Subsystem {
   void update();
   bool isFinishedMove();
   void zeroEverything();
+
+  void updateShuffleBoard();
 };
