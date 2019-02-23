@@ -375,7 +375,7 @@ void ElevatorSub::updateElevatorStateMachine() {
       break;
 
     case ELEVATOR_STATE_MOVING:
-      if(isElevatorBlocked()) {
+      if(isElevatorBlocked(currentHeightMm)) {
         elevatorBlockedHeightMm = currentHeightMm;
         elevatorState = ELEVATOR_STATE_INTERRUPTED;
       }
@@ -388,7 +388,7 @@ void ElevatorSub::updateElevatorStateMachine() {
       break;
 
     case ELEVATOR_STATE_INTERRUPTED:
-      if(!isElevatorBlocked()) {
+      if(!isElevatorBlocked(currentHeightMm)) {
         elevatorState = ELEVATOR_STATE_MOVING;
       }
       else {
@@ -439,9 +439,14 @@ double ElevatorSub::calcElevatorMovePower(double currentHeightMm, double targetH
   return newPower;
 }
 
-bool ElevatorSub::isElevatorBlocked() {
+bool ElevatorSub::isElevatorBlocked(double currentHeightMm) {
   // TODO: implement
   // At max height - tolerance (going up)
+  if ((currentHeightMm >= ELEVATOR_MAX_HEIGHT_MM) || 
+      (currentHeightMm <= ELEVATOR_MIN_HEIGHT_MM)
+      ){
+    return true;
+  }
   // At min height - tolerance (going down)
   // Upper limit switch hit (going up)
   // Lower limit switch hit (going down)

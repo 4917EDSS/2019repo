@@ -23,7 +23,7 @@
 #include "commands/HatchModeGrp.h"
 #include "commands/CargoModeGrp.h"
 #include "commands/DynamicCommandPickerCmd.h"
-#include "commands/ExpandHatchGripperWhileHeldCmd.h"
+#include "commands/ExpandHatchGripperCmd.h"
 #include "commands/frc4917Cmd.h"
 #include "commands/frc4917Grp.h"
 
@@ -74,7 +74,7 @@ OI::OI() {
   //elevatorToHighHeightBtn->WhenPressed(new );
 
   intakeHatchOrCargoBtn.reset(new frc::JoystickButton(operatorController.get(), INTAKE_HATCH_OR_CARGO_BTN));
-  intakeHatchOrCargoBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Grp, frc4917Cmd>(new IntakeBallGrp(), new ExpandHatchGripperWhileHeldCmd()));
+  intakeHatchOrCargoBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Grp, frc4917Cmd>(new IntakeBallGrp(), new ExpandHatchGripperCmd()));
 
   multiCommand1Btn.reset(new frc::JoystickButton(operatorController.get(), MULTI_COMMAND_1_BTN));
   multiCommand1Btn->WhenPressed(new MultiButton1Cmd());

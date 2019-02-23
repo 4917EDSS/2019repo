@@ -97,16 +97,18 @@ class ElevatorSub : public frc::Subsystem {
   double getElevatorVelocity();
   double calcElevatorHoldPower(double currentHeightMm, double targetHeightMm);
   double calcElevatorMovePower(double currentHeightMm, double targetHeightMm, double maxElevatorPower);
-  void updateElevatorStateMachine();
-  bool isElevatorAtTarget();
-  bool isElevatorBlocked();
+  bool isElevatorBlocked(double currentHeightMm);
 
 
  public:
   ElevatorSub();
   void InitDefaultCommand() override;
 
+  void updateElevatorStateMachine();
   void setElevatorHeight(int mode, double maxPower, double targetHeightMm);
+  bool isElevatorAtTarget();
+
+
 
   void setElevatorMotorSpeed(double speed);
   void setElevatorTargetHeight(double newTarget);

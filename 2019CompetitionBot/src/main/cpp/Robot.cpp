@@ -11,6 +11,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "networktables/NetworkTableInstance.h"
 #include <iostream>
+#include "subsystems/ElevatorSub.h"
 
 
 
@@ -104,8 +105,10 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() { 
-  UpdateSmartDashboard();
+
   frc::Scheduler::GetInstance()->Run(); 
+  Robot::elevatorSub.updateElevatorStateMachine();
+  UpdateSmartDashboard();
 }
 
 void Robot::TestPeriodic() {
