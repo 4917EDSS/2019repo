@@ -40,6 +40,7 @@ class DrivetrainSub : public frc::Subsystem {
   double getRate();
   void InitDefaultCommand() override;
   void drive(double lSpeed, double rSpeed);
+  void updateShuffleBoard();
   void driverDriveStraight(float speed);
   void enableBalancerPID(float setPoint);
   void disableBalancerPID();
