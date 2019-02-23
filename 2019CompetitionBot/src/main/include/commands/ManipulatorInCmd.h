@@ -2,9 +2,9 @@
 #include <frc/commands/Command.h>
 #include "commands/frc4917Cmd.h"
 
-class manipulatorInCmd : public frc4917Cmd {
+class ManipulatorInCmd : public frc4917Cmd {
   public:
-    manipulatorInCmd();
+    ManipulatorInCmd();
     void Initialize() override;
     void Execute() override;
     bool IsFinished() override;

@@ -21,6 +21,7 @@ class DynamicCommandPickerCmd : public frc4917Cmd {
   void Interrupted() override;
 
 private:
+    bool inBallMode;
   CBall* ballModeCmd;
   CHatch* hatchModeCmd;
 };

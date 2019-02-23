@@ -2,10 +2,10 @@
 #include <frc/commands/Command.h>
 #include "commands/frc4917Cmd.h"
 
-class manipulatorOutCmd : public frc4917Cmd
+class ManipulatorOutCmd : public frc4917Cmd
 {
   public:
-    manipulatorOutCmd();
+    ManipulatorOutCmd();
     void Initialize() override;
     void Execute() override;
     bool IsFinished() override;

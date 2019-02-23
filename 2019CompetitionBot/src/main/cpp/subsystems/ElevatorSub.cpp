@@ -58,10 +58,11 @@ ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
 
   frc::ShuffleboardTab& shuffleTab = frc::Shuffleboard::GetTab("Elevator");
 
-  for (int index = 0; index < 3; index++){
+  for (int index = 0; index < 2; index++){
     std::string listName = "Motor " + std::to_string(index) + " Data";
     frc::ShuffleboardLayout& shuffleList = shuffleTab.GetLayout(listName, frc::BuiltInLayouts::kList);
-
+    shuffleList.WithSize(1,3);
+    shuffleList.WithPosition(index,0);
     nteSparksTwo[index].setPower = (shuffleList.Add("Set Power", 0).GetEntry());
     nteSparksTwo[index].outputCurrent = (shuffleList.Add("Current Out", 0).GetEntry());
     nteSparksTwo[index].encoderPosition = (shuffleList.Add("Position", 0).GetEntry());
@@ -375,7 +376,7 @@ void ElevatorSub::updateElevatorStateMachine() {
       break;
 
     case ELEVATOR_STATE_MOVING:
-      if(isElevatorBlocked()) {
+      if(isElevatorBlocked(currentHeightMm)) {
         elevatorBlockedHeightMm = currentHeightMm;
         elevatorState = ELEVATOR_STATE_INTERRUPTED;
       }
@@ -388,7 +389,7 @@ void ElevatorSub::updateElevatorStateMachine() {
       break;
 
     case ELEVATOR_STATE_INTERRUPTED:
-      if(!isElevatorBlocked()) {
+      if(!isElevatorBlocked(currentHeightMm)) {
         elevatorState = ELEVATOR_STATE_MOVING;
       }
       else {
@@ -439,9 +440,14 @@ double ElevatorSub::calcElevatorMovePower(double currentHeightMm, double targetH
   return newPower;
 }
 
-bool ElevatorSub::isElevatorBlocked() {
+bool ElevatorSub::isElevatorBlocked(double currentHeightMm) {
   // TODO: implement
   // At max height - tolerance (going up)
+  if ((currentHeightMm >= ELEVATOR_MAX_HEIGHT_MM) || 
+      (currentHeightMm <= ELEVATOR_MIN_HEIGHT_MM)
+      ){
+    return true;
+  }
   // At min height - tolerance (going down)
   // Upper limit switch hit (going up)
   // Lower limit switch hit (going down)

@@ -10,9 +10,9 @@
 #include <frc/commands/Command.h>
 #include "commands/frc4917Cmd.h"
 
-class ExpandHatchGripperWhileHeldCmd : public frc4917Cmd {
+class ExpandHatchGripperCmd : public frc4917Cmd {
  public:
-  ExpandHatchGripperWhileHeldCmd();
+  ExpandHatchGripperCmd();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

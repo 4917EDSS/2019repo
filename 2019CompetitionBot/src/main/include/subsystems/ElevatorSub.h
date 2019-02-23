@@ -40,15 +40,16 @@ Encoder Heights
 
 // Elevator heights
 // TODO:  Update these values to real ones.
-constexpr double ELEVATOR_MIN_HEIGHT_MM = 500;
-constexpr double ELEVATOR_MAX_HEIGHT_MM = 2000;
-constexpr double ELEVATOR_LOW_HATCH_HEIGHT_MM = 500;
-constexpr double ELEVATOR_MEDIUM_HATCH_HEIGHT_MM = 500;
-constexpr double ELEVATOR_HIGH_HATCH_HEIGHT_MM = 500;
-constexpr double ELEVATOR_ROCKET_LOW_CARGO_HEIGHT_MM = 500;
-constexpr double ELEVATOR_ROCKET_MEDIUM_CARGO_HEIGHT_MM = 500;
-constexpr double ELEVATOR_ROCKET_HIGH_CARGO_HEIGHT_MM = 500;
-constexpr double ELEVATOR_CARGO_SHIP_CARGO_HEIGHT_MM = 500;
+constexpr double ELEVATOR_MIN_HEIGHT_MM = 445;
+// Maybe not great for max height
+constexpr double ELEVATOR_MAX_HEIGHT_MM = 1505;
+constexpr double ELEVATOR_LOW_HATCH_HEIGHT_MM = 482.6;
+constexpr double ELEVATOR_MEDIUM_HATCH_HEIGHT_MM = 1193.8;
+constexpr double ELEVATOR_HIGH_HATCH_HEIGHT_MM = 1905;
+constexpr double ELEVATOR_ROCKET_LOW_CARGO_HEIGHT_MM = 698.5;
+constexpr double ELEVATOR_ROCKET_MEDIUM_CARGO_HEIGHT_MM = 1409.7;
+constexpr double ELEVATOR_ROCKET_HIGH_CARGO_HEIGHT_MM = 1955.8;
+constexpr double ELEVATOR_CARGO_SHIP_CARGO_HEIGHT_MM = 1168.4;
 
 // Elevator height control modes
 constexpr int ELEVATOR_MODE_DISABLED = 0;
@@ -74,7 +75,7 @@ class ElevatorSub : public frc::Subsystem {
   double targetHeight;
 
 
-  struct SparkShuffleboardEntrySet nteSparksTwo[3];
+  struct SparkShuffleboardEntrySet nteSparksTwo[2];
   nt::NetworkTableEntry nteHatchGripperSolenoid;
   nt::NetworkTableEntry nteIntakeFromRobotLimit;
   nt::NetworkTableEntry nteShifterSolenoid;
@@ -97,16 +98,18 @@ class ElevatorSub : public frc::Subsystem {
   double getElevatorVelocity();
   double calcElevatorHoldPower(double currentHeightMm, double targetHeightMm);
   double calcElevatorMovePower(double currentHeightMm, double targetHeightMm, double maxElevatorPower);
-  void updateElevatorStateMachine();
-  bool isElevatorAtTarget();
-  bool isElevatorBlocked();
+  bool isElevatorBlocked(double currentHeightMm);
 
 
  public:
   ElevatorSub();
   void InitDefaultCommand() override;
 
+  void updateElevatorStateMachine();
   void setElevatorHeight(int mode, double maxPower, double targetHeightMm);
+  bool isElevatorAtTarget();
+
+
 
   void setElevatorMotorSpeed(double speed);
   void setElevatorTargetHeight(double newTarget);
