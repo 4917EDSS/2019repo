@@ -51,7 +51,8 @@ DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub"){
   {
     std::string listName = "Motor " + std::to_string(motorId) + " Data";
     frc::ShuffleboardLayout& shuffleList = shuffleTab.GetLayout(listName, frc::BuiltInLayouts::kList);
-
+    shuffleList.WithSize(1,3);
+    
     nteSparks[motorId].setPower = (shuffleList.Add("Set Power", 0).GetEntry());
     nteSparks[motorId].outputCurrent = (shuffleList.Add("Current Out", 0).GetEntry());
     nteSparks[motorId].encoderPosition = (shuffleList.Add("Position", 0).GetEntry());

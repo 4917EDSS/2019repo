@@ -12,7 +12,7 @@
 #include "networktables/NetworkTableInstance.h"
 #include <iostream>
 #include "subsystems/ElevatorSub.h"
-
+#include "subsystems/DrivetrainSub.h"
 
 
 DrivetrainSub Robot::drivetrainSub;
@@ -108,6 +108,7 @@ void Robot::TeleopPeriodic() {
 
   frc::Scheduler::GetInstance()->Run(); 
   Robot::elevatorSub.updateElevatorStateMachine();
+  Robot::drivetrainSub.updateShuffleBoard();
   UpdateSmartDashboard();
 }
 
