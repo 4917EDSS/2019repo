@@ -36,6 +36,7 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
   static double GetVisionTarget();
   static double NormalizeAngle(double targetangle);
+  static void pipeLineToggle(bool pipeLine);
 
   static bool inBallMode;
 
@@ -51,4 +52,5 @@ class Robot : public frc::TimedRobot {
   frc::Command* m_autonomousCommand = nullptr;
   frc::SendableChooser<frc::Command*> m_chooser;
   void UpdateSmartDashboard();
+ 
 };

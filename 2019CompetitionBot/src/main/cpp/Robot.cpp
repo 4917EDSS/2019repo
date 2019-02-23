@@ -21,13 +21,27 @@ ElevatorSub Robot::elevatorSub;
 OI Robot::oi;
 bool Robot::inBallMode;
 
+
+void Robot::pipeLineToggle(bool pipeLine){
+  
+  if (pipeLine == true) {
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 1);
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 1);
+  } 
+  else{
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 0);
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0);
+  }
+}
 void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
 		// Setup logging system
 		std::string syslogTargetAddress = (Preferences::GetInstance())->GetString("SyslogTargetAddress", "10.49.17.30");
 		logger.enableChannels(logger.WARNINGS | logger.ERRORS | logger.ASSERTS);	// These should stay on during competition
-		logger.enableChannels(logger.CMD_TRACE /*logger.DEBUGGING | logger.DRIVETRAIN | logger.PERIODIC*/ | logger.ELEVATOR /*| logger.BALLINTAKE*/);	// Should look at these during development
+		logger.enableChannels(logger.CMD_TRACE /*logger.DEBUGGING | logger.DRIVETRAIN | logger.PERIODIC*/ | logger.ELEVATOR | logger.VISION /*| logger.BALLINTAKE*/);	// Should look at these during development
     logger.addOutputPath(new frc4917::ConsoleOutput());						            // Enable console output and/or
 		logger.addOutputPath(new frc4917::SyslogOutput(syslogTargetAddress));		  // Enable syslog output
 		logger.send(logger.DEBUGGING, "Robot code started @ %f\n", GetTime());
@@ -73,7 +87,6 @@ void Robot::DisabledPeriodic() {
  * the if-else structure below with additional strings & commands.
  */
 void Robot::AutonomousInit() {
-
   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 0);
   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0);
