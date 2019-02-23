@@ -1,21 +1,23 @@
-#include "commands/manipulatorOutCmd.h"
+#include "commands/ManipulatorOutCmd.h"
 #include "Robot.h"
-manipulatorOutCmd::manipulatorOutCmd() {
+
+ManipulatorOutCmd::ManipulatorOutCmd() {
   Requires(&Robot::elevatorSub);
 }
-void manipulatorOutCmd::Initialize() {
+void ManipulatorOutCmd::Initialize() {
   Robot::elevatorSub.setManipulatorWheelSpeed(0.5,0.5);
+  Robot::inBallMode = false;
 }
-void manipulatorOutCmd::Execute() {}
-bool manipulatorOutCmd::IsFinished() {
+void ManipulatorOutCmd::Execute() {}
+bool ManipulatorOutCmd::IsFinished() {
   if (TimeSinceInitialized() >= 1.0) {
     return true;
 }
   return false;
 }
-void manipulatorOutCmd::End() {
+void ManipulatorOutCmd::End() {
   Robot::elevatorSub.setManipulatorWheelSpeed(0,0);
 }
-void manipulatorOutCmd::Interrupted() {
+void ManipulatorOutCmd::Interrupted() {
   End();
 }
