@@ -18,6 +18,7 @@
 DrivetrainSub Robot::drivetrainSub;
 BallIntakeSub Robot::ballIntakeSub;
 ElevatorSub Robot::elevatorSub;
+ManipulatorSub Robot::manipulatorSub;
 OI Robot::oi;
 bool Robot::inBallMode;
 

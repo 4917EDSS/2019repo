@@ -12,12 +12,12 @@
 IntakeBallFromRobotCmd::IntakeBallFromRobotCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::elevatorSub);
+  Requires(&Robot::manipulatorSub);
 }
 
 // Called just before this Command runs the first time
 void IntakeBallFromRobotCmd::Initialize() {
-  Robot::elevatorSub.setManipulatorWheelSpeed(-0.5, -0.5);
+  Robot::manipulatorSub.setManipulatorWheelSpeed(-0.5, -0.5);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -25,12 +25,12 @@ void IntakeBallFromRobotCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
 bool IntakeBallFromRobotCmd::IsFinished() { 
-  return Robot::elevatorSub.isBallInManipulator();
+  return Robot::manipulatorSub.isBallInManipulator();
 }
 
 // Called once after isFinished returns true
 void IntakeBallFromRobotCmd::End() {
-  Robot::elevatorSub.setManipulatorWheelSpeed(0.0, 0.0);
+  Robot::manipulatorSub.setManipulatorWheelSpeed(0.0, 0.0);
 }
 
 // Called when another command which requires one or more of the same

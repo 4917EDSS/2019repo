@@ -1,10 +1,10 @@
 #include "commands/ManipulatorInCmd.h"
 #include "Robot.h"
 ManipulatorInCmd::ManipulatorInCmd () {
-  Requires(&Robot::elevatorSub);
+  Requires(&Robot::manipulatorSub);
 }
 void ManipulatorInCmd::Initialize() {
-  Robot::elevatorSub.setManipulatorWheelSpeed(-0.5,-0.5);
+  Robot::manipulatorSub.setManipulatorWheelSpeed(-0.5,-0.5);
     Robot::inBallMode = true;
 }
 void ManipulatorInCmd::Execute() {}
@@ -15,7 +15,7 @@ bool ManipulatorInCmd::IsFinished() {
   return false;
 }
 void ManipulatorInCmd::End() {
-  Robot::elevatorSub.setManipulatorWheelSpeed(0,0);
+  Robot::manipulatorSub.setManipulatorWheelSpeed(0,0);
 }
 void ManipulatorInCmd::Interrupted() {
   End();
