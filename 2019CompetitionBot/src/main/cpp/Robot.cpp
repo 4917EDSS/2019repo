@@ -33,7 +33,7 @@ void Robot::RobotInit() {
 		logger.send(logger.DEBUGGING, "Robot code started @ %f\n", GetTime());
 		logger.send(logger.ELEVATOR, "Robot code started @ %f\n", GetTime());
 
-    std::cout<<"Starting version 1.3\n";
+    std::cout<<"Starting version 1.4\n";
 
     Robot::inBallMode = true;
 }
@@ -150,7 +150,7 @@ void Robot::UpdateSmartDashboard(){
   frc::SmartDashboard::PutNumber("Gyro's Angle", drivetrainSub.getAngle());
   frc::SmartDashboard::PutNumber("Intake Arm Angle ENC",ballIntakeSub.getIntakeArmEncoderAngle());
   frc::SmartDashboard::PutNumber("Manipulator Position", elevatorSub.getManipulatorEncoder());
-  frc::SmartDashboard::PutNumber("Elevator Position", elevatorSub.getElevatorEncoder());
+  frc::SmartDashboard::PutNumber("Elevator Height mm", elevatorSub.getElevatorHeight());
   frc::SmartDashboard::PutNumber("Ball In Sensor", elevatorSub.isBallInManipulator());
 
   frc::SmartDashboard::PutNumber("O POV", Robot::oi.getOperatorController()->GetPOV());

@@ -26,6 +26,7 @@
 #include "commands/ExpandHatchGripperCmd.h"
 #include "commands/frc4917Cmd.h"
 #include "commands/frc4917Grp.h"
+#include "commands/SetElevatorToHeightCmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -56,7 +57,7 @@ OI::OI() {
   //elevatorToCargoShipHeightBtn->WhenPressed(new );
 
   elevatorToLowHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_LOW_HEIGHT_BTN));
-  //elevatorToLowHeightBtn->WhenPressed(new );
+  elevatorToLowHeightBtn->WhenPressed(new SetElevatorToHeightCmd(ELEVATOR_ROCKET_LOW_CARGO_HEIGHT_MM));
   
   elevatorToMediumHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_MEDIUM_HEIGHT_BTN));
   //elevatorToMediumHeightBtn->WhenPressed(new );

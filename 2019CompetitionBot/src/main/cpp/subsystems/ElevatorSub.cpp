@@ -23,7 +23,7 @@ constexpr float MANUAL_MODE_POWER_DEADBAND = 0.03;
 constexpr float ELEVATOR_P = 0;
 constexpr float ELEVATOR_I = 0;
 constexpr float ELEVATOR_D = 0;
-constexpr float ELEVATOR_TICK_TO_MM_FACTOR = (1/1);             // TODO Determine value
+constexpr float ELEVATOR_TICK_TO_MM_FACTOR = (28.94679);             // TODO Determine value
 constexpr float FLIPPER_TICK_TO_DEGREE_FACTOR = (90/44.1900);
 constexpr float ELEVATOR_MAX_HEIGHT = 150;
 
@@ -268,6 +268,8 @@ void ElevatorSub::setElevatorMotorSpeed(double speed){
 // - ELEVATOR_MODE_AUTO has the state machine move the elevator to the desire height
 // - ELEVATOR_MODE_MANUAL is for joystick input (targetHeightMm is ignored)
 void ElevatorSub::setElevatorHeight(int mode, double maxPower, double targetHeightMm) {
+  logger.send(logger.ELEVATOR, "ESH: START: (P=%.2f, H=%.1f)\n", maxPower, targetHeightMm);     
+  
   // If an old input is pending, drop it
   elevatorNewStateParameters = false;
 
@@ -299,6 +301,7 @@ void ElevatorSub::setElevatorHeight(int mode, double maxPower, double targetHeig
         elevatorNewMaxPower = fabs(maxPower);
         elevatorNewTargetHeightMm = targetHeightMm;
         elevatorNewStateParameters = true;    // Only set this to true after all the other parameters have been set
+        logger.send(logger.ELEVATOR, "ESH: Auto (P1=%.2f, H1=%.1f)\n", maxPower, targetHeightMm);
         logger.send(logger.ELEVATOR, "ESH: Auto (P=%.2f, H=%.1f)\n", elevatorNewMaxPower, elevatorNewTargetHeightMm);
         break;
 
@@ -372,10 +375,12 @@ void ElevatorSub::updateElevatorStateMachine() {
     case ELEVATOR_STATE_HOLDING:
       // Give the motor just enough power to keep the current position
       newPower = calcElevatorHoldPower(currentHeightMm, elevatorTargetHeightMm);
+
+      logger.send(logger.ELEVATOR, "ESM: Holding (P=%.2f)\n", newPower);
       break;
 
     case ELEVATOR_STATE_MOVING:
-      if(isElevatorBlocked(currentHeightMm)) {
+      if(isElevatorBlocked(currentHeightMm, elevatorTargetHeightMm)) {
         elevatorBlockedHeightMm = currentHeightMm;
         elevatorState = ELEVATOR_STATE_INTERRUPTED;
       }
@@ -385,15 +390,17 @@ void ElevatorSub::updateElevatorStateMachine() {
       else {
         newPower = calcElevatorMovePower(currentHeightMm, elevatorTargetHeightMm, elevatorMaxPower);
       }
+      logger.send(logger.ELEVATOR, "ESM: Moving (P=%.2f,s=%d,b=%.1f,c=%.1f)\n", newPower, elevatorState, elevatorBlockedHeightMm, currentHeightMm);
       break;
 
     case ELEVATOR_STATE_INTERRUPTED:
-      if(!isElevatorBlocked(currentHeightMm)) {
+      if(!isElevatorBlocked(currentHeightMm, elevatorTargetHeightMm)) {
         elevatorState = ELEVATOR_STATE_MOVING;
       }
       else {
          newPower = calcElevatorHoldPower(currentHeightMm, elevatorBlockedHeightMm);
       }
+      logger.send(logger.ELEVATOR, "ESM: Blocked (P=%.2f,s=%d,b=%.1f,c=%.1f)\n", newPower, elevatorState, elevatorBlockedHeightMm, currentHeightMm);
       break;
 
     default:
@@ -433,18 +440,23 @@ double ElevatorSub::calcElevatorMovePower(double currentHeightMm, double targetH
     newPower = maxElevatorPower * direction;
   }
   else {
-    newPower = std::min(0.1, maxElevatorPower) * direction;
+    newPower = std::min(0.2, maxElevatorPower) * direction;
   }
   
   return newPower;
 }
 
-bool ElevatorSub::isElevatorBlocked(double currentHeightMm) {
+bool ElevatorSub::isElevatorBlocked(double currentHeightMm, double targetHeightMm) {
+  double direction = 1.0;
+  
+  if(currentHeightMm > targetHeightMm) {
+    direction = -1.0;
+  }
+
   // TODO: implement
   // At max height - tolerance (going up)
-  if ((currentHeightMm >= ELEVATOR_MAX_HEIGHT_MM) || 
-      (currentHeightMm <= ELEVATOR_MIN_HEIGHT_MM)
-      ){
+  if (((currentHeightMm >= ELEVATOR_MAX_HEIGHT_MM) && (direction > 0)) || 
+      ((currentHeightMm < ELEVATOR_MIN_HEIGHT_MM) && (direction < 0))) {
     return true;
   }
   // At min height - tolerance (going down)
@@ -460,9 +472,9 @@ void ElevatorSub::setElevatorMotorPower(double power) {
 }
 
 double ElevatorSub::getElevatorHeight() {
-  return elevatorMotor1->GetEncoder().GetPosition();
+  return elevatorMotor2->GetEncoder().GetPosition() + ELEVATOR_MIN_HEIGHT_MM;
 }
 
 double ElevatorSub::getElevatorVelocity() {
-  return elevatorMotor1->GetEncoder().GetVelocity();
+  return elevatorMotor2->GetEncoder().GetVelocity();
 }
