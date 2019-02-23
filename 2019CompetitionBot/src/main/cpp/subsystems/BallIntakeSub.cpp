@@ -10,19 +10,40 @@
 #include "components/Log.h"
 #include <iostream>
 #include "commands/BallIntakeWithJoystickCmd.h"
+#include "SparkShuffleboardEntrySet.h"
+#include <frc/shuffleboard/Shuffleboard.h>
+#include "frc/shuffleboard/BuiltInLayouts.h"
 //Canid4 and Set Intake
 #define ENCODER_SCALE (90.0 / 32.0)
 
 BallIntakeSub::BallIntakeSub() : Subsystem("BallIntakeSub")
 {
-  ballIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_WHEELS_MOTOR_CAN_ID));
+  ballIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::WPI_VictorSPX(BALL_INTAKE_WHEELS_MOTOR_CAN_ID));
   currentSpeed = 0;
-  flipperMotorOne.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_TOP_FLIP_MOTOR_1_CAN_ID));
-  flipperMotorTwo.reset(new ctre::phoenix::motorcontrol::can::VictorSPX(BALL_INTAKE_BOTTOM_FLIP_MOTOR_2_CAN_ID));
+  flipperMotorOne.reset(new ctre::phoenix::motorcontrol::can::WPI_VictorSPX(BALL_INTAKE_TOP_FLIP_MOTOR_1_CAN_ID));
+  flipperMotorTwo.reset(new ctre::phoenix::motorcontrol::can::WPI_VictorSPX(BALL_INTAKE_BOTTOM_FLIP_MOTOR_2_CAN_ID));
   intakeFolderSolenoid.reset(new frc::Solenoid(BALL_INTAKE_FOLDER_PCM_ID));
   ballIntakeArmLimit.reset(new frc::DigitalInput(BALL_INTAKE_ARM_LIMIT_DIO));
   setFolderOut(true);
   intakeArmEnc.reset(new frc::Encoder(INTAKE_MOTOR_ENC1_DIO, INTAKE_MOTOR_ENC2_DIO));
+
+  frc::ShuffleboardTab& shuffleTab = frc::Shuffleboard::GetTab("Ball Intake");
+
+  nteBallIntakeMotor = (shuffleTab.Add("Intake", 0).GetEntry()); 
+  nteFlipperMotorOne = (shuffleTab.Add("Flipper 1", 0).GetEntry());
+  nteFlipperMotorOne = (shuffleTab.Add("Flipper 2", 0).GetEntry());
+  nteIntakeFolderSolenoid = (shuffleTab.Add("Folder", 0).GetEntry());
+  nteBallIntakeArmLimit = (shuffleTab.Add("Intake Limit", 0).GetEntry());
+  nteIntakeArmEncPosition = (shuffleTab.Add("Intake Position", 0).GetEntry());
+}
+
+void BallIntakeSub::updateShuffleBoard(){
+  nteBallIntakeMotor.SetDouble(ballIntakeMotor->Get());
+  nteFlipperMotorOne.SetDouble(flipperMotorOne->Get());
+  nteFlipperMotorTwo.SetDouble(flipperMotorTwo->Get());
+  nteIntakeFolderSolenoid.SetBoolean(intakeFolderSolenoid->Get());
+  nteBallIntakeArmLimit.SetBoolean(ballIntakeArmLimit->Get());
+  nteIntakeArmEncPosition.SetDouble(intakeArmEnc->Get());
 }
 
 void BallIntakeSub::InitDefaultCommand()
@@ -45,6 +66,8 @@ void BallIntakeSub::setIntakeWheelsMotorSpeed(double speed)
   ballIntakeMotor->Set(ControlMode::PercentOutput, speed);
   currentSpeed = speed;
   logger.send(logger.DEBUGGING, "%s\n", __FUNCTION__);
+
+  
 }
 
 double BallIntakeSub::getIntakeWheelsMotorSpeed()

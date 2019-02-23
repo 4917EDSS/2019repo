@@ -14,14 +14,7 @@
 #include <ctre/Phoenix.h>
 #include "AHRS.h"
 #include "components/MotorBalancer.h"
-
-struct SparkShuffleboardEntrySet {
-  nt::NetworkTableEntry setPower;
-  nt::NetworkTableEntry outputCurrent;
-  nt::NetworkTableEntry encoderPosition;
-  nt::NetworkTableEntry encoderVelocity;
-  nt::NetworkTableEntry motorTemperature;
-};
+#include "SparkShuffleboardEntrySet.h"
 
 class DrivetrainSub : public frc::Subsystem {
  private:
