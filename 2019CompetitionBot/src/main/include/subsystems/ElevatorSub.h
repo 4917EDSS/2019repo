@@ -38,6 +38,8 @@ Encoder Heights
 #include <RobotMap.h>
 #include <rev/CANSparkMax.h>
 #include <rev/CANSparkMaxLowLevel.h>
+#include "components/MotorBalancer.h"
+#include "SparkShuffleboardEntrySet.h"
 
 class ElevatorSub : public frc::Subsystem {
  private:
@@ -56,6 +58,11 @@ class ElevatorSub : public frc::Subsystem {
   
   double targetAngle;
   double targetHeight;
+
+  struct SparkShuffleboardEntrySet nteSparksTwo[3];
+  nt::NetworkTableEntry nteHatchGripperSolenoid;
+  nt::NetworkTableEntry nteIntakeFromRobotLimit;
+  nt::NetworkTableEntry nteShifterSolenoid;
 
  public:
   ElevatorSub();
@@ -87,4 +94,6 @@ class ElevatorSub : public frc::Subsystem {
   void update();
   bool isFinishedMove();
   void zeroEverything();
+
+  void updateShuffleBoard();
 };
