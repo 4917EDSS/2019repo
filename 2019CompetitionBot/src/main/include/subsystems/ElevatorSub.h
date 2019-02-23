@@ -40,15 +40,16 @@ Encoder Heights
 
 // Elevator heights
 // TODO:  Update these values to real ones.
-constexpr double ELEVATOR_MIN_HEIGHT_MM = 500;
-constexpr double ELEVATOR_MAX_HEIGHT_MM = 2000;
-constexpr double ELEVATOR_LOW_HATCH_HEIGHT_MM = 500;
-constexpr double ELEVATOR_MEDIUM_HATCH_HEIGHT_MM = 500;
-constexpr double ELEVATOR_HIGH_HATCH_HEIGHT_MM = 500;
-constexpr double ELEVATOR_ROCKET_LOW_CARGO_HEIGHT_MM = 500;
-constexpr double ELEVATOR_ROCKET_MEDIUM_CARGO_HEIGHT_MM = 500;
-constexpr double ELEVATOR_ROCKET_HIGH_CARGO_HEIGHT_MM = 500;
-constexpr double ELEVATOR_CARGO_SHIP_CARGO_HEIGHT_MM = 500;
+constexpr double ELEVATOR_MIN_HEIGHT_MM = 445;
+// Maybe not great for max height
+constexpr double ELEVATOR_MAX_HEIGHT_MM = 1505;
+constexpr double ELEVATOR_LOW_HATCH_HEIGHT_MM = 482.6;
+constexpr double ELEVATOR_MEDIUM_HATCH_HEIGHT_MM = 1193.8;
+constexpr double ELEVATOR_HIGH_HATCH_HEIGHT_MM = 1905;
+constexpr double ELEVATOR_ROCKET_LOW_CARGO_HEIGHT_MM = 698.5;
+constexpr double ELEVATOR_ROCKET_MEDIUM_CARGO_HEIGHT_MM = 1409.7;
+constexpr double ELEVATOR_ROCKET_HIGH_CARGO_HEIGHT_MM = 1955.8;
+constexpr double ELEVATOR_CARGO_SHIP_CARGO_HEIGHT_MM = 1168.4;
 
 // Elevator height control modes
 constexpr int ELEVATOR_MODE_DISABLED = 0;
