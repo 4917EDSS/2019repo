@@ -21,7 +21,8 @@ DynamicCommandPickerCmd<CBall,CHatch>::DynamicCommandPickerCmd(CBall* ballMode, 
 // Called just before this Command runs the first time
 template <typename CBall, typename CHatch>
 void DynamicCommandPickerCmd<CBall,CHatch>::Initialize() {
-  if (Robot::inBallMode) {
+  inBallMode=Robot::inBallMode;
+  if (inBallMode) {
     ballModeCmd->Initialize();
   } else {
     hatchModeCmd->Initialize();
@@ -31,7 +32,7 @@ void DynamicCommandPickerCmd<CBall,CHatch>::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 template <typename CBall, typename CHatch>
 void DynamicCommandPickerCmd<CBall,CHatch>::Execute() {
-  if (Robot::inBallMode) {
+  if (inBallMode) {
     ballModeCmd->Execute();
   } else {
     hatchModeCmd->Execute();
@@ -41,7 +42,7 @@ void DynamicCommandPickerCmd<CBall,CHatch>::Execute() {
 // Make this return true when this Command no longer needs to run execute()
 template <typename CBall, typename CHatch>
 bool DynamicCommandPickerCmd<CBall,CHatch>::IsFinished() { 
-  if (Robot::inBallMode) {
+  if (inBallMode) {
     return ballModeCmd->IsFinished();
   } else {
     return hatchModeCmd->IsFinished();
@@ -51,7 +52,7 @@ bool DynamicCommandPickerCmd<CBall,CHatch>::IsFinished() {
 // Called once after isFinished returns true
 template <typename CBall, typename CHatch>
 void DynamicCommandPickerCmd<CBall,CHatch>::End() {
-  if (Robot::inBallMode) {
+  if (inBallMode) {
     ballModeCmd->End();
   } else {
     hatchModeCmd->End();
@@ -62,7 +63,7 @@ void DynamicCommandPickerCmd<CBall,CHatch>::End() {
 // subsystems is scheduled to run
 template <typename CBall, typename CHatch>
 void DynamicCommandPickerCmd<CBall,CHatch>::Interrupted() {
-  if (Robot::inBallMode) {
+  if (inBallMode) {
     ballModeCmd->Interrupted();
   } else {
     hatchModeCmd->Interrupted();
