@@ -7,8 +7,11 @@
 
 #include "commands/DynamicCommandPickerCmd.h"
 #include "Robot.h"
+#include "commands/frc4917Cmd.h"
+#include "commands/frc4917Grp.h"
 
-DynamicCommandPickerCmd::DynamicCommandPickerCmd(frc::Command* ballMode, frc::Command* hatchMode) {
+template <typename CBall, typename CHatch>
+DynamicCommandPickerCmd<CBall,CHatch>::DynamicCommandPickerCmd(CBall* ballMode, CHatch* hatchMode) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   ballModeCmd = ballMode;
@@ -16,47 +19,57 @@ DynamicCommandPickerCmd::DynamicCommandPickerCmd(frc::Command* ballMode, frc::Co
 }
 
 // Called just before this Command runs the first time
-void DynamicCommandPickerCmd::Initialize() {
+template <typename CBall, typename CHatch>
+void DynamicCommandPickerCmd<CBall,CHatch>::Initialize() {
   if (Robot::inBallMode) {
-    //ballModeCmd->Initialize();
+    ballModeCmd->Initialize();
   } else {
-    //hatchModeCmd->Initialize();
+    hatchModeCmd->Initialize();
   }
 }
 
 // Called repeatedly when this Command is scheduled to run
-void DynamicCommandPickerCmd::Execute() {
+template <typename CBall, typename CHatch>
+void DynamicCommandPickerCmd<CBall,CHatch>::Execute() {
   if (Robot::inBallMode) {
-    //ballModeCmd->Execute();
+    ballModeCmd->Execute();
   } else {
-    //hatchModeCmd->Execute();
+    hatchModeCmd->Execute();
   }
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool DynamicCommandPickerCmd::IsFinished() { 
+template <typename CBall, typename CHatch>
+bool DynamicCommandPickerCmd<CBall,CHatch>::IsFinished() { 
   if (Robot::inBallMode) {
-    //return ballModeCmd->IsFinished();
+    return ballModeCmd->IsFinished();
   } else {
-    //return hatchModeCmd->IsFinished();
+    return hatchModeCmd->IsFinished();
   }
 }
 
 // Called once after isFinished returns true
-void DynamicCommandPickerCmd::End() {
+template <typename CBall, typename CHatch>
+void DynamicCommandPickerCmd<CBall,CHatch>::End() {
   if (Robot::inBallMode) {
-    //ballModeCmd->End();
+    ballModeCmd->End();
   } else {
-    //hatchModeCmd->End();
+    hatchModeCmd->End();
   }
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void DynamicCommandPickerCmd::Interrupted() {
+template <typename CBall, typename CHatch>
+void DynamicCommandPickerCmd<CBall,CHatch>::Interrupted() {
   if (Robot::inBallMode) {
-    //ballModeCmd->Interrupted();
+    ballModeCmd->Interrupted();
   } else {
-    //hatchModeCmd->Interrupted();
+    hatchModeCmd->Interrupted();
   }
 }
+
+template class DynamicCommandPickerCmd<frc4917Grp, frc4917Grp>;
+template class DynamicCommandPickerCmd<frc4917Cmd, frc4917Grp>;
+template class DynamicCommandPickerCmd<frc4917Grp, frc4917Cmd>;
+template class DynamicCommandPickerCmd<frc4917Cmd, frc4917Cmd>;

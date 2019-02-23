@@ -8,8 +8,9 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "commands/frc4917Cmd.h"
 
-class TestButtonCmd : public frc::Command {
+class TestButtonCmd : public frc4917Cmd {
  public:
   TestButtonCmd();
   void Initialize() override;

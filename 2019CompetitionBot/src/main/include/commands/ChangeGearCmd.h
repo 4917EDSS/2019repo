@@ -8,8 +8,9 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "commands/frc4917Cmd.h"
 
-class ChangeGearCmd : public frc::Command {
+class ChangeGearCmd : public frc4917Cmd {
  public:
   ChangeGearCmd();
   void Initialize() override;

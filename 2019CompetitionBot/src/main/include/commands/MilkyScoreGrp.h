@@ -8,8 +8,9 @@
 #pragma once
 
 #include <frc/commands/CommandGroup.h>
+#include "commands/frc4917Grp.h"
 
-class MilkyScoreGrp : public frc::CommandGroup {
+class MilkyScoreGrp : public frc4917Grp {
  public:
   MilkyScoreGrp();
 };

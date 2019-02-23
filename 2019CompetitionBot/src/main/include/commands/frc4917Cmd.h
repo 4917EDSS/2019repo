@@ -8,19 +8,12 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include "commands/frc4917Cmd.h"
 
-template <typename CBall, typename CHatch>
-class DynamicCommandPickerCmd : public frc4917Cmd {
+class frc4917Cmd : public virtual frc::Command {
  public:
-  DynamicCommandPickerCmd(CBall* ballMode, CHatch* hatchMode);
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
-
-private:
-  CBall* ballModeCmd;
-  CHatch* hatchModeCmd;
+  virtual void Initialize() override = 0;
+  virtual void Execute() override = 0;
+  virtual bool IsFinished() override = 0;
+  virtual void End() override = 0;
+  virtual void Interrupted() override = 0;
 };

@@ -8,8 +8,9 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "commands/frc4917Cmd.h"
 
-class MilkyManipulatorCmd : public frc::Command {
+class MilkyManipulatorCmd : public frc4917Cmd {
  public:
   MilkyManipulatorCmd();
   void Initialize();

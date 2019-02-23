@@ -1,13 +1,15 @@
 #pragma once
 #include "frc/commands/Command.h"
-class DriveStraightCmd : public frc::Command {
+#include "commands/frc4917Cmd.h"
+
+class DriveStraightCmd : public frc4917Cmd {
  public:
   DriveStraightCmd(double distance);
-  void Initialize();
-  void Execute();
-  bool IsFinished();
-  void End();
-  void Interrupt();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
  private:
   double distance;
 };

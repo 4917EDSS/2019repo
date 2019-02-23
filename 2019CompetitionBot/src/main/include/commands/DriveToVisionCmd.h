@@ -8,8 +8,9 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "commands/frc4917Cmd.h"
 
-class DriveToVisionCmd : public frc::Command {
+class DriveToVisionCmd : public frc4917Cmd {
  public:
   DriveToVisionCmd();
   void Initialize() override;

@@ -8,8 +8,9 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "commands/frc4917Cmd.h"
 
-class CloseHatchPickupCmd : public frc::Command {
+class CloseHatchPickupCmd : public frc4917Cmd {
  public:
   CloseHatchPickupCmd();
   void Initialize() override;

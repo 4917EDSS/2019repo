@@ -1,8 +1,8 @@
 #pragma once
 #include <frc/commands/Command.h>
+#include "commands/frc4917Cmd.h"
 
-class manipulatorInCmd : public frc::Command
-{
+class manipulatorInCmd : public frc4917Cmd {
   public:
     manipulatorInCmd();
     void Initialize() override;

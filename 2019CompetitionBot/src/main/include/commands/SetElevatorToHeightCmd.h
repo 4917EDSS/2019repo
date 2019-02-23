@@ -8,6 +8,7 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include "commands/frc4917Cmd.h"
 
 constexpr double UP_CLIMB_POSITION = 60.5; //change
   constexpr double DOWN_CLIMB_POSITION = -30.0; //change, check if zero is the middle position (at rest)
@@ -20,7 +21,7 @@ constexpr double UP_CLIMB_POSITION = 60.5; //change
   constexpr double UP_BALL_DROPOFF = 65.0; //change, ball dropoff on upper rocket slot
   constexpr double FLOOR_PICKUP = 5.0; //change, ball pickup off floor 
 
-class SetElevatorToHeightCmd : public frc::Command
+class SetElevatorToHeightCmd : public frc4917Cmd
 {
 
 public:
