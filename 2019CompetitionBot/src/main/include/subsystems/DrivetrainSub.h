@@ -29,8 +29,10 @@ class DrivetrainSub : public frc::Subsystem {
   std::shared_ptr<frc4917::MotorBalancer> driveBalancer;
 
   struct SparkShuffleboardEntrySet nteSparks[6];
-  nt::NetworkTableEntry nte;
-
+  nt::NetworkTableEntry ntePitch;
+  nt::NetworkTableEntry nteYaw;
+  nt::NetworkTableEntry nteRoll;
+  
  public:
   DrivetrainSub();
   double GetLeftEncoder();

@@ -47,6 +47,11 @@ DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub"){
 
   frc::ShuffleboardTab& shuffleTab = frc::Shuffleboard::GetTab("Drivetrain");
 
+  ntePitch = (shuffleTab.Add("Pitch", 0).GetEntry());
+  // .WithPosition(6,0);
+  nteYaw = (shuffleTab.Add("Yaw", 0).GetEntry());
+  nteRoll = (shuffleTab.Add("Roll", 0).GetEntry());
+
   for(int motorId = 0; motorId < 6; motorId++)
   {
     std::string listName = "Motor " + std::to_string(motorId) + " Data";
@@ -126,6 +131,10 @@ void DrivetrainSub::updateShuffleBoard(){
   nteSparks[5].encoderPosition.SetDouble(rightMotor3->GetEncoder().GetPosition());
   nteSparks[5].encoderVelocity.SetDouble(rightMotor3->GetEncoder().GetVelocity());
   nteSparks[5].motorTemperature.SetDouble(rightMotor3->GetMotorTemperature());
+
+  ntePitch.SetDouble(ahrs->GetPitch());
+  nteYaw.SetDouble(getAngle());
+  nteRoll.SetDouble(ahrs->GetRoll());
 }
 void DrivetrainSub::enableBalancerPID(float setPoint){
   Preferences *prefs = Preferences::GetInstance();
