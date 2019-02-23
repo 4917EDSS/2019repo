@@ -10,18 +10,15 @@
 #include <frc/commands/Command.h>
 #include "commands/frc4917Cmd.h"
 
-template <typename CBall, typename CHatch>
-class DynamicCommandPickerCmd : public frc4917Cmd {
+class TogglePipeLineCmd : public frc::Command {
  public:
-  DynamicCommandPickerCmd(CBall* ballMode, CHatch* hatchMode);
+  TogglePipeLineCmd();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
 
-private:
-    bool inBallMode;
-  CBall* ballModeCmd;
-  CHatch* hatchModeCmd;
+  private:
+  bool pipeLine = true;
 };

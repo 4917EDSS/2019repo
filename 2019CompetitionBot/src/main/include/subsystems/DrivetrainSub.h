@@ -29,8 +29,10 @@ class DrivetrainSub : public frc::Subsystem {
   std::shared_ptr<frc4917::MotorBalancer> driveBalancer;
 
   struct SparkShuffleboardEntrySet nteSparks[6];
-  nt::NetworkTableEntry nte;
-
+  nt::NetworkTableEntry ntePitch;
+  nt::NetworkTableEntry nteYaw;
+  nt::NetworkTableEntry nteRoll;
+  
  public:
   DrivetrainSub();
   double GetLeftEncoder();
@@ -40,6 +42,7 @@ class DrivetrainSub : public frc::Subsystem {
   double getRate();
   void InitDefaultCommand() override;
   void drive(double lSpeed, double rSpeed);
+  void updateShuffleBoard();
   void driverDriveStraight(float speed);
   void enableBalancerPID(float setPoint);
   void disableBalancerPID();

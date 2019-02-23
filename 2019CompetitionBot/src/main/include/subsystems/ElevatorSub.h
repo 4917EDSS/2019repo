@@ -74,7 +74,7 @@ class ElevatorSub : public frc::Subsystem {
   double targetHeight;
 
 
-  struct SparkShuffleboardEntrySet nteSparksTwo[3];
+  struct SparkShuffleboardEntrySet nteSparksTwo[2];
   nt::NetworkTableEntry nteHatchGripperSolenoid;
   nt::NetworkTableEntry nteIntakeFromRobotLimit;
   nt::NetworkTableEntry nteShifterSolenoid;
