@@ -15,56 +15,80 @@
 #include <frc/shuffleboard/BuiltInLayouts.h>
 #include "SparkShuffleboardEntrySet.h"
 
+constexpr float MANIPULATOR_ANGLE_TOLERANCE = 1.0;
+constexpr float FLIPPER_TICK_TO_DEGREE_FACTOR = (90/44.1900);
+
 ManipulatorSub::ManipulatorSub() : Subsystem("ManipulatorSub") {
-void ManipulatorSub::setManipulatorFlipperMotorSpeed(double speed){
-  
+  flipperMotor.reset(new rev::CANSparkMax(MANIPULATOR_FLIPPER_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  flipperMotor->GetEncoder().SetPosition(0);
+  flipperMotor->GetEncoder().SetPositionConversionFactor(FLIPPER_TICK_TO_DEGREE_FACTOR);
+  flipperLimit.reset(new frc::DigitalInput(MANIPULATOR_LIMIT_DIO));
 
-  if (getManipulatorEncoder() < -90 && speed < 0){
-    speed = 0;
-  }
+  intakeMotorLeft.reset(new WPI_VictorSPX(MANIPULATOR_LEFT_INTAKE_MOTOR_CAN_ID));
+  intakeMotorRight.reset(new WPI_VictorSPX(MANIPULATOR_RIGHT_INTAKE_MOTOR_CAN_ID));
+  intakeFromRobotLimit.reset(new frc::DigitalInput(BALL_SENSOR_DIO));
 
-  else if (getManipulatorEncoder() > 90 && speed > 0){
-    speed = 0;
-  }
+  hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
+  expandHatchGripper();
 
-   else if (getManipulatorEncoder() > 80 && speed > 0){
-    speed = std::min(speed, 0.2);
-  }
+  // Setup Shuffleboard for each input and output device
+  frc::ShuffleboardTab& shuffleTab = frc::Shuffleboard::GetTab("Manipulator");
 
-void ManipulatorSub::setManipulatorTargetAngle(double newAngle) {
-  targetAngle = newAngle;
+  frc::ShuffleboardLayout& shuffleList = shuffleTab.GetLayout("Flipper Motor", frc::BuiltInLayouts::kList);
+  nteFlipperMotor.setPower = (shuffleList.Add("Set Power", 0).GetEntry());
+  nteFlipperMotor.outputCurrent = (shuffleList.Add("Current Out", 0).GetEntry());
+  nteFlipperMotor.encoderPosition = (shuffleList.Add("Position", 0).GetEntry());
+  nteFlipperMotor.encoderVelocity = (shuffleList.Add("Velocity", 0).GetEntry());
+  nteFlipperMotor.motorTemperature = (shuffleList.Add("Motor Temp", 0).GetEntry());
+
+  nteFlipperLimit = (shuffleTab.Add("Flipper Limit", 0).GetEntry());
+  nteIntakeMotorLeft = (shuffleTab.Add("Intake Motor L", 0).GetEntry());
+  nteIntakeMotorRight = (shuffleTab.Add("Intake Motor R", 0).GetEntry());
+  nteIntakeFromRobotLimit = (shuffleTab.Add("Intake Limit", 0).GetEntry());
+  nteHatchGripperSolenoid = (shuffleTab.Add("Gripper", 0).GetEntry());
 }
 
-
-  else if (getManipulatorEncoder() < -80 && speed < 0){
-    speed = std::max(speed, -0.2);
-  }
-
- double ManipulatorSub::getManipulatorEncoder() {
-  return manipulatorFlipperMotor->GetEncoder().GetPosition();
- }
-
-bool ManipulatorSub::isManipulatorAtLimit() {
-  return !manipulatorFlipperLimit->Get();
+void ManipulatorSub::InitDefaultCommand() {
+  // Set the default command for a subsystem here.
+  // SetDefaultCommand(new MySpecialCommand());
 }
 
-void ManipulatorSub::holdManipulatorFlipper(double position){
-  //setElevatorMotorSpeed((targetHeight - elevatorMotor1->GetEncoder().GetPosition())* 0.1);
-  double holdvalue = (position -  manipulatorFlipperMotor->GetEncoder().GetPosition());
-  // logger.send(logger.ELEVATOR, "Flipper motor at target %f, position %f\n", position, manipulatorFlipperMotor->GetEncoder().GetPosition());
-  setManipulatorFlipperMotorSpeed(holdvalue*0.1); 
+void ManipulatorSub::updateShuffleBoard() {
+  nteFlipperMotor.setPower.SetDouble(flipperMotor->Get());
+  nteFlipperMotor.outputCurrent.SetDouble(flipperMotor->GetOutputCurrent());
+  nteFlipperMotor.encoderPosition.SetDouble(flipperMotor->GetEncoder().GetPosition());
+  nteFlipperMotor.encoderVelocity.SetDouble(flipperMotor->GetEncoder().GetVelocity());
+  nteFlipperMotor.motorTemperature.SetDouble(flipperMotor->GetMotorTemperature());
+
+  nteFlipperLimit.SetBoolean(flipperLimit->Get());
+  nteIntakeMotorLeft.SetDouble(intakeMotorLeft->Get());
+  nteIntakeMotorRight.SetDouble(intakeMotorRight->Get());
+  nteIntakeFromRobotLimit.SetBoolean(intakeFromRobotLimit->Get());
+  nteHatchGripperSolenoid.SetBoolean(hatchGripperSolenoid->Get());
 }
 
-double ManipulatorSub::getManipulatorAngle(){
-  return  targetAngle;
+void ManipulatorSub::setFlipperPower(double power) {
+  flipperMotor->Set(power);
 }
 
-void ManipulatorSub::setManipulatorWheelSpeed(double lspeed, double rspeed) {
-  manipulatorIntakeMotorLeft->Set(-lspeed);
-  manipulatorIntakeMotorRight->Set(rspeed);
+double ManipulatorSub::getFlipperAngle() {
+  return flipperMotor->GetEncoder().GetPosition();
 }
 
-bool ManipulatorSub::isBallInManipulator() {
+double ManipulatorSub::getFlipperVelocity() {
+  return flipperMotor->GetEncoder().GetVelocity();
+}
+
+bool ManipulatorSub::isFlipperAtLimit() {
+  return flipperLimit->Get();
+}
+
+void ManipulatorSub::setIntakePower(double power) {
+  intakeMotorLeft->Set(-power);
+  intakeMotorLeft->Set(power);
+}
+
+bool ManipulatorSub::isBallIn() {
   return !intakeFromRobotLimit->Get();
 }
 
@@ -76,31 +100,54 @@ void ManipulatorSub::contractHatchGripper(){
   hatchGripperSolenoid->Set(true);
 }
 
-
 bool ManipulatorSub::isGripperExpanded() {
   return !hatchGripperSolenoid->Get();
 }
 
+
+
+
+
+
+
+
+void ManipulatorSub::setManipulatorFlipperMotorSpeed(double speed) {
+  if (getManipulatorAngle() < -90 && speed < 0){
+    speed = 0;
+  }
+
+  else if (getManipulatorAngle() > 90 && speed > 0){
+    speed = 0;
+  }
+
+   else if (getManipulatorAngle() > 80 && speed > 0){
+    speed = std::min(speed, 0.2);
+  }
+}
+
+void ManipulatorSub::setManipulatorTargetAngle(double newAngle) {
+  targetAngle = newAngle;
+}
+
+void ManipulatorSub::holdManipulatorFlipper(double position){
+  double holdvalue = (position -  flipperMotor->GetEncoder().GetPosition());
+  setFlipperPower(holdvalue*0.1); 
+}
+
+double ManipulatorSub::getManipulatorAngle(){
+  return  targetAngle;
+}
+
 bool ManipulatorSub::isFinishedMove() {
-if (fabs(targetAngle -manipulatorFlipperMotor->GetEncoder().GetPosition()) < MANIPULATOR_POSITION_TOLERANCE && fabs(manipulatorFlipperMotor->GetEncoder().GetVelocity()) < 45) {
+if (fabs(targetAngle -flipperMotor->GetEncoder().GetPosition()) < MANIPULATOR_ANGLE_TOLERANCE && fabs(flipperMotor->GetEncoder().GetVelocity()) < 45) {
       return true;
    } else {
      return false;
    }
+}
 
 void ManipulatorSub::zeroEverything(){
-  elevatorMotor1->Set(0.0);
-  elevatorMotor2->Set(0.0);
-  manipulatorIntakeMotorLeft->Set(0.0);
-  manipulatorIntakeMotorRight->Set(0.0);
-  manipulatorFlipperMotor->Set(0.0);
+  intakeMotorLeft->Set(0.0);
+  intakeMotorRight->Set(0.0);
+  flipperMotor->Set(0.0);
 }
-}
-
-void ManipulatorSub::InitDefaultCommand() {
-  // Set the default command for a subsystem here.
-  // SetDefaultCommand(new MySpecialCommand());
-}
-
-// Put methods for controlling this subsystem
-// here. Call these from Commands.

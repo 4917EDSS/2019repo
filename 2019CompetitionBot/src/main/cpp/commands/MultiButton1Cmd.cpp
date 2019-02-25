@@ -25,12 +25,12 @@ void MultiButton1Cmd::Initialize() {
 
   switch(shift) {
     case 0:
-      if(Robot::elevatorSub.isGripperExpanded()) {
-        Robot::elevatorSub.contractHatchGripper();
+      if(Robot::manipulatorSub.isGripperExpanded()) {
+        Robot::manipulatorSub.contractHatchGripper();
         logger.send(logger.CMD_TRACE, "MultiButton1Cmd: Gripper is contracted.\n");
       }
       else {
-        Robot::elevatorSub.expandHatchGripper();
+        Robot::manipulatorSub.expandHatchGripper();
         logger.send(logger.CMD_TRACE, "MultiButton1Cmd: Gripper is expanded.\n");
       }
       break;

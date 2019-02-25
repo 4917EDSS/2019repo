@@ -4,7 +4,7 @@ ManipulatorInCmd::ManipulatorInCmd () {
   Requires(&Robot::manipulatorSub);
 }
 void ManipulatorInCmd::Initialize() {
-  Robot::manipulatorSub.setManipulatorWheelSpeed(-0.5,-0.5);
+  Robot::manipulatorSub.setIntakePower(-0.5);
     Robot::inBallMode = true;
 }
 void ManipulatorInCmd::Execute() {}
@@ -15,7 +15,7 @@ bool ManipulatorInCmd::IsFinished() {
   return false;
 }
 void ManipulatorInCmd::End() {
-  Robot::manipulatorSub.setManipulatorWheelSpeed(0,0);
+  Robot::manipulatorSub.setIntakePower(0);
 }
 void ManipulatorInCmd::Interrupted() {
   End();

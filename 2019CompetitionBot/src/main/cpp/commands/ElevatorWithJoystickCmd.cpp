@@ -12,12 +12,12 @@
 ElevatorWithJoystickCmd::ElevatorWithJoystickCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::manipulatorSub);
+  Requires(&Robot::elevatorSub);
 }
 
 // Called just before this Command runs the first time
 void ElevatorWithJoystickCmd::Initialize() {
-  currentManipulatorPosition = Robot::manipulatorSub.getManipulatorEncoder(); 
+  currentManipulatorPosition = Robot::manipulatorSub.getFlipperAngle(); 
   logger.send(logger.ELEVATOR, "Robot flipper starting position is at %f \n", currentManipulatorPosition);
 }
 
@@ -36,22 +36,26 @@ void ElevatorWithJoystickCmd::Execute() {
   case 0: // No shift, normal elevator operation
     // TODO: Replace with non-raw version (with slowdowns and limits)
     //logger.send(logger.ELEVATOR, "Call holdManFlip\n");
-    Robot::manipulatorSub.setElevatorMotorRaw(verticalStick * 0.5);  // Limit power to 50%
+    Robot::manipulatorSub.holdManipulatorFlipper(currentManipulatorPosition);
+    Robot::elevatorSub.setElevatorMotorRaw(verticalStick * 0.5);  // Limit power to 50%
     logger.send(logger.WITH_JOYSTICK_TRACE, "The elevator is being controlled @ %f\n", verticalStick);
     break;
 
   case 1: // Ball intake in/out flipper (handled in BallintakeWithJoystickCmd)  
-    Robot::manipulatorSub.setElevatorMotorRaw(0.0); 
+    Robot::elevatorSub.setElevatorMotorRaw(0.0); 
+    Robot::manipulatorSub.setFlipperPower(0.0);
     break;
 
   case 2: // Manipulator flip forward/backward
-    Robot::manipulatorSub.setElevatorMotorRaw(0.0); 
+    Robot::elevatorSub.setElevatorMotorRaw(0.0); 
+    Robot::manipulatorSub.setFlipperPower(verticalStick * 0.5);  // Limit power to 50%
+    currentManipulatorPosition = Robot::manipulatorSub.getFlipperAngle();
     //logger.send(logger.ELEVATOR, "The manipulator flipper is being controlled @ %f\n", verticalStick);
     break;
 
   default:
-    Robot::manipulatorSub.setElevatorMotorRaw(0.0); 
-    // Robot::manipulatorSub.setManipulatorFlipperMotorSpeed(0.0);
+    Robot::elevatorSub.setElevatorMotorRaw(0.0); 
+    // Robot::elevatorSub.setManipulatorFlipperMotorSpeed(0.0);
     break;
   }
 
@@ -61,7 +65,7 @@ void ElevatorWithJoystickCmd::Execute() {
   double manipulatorStick = operatorJoystick->GetRawAxis(OPERATOR_MANIPULATOR_AXIS);
   manipulatorStick = pow(manipulatorStick, 3);
   logger.send(logger.WITH_JOYSTICK_TRACE, "The manipulator wheels are being controlled @ %f\n", manipulatorStick);
-  Robot::manipulatorSub.setManipulatorWheelSpeed(manipulatorStick, manipulatorStick);
+  Robot::manipulatorSub.setIntakePower(manipulatorStick);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -71,7 +75,9 @@ bool ElevatorWithJoystickCmd::IsFinished() {
 
 // Called once after isFinished returns true
 void ElevatorWithJoystickCmd::End() {
-  Robot::manipulatorSub.setElevatorMotorSpeed(0.0);
+  Robot::elevatorSub.setElevatorMotorSpeed(0.0);
+  Robot::manipulatorSub.setFlipperPower(0.0);
+  Robot::manipulatorSub.setIntakePower(0.0);
 }
 
 // Called when another command which requires one or more of the same

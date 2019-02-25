@@ -19,46 +19,42 @@
 
 class ManipulatorSub : public frc::Subsystem {
  private:
-  std::shared_ptr<frc::Encoder> elevatorMotorEnc;
-  std::shared_ptr<rev::CANSparkMax> elevatorMotor1;
-  std::shared_ptr<rev::CANSparkMax> elevatorMotor2;
-  std::shared_ptr<frc::DigitalInput> lowerLimit;
-  std::shared_ptr<frc::DigitalInput> upperLimit;
-  std::shared_ptr<frc::Solenoid> shifterSolenoid;
+  std::shared_ptr<rev::CANSparkMax> flipperMotor;
+  std::shared_ptr<frc::DigitalInput> flipperLimit;
+  std::shared_ptr<WPI_VictorSPX> intakeMotorLeft;
+  std::shared_ptr<WPI_VictorSPX> intakeMotorRight;
   std::shared_ptr<frc::Solenoid> hatchGripperSolenoid;
-  std::shared_ptr<WPI_VictorSPX> manipulatorIntakeMotorLeft;
-  std::shared_ptr<WPI_VictorSPX> manipulatorIntakeMotorRight;
   std::shared_ptr<frc::DigitalInput> intakeFromRobotLimit;
-  std::shared_ptr<rev::CANSparkMax> manipulatorFlipperMotor;
-  std::shared_ptr<frc::DigitalInput> manipulatorFlipperLimit;
-
-  double targetAngle;
-  double targetHeight;
-
+  
+  struct SparkShuffleboardEntrySet nteFlipperMotor;
+  nt::NetworkTableEntry nteFlipperLimit;
+  nt::NetworkTableEntry nteIntakeMotorLeft;
+  nt::NetworkTableEntry nteIntakeMotorRight;
+  nt::NetworkTableEntry nteHatchGripperSolenoid;
   nt::NetworkTableEntry nteIntakeFromRobotLimit;
 
-
-  // It's desirable that everything possible under private except
-
-  // for methods that implement subsystem capabilities
+  double targetAngle;
 
  public:
   ManipulatorSub();
   void InitDefaultCommand() override;
-
-  void setManipulatorFlipperMotorSpeed(double speed);
-  void setManipulatorTargetAngle(double newAngle);
-  double getManipulatorEncoder();
-  bool isManipulatorAtLimit();
-  void holdManipulatorFlipper(double position);
-  double getManipulatorAngle();
-
-  void setManipulatorWheelSpeed(double lspeed, double rspeed);
-  bool isBallInManipulator();
-
+  void updateShuffleBoard();
+  void setFlipperPower(double power);
+  double getFlipperAngle();
+  double getFlipperVelocity();
+  bool isFlipperAtLimit();
+  void setIntakePower(double power);
+  bool isBallIn();
   void expandHatchGripper();  
   void contractHatchGripper();
   bool isGripperExpanded();
+
+
+  void setManipulatorFlipperMotorSpeed(double speed);
+  void setManipulatorTargetAngle(double newAngle);
+  bool isManipulatorAtLimit();
+  void holdManipulatorFlipper(double position);
+  double getManipulatorAngle();
 
   bool isFinishedMove();
   void zeroEverything();

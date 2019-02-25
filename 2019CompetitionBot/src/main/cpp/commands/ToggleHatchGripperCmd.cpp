@@ -15,11 +15,11 @@ ToggleHatchGripperCmd::ToggleHatchGripperCmd() {
 
 // Called just before this Command runs the first time
 void ToggleHatchGripperCmd::Initialize() {
-  if(Robot::elevatorSub.isGripperExpanded()) {
-    Robot::elevatorSub.contractHatchGripper();
+  if(Robot::manipulatorSub.isGripperExpanded()) {
+    Robot::manipulatorSub.contractHatchGripper();
   }
   else {
-    Robot::elevatorSub.expandHatchGripper();
+    Robot::manipulatorSub.expandHatchGripper();
   }
 }
 
