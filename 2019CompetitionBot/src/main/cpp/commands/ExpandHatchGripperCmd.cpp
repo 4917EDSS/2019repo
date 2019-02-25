@@ -11,12 +11,12 @@
 ExpandHatchGripperCmd::ExpandHatchGripperCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::elevatorSub);
+  Requires(&Robot::manipulatorSub);
 }
 
 // Called just before this Command runs the first time
 void ExpandHatchGripperCmd::Initialize() {
-  Robot::elevatorSub.expandHatchGripper();
+  Robot::manipulatorSub.expandHatchGripper();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -27,7 +27,7 @@ bool ExpandHatchGripperCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void ExpandHatchGripperCmd::End() {
-  Robot::elevatorSub.contractHatchGripper();
+  Robot::manipulatorSub.contractHatchGripper();
 }
 
 // Called when another command which requires one or more of the same

@@ -16,11 +16,11 @@ ToggleManipulatorPosition::ToggleManipulatorPosition() {
 
 // Called just before this Command runs the first time
 void ToggleManipulatorPosition::Initialize() {
-  if (Robot::elevatorSub.getManipulatorAngle() == -90) {
-    Robot::elevatorSub.setManipulatorTargetAngle(90);
+  if (Robot::manipulatorSub.getManipulatorAngle() == -90) {
+    Robot::manipulatorSub.setManipulatorTargetAngle(90);
   }
-  else if (Robot::elevatorSub.getManipulatorAngle() == 90){
-Robot::elevatorSub.setManipulatorTargetAngle(-90);
+  else if (Robot::manipulatorSub.getManipulatorAngle() == 90){
+Robot::manipulatorSub.setManipulatorTargetAngle(-90);
   }
 }
 

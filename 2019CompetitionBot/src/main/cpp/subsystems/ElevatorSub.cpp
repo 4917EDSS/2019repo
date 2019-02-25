@@ -18,14 +18,11 @@
 
 
 constexpr float ELEVATOR_POSITION_TOLERANCE = 5.0;
-constexpr float MANIPULATOR_POSITION_TOLERANCE = 1.0;
 constexpr float MANUAL_MODE_POWER_DEADBAND = 0.03;
 constexpr float ELEVATOR_P = 0;
 constexpr float ELEVATOR_I = 0;
 constexpr float ELEVATOR_D = 0;
 constexpr float ELEVATOR_TICK_TO_MM_FACTOR = (28.94679);             // TODO Determine value
-constexpr float FLIPPER_TICK_TO_DEGREE_FACTOR = (90/44.1900);
-constexpr float ELEVATOR_MAX_HEIGHT = 150;
 
 // Elevator state machine states
 constexpr int ELEVATOR_STATE_IDLE = 0;
@@ -45,17 +42,7 @@ ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
   shifterSolenoid.reset(new frc::Solenoid(CLIMB_GEAR_PCM_ID));
   setShifterHigh(true);
 
-  manipulatorFlipperMotor.reset(new rev::CANSparkMax(MANIPULATOR_FLIPPER_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
-  manipulatorFlipperMotor->GetEncoder().SetPosition(0);
-  manipulatorFlipperMotor->GetEncoder().SetPositionConversionFactor(FLIPPER_TICK_TO_DEGREE_FACTOR);
-  intakeFromRobotLimit.reset(new frc::DigitalInput(BALL_SENSOR_DIO));
-
-  manipulatorIntakeMotorLeft.reset(new WPI_VictorSPX(MANIPULATOR_LEFT_INTAKE_MOTOR_CAN_ID));
-  manipulatorIntakeMotorRight.reset(new WPI_VictorSPX(MANIPULATOR_RIGHT_INTAKE_MOTOR_CAN_ID));
-
-  hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
-  expandHatchGripper();
-
+  // Setup Shuffleboard for each input and output device
   frc::ShuffleboardTab& shuffleTab = frc::Shuffleboard::GetTab("Elevator");
 
   for (int index = 0; index < 2; index++){
@@ -69,12 +56,9 @@ ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
     nteSparksTwo[index].encoderVelocity = (shuffleList.Add("Velocity", 0).GetEntry());
     nteSparksTwo[index].motorTemperature = (shuffleList.Add("Motor Temp", 0).GetEntry());
   }
-
-  nteHatchGripperSolenoid = (shuffleTab.Add("Gripper", 0).GetEntry());
   nteShifterSolenoid = (shuffleTab.Add("Shiffter", 0).GetEntry());
-  nteIntakeFromRobotLimit = (shuffleTab.Add("Intake Limit", 0).GetEntry());
 
-    // Initialize elevator state machine
+  // Initialize elevator state machine
   elevatorNewStateParameters = false;
   elevatorNewControlMode = ELEVATOR_MODE_DISABLED;
   elevatorNewMaxPower = 0.0;
@@ -84,10 +68,15 @@ ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
   elevatorMaxPower = 0.0;
   elevatorTargetHeightMm = ELEVATOR_MIN_HEIGHT_MM;
   elevatorState = ELEVATOR_STATE_IDLE;
-   elevatorLastPower = 0.0;
+  elevatorLastPower = 0.0;
   elevatorBlockedHeightMm = 0.0;
 }
 
+void ElevatorSub::InitDefaultCommand() {
+  // Set the default command for a subsystem here.
+  // SetDefaultCommand(new MySpecialCommand());
+  SetDefaultCommand(new ElevatorWithJoystickCmd()); 
+}
 
 void ElevatorSub::updateShuffleBoard(){
 
@@ -110,23 +99,6 @@ void ElevatorSub::updateShuffleBoard(){
 
 }
 
-void ElevatorSub::InitDefaultCommand() {
-  // Set the default command for a subsystem here.
-  // SetDefaultCommand(new MySpecialCommand());
-  SetDefaultCommand(new ElevatorWithJoystickCmd()); 
-}
-
-void ElevatorSub::update(){
-  //setElevatorMotorSpeed((targetHeight - elevatorMotor1->GetEncoder().GetPosition())* 0.1);
-  //holdManipulatorFlipper();
-}
-
-void ElevatorSub::holdManipulatorFlipper(double position){
-  //setElevatorMotorSpeed((targetHeight - elevatorMotor1->GetEncoder().GetPosition())* 0.1);
-  double holdvalue = (position -  manipulatorFlipperMotor->GetEncoder().GetPosition());
-  // logger.send(logger.ELEVATOR, "Flipper motor at target %f, position %f\n", position, manipulatorFlipperMotor->GetEncoder().GetPosition());
-  setManipulatorFlipperMotorSpeed(holdvalue*0.1); 
-}
 // Set true for High Gear, false for Low Gear
 void ElevatorSub::setShifterHigh(bool highGear){
   shifterSolenoid->Set(highGear);
@@ -136,61 +108,22 @@ bool ElevatorSub::isShifterHigh(){
   return shifterSolenoid->Get();
 }
 
-void ElevatorSub::expandHatchGripper(){
-  hatchGripperSolenoid->Set(false);
-}
-
-void ElevatorSub::contractHatchGripper(){
-  hatchGripperSolenoid->Set(true);
-}
-
-bool ElevatorSub::isGripperExpanded() {
-  return !hatchGripperSolenoid->Get();
-}
-
 void ElevatorSub::zeroEverything(){
   elevatorMotor1->Set(0.0);
   elevatorMotor2->Set(0.0);
-  manipulatorIntakeMotorLeft->Set(0.0);
-  manipulatorIntakeMotorRight->Set(0.0);
-  manipulatorFlipperMotor->Set(0.0);
 }
 
-// Positive speed is out, negative is in
-void ElevatorSub::setManipulatorWheelSpeed(double lspeed, double rspeed) {
-  manipulatorIntakeMotorLeft->Set(-lspeed);
-  manipulatorIntakeMotorRight->Set(rspeed);
-}
-
-bool ElevatorSub::isBallInManipulator() {
-  return !intakeFromRobotLimit->Get();
-}
-
- double ElevatorSub::getElevatorEncoder() {
+double ElevatorSub::getElevatorEncoder() {
   return elevatorMotor1->GetEncoder().GetPosition();
- }
-
- double ElevatorSub::getManipulatorEncoder() {
-  return manipulatorFlipperMotor->GetEncoder().GetPosition();
- }
-
-bool ElevatorSub::isManipulatorAtLimit() {
-  return !manipulatorFlipperLimit->Get();
 }
 
 void ElevatorSub::setElevatorTargetHeight(double newHeight){
   targetHeight = newHeight;
 }
 
-void ElevatorSub::setManipulatorTargetAngle(double newAngle) {
-  targetAngle = newAngle;
-}
-double ElevatorSub::getManipulatorAngle(){
-  return  targetAngle;
-}
 bool ElevatorSub::isFinishedMove() {
  if (fabs(targetHeight -elevatorMotor1->GetEncoder().GetPosition()) < ELEVATOR_POSITION_TOLERANCE && fabs(elevatorMotor1->GetEncoder().GetVelocity()) < 45) {
-   if (fabs(targetAngle -manipulatorFlipperMotor->GetEncoder().GetPosition()) < MANIPULATOR_POSITION_TOLERANCE && fabs(manipulatorFlipperMotor->GetEncoder().GetVelocity()) < 45) {
+   if (1/*fabs(targetAngle -manipulatorFlipperMotor->GetEncoder().GetPosition()) < MANIPULATOR_POSITION_TOLERANCE && fabs(manipulatorFlipperMotor->GetEncoder().GetVelocity()) < 45*/) {
       return true;
    } else {
      return false;
@@ -212,40 +145,14 @@ void ElevatorSub::setElevatorMotorRaw(double speed){
   
 }
 
-void ElevatorSub::setManipulatorFlipperMotorSpeed(double speed){
-  
 
-  if (getManipulatorEncoder() < -90 && speed < 0){
-    speed = 0;
-  }
-
-  else if (getManipulatorEncoder() > 90 && speed > 0){
-    speed = 0;
-  }
-
-   else if (getManipulatorEncoder() > 80 && speed > 0){
-    speed = std::min(speed, 0.2);
-  }
-
-
-  else if (getManipulatorEncoder() < -80 && speed < 0){
-    speed = std::max(speed, -0.2);
-  }
-
-  manipulatorFlipperMotor->Set(speed);
-  nteSparksTwo[2].setPower.SetDouble(manipulatorFlipperMotor->Get());
-  nteSparksTwo[2].outputCurrent.SetDouble(manipulatorFlipperMotor->GetOutputCurrent());
-  nteSparksTwo[2].encoderPosition.SetDouble(manipulatorFlipperMotor->GetEncoder().GetPosition());
-  nteSparksTwo[2].encoderVelocity.SetDouble(manipulatorFlipperMotor->GetEncoder().GetVelocity());
-  nteSparksTwo[2].motorTemperature.SetDouble(manipulatorFlipperMotor->GetMotorTemperature());
-} 
 void ElevatorSub::setElevatorMotorSpeed(double speed){
 
   if (isElevatorDown() && speed < 0){
         speed = 0;
   }
 
-   else if (elevatorMotor1->GetEncoder().GetPosition() > ELEVATOR_MAX_HEIGHT && speed > 0){
+   else if (elevatorMotor1->GetEncoder().GetPosition() > 150 && speed > 0){
     speed = 0;
   }
 

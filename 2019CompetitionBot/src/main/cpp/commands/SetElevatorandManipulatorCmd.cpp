@@ -17,22 +17,23 @@ SetElevatorandManipulatorCmd::SetElevatorandManipulatorCmd(double targetAngle, d
 // Called just before this Command runs the first time
 void SetElevatorandManipulatorCmd::Initialize() {
   Robot::elevatorSub.setElevatorTargetHeight(targetHeight);
-  Robot::elevatorSub.setManipulatorTargetAngle(targetAngle);
+  Robot::manipulatorSub.setManipulatorTargetAngle(targetAngle);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void SetElevatorandManipulatorCmd::Execute() {
-  Robot::elevatorSub.update();
+
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool SetElevatorandManipulatorCmd::IsFinished() { 
-  return Robot::elevatorSub.isFinishedMove(); 
+  return Robot::elevatorSub.isFinishedMove() && Robot::manipulatorSub.isFinishedMove();
 }
 
 // Called once after isFinished returns true
 void SetElevatorandManipulatorCmd::End() {
   Robot::elevatorSub.zeroEverything();
+  Robot::manipulatorSub.zeroEverything();
 }
 
 // Called when another command which requires one or more of the same
