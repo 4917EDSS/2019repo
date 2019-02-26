@@ -17,12 +17,11 @@
 #include "SparkShuffleboardEntrySet.h"
 
 
-constexpr float ELEVATOR_POSITION_TOLERANCE = 5.0;
-constexpr float MANUAL_MODE_POWER_DEADBAND = 0.03;
-constexpr float ELEVATOR_P = 0;
-constexpr float ELEVATOR_I = 0;
-constexpr float ELEVATOR_D = 0;
-constexpr float ELEVATOR_TICK_TO_MM_FACTOR = (28.94679);             // TODO Determine value
+constexpr double ELEVATOR_POSITION_TOLERANCE_MM = 5.0;
+constexpr double ELEVATOR_VELOCITY_TOLERANCE_MM_S = 45;               // TODO Determine value
+constexpr double MANUAL_MODE_POWER_DEADBAND = 0.03;
+constexpr double ELEVATOR_TICK_TO_MM_FACTOR = (28.94679);             // TODO Determine value
+constexpr double ELEVATOR_IS_DOWN_TOLERANCE_MM = ELEVATOR_POSITION_TOLERANCE_MM + 1.0;
 
 // Elevator state machine states
 constexpr int ELEVATOR_STATE_IDLE = 0;
@@ -38,6 +37,8 @@ ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
   elevatorMotor2->GetEncoder().SetPosition(0);  // Not used but good to have as a backup
   elevatorMotor1->GetEncoder().SetPositionConversionFactor(ELEVATOR_TICK_TO_MM_FACTOR);
   elevatorMotor2->GetEncoder().SetPositionConversionFactor(ELEVATOR_TICK_TO_MM_FACTOR);
+
+  // TODO: Add limit switch
 
   shifterSolenoid.reset(new frc::Solenoid(CLIMB_GEAR_PCM_ID));
   setShifterHigh(true);
@@ -64,6 +65,7 @@ ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
   elevatorNewMaxPower = 0.0;
   elevatorNewTargetHeightMm = ELEVATOR_MIN_HEIGHT_MM;
   elevatorNewState = ELEVATOR_STATE_IDLE;
+
   elevatorControlMode = ELEVATOR_MODE_DISABLED;
   elevatorMaxPower = 0.0;
   elevatorTargetHeightMm = ELEVATOR_MIN_HEIGHT_MM;
@@ -79,12 +81,6 @@ void ElevatorSub::InitDefaultCommand() {
 }
 
 void ElevatorSub::updateShuffleBoard(){
-
-  nteHatchGripperSolenoid.SetBoolean(hatchGripperSolenoid->Get());
-  nteShifterSolenoid.SetBoolean(shifterSolenoid->Get());
-  nteIntakeFromRobotLimit.SetBoolean(intakeFromRobotLimit->Get());
-
-
   nteSparksTwo[0].setPower.SetDouble(elevatorMotor1->Get());
   nteSparksTwo[0].outputCurrent.SetDouble(elevatorMotor1->GetOutputCurrent());
   nteSparksTwo[0].encoderPosition.SetDouble(elevatorMotor1->GetEncoder().GetPosition());
@@ -97,6 +93,29 @@ void ElevatorSub::updateShuffleBoard(){
   nteSparksTwo[1].encoderVelocity.SetDouble(elevatorMotor2->GetEncoder().GetVelocity());
   nteSparksTwo[1].motorTemperature.SetDouble(elevatorMotor2->GetMotorTemperature());
 
+  nteShifterSolenoid.SetBoolean(shifterSolenoid->Get());
+}
+
+void ElevatorSub::setElevatorMotorPower(double power) {
+  elevatorMotor1->Set(-power);
+  elevatorMotor2->Set(power);
+}
+
+double ElevatorSub::getElevatorHeight() {
+  return elevatorMotor2->GetEncoder().GetPosition() + ELEVATOR_MIN_HEIGHT_MM;
+}
+
+double ElevatorSub::getElevatorVelocity() {
+  return elevatorMotor2->GetEncoder().GetVelocity();
+}
+
+bool ElevatorSub::isElevatorDown() {
+  if((getElevatorHeight() - ELEVATOR_MIN_HEIGHT_MM) < ELEVATOR_IS_DOWN_TOLERANCE_MM) {
+    return true;
+  }
+  else {
+    return false;
+  }
 }
 
 // Set true for High Gear, false for Low Gear
@@ -108,81 +127,18 @@ bool ElevatorSub::isShifterHigh(){
   return shifterSolenoid->Get();
 }
 
-void ElevatorSub::zeroEverything(){
-  elevatorMotor1->Set(0.0);
-  elevatorMotor2->Set(0.0);
-}
-
-double ElevatorSub::getElevatorEncoder() {
-  return elevatorMotor1->GetEncoder().GetPosition();
-}
-
-void ElevatorSub::setElevatorTargetHeight(double newHeight){
-  targetHeight = newHeight;
-}
-
-bool ElevatorSub::isFinishedMove() {
- if (fabs(targetHeight -elevatorMotor1->GetEncoder().GetPosition()) < ELEVATOR_POSITION_TOLERANCE && fabs(elevatorMotor1->GetEncoder().GetVelocity()) < 45) {
-   if (1/*fabs(targetAngle -manipulatorFlipperMotor->GetEncoder().GetPosition()) < MANIPULATOR_POSITION_TOLERANCE && fabs(manipulatorFlipperMotor->GetEncoder().GetVelocity()) < 45*/) {
-      return true;
-   } else {
-     return false;
-   }
- } else{
-   return false;
- }
-}
-
-bool ElevatorSub::isElevatorDown(){
-  return !lowerLimit.get() && elevatorMotor1->GetEncoder().GetPosition() < 20;
-}
-
-void ElevatorSub::setElevatorMotorRaw(double speed){
-  elevatorMotor1->Set(-speed);
-  
-
-  elevatorMotor2->Set(speed);
-  
-}
-
-
-void ElevatorSub::setElevatorMotorSpeed(double speed){
-
-  if (isElevatorDown() && speed < 0){
-        speed = 0;
-  }
-
-   else if (elevatorMotor1->GetEncoder().GetPosition() > 150 && speed > 0){
-    speed = 0;
-  }
-
-  else if (elevatorMotor1->GetEncoder().GetPosition() < 20 && speed < 0){
-    speed = std::max(speed, -0.2);
-  }
-
-
-  else if (elevatorMotor1->GetEncoder().GetPosition() > 100 && speed > 0){
-    speed = std::min(speed, 0.2);
-  }
-}
-
-
-
-
-
-
 // Set the elevator mode and height
-// - ELEVATOR_MODE_DISABLED turns off elevator motor (maxPower and targetHeightMm are not ignored)
+// - ELEVATOR_MODE_DISABLED turns off elevator motor (maxPower and targetHeightMm are ignored)
 // - ELEVATOR_MODE_AUTO has the state machine move the elevator to the desire height
 // - ELEVATOR_MODE_MANUAL is for joystick input (targetHeightMm is ignored)
 void ElevatorSub::setElevatorHeight(int mode, double maxPower, double targetHeightMm) {
   logger.send(logger.ELEVATOR, "ESH: START: (P=%.2f, H=%.1f)\n", maxPower, targetHeightMm);     
   
-  // If an old input is pending, drop it
-  elevatorNewStateParameters = false;
-
   // Only do something if one of the parameters has changed
   if((mode != elevatorControlMode) || (maxPower != elevatorMaxPower) || (targetHeightMm != elevatorTargetHeightMm)) {
+    // If an old input is pending, drop it
+    elevatorNewStateParameters = false;
+
     // Check input parameters
     if (fabs(maxPower) > 1.0) {
       return; 
@@ -209,7 +165,6 @@ void ElevatorSub::setElevatorHeight(int mode, double maxPower, double targetHeig
         elevatorNewMaxPower = fabs(maxPower);
         elevatorNewTargetHeightMm = targetHeightMm;
         elevatorNewStateParameters = true;    // Only set this to true after all the other parameters have been set
-        logger.send(logger.ELEVATOR, "ESH: Auto (P1=%.2f, H1=%.1f)\n", maxPower, targetHeightMm);
         logger.send(logger.ELEVATOR, "ESH: Auto (P=%.2f, H=%.1f)\n", elevatorNewMaxPower, elevatorNewTargetHeightMm);
         break;
 
@@ -243,8 +198,8 @@ void ElevatorSub::setElevatorHeight(int mode, double maxPower, double targetHeig
 
 // Returns true if the elevator is within tolerance of the target height
 bool ElevatorSub::isElevatorAtTarget() {
- if ((fabs(targetHeight - getElevatorHeight()) < ELEVATOR_POSITION_TOLERANCE) && 
-      (fabs(getElevatorVelocity() < 45))) {
+ if ((fabs(elevatorTargetHeightMm - getElevatorHeight()) < ELEVATOR_POSITION_TOLERANCE_MM) && 
+      (fabs(getElevatorVelocity() < ELEVATOR_VELOCITY_TOLERANCE_MM_S))) {
       return true;
  } else {
    return false;
@@ -326,6 +281,26 @@ void ElevatorSub::updateElevatorStateMachine() {
   }
 }
 
+bool ElevatorSub::isElevatorBlocked(double currentHeightMm, double targetHeightMm) {
+  double direction = 1.0;
+  
+  if(currentHeightMm > targetHeightMm) {
+    direction = -1.0;
+  }
+
+  // TODO: implement
+  // At max height - tolerance (going up)
+  if (((currentHeightMm >= ELEVATOR_MAX_HEIGHT_MM) && (direction > 0)) || 
+      ((currentHeightMm < ELEVATOR_MIN_HEIGHT_MM) && (direction < 0))) {
+    return true;
+  }
+  // At min height - tolerance (going down)
+  // Upper limit switch hit (going up)
+  // Lower limit switch hit (going down)
+  // Manipulator is not far enough forward
+  return false;
+}
+
 double ElevatorSub::calcElevatorHoldPower(double currentHeightMm, double targetHeightMm) {
   // TODO:  Determine actual value for this.  
   // Make propertional to target.
@@ -354,35 +329,6 @@ double ElevatorSub::calcElevatorMovePower(double currentHeightMm, double targetH
   return newPower;
 }
 
-bool ElevatorSub::isElevatorBlocked(double currentHeightMm, double targetHeightMm) {
-  double direction = 1.0;
-  
-  if(currentHeightMm > targetHeightMm) {
-    direction = -1.0;
-  }
 
-  // TODO: implement
-  // At max height - tolerance (going up)
-  if (((currentHeightMm >= ELEVATOR_MAX_HEIGHT_MM) && (direction > 0)) || 
-      ((currentHeightMm < ELEVATOR_MIN_HEIGHT_MM) && (direction < 0))) {
-    return true;
-  }
-  // At min height - tolerance (going down)
-  // Upper limit switch hit (going up)
-  // Lower limit switch hit (going down)
-  // Manipulator is not far enough forward
-  return false;
-}
 
-void ElevatorSub::setElevatorMotorPower(double power) {
-  elevatorMotor1->Set(-power);
-  elevatorMotor2->Set(power);
-}
 
-double ElevatorSub::getElevatorHeight() {
-  return elevatorMotor2->GetEncoder().GetPosition() + ELEVATOR_MIN_HEIGHT_MM;
-}
-
-double ElevatorSub::getElevatorVelocity() {
-  return elevatorMotor2->GetEncoder().GetVelocity();
-}

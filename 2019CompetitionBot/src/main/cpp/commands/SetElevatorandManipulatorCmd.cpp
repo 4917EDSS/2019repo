@@ -16,8 +16,8 @@ SetElevatorandManipulatorCmd::SetElevatorandManipulatorCmd(double targetAngle, d
 
 // Called just before this Command runs the first time
 void SetElevatorandManipulatorCmd::Initialize() {
-  Robot::elevatorSub.setElevatorTargetHeight(targetHeight);
-  Robot::manipulatorSub.setManipulatorTargetAngle(targetAngle);
+  Robot::elevatorSub.setElevatorHeight(ELEVATOR_MODE_AUTO, 0.5, targetHeight);
+  Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_AUTO, 0.5, targetAngle);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -27,13 +27,12 @@ void SetElevatorandManipulatorCmd::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool SetElevatorandManipulatorCmd::IsFinished() { 
-  return Robot::elevatorSub.isFinishedMove() && Robot::manipulatorSub.isFinishedMove();
+  return Robot::elevatorSub.isElevatorAtTarget() && Robot::manipulatorSub.isFlipperAtTarget();
 }
 
 // Called once after isFinished returns true
 void SetElevatorandManipulatorCmd::End() {
-  Robot::elevatorSub.zeroEverything();
-  Robot::manipulatorSub.zeroEverything();
+  
 }
 
 // Called when another command which requires one or more of the same

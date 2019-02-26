@@ -16,12 +16,16 @@ ToggleManipulatorPosition::ToggleManipulatorPosition() {
 
 // Called just before this Command runs the first time
 void ToggleManipulatorPosition::Initialize() {
-  if (Robot::manipulatorSub.getManipulatorAngle() == -90) {
-    Robot::manipulatorSub.setManipulatorTargetAngle(90);
+  double targetAngle;
+
+  if(Robot::manipulatorSub.getFlipperAngle() > 0) {
+    targetAngle = -90;
   }
-  else if (Robot::manipulatorSub.getManipulatorAngle() == 90){
-Robot::manipulatorSub.setManipulatorTargetAngle(-90);
+  else {
+    targetAngle = 90;
   }
+
+  Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_AUTO, 0.5, targetAngle);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -30,11 +34,15 @@ void ToggleManipulatorPosition::Execute() {
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool ToggleManipulatorPosition::IsFinished() { return false; }
+bool ToggleManipulatorPosition::IsFinished() { 
+  return Robot::manipulatorSub.isFlipperAtTarget(); 
+}
 
 // Called once after isFinished returns true
 void ToggleManipulatorPosition::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ToggleManipulatorPosition::Interrupted() {}
+void ToggleManipulatorPosition::Interrupted() {
+  End();
+}

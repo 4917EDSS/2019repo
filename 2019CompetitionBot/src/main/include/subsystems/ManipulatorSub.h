@@ -16,6 +16,10 @@
 #include "components/MotorBalancer.h"
 #include "SparkShuffleboardEntrySet.h"
 
+// Flipper angle control modes
+constexpr int FLIPPER_MODE_DISABLED = 0;
+constexpr int FLIPPER_MODE_AUTO = 1;
+constexpr int FLIPPER_MODE_MANUAL = 2;
 
 class ManipulatorSub : public frc::Subsystem {
  private:
@@ -33,7 +37,22 @@ class ManipulatorSub : public frc::Subsystem {
   nt::NetworkTableEntry nteHatchGripperSolenoid;
   nt::NetworkTableEntry nteIntakeFromRobotLimit;
 
-  double targetAngle;
+    // Flipper state machine variables and functions
+  bool flipperNewStateParameters;
+  int flipperNewControlMode;
+  double flipperNewMaxPower;
+  double flipperNewTargetAngle;
+  int flipperNewState;
+  int flipperControlMode;
+  double flipperMaxPower;
+  double flipperTargetAngle;
+  int flipperState;
+  double flipperLastPower;
+  double flipperBlockedAngle;
+
+  bool isFlipperBlocked(double currentAngle, double targetAngle);
+  double calcFlipperHoldPower(double currentAngle, double targetAngle);
+  double calcFlipperMovePower(double currentAngle, double targetAngle, double maxPower);
 
  public:
   ManipulatorSub();
@@ -48,14 +67,8 @@ class ManipulatorSub : public frc::Subsystem {
   void expandHatchGripper();  
   void contractHatchGripper();
   bool isGripperExpanded();
+  void setFlipperAngle(int mode, double maxPower, double targetAngle);
+  bool isFlipperAtTarget();
 
-
-  void setManipulatorFlipperMotorSpeed(double speed);
-  void setManipulatorTargetAngle(double newAngle);
-  bool isManipulatorAtLimit();
-  void holdManipulatorFlipper(double position);
-  double getManipulatorAngle();
-
-  bool isFinishedMove();
-  void zeroEverything();
+  void updateFlipperStateMachine();
 };

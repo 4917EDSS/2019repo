@@ -29,7 +29,9 @@ namespace frc4917 {
 		static constexpr unsigned long CMD_TRACE			= 0x00000080;
 		static constexpr unsigned long ELEVATOR				= 0x00000100;
 		static constexpr unsigned long BALLINTAKE			= 0x00000200;
-		static constexpr unsigned long WITH_JOYSTICK_TRACE 	= 0x00000400;
+		static constexpr unsigned long MANIPULATOR			= 0x00000400;
+		static constexpr unsigned long WITH_JOYSTICK_TRACE 	= 0x00000800;
+		
 
 		Log();
 		void addOutputPath(LogOutput *newOutput);

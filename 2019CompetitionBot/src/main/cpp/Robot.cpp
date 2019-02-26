@@ -165,7 +165,7 @@ void Robot::UpdateSmartDashboard(){
   frc::SmartDashboard::PutNumber("Gyro's Angle", drivetrainSub.getAngle());
   frc::SmartDashboard::PutNumber("Intake Arm Angle",ballIntakeSub.getIntakeArmEncoderAngle());
   frc::SmartDashboard::PutNumber("Manipulator Angle", manipulatorSub.getFlipperAngle());
-  frc::SmartDashboard::PutNumber("Elevator Height mm", elevatorSub.getElevatorEncoder());
+  frc::SmartDashboard::PutNumber("Elevator Height mm", elevatorSub.getElevatorHeight());
   frc::SmartDashboard::PutNumber("Ball In Sensor", manipulatorSub.isBallIn());
 
   frc::SmartDashboard::PutNumber("O POV", Robot::oi.getOperatorController()->GetPOV());
