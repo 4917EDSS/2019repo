@@ -23,21 +23,9 @@ OI Robot::oi;
 bool Robot::inBallMode;
 
 
-void Robot::pipeLineToggle(bool pipeLine){
-  
-  if (pipeLine == true) {
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 1);
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 1);
-  } 
-  else{
-      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
-      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 0);
-      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0);
-  }
-}
 void Robot::RobotInit() {
-  frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+  // No Auto command this year
+  // frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
 		// Setup logging system
 		std::string syslogTargetAddress = (Preferences::GetInstance())->GetString("SyslogTargetAddress", "10.49.17.30");
@@ -48,7 +36,7 @@ void Robot::RobotInit() {
 		logger.send(logger.DEBUGGING, "Robot code started @ %f\n", GetTime());
 		logger.send(logger.ELEVATOR, "Robot code started @ %f\n", GetTime());
 
-    std::cout<<"Starting version 1.4\n";
+    std::cout<<"Starting version 1.5\n";
 
     Robot::inBallMode = true;
 }
@@ -73,8 +61,7 @@ void Robot::DisabledInit() {}
 
 void Robot::DisabledPeriodic() { 
   frc::Scheduler::GetInstance()->Run(); 
-
-  }
+}
 
 /**
  * This autonomous (along with the chooser code above) shows how to select
@@ -92,18 +79,22 @@ void Robot::AutonomousInit() {
   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0);
 
+  // No auto command this year
+  /*
   m_autonomousCommand = m_chooser.GetSelected();
-
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Start();
   }
-
+  */
 }
 
 void Robot::AutonomousPeriodic() { 
-  frc::Scheduler::GetInstance()->Run(); 
+  //frc::Scheduler::GetInstance()->Run(); 
+  
+  // This year, Auto runs like Teleop
+  TeleopPeriodic();
 
-  }
+}
 
 void Robot::TeleopInit() {
   // This makes sure that the autonomous stops running when
@@ -114,30 +105,31 @@ void Robot::TeleopInit() {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
   }
-  
-//  frc::CameraServer::GetInstance()->StartAutomaticCapture("usbCam1", "/dev/video0");
 }
 
 void Robot::TeleopPeriodic() { 
-
   frc::Scheduler::GetInstance()->Run(); 
+  
   Robot::elevatorSub.updateElevatorStateMachine();
+  Robot::manipulatorSub.updateFlipperStateMachine();
+
   Robot::drivetrainSub.updateShuffleBoard();
+  Robot::elevatorSub.updateShuffleBoard();
+  Robot::manipulatorSub.updateShuffleBoard();
+  Robot::ballIntakeSub.updateShuffleBoard();
   UpdateSmartDashboard();
 }
 
 void Robot::TestPeriodic() {
-;
+
 }
 
 #ifndef RUNNING_FRC_TESTS
 int main() { return frc::StartRobot<Robot>(); }
 #endif
 
-void Robot::UpdateSmartDashboard(){
- 
-
-  //Limelight Data
+void Robot::UpdateSmartDashboard() {
+   //Limelight Data
   std::shared_ptr<NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
   double targetPerecentArea = table->GetNumber("ta", 0.0);
   double targetSkew = table->GetNumber("ts", 0.0);
@@ -167,11 +159,22 @@ void Robot::UpdateSmartDashboard(){
   frc::SmartDashboard::PutNumber("Manipulator Angle", manipulatorSub.getFlipperAngle());
   frc::SmartDashboard::PutNumber("Elevator Height mm", elevatorSub.getElevatorHeight());
   frc::SmartDashboard::PutNumber("Ball In Sensor", manipulatorSub.isBallIn());
-
   frc::SmartDashboard::PutNumber("O POV", Robot::oi.getOperatorController()->GetPOV());
 }
 
-
+void Robot::pipeLineToggle(bool pipeLine){
+  
+  if (pipeLine == true) {
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 1);
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 1);
+  } 
+  else{
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 0);
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0);
+  }
+}
 
 double Robot::GetVisionTarget() {
   

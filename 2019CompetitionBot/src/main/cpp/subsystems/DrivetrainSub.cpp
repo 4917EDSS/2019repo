@@ -45,27 +45,37 @@ DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub"){
   driveBalancer.reset(new frc4917::MotorBalancer());
   driveBalancePID.reset(new frc::PIDController(DRIVE_BALANCE_P, DRIVE_BALANCE_I, DRIVE_BALANCE_D, ahrs.get(), driveBalancer.get()));
 
+  // Post all sensors and actuators to the Shuffleboard
   frc::ShuffleboardTab& shuffleTab = frc::Shuffleboard::GetTab("Drivetrain");
 
-  ntePitch = (shuffleTab.Add("Pitch", 0).GetEntry());
-  // .WithPosition(6,0);
-  nteYaw = (shuffleTab.Add("Yaw", 0).GetEntry());
-  nteRoll = (shuffleTab.Add("Roll", 0).GetEntry());
-
-  for(int motorId = 0; motorId < 6; motorId++)
+  for(int motorIndex = 0; motorIndex < 6; motorIndex++)
   {
-    std::string listName = "Motor " + std::to_string(motorId) + " Data";
+    std::string listName = "Motor " + std::to_string(motorIndex) + " Data";
     frc::ShuffleboardLayout& shuffleList = shuffleTab.GetLayout(listName, frc::BuiltInLayouts::kList);
     shuffleList.WithSize(1,3);
-    shuffleList.WithPosition(motorId,0);
+    shuffleList.WithPosition(motorIndex,0);
 
-    nteSparks[motorId].setPower = (shuffleList.Add("Set Power", 0).GetEntry());
-    nteSparks[motorId].outputCurrent = (shuffleList.Add("Current Out", 0).GetEntry());
-    nteSparks[motorId].encoderPosition = (shuffleList.Add("Position", 0).GetEntry());
-    nteSparks[motorId].encoderVelocity = (shuffleList.Add("Velocity", 0).GetEntry());
-    nteSparks[motorId].motorTemperature = (shuffleList.Add("Motor Temp", 0).GetEntry());
+    nteSparks[motorIndex].setPower = (shuffleList.Add("Set Power", 0).GetEntry());
+    nteSparks[motorIndex].outputCurrent = (shuffleList.Add("Current Out", 0).GetEntry());
+    nteSparks[motorIndex].encoderPosition = (shuffleList.Add("Position", 0).GetEntry());
+    nteSparks[motorIndex].encoderVelocity = (shuffleList.Add("Velocity", 0).GetEntry());
+    nteSparks[motorIndex].motorTemperature = (shuffleList.Add("Motor Temp", 0).GetEntry());
   }
 
+  SimpleWidget yawWidget = shuffleTab.Add("Yaw", 0);
+  yawWidget.WithPosition(6,0);
+  yawWidget.WithSize(1,1);
+  nteYaw = yawWidget.GetEntry();
+
+  SimpleWidget pitchWidget = shuffleTab.Add("Pitch", 0);
+  pitchWidget.WithPosition(6,1);
+  pitchWidget.WithSize(1,1);
+  ntePitch = pitchWidget.GetEntry();
+
+  SimpleWidget rollhWidget = shuffleTab.Add("Roll", 0);
+  rollhWidget.WithPosition(6,2);
+  rollhWidget.WithSize(1,1);
+  nteRoll = rollhWidget.GetEntry();
 }
 
 double DrivetrainSub::GetRightEncoder()
