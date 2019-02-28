@@ -12,7 +12,7 @@
 
 class FoldIntakeCmd : public frc4917Cmd {
  public:
-  FoldIntakeCmd(bool flipOut);
+  FoldIntakeCmd(bool foldIn);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
@@ -20,5 +20,5 @@ class FoldIntakeCmd : public frc4917Cmd {
   void Interrupted() override;
 
 private:
-  bool flipOut;
+  bool foldIn;
 };
