@@ -16,8 +16,7 @@ SetElevatorToHeightCmd::SetElevatorToHeightCmd(double height) : height(height) {
 
 // Called just before this Command runs the first time
 void SetElevatorToHeightCmd::Initialize(){
-      logger.send(logger.ELEVATOR, "Initializing set elevator to height command\n");
-
+  logger.send(logger.ELEVATOR, "Initializing set elevator to height command = %f \n", height);
   Robot::elevatorSub.setElevatorHeight(ELEVATOR_MODE_AUTO, 0.3, height);
 }
 

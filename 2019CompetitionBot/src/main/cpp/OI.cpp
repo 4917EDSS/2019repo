@@ -55,6 +55,9 @@ OI::OI() {
 
   togglePipeLineBtn.reset(new frc::JoystickButton(driverController.get(),TOGGLE_PIPELINE_BTN));
   togglePipeLineBtn->WhenPressed(new TogglePipeLineCmd());
+  
+  test1Btn.reset(new frc::JoystickButton(driverController.get(), TEST_1_BTN));
+  test1Btn->WhenPressed(new SetElevatorToHeightCmd(1000.0));
 
   // Operator controller buttons
   elevatorToCargoShipHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_CARGO_SHIP_HEIGHT_BTN));
