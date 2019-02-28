@@ -15,13 +15,13 @@ DriveToVisionCmd::DriveToVisionCmd() {
 }
 
 // Called just before this Command runs the first time
-void DriveToVisionCmd::Initialize() {}
+void DriveToVisionCmd::Initialize() {
+  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
+}
 
 // Called repeatedly when this Command is scheduled to run
 void DriveToVisionCmd::Execute() {
   double xAngle = Robot::GetVisionTarget();
-  logger.send(logger.DEBUGGING, "%s : %s\n", __FILE__, __FUNCTION__);
-
 
  if (xAngle > 9000){
    Robot::drivetrainSub.drive(0.0, 0.0);

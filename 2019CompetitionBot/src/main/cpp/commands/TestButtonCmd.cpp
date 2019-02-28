@@ -16,8 +16,9 @@ TestButtonCmd::TestButtonCmd() {
 
 // Called just before this Command runs the first time
 void TestButtonCmd::Initialize() {
-   Robot::ballIntakeSub.setIntakeWheelsMotorSpeed(1.0);
-   Robot::ballIntakeSub.setFolderOut(true);
+  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
+  Robot::ballIntakeSub.setIntakeWheelsMotorSpeed(1.0);
+  Robot::ballIntakeSub.setFolderOut(true);
 }
 
 // Called repeatedly when this Command is scheduled to run

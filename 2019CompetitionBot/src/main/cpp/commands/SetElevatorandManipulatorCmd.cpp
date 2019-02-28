@@ -16,6 +16,7 @@ SetElevatorandManipulatorCmd::SetElevatorandManipulatorCmd(double targetAngle, d
 
 // Called just before this Command runs the first time
 void SetElevatorandManipulatorCmd::Initialize() {
+  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
   Robot::elevatorSub.setElevatorHeight(ELEVATOR_MODE_AUTO, 0.5, targetHeight);
   Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_AUTO, 0.5, targetAngle);
 }

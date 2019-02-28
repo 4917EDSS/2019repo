@@ -18,6 +18,8 @@ ToggleManipulatorPosition::ToggleManipulatorPosition() {
 void ToggleManipulatorPosition::Initialize() {
   double targetAngle;
 
+  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
+
   if(Robot::manipulatorSub.getFlipperAngle() > 0) {
     targetAngle = -90;
   }

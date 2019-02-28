@@ -17,7 +17,8 @@ ChangeGearCmd::ChangeGearCmd() {
 
 // Called just before this Command runs the first time
 void ChangeGearCmd::Initialize() {
-highGear = Robot::elevatorSub.isShifterHigh();
+  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
+  highGear = Robot::elevatorSub.isShifterHigh();
 }
 
 // Called repeatedly when this Command is scheduled to run
