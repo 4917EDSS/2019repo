@@ -15,9 +15,7 @@ BallIntakeWithJoystickCmd::BallIntakeWithJoystickCmd() {
 }
 
 // Called just before this Command runs the first time
-void BallIntakeWithJoystickCmd::Initialize() {
-  logger.send(logger.WITH_JOYSTICK_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-}
+void BallIntakeWithJoystickCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void BallIntakeWithJoystickCmd::Execute() {
@@ -31,31 +29,25 @@ void BallIntakeWithJoystickCmd::Execute() {
   verticalStick = pow(verticalStick, 3);
 
   switch(shift) {
-  case 0: // No shift, normal elevator operation (handled in ElevatorWithJoystickCmd)
-    Robot::ballIntakeSub.setIntakeArmMotor(0.0, false);
-    break;
-
-  case 1: // Ball intake in/out flipper
-    Robot::ballIntakeSub.setIntakeArmMotor(verticalStick * 0.5, false);  // Limit power to 50%
-    logger.send(logger.WITH_JOYSTICK_TRACE, "The ball intake flipper is being controlled @ %f\n", verticalStick);
-    break;
-
-  case 2: // Manipulator flip forward/backward (handled in ElevatorWithJoystickCmd)
-    Robot::ballIntakeSub.setIntakeArmMotor(0.0, false);
-    break;
-
-  default:
-    Robot::ballIntakeSub.setIntakeArmMotor(0.0, false);
-    break;
+    case 1: // Ball intake in/out flipper
+      Robot::ballIntakeSub.setIntakeArmAngle(ELEVATOR_MODE_MANUAL, verticalStick * 0.5, 0);
+      logger.send(logger.WITH_JOYSTICK_TRACE, "The ball intake flipper is being controlled @ %f\n", verticalStick);
+      break;
+    
+    case 0: // No shift, normal elevator operation (handled in ElevatorWithJoystickCmd)
+    case 2: // Manipulator flip forward/backward (handled in ElevatorWithJoystickCmd)
+    default:
+      break;
   }
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool BallIntakeWithJoystickCmd::IsFinished() { return false; }
+bool BallIntakeWithJoystickCmd::IsFinished() { 
+  return false; 
+}
 
 // Called once after isFinished returns true
 void BallIntakeWithJoystickCmd::End() {
-  Robot::ballIntakeSub.setIntakeArmMotor(0.0, false);
 }
 
 // Called when another command which requires one or more of the same

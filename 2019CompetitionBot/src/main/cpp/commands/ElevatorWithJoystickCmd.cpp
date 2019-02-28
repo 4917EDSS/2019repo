@@ -16,9 +16,7 @@ ElevatorWithJoystickCmd::ElevatorWithJoystickCmd() {
 }
 
 // Called just before this Command runs the first time
-void ElevatorWithJoystickCmd::Initialize() {
-  logger.send(logger.WITH_JOYSTICK_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-}
+void ElevatorWithJoystickCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void ElevatorWithJoystickCmd::Execute() {

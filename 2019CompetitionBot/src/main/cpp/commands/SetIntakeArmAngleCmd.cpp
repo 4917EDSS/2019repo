@@ -25,24 +25,19 @@ SetIntakeArmAngleCmd::SetIntakeArmAngleCmd(double angle) {
 // Called just before this Command runs the first time
 void SetIntakeArmAngleCmd::Initialize() {
   logger.send(logger.CMD_TRACE, "%s : %s | Angle = %.1f\n", __FILE__, __FUNCTION__, targetAngle);
-  Robot::ballIntakeSub.setArmTargetPosition(targetAngle);
-
+  Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_AUTO, targetAngle, 1.0);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void SetIntakeArmAngleCmd::Execute() {
-    Robot::ballIntakeSub.update(isClimbingNow);
-}
+void SetIntakeArmAngleCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
 bool SetIntakeArmAngleCmd::IsFinished() {  
-    return Robot::ballIntakeSub.doneFlipping(); 
+    return Robot::ballIntakeSub.isIntakeArmAtTarget(); 
 }
 
 // Called once after isFinished returns true
-void SetIntakeArmAngleCmd::End() {
-  Robot::ballIntakeSub.setIntakeArmMotor(0.0, false);
-}
+void SetIntakeArmAngleCmd::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run

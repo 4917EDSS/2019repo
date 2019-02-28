@@ -48,24 +48,24 @@ void MultiButton1Cmd::Initialize() {
 
     case 2:
       // Unfold/fold ball intake
-      if(Robot::ballIntakeSub.isFolderOut()) {
-        Robot::ballIntakeSub.setFolderOut(false);
+      if(Robot::ballIntakeSub.isIntakeUnfolded()) {
+        Robot::ballIntakeSub.foldIntakeArms();
         logger.send(logger.CMD_TRACE, "MultiButton1Cmd: Fold ball intake in.\n");
       }
       else {
-        Robot::ballIntakeSub.setFolderOut(true);
+        Robot::ballIntakeSub.unfoldIntakeArms();
         logger.send(logger.CMD_TRACE, "MultiButton1Cmd: Unfold ball intake.\n");
       }
       break;
     
     case 3:
       // Enable/disable ball intake wheels
-      if(Robot::ballIntakeSub.getIntakeWheelsMotorSpeed() == 0) {
-        Robot::ballIntakeSub.setIntakeWheelsMotorSpeed(1.0);
+      if(Robot::ballIntakeSub.getIntakeWheelPower() == 0) {
+        Robot::ballIntakeSub.setIntakeWheelPower(1.0);
         logger.send(logger.CMD_TRACE, "MultiButton1Cmd: Enable ball intake wheels.\n");
       }
       else {
-        Robot::ballIntakeSub.setIntakeWheelsMotorSpeed(0.0);
+        Robot::ballIntakeSub.setIntakeWheelPower(0.0);
         logger.send(logger.CMD_TRACE, "MultiButton1Cmd: Disable ball intake wheels.\n");
       }
       break;

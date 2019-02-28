@@ -124,6 +124,7 @@ void Robot::TeleopPeriodic() {
   
   Robot::elevatorSub.updateElevatorStateMachine();
   Robot::manipulatorSub.updateFlipperStateMachine();
+  Robot::ballIntakeSub.updateIntakeArmStateMachine();
 
   Robot::drivetrainSub.updateShuffleBoard();
   Robot::elevatorSub.updateShuffleBoard();
@@ -167,7 +168,7 @@ void Robot::UpdateSmartDashboard() {
   frc::SmartDashboard::PutNumber("Left Drive Motor Enc", drivetrainSub.GetLeftEncoder());
   frc::SmartDashboard::PutNumber("Right Drive Motor Enc", drivetrainSub.GetRightEncoder());
   frc::SmartDashboard::PutNumber("Gyro's Angle", drivetrainSub.getAngle());
-  frc::SmartDashboard::PutNumber("Intake Arm Angle",ballIntakeSub.getIntakeArmEncoderAngle());
+  frc::SmartDashboard::PutNumber("Intake Arm Angle",ballIntakeSub.getIntakeArmAngle());
   frc::SmartDashboard::PutNumber("Manipulator Angle", manipulatorSub.getFlipperAngle());
   frc::SmartDashboard::PutNumber("Elevator Height mm", elevatorSub.getElevatorHeight());
   frc::SmartDashboard::PutNumber("Ball In Sensor", manipulatorSub.isBallIn());

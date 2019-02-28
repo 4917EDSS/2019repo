@@ -17,7 +17,7 @@ ScoreBallCmd::ScoreBallCmd() {
 // Called just before this Command runs the first time
 void ScoreBallCmd::Initialize() {
   logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-  Robot::ballIntakeSub.setIntakeWheelsMotorSpeed(-1.0);
+  Robot::ballIntakeSub.setIntakeWheelPower(-1.0);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -35,7 +35,7 @@ bool ScoreBallCmd::IsFinished() {
 
 // Called once after isFinished returns true
 void ScoreBallCmd::End() {
-   Robot::ballIntakeSub.setIntakeWheelsMotorSpeed(0.0);
+   Robot::ballIntakeSub.setIntakeWheelPower(0.0);
 }
 
 // Called when another command which requires one or more of the same

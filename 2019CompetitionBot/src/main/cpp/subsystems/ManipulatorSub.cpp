@@ -57,6 +57,20 @@ ManipulatorSub::ManipulatorSub() : Subsystem("ManipulatorSub") {
   nteIntakeMotorRight = (shuffleTab.Add("Intake Motor R", 0).GetEntry());
   nteIntakeFromRobotLimit = (shuffleTab.Add("Intake Limit", 0).GetEntry());
   nteHatchGripperSolenoid = (shuffleTab.Add("Gripper", 0).GetEntry());
+
+  // Initialize state machine
+  flipperNewStateParameters = false;
+  flipperNewControlMode = FLIPPER_MODE_DISABLED;
+  flipperNewMaxPower = 0.0;
+  flipperNewTargetAngle = FLIPPER_MIN_ANGLE;
+  flipperNewState = FLIPPER_STATE_IDLE;
+
+  flipperControlMode = FLIPPER_MODE_DISABLED;
+  flipperMaxPower = 0.0;
+  flipperTargetAngle = FLIPPER_MIN_ANGLE;
+  flipperState = FLIPPER_STATE_IDLE;
+  flipperLastPower = 0.0;
+  flipperBlockedAngle = 0.0;
 }
 
 void ManipulatorSub::InitDefaultCommand() {
@@ -131,7 +145,8 @@ void ManipulatorSub::setFlipperAngle(int mode, double maxPower, double targetAng
     if (fabs(maxPower) > 1.0) {
       return; 
     }
-    if ((targetAngle < FLIPPER_MIN_ANGLE) || (targetAngle > FLIPPER_MAX_ANGLE)) {
+    if ((mode != FLIPPER_MODE_MANUAL) && 
+        ((targetAngle < FLIPPER_MIN_ANGLE) || (targetAngle > FLIPPER_MAX_ANGLE))) {
       return;
     }
     
@@ -186,8 +201,13 @@ void ManipulatorSub::setFlipperAngle(int mode, double maxPower, double targetAng
 
 // Returns true if the flipper is within tolerance of the target angle
 bool ManipulatorSub::isFlipperAtTarget() {
+  if (flipperNewStateParameters) {
+    // Haven't even implemented the new request so we can't be done
+    return false;
+  }
+
   if ((fabs(flipperTargetAngle - getFlipperAngle()) < FLIPPER_ANGLE_TOLERANCE) && 
-      (fabs(getFlipperVelocity() < FLIPPER_VELOCITY_TOLERANCE))) {
+      (fabs(getFlipperVelocity()) < FLIPPER_VELOCITY_TOLERANCE)) {
       return true;
   } else {
     return false;

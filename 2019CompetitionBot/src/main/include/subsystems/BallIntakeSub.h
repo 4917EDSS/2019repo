@@ -10,6 +10,8 @@
 #include <frc/commands/Subsystem.h>
 #include <frc/WPILib.h>
 #include <ctre/Phoenix.h>
+#include <rev/CANSparkMax.h>
+#include <rev/CANSparkMaxLowLevel.h>
 #include <RobotMap.h>
 #include "SparkShuffleboardEntrySet.h"
 constexpr int INTAKE_ARM_MODE_DISABLED = 0;
@@ -19,15 +21,13 @@ constexpr int INTAKE_ARM_MODE_MANUAL = 2;
 class BallIntakeSub : public frc::Subsystem {
  private:
   std::shared_ptr<ctre::phoenix::motorcontrol::can::WPI_VictorSPX> ballIntakeMotor;
-  std::shared_ptr<rev::CANSparkMax> flipperMotorOne;
+  std::shared_ptr<rev::CANSparkMax> flipperMotor;
   std::shared_ptr<frc::Solenoid> intakeFolderSolenoid;
   std::shared_ptr<frc::Encoder> intakeArmEnc;
   std::shared_ptr<frc::DigitalInput> ballIntakeArmLimit;
-  double currentSpeed;
 
+  struct SparkShuffleboardEntrySet nteFlipperMotor;
   nt::NetworkTableEntry nteBallIntakeMotor;
-  nt::NetworkTableEntry nteFlipperMotorOne;
-  nt::NetworkTableEntry nteFlipperMotorTwo;
   nt::NetworkTableEntry nteIntakeFolderSolenoid;
   nt::NetworkTableEntry nteBallIntakeArmLimit;
   nt::NetworkTableEntry nteIntakeArmEncPosition;
@@ -45,30 +45,25 @@ class BallIntakeSub : public frc::Subsystem {
   double intakeArmLastPower;
   double intakeArmBlockedAngle;
 
+  bool isIntakeArmBlocked(double currentAngle, double targetAngle);
+  double calcIntakeArmHoldPower(double currentAngle, double targetAngle);
+  double calcIntakeArmMovePower(double currentAngle, double targetAngle, double maxPower);
 
  public:
   BallIntakeSub();
   void InitDefaultCommand() override;
-  void ExtendRearIntakeSolenoids();
-  void setIntakeWheelsMotorSpeed(double speed);
-  double getIntakeWheelsMotorSpeed();
-  void setFolderOut(bool flipOut);
-  bool isFolderOut();
-  double getIntakeArmEncoderAngle();
-  bool getIntakeArmLimit();
-  void setIn();
-  void setOut();
-  void setDown();
-  void setIntakeArmPower(double speed, bool isClimbing);
-  bool getIntakeArmSpeed();
-  double calcIntakeArmMovePower(double currentAngle, double targetAngle, double maxPower);
-  void setArmTargetPosition(int mode, double maxPower, double targetAngle);
-  void keepArmAtTarget(double speed, bool isClimbing);
-  void updateIntakeArmStateMachine();
-  double calcIntakeArmHoldPower(double currentAngle, double targetAngle);
-  bool isIntakeArmBlocked(double currentAngle, double targetAngle);
-  bool isIntakeArmAtTarget();
-  void update(bool isClimbing, double targetAngle);
-  bool doneFlipping();
   void updateShuffleBoard();
+  void setIntakeArmPower(double power);
+  double getIntakeArmAngle();
+  double getIntakeArmVelocity();
+  bool isIntakeAtLimit();
+  void unfoldIntakeArms();
+  void foldIntakeArms();
+  bool isIntakeUnfolded();
+  void setIntakeWheelPower(double speed);
+  double getIntakeWheelPower();
+  void setIntakeArmAngle(int mode, double maxPower, double targetAngle);
+  bool isIntakeArmAtTarget();
+
+  void updateIntakeArmStateMachine();  
 };

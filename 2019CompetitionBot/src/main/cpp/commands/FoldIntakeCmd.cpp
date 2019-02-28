@@ -17,15 +17,23 @@ FoldIntakeCmd::FoldIntakeCmd(bool flipOut) {
 
 // Called just before this Command runs the first time
 void FoldIntakeCmd::Initialize() {
-  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-  Robot::ballIntakeSub.setFolderOut(flipOut);
+  logger.send(logger.CMD_TRACE, "%s : %s | flipOut = %d\n", __FILE__, __FUNCTION__, flipOut);
+ 
+  if(flipOut) {
+    Robot::ballIntakeSub.unfoldIntakeArms();
+  }
+  else {
+    Robot::ballIntakeSub.foldIntakeArms();
+  }
 }
 
 // Called repeatedly when this Command is scheduled to run
 void FoldIntakeCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool FoldIntakeCmd::IsFinished() { return false; }
+bool FoldIntakeCmd::IsFinished() { 
+  return false; 
+}
 
 // Called once after isFinished returns true
 void FoldIntakeCmd::End() {}
