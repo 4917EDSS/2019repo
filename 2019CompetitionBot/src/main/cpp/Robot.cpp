@@ -27,18 +27,30 @@ void Robot::RobotInit() {
   // No Auto command this year
   // frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
-		// Setup logging system
-		std::string syslogTargetAddress = (Preferences::GetInstance())->GetString("SyslogTargetAddress", "10.49.17.30");
-		logger.enableChannels(logger.WARNINGS | logger.ERRORS | logger.ASSERTS);	// These should stay on during competition
-		logger.enableChannels(logger.CMD_TRACE /*logger.DEBUGGING | logger.DRIVETRAIN | logger.PERIODIC*/ | logger.ELEVATOR | logger.VISION /*| logger.BALLINTAKE*/);	// Should look at these during development
-    logger.addOutputPath(new frc4917::ConsoleOutput());						            // Enable console output and/or
-		logger.addOutputPath(new frc4917::SyslogOutput(syslogTargetAddress));		  // Enable syslog output
-		logger.send(logger.DEBUGGING, "Robot code started @ %f\n", GetTime());
-		logger.send(logger.ELEVATOR, "Robot code started @ %f\n", GetTime());
+  // Setup logging system
+  std::string syslogTargetAddress = (Preferences::GetInstance())->GetString("SyslogTargetAddress", "10.49.17.30");
 
-    std::cout<<"Starting version 1.5\n";
+  // These should stay on during competition
+  logger.enableChannels(logger.WARNINGS | logger.ERRORS | logger.ASSERTS);
 
-    Robot::inBallMode = true;
+  // Can use these for debugging.  Comment/uncomment as needed
+  //logger.enableChannels(logger.DRIVETRAIN);
+  //logger.enableChannels(logger.VISION);
+  //logger.enableChannels(logger.PERIODIC);
+  logger.enableChannels(logger.CMD_TRACE);
+  //logger.enableChannels(logger.ELEVATOR);
+  //logger.enableChannels(logger.BALLINTAKE);
+  //logger.enableChannels(logger.MANIPULATOR);
+  //logger.enableChannels(logger.WITH_JOYSTICK_TRACE);
+
+  logger.addOutputPath(new frc4917::ConsoleOutput());						            // Enable console output and/or
+  logger.addOutputPath(new frc4917::SyslogOutput(syslogTargetAddress));		  // Enable syslog output
+  logger.send(logger.DEBUGGING, "Robot code started @ %f\n", GetTime());
+  logger.send(logger.ELEVATOR, "Robot code started @ %f\n", GetTime());
+
+  std::cout << "Starting version 1.6\n";
+
+  Robot::inBallMode = true;
 }
 
 /**

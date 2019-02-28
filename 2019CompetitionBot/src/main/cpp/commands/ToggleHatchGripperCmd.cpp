@@ -15,6 +15,7 @@ ToggleHatchGripperCmd::ToggleHatchGripperCmd() {
 
 // Called just before this Command runs the first time
 void ToggleHatchGripperCmd::Initialize() {
+  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
   if(Robot::manipulatorSub.isGripperExpanded()) {
     Robot::manipulatorSub.contractHatchGripper();
   }

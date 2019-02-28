@@ -17,6 +17,7 @@ IntakeBallFromRobotCmd::IntakeBallFromRobotCmd() {
 
 // Called just before this Command runs the first time
 void IntakeBallFromRobotCmd::Initialize() {
+  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
   Robot::manipulatorSub.setIntakePower(-0.5);
 }
 

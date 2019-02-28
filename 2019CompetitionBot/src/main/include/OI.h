@@ -38,6 +38,7 @@ constexpr int MILKY_MANIPULATOR_BTN= 9;
 constexpr int DRIVER_KILL_ONE_BTN = 11;
 constexpr int DRIVER_KILL_TWO_BTN = 12;
 constexpr int TOGGLE_PIPELINE_BTN = 6;
+constexpr int TEST_1_BTN = 1;
 
 // Driver Axes
 //...
@@ -89,6 +90,7 @@ class OI {
     std::shared_ptr<frc::JoystickButton> driverKillBtn1;
     std::shared_ptr<frc::JoystickButton> driverKillBtn2;
     std::shared_ptr<frc::JoystickButton> togglePipeLineBtn;
+    std::shared_ptr<frc::JoystickButton> test1Btn;
 
     // Operator controller buttons
     std::shared_ptr<frc::JoystickButton> elevatorToCargoShipHeightBtn;

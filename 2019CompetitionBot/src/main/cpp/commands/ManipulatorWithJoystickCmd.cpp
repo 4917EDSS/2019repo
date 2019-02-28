@@ -16,7 +16,9 @@ ManipulatorWithJoystickCmd::ManipulatorWithJoystickCmd() {
 }
 
 // Called just before this Command runs the first time
-void ManipulatorWithJoystickCmd::Initialize() {}
+void ManipulatorWithJoystickCmd::Initialize() {
+  logger.send(logger.WITH_JOYSTICK_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
+}
 
 // Called repeatedly when this Command is scheduled to run
 void ManipulatorWithJoystickCmd::Execute() {
@@ -30,26 +32,23 @@ void ManipulatorWithJoystickCmd::Execute() {
   verticalStick = pow(verticalStick, 3);
 
   switch(shift) {
-  case 0: // Elevator (handled in ElevatorWithJoystickCmd)
-  case 1: // Ball intake in/out flipper (handled in BallintakeWithJoystickCmd)  
-    Robot::manipulatorSub.setFlipperPower(0.0);
-    break;
-  
-  case 2: // Manipulator flip forward/backward
-    Robot::manipulatorSub.setFlipperPower(verticalStick * 0.5);  // Limit power to 50%
-    logger.send(logger.MANIPULATOR, "The manipulator flipper is being controlled @ %f\n", verticalStick);
-    break;
+    case 0: // Elevator (handled in ElevatorWithJoystickCmd)
+    case 1: // Ball intake in/out flipper (handled in BallintakeWithJoystickCmd)  
+      Robot::manipulatorSub.setFlipperPower(0.0);
+      break;
+    
+    case 2: // Manipulator flip forward/backward
+      Robot::manipulatorSub.setFlipperPower(verticalStick * 0.5);  // Limit power to 50%
+      break;
 
-  default:
-    break;
+    default:
+      break;
   }
-
 
   // Left operator joystick vertical axis
   // Manipulator wheels in/out
   double manipulatorStick = operatorJoystick->GetRawAxis(OPERATOR_MANIPULATOR_AXIS);
   manipulatorStick = pow(manipulatorStick, 3);
-  logger.send(logger.WITH_JOYSTICK_TRACE, "The manipulator wheels are being controlled @ %f\n", manipulatorStick);
   Robot::manipulatorSub.setIntakePower(manipulatorStick);
 }
 

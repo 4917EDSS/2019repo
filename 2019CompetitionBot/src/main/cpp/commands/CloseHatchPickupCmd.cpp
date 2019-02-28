@@ -16,11 +16,11 @@ CloseHatchPickupCmd::CloseHatchPickupCmd() {
 
 // Called just before this Command runs the first time
 void CloseHatchPickupCmd::Initialize() {
+  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
   Robot::manipulatorSub.contractHatchGripper();
 }
 // Called repeatedly when this Command is scheduled to run
 void CloseHatchPickupCmd::Execute() {
-  logger.send(logger.DEBUGGING, "%s : %s\n", __FILE__, __FUNCTION__);
 }
 
 // Make this return true when this Command no longer needs to run execute()

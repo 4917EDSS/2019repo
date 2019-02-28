@@ -17,12 +17,12 @@ KillEverythingCmd::KillEverythingCmd() {
 }
 
 // Called just before this Command runs the first time
-void KillEverythingCmd::Initialize() {}
+void KillEverythingCmd::Initialize() {
+  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
+}
 
 // Called repeatedly when this Command is scheduled to run
-void KillEverythingCmd::Execute() {
-  logger.send(logger.DEBUGGING, "%s : %s\n", __FILE__, __FUNCTION__);
-}
+void KillEverythingCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
 bool KillEverythingCmd::IsFinished() {  

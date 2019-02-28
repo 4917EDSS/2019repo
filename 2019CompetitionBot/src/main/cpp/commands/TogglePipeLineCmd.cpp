@@ -17,14 +17,13 @@ TogglePipeLineCmd::TogglePipeLineCmd() {
 
 // Called just before this Command runs the first time
 void TogglePipeLineCmd::Initialize() {
-pipeLine = !pipeLine;
-Robot::pipeLineToggle(pipeLine);
- logger.send(logger.VISION, "Robot toggle pipeline %d \n", pipeLine);
+  pipeLine = !pipeLine;
+  Robot::pipeLineToggle(pipeLine);
+
+  logger.send(logger.CMD_TRACE, "%s : %s | Pipeline = %d\n", __FILE__, __FUNCTION__, pipeLine);
 }
 // Called repeatedly when this Command is scheduled to run
-void TogglePipeLineCmd::Execute() {
-
-}
+void TogglePipeLineCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
 bool TogglePipeLineCmd::IsFinished() { return true; }

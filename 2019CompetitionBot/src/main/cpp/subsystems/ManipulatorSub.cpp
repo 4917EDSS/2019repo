@@ -45,6 +45,7 @@ ManipulatorSub::ManipulatorSub() : Subsystem("ManipulatorSub") {
   frc::ShuffleboardTab& shuffleTab = frc::Shuffleboard::GetTab("Manipulator");
 
   frc::ShuffleboardLayout& shuffleList = shuffleTab.GetLayout("Flipper Motor", frc::BuiltInLayouts::kList);
+  shuffleList.WithSize(1,3);
   nteFlipperMotor.setPower = (shuffleList.Add("Set Power", 0).GetEntry());
   nteFlipperMotor.outputCurrent = (shuffleList.Add("Current Out", 0).GetEntry());
   nteFlipperMotor.encoderPosition = (shuffleList.Add("Position", 0).GetEntry());

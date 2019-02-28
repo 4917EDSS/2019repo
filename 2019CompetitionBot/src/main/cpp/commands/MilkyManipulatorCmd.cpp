@@ -18,12 +18,12 @@ MilkyManipulatorCmd::MilkyManipulatorCmd() {
 }
 
 // Called just before this Command runs the first time
-void MilkyManipulatorCmd::Initialize() {}
+void MilkyManipulatorCmd::Initialize() {
+  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
+}
 
 // Called repeatedly when this Command is scheduled to run
 void MilkyManipulatorCmd::Execute() {
-  logger.send(logger.DEBUGGING, "%s : %s\n", __FILE__, __FUNCTION__);
-
   double targetAngle=Robot::GetVisionTarget();
   double distance=Robot::GetDistanceFromVision();
   double robotAngle=Robot::drivetrainSub.getAngle();

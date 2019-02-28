@@ -16,6 +16,7 @@ ExpandHatchGripperCmd::ExpandHatchGripperCmd() {
 
 // Called just before this Command runs the first time
 void ExpandHatchGripperCmd::Initialize() {
+  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
   Robot::manipulatorSub.expandHatchGripper();
 }
 

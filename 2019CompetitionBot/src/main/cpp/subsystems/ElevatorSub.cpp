@@ -16,11 +16,10 @@
 #include <frc/shuffleboard/BuiltInLayouts.h>
 #include "SparkShuffleboardEntrySet.h"
 
-
 constexpr double ELEVATOR_POSITION_TOLERANCE_MM = 5.0;
-constexpr double ELEVATOR_VELOCITY_TOLERANCE_MM_S = 45;               // TODO Determine value
+constexpr double ELEVATOR_VELOCITY_TOLERANCE_MM_S = 45; // TODO Determine value
 constexpr double MANUAL_MODE_POWER_DEADBAND = 0.03;
-constexpr double ELEVATOR_TICK_TO_MM_FACTOR = (28.94679);             // TODO Determine value
+constexpr double ELEVATOR_TICK_TO_MM_FACTOR = (28.94679); // TODO Determine value
 constexpr double ELEVATOR_IS_DOWN_TOLERANCE_MM = ELEVATOR_POSITION_TOLERANCE_MM + 1.0;
 
 // Elevator state machine states
@@ -29,12 +28,11 @@ constexpr int ELEVATOR_STATE_HOLDING = 1;
 constexpr int ELEVATOR_STATE_MOVING = 2;
 constexpr int ELEVATOR_STATE_INTERRUPTED = 3;
 
-
 ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
   elevatorMotor1.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   elevatorMotor2.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_2_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
-  elevatorMotor1->GetEncoder().SetPosition(0);  // Positive means rotating towards front
-  elevatorMotor2->GetEncoder().SetPosition(0);  // Not used but good to have as a backup
+  elevatorMotor1->GetEncoder().SetPosition(0); // Positive means rotating towards front
+  elevatorMotor2->GetEncoder().SetPosition(0); // Not used but good to have as a backup
   elevatorMotor1->GetEncoder().SetPositionConversionFactor(ELEVATOR_TICK_TO_MM_FACTOR);
   elevatorMotor2->GetEncoder().SetPositionConversionFactor(ELEVATOR_TICK_TO_MM_FACTOR);
 
@@ -44,13 +42,13 @@ ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
   setShifterHigh(true);
 
   // Setup Shuffleboard for each input and output device
-  frc::ShuffleboardTab& shuffleTab = frc::Shuffleboard::GetTab("Elevator");
+  frc::ShuffleboardTab &shuffleTab = frc::Shuffleboard::GetTab("Elevator");
 
-  for (int index = 0; index < 2; index++){
+  for (int index = 0; index < 2; index++) {
     std::string listName = "Motor " + std::to_string(index) + " Data";
-    frc::ShuffleboardLayout& shuffleList = shuffleTab.GetLayout(listName, frc::BuiltInLayouts::kList);
-    shuffleList.WithSize(1,3);
-    shuffleList.WithPosition(index,0);
+    frc::ShuffleboardLayout &shuffleList = shuffleTab.GetLayout(listName, frc::BuiltInLayouts::kList);
+    shuffleList.WithSize(1, 3);
+    shuffleList.WithPosition(index, 0);
     nteSparksTwo[index].setPower = (shuffleList.Add("Set Power", 0).GetEntry());
     nteSparksTwo[index].outputCurrent = (shuffleList.Add("Current Out", 0).GetEntry());
     nteSparksTwo[index].encoderPosition = (shuffleList.Add("Position", 0).GetEntry());
@@ -77,10 +75,10 @@ ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
 void ElevatorSub::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
-  SetDefaultCommand(new ElevatorWithJoystickCmd()); 
+  SetDefaultCommand(new ElevatorWithJoystickCmd());
 }
 
-void ElevatorSub::updateShuffleBoard(){
+void ElevatorSub::updateShuffleBoard() {
   nteSparksTwo[0].setPower.SetDouble(elevatorMotor1->Get());
   nteSparksTwo[0].outputCurrent.SetDouble(elevatorMotor1->GetOutputCurrent());
   nteSparksTwo[0].encoderPosition.SetDouble(elevatorMotor1->GetEncoder().GetPosition());
@@ -110,7 +108,7 @@ double ElevatorSub::getElevatorVelocity() {
 }
 
 bool ElevatorSub::isElevatorDown() {
-  if((getElevatorHeight() - ELEVATOR_MIN_HEIGHT_MM) < ELEVATOR_IS_DOWN_TOLERANCE_MM) {
+  if ((getElevatorHeight() - ELEVATOR_MIN_HEIGHT_MM) < ELEVATOR_IS_DOWN_TOLERANCE_MM) {
     return true;
   }
   else {
@@ -119,11 +117,11 @@ bool ElevatorSub::isElevatorDown() {
 }
 
 // Set true for High Gear, false for Low Gear
-void ElevatorSub::setShifterHigh(bool highGear){
+void ElevatorSub::setShifterHigh(bool highGear) {
   shifterSolenoid->Set(highGear);
 }
 
-bool ElevatorSub::isShifterHigh(){
+bool ElevatorSub::isShifterHigh() {
   return shifterSolenoid->Get();
 }
 
@@ -132,29 +130,30 @@ bool ElevatorSub::isShifterHigh(){
 // - ELEVATOR_MODE_AUTO has the state machine move the elevator to the desire height
 // - ELEVATOR_MODE_MANUAL is for joystick input (targetHeightMm is ignored)
 void ElevatorSub::setElevatorHeight(int mode, double maxPower, double targetHeightMm) {
-  logger.send(logger.ELEVATOR, "ESH: START: (P=%.2f, H=%.1f)\n", maxPower, targetHeightMm);     
-  
   // Only do something if one of the parameters has changed
-  if((mode != elevatorControlMode) || (maxPower != elevatorMaxPower) || (targetHeightMm != elevatorTargetHeightMm)) {
+  if ((mode != elevatorControlMode) || (maxPower != elevatorMaxPower) || (targetHeightMm != elevatorTargetHeightMm)) {
     // If an old input is pending, drop it
     elevatorNewStateParameters = false;
 
     // Check input parameters
     if (fabs(maxPower) > 1.0) {
-      return; 
-    }
-    if ((targetHeightMm < ELEVATOR_MIN_HEIGHT_MM) || (targetHeightMm > ELEVATOR_MAX_HEIGHT_MM)) {
+      logger.send(logger.ELEVATOR, "ESH: ERROR!! Max power = %.2f \n", maxPower);
       return;
     }
-    
-    switch(mode) {
+    if ((mode != ELEVATOR_MODE_MANUAL) && 
+        (targetHeightMm < ELEVATOR_MIN_HEIGHT_MM) || (targetHeightMm > ELEVATOR_MAX_HEIGHT_MM)) {
+      logger.send(logger.ELEVATOR, "ESH: ERROR (#2)!! Height = %.1f \n", targetHeightMm);
+      return;
+    }
+
+    switch (mode) {
       case ELEVATOR_MODE_DISABLED:
         // Turn elevator motors off
         elevatorNewState = ELEVATOR_STATE_IDLE;
         elevatorNewControlMode = mode;
         elevatorNewMaxPower = 0.0;
         elevatorNewTargetHeightMm = ELEVATOR_MIN_HEIGHT_MM;
-        elevatorNewStateParameters = true;    // Only set this to true after all the other parameters have been set
+        elevatorNewStateParameters = true; // Only set this to true after all the other parameters have been set
         logger.send(logger.ELEVATOR, "ESH: Disabled\n");
         break;
 
@@ -164,46 +163,63 @@ void ElevatorSub::setElevatorHeight(int mode, double maxPower, double targetHeig
         elevatorNewControlMode = mode;
         elevatorNewMaxPower = fabs(maxPower);
         elevatorNewTargetHeightMm = targetHeightMm;
-        elevatorNewStateParameters = true;    // Only set this to true after all the other parameters have been set
+        elevatorNewStateParameters = true; // Only set this to true after all the other parameters have been set
         logger.send(logger.ELEVATOR, "ESH: Auto (P=%.2f, H=%.1f)\n", elevatorNewMaxPower, elevatorNewTargetHeightMm);
         break;
 
-      case ELEVATOR_MODE_MANUAL:
-        // Take the joystick input to determine the direction of travel and power
-        // Note that in this mode the power is continually adjusted (i.e. this function gets called a lot).
-        if(fabs(maxPower) < MANUAL_MODE_POWER_DEADBAND) {
-          // Hold position
-          if(elevatorState != ELEVATOR_STATE_HOLDING) {
-            elevatorNewState = ELEVATOR_STATE_HOLDING;
-            elevatorNewControlMode = mode;
-            elevatorNewMaxPower = 0.0;
-            elevatorNewTargetHeightMm = getElevatorHeight();
-            elevatorNewStateParameters = true;    // Only set this to true after all the other parameters have been set
-            logger.send(logger.ELEVATOR, "ESH: Man - deadzone start @ %f\n", elevatorNewTargetHeightMm);
-          }
-        } 
-        else {
-          // Move using specified power
-          elevatorNewState = ELEVATOR_STATE_MOVING;
+    case ELEVATOR_MODE_MANUAL:
+      // Take the joystick input to determine the direction of travel and power
+      // Note that in this mode the power is continually adjusted (i.e. this function gets called a lot).
+      if (fabs(maxPower) < MANUAL_MODE_POWER_DEADBAND) {
+        // Hold position
+        if (elevatorState != ELEVATOR_STATE_HOLDING) {
+          elevatorNewState = ELEVATOR_STATE_HOLDING;
           elevatorNewControlMode = mode;
-          elevatorNewMaxPower = fabs(maxPower);;
-          elevatorNewTargetHeightMm = (maxPower > 0) ? ELEVATOR_MAX_HEIGHT_MM : ELEVATOR_MIN_HEIGHT_MM;
-          elevatorNewStateParameters = true;    // Only set this to true after all the other parameters have been set 
-          logger.send(logger.ELEVATOR, "ESH: Man - moving (P=%.2f, H=%.1f)\n", elevatorNewMaxPower, elevatorNewTargetHeightMm);         
+          elevatorNewMaxPower = 0.0;
+          elevatorNewTargetHeightMm = getElevatorHeight();
+          elevatorNewStateParameters = true; // Only set this to true after all the other parameters have been set
+          logger.send(logger.ELEVATOR, "ESH: Man - deadzone start @ %.1f\n", elevatorNewTargetHeightMm);
         }
-        break;
+        else {
+          //logger.send(logger.ELEVATOR, "ESH: Holding \n");
+        }
+      }
+      else {
+        // Move using specified power
+        elevatorNewState = ELEVATOR_STATE_MOVING;
+        elevatorNewControlMode = mode;
+        elevatorNewMaxPower = fabs(maxPower);
+        elevatorNewTargetHeightMm = (maxPower > 0) ? ELEVATOR_MAX_HEIGHT_MM : ELEVATOR_MIN_HEIGHT_MM;
+        elevatorNewStateParameters = true; // Only set this to true after all the other parameters have been set
+        logger.send(logger.ELEVATOR, "ESH: Man - moving (P=%.2f, H=%.1f)\n", 
+            elevatorNewMaxPower, elevatorNewTargetHeightMm);
+      }
+      break;
     }
+  }
+  else {
+    logger.send(logger.ELEVATOR, "ESH: No change (M=%d, P=%.2f, H=%.1f)\n", mode, maxPower, targetHeightMm);
   }
 }
 
 // Returns true if the elevator is within tolerance of the target height
 bool ElevatorSub::isElevatorAtTarget() {
- if ((fabs(elevatorTargetHeightMm - getElevatorHeight()) < ELEVATOR_POSITION_TOLERANCE_MM) && 
-      (fabs(getElevatorVelocity() < ELEVATOR_VELOCITY_TOLERANCE_MM_S))) {
-      return true;
- } else {
-   return false;
- }
+  if (elevatorNewStateParameters) {
+    // Haven't even implemented the new request so we can't be done
+    return false;
+  }
+
+  if ((fabs(elevatorTargetHeightMm - getElevatorHeight()) < ELEVATOR_POSITION_TOLERANCE_MM) &&
+      (fabs(getElevatorVelocity()) < ELEVATOR_VELOCITY_TOLERANCE_MM_S)) {
+    logger.send(logger.ELEVATOR, "IEAT: Elevator at target (T=%.1f, C=%.1f, V=%.1f)\n", 
+        elevatorTargetHeightMm, getElevatorHeight(), getElevatorVelocity());
+    return true;
+  }
+  else {
+    //logger.send(logger.ELEVATOR, "IEAT: Elevator not at target (T=%.1f, C=%.1f, V=%.1f)\n", 
+    //    elevatorTargetHeightMm, getElevatorHeight(), getElevatorVelocity());
+    return false;
+  }
 }
 
 // This is the state machine that manages the elevator's motion.  It should be called on at a regular time interval
@@ -212,24 +228,24 @@ void ElevatorSub::updateElevatorStateMachine() {
   double currentHeightMm = getElevatorHeight();
 
   // Apply any new inputs
-  if(elevatorNewStateParameters) {
+  if (elevatorNewStateParameters) {
     elevatorState = elevatorNewState;
     elevatorControlMode = elevatorNewControlMode;
     elevatorMaxPower = elevatorNewMaxPower;
     elevatorTargetHeightMm = elevatorNewTargetHeightMm;
     elevatorNewStateParameters = false;
-    logger.send(logger.ELEVATOR, "ESM: New (S=%d, M=%d, P=%.2f, H=%.1f)\n", 
-        elevatorState, elevatorControlMode, elevatorNewMaxPower, elevatorNewTargetHeightMm);
+    logger.send(logger.ELEVATOR, "ESM: New     (P=%3.2f, S=%d, T=%6.1f, C=%6.1f, M=%d)\n", 
+        elevatorNewMaxPower, elevatorState, elevatorTargetHeightMm, currentHeightMm, elevatorControlMode);
   }
 
   // In auto mode
   //  - The target height and max power are set by the caller
   // In manual mode
-  // - If the joystick is outside the dead zone, the target height is set to the highest/lowest 
-  //   allowable height with the max power based on the joystick value.  
-  // - If the max power is close to zero (in the dead zone), the target height is set to the 
+  // - If the joystick is outside the dead zone, the target height is set to the highest/lowest
+  //   allowable height with the max power based on the joystick value.
+  // - If the max power is close to zero (in the dead zone), the target height is set to the
   //   current height.
-  switch(elevatorState) {
+  switch (elevatorState) {
     case ELEVATOR_STATE_IDLE:
       // Don't drive motors, leave as is
       newPower = 0.0;
@@ -238,59 +254,61 @@ void ElevatorSub::updateElevatorStateMachine() {
     case ELEVATOR_STATE_HOLDING:
       // Give the motor just enough power to keep the current position
       newPower = calcElevatorHoldPower(currentHeightMm, elevatorTargetHeightMm);
-
-      logger.send(logger.ELEVATOR, "ESM: Holding (P=%.2f)\n", newPower);
+      logger.send(logger.ELEVATOR, "ESM: Holding (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
+          newPower, elevatorState, elevatorTargetHeightMm, currentHeightMm);
       break;
 
     case ELEVATOR_STATE_MOVING:
-      if(isElevatorBlocked(currentHeightMm, elevatorTargetHeightMm)) {
+      if (isElevatorBlocked(currentHeightMm, elevatorTargetHeightMm)) {
         elevatorBlockedHeightMm = currentHeightMm;
         elevatorState = ELEVATOR_STATE_INTERRUPTED;
       }
-      else if(isElevatorAtTarget()) {
+      else if (isElevatorAtTarget()) {
         elevatorState = ELEVATOR_STATE_HOLDING;
       }
       else {
         newPower = calcElevatorMovePower(currentHeightMm, elevatorTargetHeightMm, elevatorMaxPower);
       }
-      logger.send(logger.ELEVATOR, "ESM: Moving (P=%.2f,s=%d,b=%.1f,c=%.1f)\n", newPower, elevatorState, elevatorBlockedHeightMm, currentHeightMm);
+      logger.send(logger.ELEVATOR, "ESM: Moving  (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
+          newPower, elevatorState, elevatorTargetHeightMm, currentHeightMm);
       break;
 
     case ELEVATOR_STATE_INTERRUPTED:
-      if(!isElevatorBlocked(currentHeightMm, elevatorTargetHeightMm)) {
+      if (!isElevatorBlocked(currentHeightMm, elevatorTargetHeightMm)) {
         elevatorState = ELEVATOR_STATE_MOVING;
       }
       else {
-         newPower = calcElevatorHoldPower(currentHeightMm, elevatorBlockedHeightMm);
+        newPower = calcElevatorHoldPower(currentHeightMm, elevatorBlockedHeightMm);
       }
-      logger.send(logger.ELEVATOR, "ESM: Blocked (P=%.2f,s=%d,b=%.1f,c=%.1f)\n", newPower, elevatorState, elevatorBlockedHeightMm, currentHeightMm);
+      logger.send(logger.ELEVATOR, "ESM: Blocked (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
+          newPower, elevatorState, elevatorBlockedHeightMm, currentHeightMm);
       break;
 
     default:
       // This should never happen.  Best thing we can do is hold our current position.
-      logger.send(logger.ASSERTS, "Elevator state machine entered invalid state (%d).  Fix the code!\n", elevatorState);     
+      logger.send(logger.ASSERTS, "Elevator state machine entered invalid state (%d).  Fix the code!\n", elevatorState);
       elevatorState = ELEVATOR_STATE_HOLDING;
       break;
   }
 
-  if(newPower != elevatorLastPower) {
+  if (newPower != elevatorLastPower) {
     setElevatorMotorPower(newPower);
     elevatorLastPower = newPower;
-    logger.send(logger.ELEVATOR, "ESM: New power = %f (S=%d, M=%d, P=%.2f, H=%.1f)\n", newPower,
-        elevatorState, elevatorControlMode, elevatorNewMaxPower, elevatorNewTargetHeightMm);
+    //logger.send(logger.ELEVATOR, "ESM: New power = %f (S=%d, M=%d, P=%.2f, H=%.1f)\n", newPower,
+    //    elevatorState, elevatorControlMode, elevatorMaxPower, elevatorTargetHeightMm);
   }
 }
 
 bool ElevatorSub::isElevatorBlocked(double currentHeightMm, double targetHeightMm) {
   double direction = 1.0;
-  
-  if(currentHeightMm > targetHeightMm) {
+
+  if (currentHeightMm > targetHeightMm) {
     direction = -1.0;
   }
 
   // TODO: implement
   // At max height - tolerance (going up)
-  if (((currentHeightMm >= ELEVATOR_MAX_HEIGHT_MM) && (direction > 0)) || 
+  if (((currentHeightMm >= ELEVATOR_MAX_HEIGHT_MM) && (direction > 0)) ||
       ((currentHeightMm < ELEVATOR_MIN_HEIGHT_MM) && (direction < 0))) {
     return true;
   }
@@ -302,33 +320,29 @@ bool ElevatorSub::isElevatorBlocked(double currentHeightMm, double targetHeightM
 }
 
 double ElevatorSub::calcElevatorHoldPower(double currentHeightMm, double targetHeightMm) {
-  // TODO:  Determine actual value for this.  
+  // TODO:  Determine actual value for this.
   // Make propertional to target.
   // Take into consideration elevator gear and if carrying hatch/cargo?
-  double holdPower = (targetHeightMm -  currentHeightMm) * 0.003;
+  double holdPower = (targetHeightMm - currentHeightMm) * 0.003;
 
-  return holdPower; 
+  return holdPower;
 }
 
 double ElevatorSub::calcElevatorMovePower(double currentHeightMm, double targetHeightMm, double maxElevatorPower) {
   double direction = 1.0;
   double newPower = 0;
-  
-  if(currentHeightMm > targetHeightMm) {
+
+  if (currentHeightMm > targetHeightMm) {
     direction = -1.0;
   }
-  
+
   // TODO: Use better values
-  if(fabs(currentHeightMm - targetHeightMm) > 100) {
+  if (fabs(currentHeightMm - targetHeightMm) > 100) {
     newPower = maxElevatorPower * direction;
   }
   else {
     newPower = std::min(0.2, maxElevatorPower) * direction;
   }
-  
+
   return newPower;
 }
-
-
-
-

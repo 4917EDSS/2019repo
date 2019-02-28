@@ -15,20 +15,18 @@ SetElevatorToHeightCmd::SetElevatorToHeightCmd(double height) : height(height) {
 }
 
 // Called just before this Command runs the first time
-void SetElevatorToHeightCmd::Initialize(){
-      logger.send(logger.ELEVATOR, "Initializing set elevator to height command\n");
-
+void SetElevatorToHeightCmd::Initialize() {
+  logger.send(logger.CMD_TRACE, "%s : %s | Height = %.1f\n", __FILE__, __FUNCTION__), height;
   Robot::elevatorSub.setElevatorHeight(ELEVATOR_MODE_AUTO, 0.3, height);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void SetElevatorToHeightCmd::Execute(){
+void SetElevatorToHeightCmd::Execute() {
 
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool SetElevatorToHeightCmd::IsFinished()
-{
+bool SetElevatorToHeightCmd::IsFinished() {
   return Robot::elevatorSub.isElevatorAtTarget();
 }
 
