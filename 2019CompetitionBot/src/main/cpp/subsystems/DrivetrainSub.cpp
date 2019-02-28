@@ -62,20 +62,13 @@ DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub"){
     nteSparks[motorIndex].motorTemperature = (shuffleList.Add("Motor Temp", 0).GetEntry());
   }
 
-  SimpleWidget yawWidget = shuffleTab.Add("Yaw", 0);
-  yawWidget.WithPosition(6,0);
-  yawWidget.WithSize(1,1);
-  nteYaw = yawWidget.GetEntry();
-
-  SimpleWidget pitchWidget = shuffleTab.Add("Pitch", 0);
-  pitchWidget.WithPosition(6,1);
-  pitchWidget.WithSize(1,1);
-  ntePitch = pitchWidget.GetEntry();
-
-  SimpleWidget rollhWidget = shuffleTab.Add("Roll", 0);
-  rollhWidget.WithPosition(6,2);
-  rollhWidget.WithSize(1,1);
-  nteRoll = rollhWidget.GetEntry();
+  frc::ShuffleboardLayout& shuffleList = shuffleTab.GetLayout("AHRS", frc::BuiltInLayouts::kList);
+  shuffleList.WithSize(1,2);
+  shuffleList.WithPosition(6,0);
+  nteYaw = (shuffleList.Add("Yaw", 0).GetEntry());
+  ntePitch = (shuffleList.Add("Pitch", 0).GetEntry());
+  nteRoll = (shuffleList.Add("Roll", 0).GetEntry());
+  
 }
 
 double DrivetrainSub::GetRightEncoder()
