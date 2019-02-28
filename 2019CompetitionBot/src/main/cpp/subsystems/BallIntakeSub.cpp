@@ -19,7 +19,7 @@ constexpr double INTAKE_ARM_VELOCITY_TOLERANCE = 45;
 constexpr double INTAKE_ARM_TICK_TO_DEGREE_FACTOR = (-90.0 / 32.0);
 constexpr double MANUAL_MODE_POWER_DEADBAND = 0.03;
 
-// Manipulator state machine states
+// Intake arm state machine states
 constexpr int INTAKE_ARM_STATE_IDLE = 0;
 constexpr int INTAKE_ARM_STATE_HOLDING = 1;
 constexpr int INTAKE_ARM_STATE_MOVING = 2;
@@ -130,10 +130,12 @@ void BallIntakeSub::setIntakeArmAngle(int mode, double maxPower, double targetAn
 
     // Check input parameters
     if (fabs(maxPower) > 1.0) {
+      logger.send(logger.BALLINTAKE, "SIA: ERROR!! Max power = %.2f \n", maxPower);
       return;
     }
     if ((mode != INTAKE_ARM_MODE_MANUAL) &&
       ((targetAngle < INTAKE_ARM_MIN_ANGLE) || (targetAngle > INTAKE_ARM_MAX_ANGLE))) {
+      logger.send(logger.BALLINTAKE, "SIA: ERROR (#2)!! Angle = %.1f \n", targetAngle);
       return;
     }
 
@@ -145,7 +147,7 @@ void BallIntakeSub::setIntakeArmAngle(int mode, double maxPower, double targetAn
         intakeArmNewMaxPower = 0.0;
         intakeArmNewTargetAngle = 0.0;
         intakeArmNewStateParameters = true; // Only set this to true after all the other parameters have been set
-        //logger.send(logger.FLIPPER, "SFA: Disabled\n");
+        logger.send(logger.BALLINTAKE, "SIA: Disabled\n");
         break;
 
       case INTAKE_ARM_MODE_AUTO:
@@ -155,7 +157,7 @@ void BallIntakeSub::setIntakeArmAngle(int mode, double maxPower, double targetAn
         intakeArmNewMaxPower = fabs(maxPower);
         intakeArmNewTargetAngle = targetAngle;
         intakeArmNewStateParameters = true; // Only set this to true after all the other parameters have been set
-        // logger.send(logger.MANIPULATOR, "SFA: Auto (P=%.2f, A=%.1f)\n", flipperNewMaxPower, flipperNewTargetAngle);
+        logger.send(logger.BALLINTAKE, "SIA: Auto (P=%.2f, A=%.1f)\n", intakeArmNewMaxPower, intakeArmNewTargetAngle);
         break;
 
       case INTAKE_ARM_MODE_MANUAL:
@@ -169,7 +171,10 @@ void BallIntakeSub::setIntakeArmAngle(int mode, double maxPower, double targetAn
             intakeArmNewMaxPower = 0.0;
             intakeArmNewTargetAngle = getIntakeArmAngle();
             intakeArmNewStateParameters = true; // Only set this to true after all the other parameters have been set
-            //logger.send(logger.MANIPULATOR, "SFA: Man - deadzone start @ %f\n", flipperNewTargetAngle);
+            logger.send(logger.BALLINTAKE, "SIA: Man - deadzone start @ %.1f\n", intakeArmNewTargetAngle);
+          }
+          else {
+          //logger.send(logger.BALLINTAKE, "SFA: Holding \n");
           }
         }
         else {
@@ -179,14 +184,18 @@ void BallIntakeSub::setIntakeArmAngle(int mode, double maxPower, double targetAn
           intakeArmNewMaxPower = fabs(maxPower);
           intakeArmNewTargetAngle = (maxPower > 0) ? INTAKE_ARM_MAX_ANGLE : INTAKE_ARM_MIN_ANGLE;
           intakeArmNewStateParameters = true; // Only set this to true after all the other parameters have been set
-          //logger.send(logger.MANIPULATOR, "SFA: Man - moving (P=%.2f, H=%.1f)\n", flipperNewMaxPower, flipperNewTargetAngle);
+          logger.send(logger.BALLINTAKE, "SIA: Man - moving (P=%.2f, H=%.1f)\n", 
+              intakeArmNewMaxPower, intakeArmNewTargetAngle);
         }
         break;
     }
   }
+  else {
+    logger.send(logger.BALLINTAKE, "SIA: No change (M=%d, P=%.2f, A=%.1f)\n", mode, maxPower, targetAngle);
+  }
 }
 
-
+// Returns true if the arm angle is within tolerance of the target angle
 bool BallIntakeSub::isIntakeArmAtTarget() {
   if (intakeArmNewStateParameters) {
     // Haven't even implemented the new request so we can't be done
@@ -195,9 +204,13 @@ bool BallIntakeSub::isIntakeArmAtTarget() {
 
   if ((fabs(intakeArmTargetAngle - getIntakeArmAngle()) < INTAKE_ARM_ANGLE_TOLERANCE) &&
       (fabs(getIntakeArmVelocity()) < INTAKE_ARM_VELOCITY_TOLERANCE)) {
+    logger.send(logger.BALLINTAKE, "IIAAT: Arms at target (T=%.1f, C=%.1f, V=%.1f)\n", 
+        intakeArmTargetAngle, getIntakeArmAngle(), getIntakeArmVelocity());
     return true;
   }
   else {
+    //logger.send(logger.BALLINTAKE, "IIAAT: Arms not at target (T=%.1f, C=%.1f, V=%.1f)\n", 
+    //    intakeArmTargetAngle, getIntakeArmAngle(), getIntakeArmVelocity());
     return false;
   }
 }
@@ -213,8 +226,8 @@ void BallIntakeSub::updateIntakeArmStateMachine() {
     intakeArmMaxPower = intakeArmNewMaxPower;
     intakeArmTargetAngle = intakeArmNewTargetAngle;
     intakeArmNewStateParameters = false;
-    //logger.send(logger.MANIPULATOR, "FSM: New (S=%d, M=%d, P=%.2f, A=%.1f)\n",
-    //   flipperState, flipperControlMode, flipperNewMaxPower, flipperNewTargetAngle);
+    logger.send(logger.BALLINTAKE, "IASM: New     (P=%3.2f, S=%d, T=%6.1f, C=%6.1f, M=%d)\n", 
+        intakeArmNewMaxPower, intakeArmState, intakeArmTargetAngle, currentAngle, intakeArmControlMode);
   }
 
   // In auto mode
@@ -233,8 +246,8 @@ void BallIntakeSub::updateIntakeArmStateMachine() {
     case INTAKE_ARM_STATE_HOLDING:
       // Give the motor just enough power to keep the current position
       newPower = calcIntakeArmHoldPower(currentAngle, intakeArmTargetAngle);
-
-      //logger.send(logger.MANIPULATOR, "FSM: Holding (P=%.2f)\n", newPower);
+      logger.send(logger.BALLINTAKE, "IASM: Holding (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
+          newPower, intakeArmState, intakeArmTargetAngle, currentAngle);
       break;
 
     case INTAKE_ARM_STATE_MOVING:
@@ -248,7 +261,8 @@ void BallIntakeSub::updateIntakeArmStateMachine() {
       else {
         newPower = calcIntakeArmMovePower(currentAngle, intakeArmTargetAngle, intakeArmMaxPower);
       }
-      //logger.send(logger.MANIPULATOR, "FSM: Moving (P=%.2f,s=%d,b=%.1f,c=%.1f)\n", newPower, flipperState, flipperBlockedAngle, currentAngle);
+      logger.send(logger.BALLINTAKE, "IASM: Moving  (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
+          newPower, intakeArmState, intakeArmTargetAngle, currentAngle);
       break;
 
     case INTAKE_ARM_STATE_INTERRUPTED:
@@ -258,12 +272,13 @@ void BallIntakeSub::updateIntakeArmStateMachine() {
       else {
         newPower = calcIntakeArmHoldPower(currentAngle, intakeArmBlockedAngle);
       }
-      //logger.send(logger.MANIPULATOR, "FSM: Blocked (P=%.2f,s=%d,b=%.1f,c=%.1f)\n", newPower, flipperState, flipperBlockedAngle, currentAngle);
+      logger.send(logger.BALLINTAKE, "IASM: Blocked (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
+          newPower, intakeArmState, intakeArmTargetAngle, currentAngle);
       break;
 
     default:
       // This should never happen.  Best thing we can do is hold our current position.
-      //logger.send(logger.ASSERTS, "Flipper state machine entered invalid state (%d).  Fix the code!\n", flipperState);
+      logger.send(logger.ASSERTS, "Intake arm state machine entered invalid state (%d).  Fix the code!\n", intakeArmState);
       intakeArmState = INTAKE_ARM_STATE_HOLDING;
       break;
   }
@@ -271,8 +286,8 @@ void BallIntakeSub::updateIntakeArmStateMachine() {
   if (newPower != intakeArmLastPower) {
     setIntakeArmPower(newPower);
     intakeArmLastPower = newPower;
-    //logger.send(logger.MANIPULATOR, "FSM: New power = %f (S=%d, M=%d, P=%.2f, A=%.1f)\n", newPower,
-    //flipperState, flipperControlMode, flipperNewMaxPower, flipperNewTargetAngle);
+    //logger.send(logger.BALLINTAKE, "IASM: New power = %f (S=%d, M=%d, P=%.2f, H=%.1f)\n", newPower,
+    //    intakeArmState, intakeArmControlMode, intakeArmNewMaxPower, intakeArmNewTargetAngle);
   }
 }
 
