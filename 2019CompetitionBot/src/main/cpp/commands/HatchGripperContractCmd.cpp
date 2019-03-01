@@ -5,34 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CloseHatchPickupCmd.h"
+#include "commands/HatchGripperContractCmd.h"
 #include "robot.h"
 
-CloseHatchPickupCmd::CloseHatchPickupCmd() {
+HatchGripperContractCmd::HatchGripperContractCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::manipulatorSub);
 }
 
 // Called just before this Command runs the first time
-void CloseHatchPickupCmd::Initialize() {
+void HatchGripperContractCmd::Initialize() {
   logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
   Robot::manipulatorSub.contractHatchGripper();
 }
 // Called repeatedly when this Command is scheduled to run
-void CloseHatchPickupCmd::Execute() {
+void HatchGripperContractCmd::Execute() {
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool CloseHatchPickupCmd::IsFinished() { return false; }
+bool HatchGripperContractCmd::IsFinished() { return true; }
 
 // Called once after isFinished returns true
-void CloseHatchPickupCmd::End() {
-  Robot::manipulatorSub.expandHatchGripper();
+void HatchGripperContractCmd::End() {
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CloseHatchPickupCmd::Interrupted() {
+void HatchGripperContractCmd::Interrupted() {
   End();
 }

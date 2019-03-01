@@ -7,12 +7,12 @@
 
 #include "commands/HatchModeGrp.h"
 #include "commands/ManipulatorOutCmd.h"
-#include "commands/CloseHatchPickupCmd.h"
+#include "commands/HatchGripperContractCmd.h"
 #include "Robot.h"
 
 HatchModeGrp::HatchModeGrp() {
+  AddSequential(new HatchGripperContractCmd());
   AddSequential(new ManipulatorOutCmd());
-  AddSequential(new CloseHatchPickupCmd());
   // Add Commands here:
   // e.g. AddSequential(new Command1());
   //      AddSequential(new Command2());

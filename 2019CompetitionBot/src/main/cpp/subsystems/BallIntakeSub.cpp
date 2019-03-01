@@ -245,7 +245,9 @@ void BallIntakeSub::updateIntakeArmStateMachine() {
 
     case INTAKE_ARM_STATE_HOLDING:
       // Give the motor just enough power to keep the current position
+  
       newPower = calcIntakeArmHoldPower(currentAngle, intakeArmTargetAngle);
+      
       logger.send(logger.BALLINTAKE, "IASM: Holding (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
           newPower, intakeArmState, intakeArmTargetAngle, currentAngle);
       break;
@@ -308,7 +310,8 @@ bool BallIntakeSub::isIntakeArmBlocked(double currentAngle, double targetAngle) 
 }
 
 double BallIntakeSub::calcIntakeArmHoldPower(double currentAngle, double targetAngle) {
-  return ((targetAngle - currentAngle) * 0.01);
+return (-0.02 / 90)*(-targetAngle)  + ((targetAngle - currentAngle) * 0.0005 );
+
 }
 
 double BallIntakeSub::calcIntakeArmMovePower(double currentAngle, double targetAngle, double maxPower) {

@@ -10,9 +10,9 @@
 #include <frc/commands/Command.h>
 #include "commands/frc4917Cmd.h"
 
-class ToggleManipulatorPosition : public frc4917Cmd {
+class ToggleManipulatorPositionCmd : public frc4917Cmd {
  public:
-  ToggleManipulatorPosition();
+  ToggleManipulatorPositionCmd();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

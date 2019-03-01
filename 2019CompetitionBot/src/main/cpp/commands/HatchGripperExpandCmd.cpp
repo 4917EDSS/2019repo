@@ -5,46 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ToggleManipulatorPosition.h"
-#include "subsystems/elevatorSub.h"
+#include "commands/HatchGripperExpandCmd.h"
 #include "Robot.h"
 
-ToggleManipulatorPosition::ToggleManipulatorPosition() {
+HatchGripperExpandCmd::HatchGripperExpandCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  Requires(&Robot::manipulatorSub);
 }
 
 // Called just before this Command runs the first time
-void ToggleManipulatorPosition::Initialize() {
-  double targetAngle;
-
+void HatchGripperExpandCmd::Initialize() {
   logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-
-  if(Robot::manipulatorSub.getFlipperAngle() > 0) {
-    targetAngle = -90;
-  }
-  else {
-    targetAngle = 90;
-  }
-
-  Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_AUTO, 0.5, targetAngle);
+  Robot::manipulatorSub.expandHatchGripper();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ToggleManipulatorPosition::Execute() {
-  
-}
+void HatchGripperExpandCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool ToggleManipulatorPosition::IsFinished() { 
-  return Robot::manipulatorSub.isFlipperAtTarget(); 
-}
+bool HatchGripperExpandCmd::IsFinished() { return true; }
 
 // Called once after isFinished returns true
-void ToggleManipulatorPosition::End() {}
+void HatchGripperExpandCmd::End() {
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ToggleManipulatorPosition::Interrupted() {
+void HatchGripperExpandCmd::Interrupted() {
   End();
 }
