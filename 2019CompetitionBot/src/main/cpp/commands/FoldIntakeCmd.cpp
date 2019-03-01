@@ -8,18 +8,18 @@
 #include "commands/FoldIntakeCmd.h"
 #include "Robot.h"
 
-FoldIntakeCmd::FoldIntakeCmd(bool flipOut) {
+FoldIntakeCmd::FoldIntakeCmd(bool foldIn) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::ballIntakeSub);
-  flipOut = flipOut;
+  foldIn = foldIn;
 }
 
 // Called just before this Command runs the first time
 void FoldIntakeCmd::Initialize() {
-  logger.send(logger.CMD_TRACE, "%s : %s | flipOut = %d\n", __FILE__, __FUNCTION__, flipOut);
+  logger.send(logger.CMD_TRACE, "%s : %s | foldIn = %d\n", __FILE__, __FUNCTION__, foldIn);
  
-  if(flipOut) {
+  if(foldIn) {
     Robot::ballIntakeSub.unfoldIntakeArms();
   }
   else {
