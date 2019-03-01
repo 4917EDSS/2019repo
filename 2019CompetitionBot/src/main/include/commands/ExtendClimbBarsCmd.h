@@ -8,17 +8,13 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include "commands/frc4917Cmd.h"
 
-class FoldIntakeCmd : public frc4917Cmd {
+class ExtendClimbBarsCmd : public frc::Command {
  public:
-  FoldIntakeCmd(bool foldIn);
+  ExtendClimbBarsCmd();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
-
-private:
-  bool foldIn;
 };
