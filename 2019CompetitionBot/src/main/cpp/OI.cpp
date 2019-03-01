@@ -27,6 +27,7 @@
 #include "commands/frc4917Cmd.h"
 #include "commands/frc4917Grp.h"
 #include "commands/TogglePipeLineCmd.h"
+#include "commands/ToggleManipulatorPositionCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
 
 OI::OI() {
@@ -80,6 +81,8 @@ OI::OI() {
   cargoModeBtn->WhenPressed(new CargoModeGrp());
 
   flipManipulatorBtn.reset(new frc::JoystickButton(operatorController.get(), FLIP_MANIPULATOR_BTN));
+  flipManipulatorBtn->WhenPressed(new ToggleManipulatorPositionCmd());
+  
   //elevatorToHighHeightBtn->WhenPressed(new );
 
   intakeHatchOrCargoBtn.reset(new frc::JoystickButton(operatorController.get(), INTAKE_HATCH_OR_CARGO_BTN));

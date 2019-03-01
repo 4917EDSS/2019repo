@@ -7,15 +7,18 @@
 
 #pragma once
 
-#include <frc/commands/Command.h>
-#include "commands/frc4917Cmd.h"
+#include <frc/commands/Subsystem.h>
+#include <rev/CANSparkMax.h>
+#include <rev/CANSparkMaxLowLevel.h>
 
-class ToggleManipulatorPosition : public frc4917Cmd {
+class ClimbSub : public frc::Subsystem {
+ private:
+  // It's desirable that everything possible under private except
+  // for methods that implement subsystem capabilities
+    std::shared_ptr <rev::CANSparkMax> climbMotor;
+
+
  public:
-  ToggleManipulatorPosition();
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
+  ClimbSub();
+  void InitDefaultCommand() override;
 };

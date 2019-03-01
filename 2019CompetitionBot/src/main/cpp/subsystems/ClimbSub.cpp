@@ -5,20 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
+#include "subsystems/ClimbSub.h"
+#include "RobotMap.h"
 
-#include <frc/commands/Command.h>
-#include "commands/frc4917Cmd.h"
+ClimbSub::ClimbSub() : Subsystem("ExampleSubsystem") {
+  climbMotor.reset(new rev::CANSparkMax(CLIMB_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+}
 
-class FoldIntakeCmd : public frc4917Cmd {
- public:
-  FoldIntakeCmd(bool foldIn);
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
+void ClimbSub::InitDefaultCommand() {
+  // Set the default command for a subsystem here.
+  // SetDefaultCommand(new MySpecialCommand());
+}
 
-private:
-  bool foldIn;
-};
+// Put methods for controlling this subsystem
+// here. Call these from Commands.

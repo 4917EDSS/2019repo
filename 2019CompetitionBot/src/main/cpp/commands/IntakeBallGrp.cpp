@@ -13,10 +13,10 @@
 #include <iostream>
 IntakeBallGrp::IntakeBallGrp() {
 //true = pnematics pulled in
-  AddParallel(new FoldIntakeCmd(true));
+  AddParallel(new FoldIntakeCmd(false));
   //AddParallel(new FoldIntakeCmd(false));
-  AddSequential(new SetIntakeArmAngleCmd(false, 110));
+  AddSequential(new SetIntakeArmAngleCmd(110));
   //std::cout << "intake ball group working";
-  AddSequential(new SetElevatorandManipulatorCmd(-90,0));
-  AddSequential(new IntakeBallFromRobotCmd());
+  //AddSequential(new SetElevatorandManipulatorCmd(-90,0));
+  //AddSequential(new IntakeBallFromRobotCmd());
 }

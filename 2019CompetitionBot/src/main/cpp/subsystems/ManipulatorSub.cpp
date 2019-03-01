@@ -96,6 +96,10 @@ void ManipulatorSub::setFlipperPower(double power) {
   flipperMotor->Set(power);
 }
 
+double ManipulatorSub::getFlipperTargetAngle() {
+  return flipperTargetAngle;
+}
+
 double ManipulatorSub::getFlipperAngle() {
   return flipperMotor->GetEncoder().GetPosition();
 }
@@ -321,12 +325,11 @@ bool ManipulatorSub::isFlipperBlocked(double currentAngle, double targetAngle) {
 }
 
 double ManipulatorSub::calcFlipperHoldPower(double currentAngle, double targetAngle) {
-  // TODO:  Determine actual value for this.  
+  // TODO:  Determine actual value for this.
+  // 3% power holds flipper at a 90 degree angle  
   // Make propertional to target.
   // Take into consideration flipper position
-  double holdPower = (targetAngle - currentAngle) * 0.10;
-  
-  return holdPower; 
+  return (0.03 / 90) * (-targetAngle) + ((targetAngle - currentAngle) * 0.0005);
 }
 
 double ManipulatorSub::calcFlipperMovePower(double currentAngle, double targetAngle, double maxPower) {

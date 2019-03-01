@@ -5,41 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/FoldIntakeCmd.h"
-#include "Robot.h"
+#include "commands/ExtendClimbBarsCmd.h"
 
-FoldIntakeCmd::FoldIntakeCmd(bool foldIn) {
+ExtendClimbBarsCmd::ExtendClimbBarsCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::ballIntakeSub);
-  foldIn = foldIn;
 }
 
 // Called just before this Command runs the first time
-void FoldIntakeCmd::Initialize() {
-  logger.send(logger.CMD_TRACE, "%s : %s | foldIn = %d\n", __FILE__, __FUNCTION__, foldIn);
- 
-  if(foldIn) {
-    Robot::ballIntakeSub.unfoldIntakeArms();
-  }
-  else {
-    Robot::ballIntakeSub.foldIntakeArms();
-  }
+void ExtendClimbBarsCmd::Initialize() {
+  
 }
 
 // Called repeatedly when this Command is scheduled to run
-void FoldIntakeCmd::Execute() {}
+void ExtendClimbBarsCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool FoldIntakeCmd::IsFinished() { 
-  return false; 
-}
+bool ExtendClimbBarsCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void FoldIntakeCmd::End() {}
+void ExtendClimbBarsCmd::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void FoldIntakeCmd::Interrupted() {
-  End();
-}
+void ExtendClimbBarsCmd::Interrupted() {}
