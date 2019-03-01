@@ -8,17 +8,18 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
-#include <rev/CANSparkMax.h>
-#include <rev/CANSparkMaxLowLevel.h>
+#include <frc/WPILib.h>
+#include <ctre/Phoenix.h>
 
 class ClimbSub : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-    std::shared_ptr <rev::CANSparkMax> climbMotor;
+	std::shared_ptr<WPI_VictorSPX> climbMotor;
 
 
  public:
   ClimbSub();
   void InitDefaultCommand() override;
+  void SetClimbMotor(double speed);
 };

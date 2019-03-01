@@ -29,7 +29,11 @@ void SetIntakeArmAngleCmd::Initialize() {
 }
 
 // Called repeatedly when this Command is scheduled to run
-void SetIntakeArmAngleCmd::Execute() {}
+void SetIntakeArmAngleCmd::Execute() {
+
+
+  
+}
 
 // Make this return true when this Command no longer needs to run execute()
 bool SetIntakeArmAngleCmd::IsFinished() {  

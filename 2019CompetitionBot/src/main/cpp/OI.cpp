@@ -28,6 +28,7 @@
 #include "commands/frc4917Grp.h"
 #include "commands/TogglePipeLineCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
+#include "commands/ExtendClimbBarsCmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -58,6 +59,9 @@ OI::OI() {
   
   test1Btn.reset(new frc::JoystickButton(driverController.get(), TEST_1_BTN));
   test1Btn->WhenPressed(new SetElevatorToHeightCmd(1000.0));
+
+  extendClimbBarBtn.reset(new frc::JoystickButton(driverController.get(),EXTEND_CLIMB_BAR_BTN ));
+  extendClimbBarBtn->WhenPressed(new ExtendClimbBarsCmd());
 
   // Operator controller buttons
   elevatorToCargoShipHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_CARGO_SHIP_HEIGHT_BTN));

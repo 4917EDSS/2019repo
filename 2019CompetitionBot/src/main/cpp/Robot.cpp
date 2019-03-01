@@ -13,13 +13,16 @@
 #include <iostream>
 #include "subsystems/ElevatorSub.h"
 #include "subsystems/DrivetrainSub.h"
+#include "subsystems/ClimbSub.h"
 
 
 DrivetrainSub Robot::drivetrainSub;
 BallIntakeSub Robot::ballIntakeSub;
 ElevatorSub Robot::elevatorSub;
 ManipulatorSub Robot::manipulatorSub;
+ClimbSub Robot::climbSub;
 OI Robot::oi;
+
 bool Robot::inBallMode;
 
 

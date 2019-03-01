@@ -9,7 +9,8 @@
 #include "RobotMap.h"
 
 ClimbSub::ClimbSub() : Subsystem("ExampleSubsystem") {
-  climbMotor.reset(new rev::CANSparkMax(CLIMB_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+climbMotor.reset(new WPI_VictorSPX(CLIMB_MOTOR_CAN_ID));
+	climbMotor->SetName("Climb");
 }
 
 void ClimbSub::InitDefaultCommand() {
@@ -19,3 +20,7 @@ void ClimbSub::InitDefaultCommand() {
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
+
+void ClimbSub::SetClimbMotor(double speed){
+  climbMotor->Set(speed);
+}

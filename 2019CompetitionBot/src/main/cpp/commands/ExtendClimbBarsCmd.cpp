@@ -6,6 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/ExtendClimbBarsCmd.h"
+#include "subsystems/ClimbSub.h"
+#include "Robot.h"
 
 ExtendClimbBarsCmd::ExtendClimbBarsCmd() {
   // Use Requires() here to declare subsystem dependencies
@@ -14,7 +16,7 @@ ExtendClimbBarsCmd::ExtendClimbBarsCmd() {
 
 // Called just before this Command runs the first time
 void ExtendClimbBarsCmd::Initialize() {
-  
+  Robot::climbSub.SetClimbMotor(1);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -24,8 +26,12 @@ void ExtendClimbBarsCmd::Execute() {}
 bool ExtendClimbBarsCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void ExtendClimbBarsCmd::End() {}
+void ExtendClimbBarsCmd::End() {
+    Robot::climbSub.SetClimbMotor(0);
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ExtendClimbBarsCmd::Interrupted() {}
+void ExtendClimbBarsCmd::Interrupted() {
+    End();
+}
