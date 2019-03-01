@@ -59,6 +59,7 @@ class ManipulatorSub : public frc::Subsystem {
   void InitDefaultCommand() override;
   void updateShuffleBoard();
   void setFlipperPower(double power);
+  double getFlipperTargetAngle();
   double getFlipperAngle();
   double getFlipperVelocity();
   bool isFlipperAtLimit();

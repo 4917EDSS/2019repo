@@ -96,6 +96,10 @@ void ManipulatorSub::setFlipperPower(double power) {
   flipperMotor->Set(power);
 }
 
+double ManipulatorSub::getFlipperTargetAngle() {
+  return flipperTargetAngle;
+}
+
 double ManipulatorSub::getFlipperAngle() {
   return flipperMotor->GetEncoder().GetPosition();
 }
