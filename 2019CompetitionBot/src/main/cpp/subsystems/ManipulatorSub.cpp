@@ -109,7 +109,7 @@ bool ManipulatorSub::isFlipperAtLimit() {
 }
 
 void ManipulatorSub::setIntakePower(double power) {
-  intakeMotorLeft->Set(-power);
+  intakeMotorRight->Set(-power);
   intakeMotorLeft->Set(power);
 }
 

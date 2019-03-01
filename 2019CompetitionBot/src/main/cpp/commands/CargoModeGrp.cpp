@@ -7,12 +7,12 @@
 
 #include "commands/CargoModeGrp.h"
 #include "commands/ManipulatorInCmd.h"
-#include "commands/CloseHatchPickupCmd.h"
+#include "commands/HatchGripperContractCmd.h"
 #include "Robot.h"
 
 CargoModeGrp::CargoModeGrp() {
   AddSequential(new ManipulatorInCmd());
-  AddSequential(new CloseHatchPickupCmd());
+  AddSequential(new HatchGripperContractCmd());
   // Add Commands here:
   // e.g. AddSequential(new Command1());
   //      AddSequential(new Command2());

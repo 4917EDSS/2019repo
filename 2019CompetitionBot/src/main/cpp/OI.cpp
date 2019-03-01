@@ -10,7 +10,6 @@
 #include <frc/WPILib.h>
 #include "Robot.h"
 #include "subsystems/BallIntakeSub.h"
-#include "Commands/CloseHatchPickupCmd.h"
 #include "commands/KillEverythingCmd.h"
 #include "commands/MilkyScoreGrp.h"
 #include "commands/MilkyManipulatorCmd.h"
@@ -23,7 +22,8 @@
 #include "commands/HatchModeGrp.h"
 #include "commands/CargoModeGrp.h"
 #include "commands/DynamicCommandPickerCmd.h"
-#include "commands/ExpandHatchGripperCmd.h"
+#include "commands/HatchGripperExpandCmd.h"
+#include "commands/HatchGripperContractCmd.h"
 #include "commands/frc4917Cmd.h"
 #include "commands/frc4917Grp.h"
 #include "commands/TogglePipeLineCmd.h"
@@ -72,6 +72,7 @@ OI::OI() {
   elevatorToHighHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_HIGH_HEIGHT_BTN));
   elevatorToHighHeightBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Cmd, frc4917Cmd>(new SetElevatorToHeightCmd(ELEVATOR_ROCKET_HIGH_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_HIGH_HATCH_HEIGHT_MM)));
 
+
   hatchModeBtn.reset(new frc::JoystickButton(operatorController.get(), HATCH_MODE_BTN));
   hatchModeBtn->WhenPressed(new HatchModeGrp());
 
@@ -82,7 +83,7 @@ OI::OI() {
   //elevatorToHighHeightBtn->WhenPressed(new );
 
   intakeHatchOrCargoBtn.reset(new frc::JoystickButton(operatorController.get(), INTAKE_HATCH_OR_CARGO_BTN));
-  intakeHatchOrCargoBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Grp, frc4917Cmd>(new IntakeBallGrp(), new ExpandHatchGripperCmd()));
+  intakeHatchOrCargoBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Grp, frc4917Cmd>(new IntakeBallGrp(), new HatchGripperExpandCmd()));
 
   multiCommand1Btn.reset(new frc::JoystickButton(operatorController.get(), MULTI_COMMAND_1_BTN));
   multiCommand1Btn->WhenPressed(new MultiButton1Cmd());
@@ -103,9 +104,6 @@ OI::OI() {
 
 
   // These commands are likley obsolete
-
-  hatchContractBtn.reset(new frc::JoystickButton(operatorController.get(), HATCH_CONTRACT_BTN));
-  hatchContractBtn->WhileHeld(new CloseHatchPickupCmd());
 
   intakeBallBtn.reset(new frc::JoystickButton(operatorController.get(), INTAKE_BALL_BTN));
   intakeBallBtn->WhenPressed(new IntakeBallGrp());
