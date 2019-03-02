@@ -10,16 +10,19 @@
 #include <ctre/Phoenix.h>
 #include <RobotMap.h>
 #include "subsystems/ManipulatorSub.h"
+#include "subsystems/ElevatorSub.h"
 #include "components/Log.h"
 #include <frc/shuffleboard/Shuffleboard.h>
 #include <frc/shuffleboard/BuiltInLayouts.h>
 #include "SparkShuffleboardEntrySet.h"
+#include "commands/ManipulatorWithJoystickCmd.h"
+#include <Robot.h>
 
 constexpr double FLIPPER_MAX_ANGLE = 90;
 constexpr double FLIPPER_MIN_ANGLE = -100;
 constexpr double FLIPPER_ANGLE_TOLERANCE = 1.0;
 constexpr double FLIPPER_VELOCITY_TOLERANCE = 45;
-constexpr double FLIPPER_TICK_TO_DEGREE_FACTOR = (90/44.1900);
+constexpr double FLIPPER_TICK_TO_DEGREE_FACTOR = (90/40.1900);
 constexpr double MANUAL_MODE_POWER_DEADBAND = 0.03;
 
 // Manipulator state machine states
@@ -76,6 +79,7 @@ ManipulatorSub::ManipulatorSub() : Subsystem("ManipulatorSub") {
 void ManipulatorSub::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
+  SetDefaultCommand(new ManipulatorWithJoystickCmd());
 }
 
 void ManipulatorSub::updateShuffleBoard() {
@@ -320,6 +324,10 @@ bool ManipulatorSub::isFlipperBlocked(double currentAngle, double targetAngle) {
       ((currentAngle < FLIPPER_MIN_ANGLE) && (direction < 0))) {
     return true;
   }
+  
+  if (Robot::elevatorSub.getElevatorHeight() > (ELEVATOR_MIN_HEIGHT_MM + 50)){
+    return true;
+  }
 
   return false;
 }
@@ -339,13 +347,21 @@ double ManipulatorSub::calcFlipperMovePower(double currentAngle, double targetAn
   if(currentAngle > targetAngle) {
     direction = -1.0;
   }
-  
+  /*
+  40 -> max
+  30*0.04  -> max
+  20*0.04 -> 0.8
+  10*0.04 -> 0.4
+  5*0.04 -> 0.2
+  */
   // TODO: Use better values
-  if(fabs(currentAngle - targetAngle) > 10) {
+  double resultPower = (targetAngle - currentAngle) * 0.04;
+
+  if(fabs(resultPower) > maxPower) {
     newPower = maxPower * direction;
   }
   else {
-    newPower = std::min(0.2, maxPower) * direction;
+    newPower = resultPower;
   }
   
   return newPower;

@@ -12,6 +12,7 @@
 ToggleManipulatorPositionCmd::ToggleManipulatorPositionCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  Requires(&Robot::manipulatorSub);
 }
 
 // Called just before this Command runs the first time
@@ -27,7 +28,7 @@ void ToggleManipulatorPositionCmd::Initialize() {
     targetAngle = 90;
   }
 
-  Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_AUTO, 0.5, targetAngle);
+  Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_AUTO, 1.0, targetAngle);
 }
 
 // Called repeatedly when this Command is scheduled to run

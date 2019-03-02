@@ -5,40 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/SetElevatorandManipulatorCmd.h"
-#include "robot.h"
+#include "commands/SetManipulatorCmd.h"
+#include "Robot.h"
 
-SetElevatorandManipulatorCmd::SetElevatorandManipulatorCmd(double targetAngle, double targetHeight) : targetAngle(targetAngle), targetHeight(targetHeight){
+SetManipulatorCmd::SetManipulatorCmd(double targetAngle) : targetAngle(targetAngle) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::elevatorSub);
-  Requires(&Robot::manipulatorSub);
+    Requires(&Robot::manipulatorSub);
 }
 
 // Called just before this Command runs the first time
-void SetElevatorandManipulatorCmd::Initialize() {
-  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-  Robot::elevatorSub.setElevatorHeight(ELEVATOR_MODE_AUTO, 0.5, targetHeight);
-  Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_AUTO, 0.5, targetAngle);
+void SetManipulatorCmd::Initialize() {
+  Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_AUTO, 1.0, targetAngle);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void SetElevatorandManipulatorCmd::Execute() {
-
-}
+void SetManipulatorCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool SetElevatorandManipulatorCmd::IsFinished() { 
-  return Robot::elevatorSub.isElevatorAtTarget() && Robot::manipulatorSub.isFlipperAtTarget();
+bool SetManipulatorCmd::IsFinished() { 
+  return Robot::manipulatorSub.isFlipperAtTarget(); 
 }
 
 // Called once after isFinished returns true
-void SetElevatorandManipulatorCmd::End() {
-  
-}
+void SetManipulatorCmd::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void SetElevatorandManipulatorCmd::Interrupted() {
+void SetManipulatorCmd::Interrupted() {
   End();
 }
