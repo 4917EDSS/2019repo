@@ -42,7 +42,7 @@ void Robot::RobotInit() {
   //logger.enableChannels(logger.PERIODIC);
   logger.enableChannels(logger.CMD_TRACE);
   //logger.enableChannels(logger.ELEVATOR);
-  //logger.enableChannels(logger.BALLINTAKE);
+  logger.enableChannels(logger.BALLINTAKE);
   //logger.enableChannels(logger.MANIPULATOR);
   //logger.enableChannels(logger.WITH_JOYSTICK_TRACE);
 
@@ -93,7 +93,7 @@ void Robot::AutonomousInit() {
   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 0);
   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0);
-
+  Robot::ballIntakeSub.foldIntakeArms();
   // No auto command this year
   /*
   m_autonomousCommand = m_chooser.GetSelected();

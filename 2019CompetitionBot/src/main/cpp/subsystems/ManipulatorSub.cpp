@@ -347,14 +347,6 @@ double ManipulatorSub::calcFlipperMovePower(double currentAngle, double targetAn
   if(currentAngle > targetAngle) {
     direction = -1.0;
   }
-  /*
-  40 -> max
-  30*0.04  -> max
-  20*0.04 -> 0.8
-  10*0.04 -> 0.4
-  5*0.04 -> 0.2
-  */
-  // TODO: Use better values
   double resultPower = (targetAngle - currentAngle) * 0.04;
 
   if(fabs(resultPower) > maxPower) {

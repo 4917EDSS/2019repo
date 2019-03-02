@@ -22,8 +22,7 @@ constexpr int LEFT_DRIVE_MOTOR_2_CAN_ID = 6;
 constexpr int LEFT_DRIVE_MOTOR_3_CAN_ID = 7;
 
 constexpr int BALL_INTAKE_WHEELS_MOTOR_CAN_ID = 10;
-constexpr int BALL_INTAKE_TOP_FLIP_MOTOR_1_CAN_ID = 24;
-constexpr int BALL_INTAKE_BOTTOM_FLIP_MOTOR_2_CAN_ID = 23;
+constexpr int BALL_INTAKE_FLIP_MOTOR_CAN_ID = 11;
 
 constexpr int ELEVATOR_MOTOR_1_CAN_ID = 4;
 constexpr int ELEVATOR_MOTOR_2_CAN_ID = 8;
@@ -39,5 +38,8 @@ constexpr int BALL_SENSOR_DIO = 9;
 constexpr int INTAKE_MOTOR_ENC1_DIO = 2;
 constexpr int INTAKE_MOTOR_ENC2_DIO = 3;
 constexpr int BALL_INTAKE_ARM_LIMIT_DIO = 4;
-constexpr int MANIPULATOR_LIMIT_DIO = 0;    // TODO: Update
-
+constexpr int MANIPULATOR_LIMIT_DIO = 0;
+//todo: update
+//placeholder IDs
+constexpr int ELEVATOR_LOWER_LIMIT_DIO=6;
+constexpr int ELEVATOR_UPPER_LIMIT_DIO=5;

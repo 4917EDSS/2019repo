@@ -32,7 +32,6 @@ void SetIntakeArmAngleCmd::Initialize() {
     Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_AUTO, 0.5, targetAngle);
   }
 
-  
 }
 
 // Called repeatedly when this Command is scheduled to run

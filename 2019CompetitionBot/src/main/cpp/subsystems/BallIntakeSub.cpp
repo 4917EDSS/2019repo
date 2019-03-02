@@ -11,6 +11,7 @@
 #include "SparkShuffleboardEntrySet.h"
 #include <frc/shuffleboard/Shuffleboard.h>
 #include "frc/shuffleboard/BuiltInLayouts.h"
+#include <iostream>
 
 constexpr double INTAKE_ARM_MAX_ANGLE = 150; //change
 constexpr double INTAKE_ARM_MIN_ANGLE = 0;
@@ -26,7 +27,7 @@ constexpr int INTAKE_ARM_STATE_MOVING = 2;
 constexpr int INTAKE_ARM_STATE_INTERRUPTED = 3;
 
 BallIntakeSub::BallIntakeSub() : Subsystem("BallIntakeSub") {
-  flipperMotor.reset(new rev::CANSparkMax(BALL_INTAKE_TOP_FLIP_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  flipperMotor.reset(new rev::CANSparkMax(BALL_INTAKE_FLIP_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   intakeArmEnc.reset(new frc::Encoder(INTAKE_MOTOR_ENC1_DIO, INTAKE_MOTOR_ENC2_DIO));
   intakeArmEnc->SetDistancePerPulse(INTAKE_ARM_TICK_TO_DEGREE_FACTOR);
   ballIntakeArmLimit.reset(new frc::DigitalInput(BALL_INTAKE_ARM_LIMIT_DIO));
@@ -98,6 +99,9 @@ double BallIntakeSub::getIntakeArmVelocity() {
 }
 
 bool BallIntakeSub::isIntakeAtLimit() {
+  if(!ballIntakeArmLimit->Get()){
+  std::cout<<"limit"<<std::endl;
+  }
   return !ballIntakeArmLimit->Get();
 }
 
@@ -174,7 +178,7 @@ void BallIntakeSub::setIntakeArmAngle(int mode, double maxPower, double targetAn
             logger.send(logger.BALLINTAKE, "SIA: Man - deadzone start @ %.1f\n", intakeArmNewTargetAngle);
           }
           else {
-          //logger.send(logger.BALLINTAKE, "SFA: Holding \n");
+          logger.send(logger.BALLINTAKE, "SFA: Holding \n");
           }
         }
         else {
@@ -288,8 +292,8 @@ void BallIntakeSub::updateIntakeArmStateMachine() {
   if (newPower != intakeArmLastPower) {
     setIntakeArmPower(newPower);
     intakeArmLastPower = newPower;
-    //logger.send(logger.BALLINTAKE, "IASM: New power = %f (S=%d, M=%d, P=%.2f, H=%.1f)\n", newPower,
-    //    intakeArmState, intakeArmControlMode, intakeArmNewMaxPower, intakeArmNewTargetAngle);
+    logger.send(logger.BALLINTAKE, "IASM: New power = %f (S=%d, M=%d, P=%.2f, H=%.1f)\n", newPower,
+       intakeArmState, intakeArmControlMode, intakeArmNewMaxPower, intakeArmNewTargetAngle);
   }
 }
 
@@ -299,10 +303,11 @@ bool BallIntakeSub::isIntakeArmBlocked(double currentAngle, double targetAngle) 
   if (currentAngle > targetAngle) {
     direction = -1.0;
   }
-
+  isIntakeAtLimit();
   // TODO: implement all rules
   if (((currentAngle >= INTAKE_ARM_MAX_ANGLE) && (direction > 0)) ||
-      ((currentAngle < INTAKE_ARM_MIN_ANGLE) && (direction < 0))) {
+      ((currentAngle < INTAKE_ARM_MIN_ANGLE) && (direction < 0))/* || 
+      (isIntakeAtLimit())*/) {
     return true;
   }
 
@@ -311,6 +316,7 @@ bool BallIntakeSub::isIntakeArmBlocked(double currentAngle, double targetAngle) 
 
 double BallIntakeSub::calcIntakeArmHoldPower(double currentAngle, double targetAngle) {
 return (-0.02 / 90)*(-targetAngle)  + ((targetAngle - currentAngle) * 0.01 );
+
 
 }
 
