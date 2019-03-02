@@ -16,7 +16,7 @@
 #include "SparkShuffleboardEntrySet.h"
 
 // Elevator heights
-constexpr double ELEVATOR_MIN_HEIGHT_MM = 445;
+constexpr double ELEVATOR_MIN_HEIGHT_MM = 485;
 constexpr double ELEVATOR_MAX_HEIGHT_MM = 1952.8;
 constexpr double ELEVATOR_LOW_HATCH_HEIGHT_MM = 482.6;
 constexpr double ELEVATOR_MEDIUM_HATCH_HEIGHT_MM = 1193.8;
