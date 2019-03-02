@@ -12,7 +12,7 @@
 #include "commands/SetElevatorandManipulatorCmd.h"
 #include <iostream>
 IntakeBallGrp::IntakeBallGrp() {
-//true = pnematics pulled in
+//false = pnematics pulled in
   AddParallel(new FoldIntakeCmd(false));
   //AddParallel(new FoldIntakeCmd(false));
   AddSequential(new SetIntakeArmAngleCmd(110));

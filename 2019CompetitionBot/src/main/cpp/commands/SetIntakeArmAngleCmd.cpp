@@ -25,7 +25,7 @@ SetIntakeArmAngleCmd::SetIntakeArmAngleCmd(double angle) {
 // Called just before this Command runs the first time
 void SetIntakeArmAngleCmd::Initialize() {
   logger.send(logger.CMD_TRACE, "%s : %s | Angle = %.1f\n", __FILE__, __FUNCTION__, targetAngle);
-  Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_AUTO, targetAngle, 1.0);
+  Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_AUTO, 1.0, targetAngle);
 }
 
 // Called repeatedly when this Command is scheduled to run
