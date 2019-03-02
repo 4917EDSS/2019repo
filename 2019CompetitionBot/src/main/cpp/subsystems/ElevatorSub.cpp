@@ -15,6 +15,7 @@
 #include <frc/shuffleboard/Shuffleboard.h>
 #include <frc/shuffleboard/BuiltInLayouts.h>
 #include "SparkShuffleboardEntrySet.h"
+#include "Robot.h"
 
 constexpr double ELEVATOR_POSITION_TOLERANCE_MM = 5.0;
 constexpr double ELEVATOR_VELOCITY_TOLERANCE_MM_S = 45; // TODO Determine value
@@ -306,16 +307,27 @@ bool ElevatorSub::isElevatorBlocked(double currentHeightMm, double targetHeightM
     direction = -1.0;
   }
 
-  // TODO: implement
-  // At max height - tolerance (going up)
   if (((currentHeightMm >= ELEVATOR_MAX_HEIGHT_MM) && (direction > 0)) ||
       ((currentHeightMm < ELEVATOR_MIN_HEIGHT_MM) && (direction < 0))) {
     return true;
   }
-  // At min height - tolerance (going down)
-  // Upper limit switch hit (going up)
-  // Lower limit switch hit (going down)
-  // Manipulator is not far enough forward
+
+  // See if Manipulator is blocking movement
+  if (direction > 0) {
+    if ((Robot::manipulatorSub.getFlipperAngle()) < 30 && (Robot::manipulatorSub.getFlipperAngle() > -45)) {
+      // Can only move up a bit if the manipulator is close to vertical
+      if (currentHeightMm >= (ELEVATOR_MIN_HEIGHT_MM + 120)) {
+        return true;
+      }
+    }
+
+    if (Robot::manipulatorSub.getFlipperAngle() <= -45) {
+      if (currentHeightMm >= (ELEVATOR_MIN_HEIGHT_MM + 500)) {
+        return true;
+      }
+    }
+  }
+  
   return false;
 }
 
@@ -336,12 +348,13 @@ double ElevatorSub::calcElevatorMovePower(double currentHeightMm, double targetH
     direction = -1.0;
   }
 
-  // TODO: Use better values
-  if (fabs(currentHeightMm - targetHeightMm) > 100) {
+  double resultPower = (targetHeightMm - currentHeightMm) * 0.02;
+
+  if(fabs(resultPower) > maxElevatorPower) {
     newPower = maxElevatorPower * direction;
   }
   else {
-    newPower = std::min(0.2, maxElevatorPower) * direction;
+    newPower = resultPower;
   }
 
   return newPower;
