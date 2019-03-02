@@ -24,6 +24,7 @@ ClimbSub Robot::climbSub;
 OI Robot::oi;
 
 bool Robot::inBallMode;
+bool Robot::stateMachinesReset;
 
 
 void Robot::RobotInit() {
@@ -54,6 +55,7 @@ void Robot::RobotInit() {
   std::cout << "Starting version 1.6\n";
 
   Robot::inBallMode = true;
+  Robot::stateMachinesReset = false;
 }
 
 /**
@@ -72,7 +74,9 @@ void Robot::RobotPeriodic() {
  * can use it to reset any subsystem information you want to clear when the
  * robot is disabled.
  */
-void Robot::DisabledInit() {}
+void Robot::DisabledInit() {
+  stateMachinesReset = false;
+}
 
 void Robot::DisabledPeriodic() { 
   frc::Scheduler::GetInstance()->Run(); 
@@ -94,6 +98,11 @@ void Robot::AutonomousInit() {
   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0);
   Robot::ballIntakeSub.foldIntakeArms();
+
+  if(!stateMachinesReset) {
+    resetStateMachines();
+    stateMachinesReset = true;
+  }
   // No auto command this year
   /*
   m_autonomousCommand = m_chooser.GetSelected();
@@ -119,6 +128,11 @@ void Robot::TeleopInit() {
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
+  }
+
+  if(!stateMachinesReset) {
+    resetStateMachines();
+    stateMachinesReset = true;
   }
 }
 
@@ -238,4 +252,10 @@ double Robot::NormalizeAngle(double targetAngle){
     targetAngle = targetAngle - 360;
   }
   return targetAngle;
+}
+
+void Robot::resetStateMachines() {
+  Robot::elevatorSub.setElevatorHeight(ELEVATOR_MODE_DISABLED, 0, 0);
+  Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_DISABLED, 0, 0);
+  Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_DISABLED, 0, 0);
 }

@@ -52,10 +52,13 @@ class Robot : public frc::TimedRobot {
 
 
  private:
+  static bool stateMachinesReset;
+
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
   frc::Command* m_autonomousCommand = nullptr;
   frc::SendableChooser<frc::Command*> m_chooser;
   void UpdateSmartDashboard();
+  static void resetStateMachines();
  
 };

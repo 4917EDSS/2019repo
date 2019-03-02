@@ -17,7 +17,7 @@ constexpr double INTAKE_ARM_MAX_ANGLE = 150; //change
 constexpr double INTAKE_ARM_MIN_ANGLE = 0;
 constexpr double INTAKE_ARM_ANGLE_TOLERANCE = 1.0;
 constexpr double INTAKE_ARM_VELOCITY_TOLERANCE = 45;
-constexpr double INTAKE_ARM_TICK_TO_DEGREE_FACTOR = (90.0 / 19.0);
+constexpr double INTAKE_ARM_TICK_TO_DEGREE_FACTOR = (-90.0 / 30.0);
 constexpr double MANUAL_MODE_POWER_DEADBAND = 0.03;
 
 // Intake arm state machine states
@@ -76,7 +76,7 @@ void BallIntakeSub::InitDefaultCommand() {
 void BallIntakeSub::updateShuffleBoard() {
   nteFlipperMotor.setPower.SetDouble(flipperMotor->Get());
   nteFlipperMotor.outputCurrent.SetDouble(flipperMotor->GetOutputCurrent());
-  nteFlipperMotor.encoderPosition.SetDouble(flipperMotor->GetEncoder().GetPosition());
+  nteFlipperMotor.encoderPosition.SetDouble(getIntakeArmAngle());
   nteFlipperMotor.encoderVelocity.SetDouble(flipperMotor->GetEncoder().GetVelocity());
   nteFlipperMotor.motorTemperature.SetDouble(flipperMotor->GetMotorTemperature());
   
@@ -315,14 +315,12 @@ bool BallIntakeSub::isIntakeArmBlocked(double currentAngle, double targetAngle) 
 }
 
 double BallIntakeSub::calcIntakeArmHoldPower(double currentAngle, double targetAngle) {
-double speedMult = 0.00;
-  if(currentAngle < 60){
-    speedMult = 0.003;
+  std::cout<<"Target: " << targetAngle << "Current: " << currentAngle << std::endl;
+  if(fabs(targetAngle - currentAngle) < 5){
+  return  (-0.02 / 90)*(targetAngle - 60);
   } else {
-    speedMult = -0.003;
+  return  ((targetAngle - currentAngle) * 0.003) + (-0.02 / 90)*(targetAngle - 60);
   }
-  std::cout<<"Target: " << targetAngle << "Current: " << currentAngle<< "speedmult: " << speedMult << std::endl;
-  return  ((targetAngle - currentAngle) * speedMult);
  //check
 
 }
