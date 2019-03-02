@@ -100,7 +100,6 @@ double BallIntakeSub::getIntakeArmVelocity() {
 
 bool BallIntakeSub::isIntakeAtLimit() {
   if(!ballIntakeArmLimit->Get()){
-  std::cout<<"limit"<<std::endl;
   }
   return !ballIntakeArmLimit->Get();
 }
@@ -161,7 +160,7 @@ void BallIntakeSub::setIntakeArmAngle(int mode, double maxPower, double targetAn
         intakeArmNewMaxPower = fabs(maxPower);
         intakeArmNewTargetAngle = targetAngle;
         intakeArmNewStateParameters = true; // Only set this to true after all the other parameters have been set
-        logger.send(logger.BALLINTAKE, "SIA: Auto (P=%.2f, A=%.1f)\n", intakeArmNewMaxPower, intakeArmNewTargetAngle);
+        logger.send(logger.DEBUGGING, "SIA: Auto (P=%.2f, A=%.1f)\n", intakeArmNewMaxPower, intakeArmNewTargetAngle);
         break;
 
       case INTAKE_ARM_MODE_MANUAL:
@@ -292,8 +291,8 @@ void BallIntakeSub::updateIntakeArmStateMachine() {
   if (newPower != intakeArmLastPower) {
     setIntakeArmPower(newPower);
     intakeArmLastPower = newPower;
-    logger.send(logger.BALLINTAKE, "IASM: New power = %f (S=%d, M=%d, P=%.2f, H=%.1f)\n", newPower,
-       intakeArmState, intakeArmControlMode, intakeArmNewMaxPower, intakeArmNewTargetAngle);
+    //logger.send(logger.BALLINTAKE, "IASM: New power = %f (S=%d, M=%d, P=%.2f, H=%.1f)\n", newPower,
+      // intakeArmState, intakeArmControlMode, intakeArmNewMaxPower, intakeArmNewTargetAngle);
   }
 }
 
@@ -315,7 +314,6 @@ bool BallIntakeSub::isIntakeArmBlocked(double currentAngle, double targetAngle) 
 }
 
 double BallIntakeSub::calcIntakeArmHoldPower(double currentAngle, double targetAngle) {
-  std::cout<<"Target: " << targetAngle << "Current: " << currentAngle << std::endl;
   if(fabs(targetAngle - currentAngle) < 5){
   return  (-0.02 / 90)*(targetAngle - 60);
   } else {

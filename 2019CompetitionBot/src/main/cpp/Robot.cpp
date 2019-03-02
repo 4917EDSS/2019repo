@@ -38,12 +38,13 @@ void Robot::RobotInit() {
   logger.enableChannels(logger.WARNINGS | logger.ERRORS | logger.ASSERTS);
 
   // Can use these for debugging.  Comment/uncomment as needed
+  logger.enableChannels(logger.DEBUGGING);
   //logger.enableChannels(logger.DRIVETRAIN);
   //logger.enableChannels(logger.VISION);
   //logger.enableChannels(logger.PERIODIC);
   logger.enableChannels(logger.CMD_TRACE);
   //logger.enableChannels(logger.ELEVATOR);
-  logger.enableChannels(logger.BALLINTAKE);
+  //logger.enableChannels(logger.BALLINTAKE);
   //logger.enableChannels(logger.MANIPULATOR);
   //logger.enableChannels(logger.WITH_JOYSTICK_TRACE);
 

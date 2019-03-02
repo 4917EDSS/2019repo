@@ -9,7 +9,7 @@
 #include "Robot.h"
 #include <iostream>
 
-SetIntakeArmAngleCmd::SetIntakeArmAngleCmd(bool isClimbing, double angle)  {
+SetIntakeArmAngleCmd::SetIntakeArmAngleCmd(bool isClimbing, double angle) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::ballIntakeSub);
@@ -18,8 +18,8 @@ SetIntakeArmAngleCmd::SetIntakeArmAngleCmd(bool isClimbing, double angle)  {
   targetAngle = angle;
 }
 
-SetIntakeArmAngleCmd::SetIntakeArmAngleCmd(double angle) {
-  SetIntakeArmAngleCmd(false, angle);
+SetIntakeArmAngleCmd::SetIntakeArmAngleCmd(double angle): SetIntakeArmAngleCmd(false, angle){
+  
 }
 
 // Called just before this Command runs the first time
