@@ -5,15 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ClimbCmdGrp.h"
+#include "commands/ClimbExtendGrp.h"
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/DriveStraightCmd.h"
 #include "commands/DriveWithIntakeMotorCmd.h"
 #include "commands/ExtendClimbBarsCmd.h"
 
-ClimbCmdGrp::ClimbCmdGrp() {
+ClimbExtendGrp::ClimbExtendGrp() {
   AddParallel(new SetIntakeArmAngleCmd(true, 150));
   AddSequential(new ExtendClimbBarsCmd());
+
+ 
 
   //AddSequential(new DriveWithIntakeMotorCmd());
   //AddSequential(new DriveStraightCmd(1.0));

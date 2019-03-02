@@ -9,7 +9,7 @@
 
 #include <frc/commands/CommandGroup.h>
 
-class ClimbCmdGrp : public frc::CommandGroup {
+class ClimbRetractGrp : public frc::CommandGroup {
  public:
-  ClimbCmdGrp();
+  ClimbRetractGrp();
 };
