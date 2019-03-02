@@ -30,6 +30,7 @@
 #include "commands/ToggleManipulatorPositionCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
 #include "commands/ExtendClimbBarsCmd.h"
+#include "commands/SetManipulatorCmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -117,10 +118,10 @@ OI::OI() {
   
   IntakeUntilLimitBtn.reset(new frc::JoystickButton(operatorController.get(), SET_INTAKE_MOTOR_BTN));
   IntakeUntilLimitBtn->WhenPressed(new IntakeBallFromRobotCmd());
-
-  setManipulatorEncoderZeroBtn.reset(new frc::JoystickButton(operatorController.get(), SET_MANIPULATOR_ENCODER_ZERO_BTN));
-  setManipulatorEncoderZeroBtn->WhenPressed(new SetElevatorandManipulatorCmd(0.0, 0.0));
 */
+  manipulatorToVerticalBtn.reset(new frc::JoystickButton(operatorController.get(), MANIPULATOR_TO_VERTICAL_BTN));
+  manipulatorToVerticalBtn->WhenPressed(new SetManipulatorCmd(0.0));
+
 
 }
 

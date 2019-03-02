@@ -5,45 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ChangeGearCmd.h"
+#include "commands/SetManipulatorCmd.h"
 #include "Robot.h"
-bool highGear;
 
-ChangeGearCmd::ChangeGearCmd() {
+SetManipulatorCmd::SetManipulatorCmd(double targetAngle) : targetAngle(targetAngle) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::elevatorSub);
+    Requires(&Robot::manipulatorSub);
 }
 
 // Called just before this Command runs the first time
-void ChangeGearCmd::Initialize() {
-  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-  highGear = Robot::elevatorSub.isShifterHigh();
+void SetManipulatorCmd::Initialize() {
+  Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_AUTO, 1.0, targetAngle);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ChangeGearCmd::Execute() {
-  if(highGear){
-    Robot::elevatorSub.setShifterHigh(false);
-  } else {
-    Robot::elevatorSub.setShifterHigh(true);
-  }
-}
+void SetManipulatorCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool ChangeGearCmd::IsFinished() { 
-   if(highGear != Robot::elevatorSub.isShifterHigh()){
-      return true;
-    } else {
-      return false;
-    }
-  }
+bool SetManipulatorCmd::IsFinished() { 
+  return Robot::manipulatorSub.isFlipperAtTarget(); 
+}
 
 // Called once after isFinished returns true
-void ChangeGearCmd::End() {}
+void SetManipulatorCmd::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ChangeGearCmd::Interrupted() {
+void SetManipulatorCmd::Interrupted() {
   End();
 }

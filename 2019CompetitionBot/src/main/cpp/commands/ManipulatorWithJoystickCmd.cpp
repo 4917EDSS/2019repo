@@ -34,11 +34,10 @@ void ManipulatorWithJoystickCmd::Execute() {
   switch(shift) {
     case 0: // Elevator (handled in ElevatorWithJoystickCmd)
     case 1: // Ball intake in/out flipper (handled in BallintakeWithJoystickCmd)  
-      Robot::manipulatorSub.setFlipperPower(0.0);
       break;
     
     case 2: // Manipulator flip forward/backward
-      Robot::manipulatorSub.setFlipperPower(verticalStick * 0.5);  // Limit power to 50%
+      Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_MANUAL, verticalStick * 0.5, 0);  // Limit power to 50%
       break;
 
     default:
@@ -47,7 +46,7 @@ void ManipulatorWithJoystickCmd::Execute() {
 
   // Left operator joystick vertical axis
   // Manipulator wheels in/out
-  double manipulatorStick = operatorJoystick->GetRawAxis(OPERATOR_MANIPULATOR_AXIS);
+  double manipulatorStick = operatorJoystick->GetRawAxis(OPERATOR_MANIPULATOR_AXIS) * (-1);
   manipulatorStick = pow(manipulatorStick, 3);
   Robot::manipulatorSub.setIntakePower(manipulatorStick);
 }
@@ -57,7 +56,6 @@ bool ManipulatorWithJoystickCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void ManipulatorWithJoystickCmd::End() {
-  Robot::manipulatorSub.setFlipperPower(0.0);
   Robot::manipulatorSub.setIntakePower(0.0);
 }
 
