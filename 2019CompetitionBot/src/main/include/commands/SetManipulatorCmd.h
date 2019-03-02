@@ -8,14 +8,16 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include "commands/frc4917Cmd.h"
 
-class SetLowGearWhileHeldCmd : public frc4917Cmd {
+class SetManipulatorCmd : public frc::Command {
  public:
-  SetLowGearWhileHeldCmd();
+  SetManipulatorCmd(double targetAngle);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+
+private:
+  double targetAngle;
 };

@@ -10,9 +10,9 @@
 #include <frc/commands/Command.h>
 #include "commands/frc4917Cmd.h"
 
-class ToggleHatchGripperCmd : public frc4917Cmd {
+class HatchGripperContractCmd : public frc4917Cmd {
  public:
-  ToggleHatchGripperCmd();
+  HatchGripperContractCmd();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

@@ -5,34 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CloseHatchPickupCmd.h"
-#include "robot.h"
+#include "commands/SetManipulatorCmd.h"
+#include "Robot.h"
 
-CloseHatchPickupCmd::CloseHatchPickupCmd() {
+SetManipulatorCmd::SetManipulatorCmd(double targetAngle) : targetAngle(targetAngle) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::manipulatorSub);
+    Requires(&Robot::manipulatorSub);
 }
 
 // Called just before this Command runs the first time
-void CloseHatchPickupCmd::Initialize() {
-  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-  Robot::manipulatorSub.contractHatchGripper();
+void SetManipulatorCmd::Initialize() {
+  Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_AUTO, 1.0, targetAngle);
 }
+
 // Called repeatedly when this Command is scheduled to run
-void CloseHatchPickupCmd::Execute() {
-}
+void SetManipulatorCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool CloseHatchPickupCmd::IsFinished() { return false; }
+bool SetManipulatorCmd::IsFinished() { 
+  return Robot::manipulatorSub.isFlipperAtTarget(); 
+}
 
 // Called once after isFinished returns true
-void CloseHatchPickupCmd::End() {
-  Robot::manipulatorSub.expandHatchGripper();
-}
+void SetManipulatorCmd::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void CloseHatchPickupCmd::Interrupted() {
+void SetManipulatorCmd::Interrupted() {
   End();
 }

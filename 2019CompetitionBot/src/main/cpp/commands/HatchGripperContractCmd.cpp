@@ -5,36 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ToggleHatchGripperCmd.h"
-#include "Robot.h"
+#include "commands/HatchGripperContractCmd.h"
+#include "robot.h"
 
-ToggleHatchGripperCmd::ToggleHatchGripperCmd() {
+HatchGripperContractCmd::HatchGripperContractCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  Requires(&Robot::manipulatorSub);
 }
 
 // Called just before this Command runs the first time
-void ToggleHatchGripperCmd::Initialize() {
+void HatchGripperContractCmd::Initialize() {
   logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-  if(Robot::manipulatorSub.isGripperExpanded()) {
-    Robot::manipulatorSub.contractHatchGripper();
-  }
-  else {
-    Robot::manipulatorSub.expandHatchGripper();
-  }
+  Robot::manipulatorSub.contractHatchGripper();
+}
+// Called repeatedly when this Command is scheduled to run
+void HatchGripperContractCmd::Execute() {
 }
 
-// Called repeatedly when this Command is scheduled to run
-void ToggleHatchGripperCmd::Execute() {}
-
 // Make this return true when this Command no longer needs to run execute()
-bool ToggleHatchGripperCmd::IsFinished() { return true; }
+bool HatchGripperContractCmd::IsFinished() { return true; }
 
 // Called once after isFinished returns true
-void ToggleHatchGripperCmd::End() {}
+void HatchGripperContractCmd::End() {
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ToggleHatchGripperCmd::Interrupted() {
+void HatchGripperContractCmd::Interrupted() {
   End();
 }

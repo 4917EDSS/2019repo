@@ -5,52 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/DriveToVisionCmd.h"
+#include "commands/HatchGripperExpandCmd.h"
 #include "Robot.h"
 
-DriveToVisionCmd::DriveToVisionCmd() {
+HatchGripperExpandCmd::HatchGripperExpandCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::drivetrainSub);
+  Requires(&Robot::manipulatorSub);
 }
 
 // Called just before this Command runs the first time
-void DriveToVisionCmd::Initialize() {
+void HatchGripperExpandCmd::Initialize() {
   logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
+  Robot::manipulatorSub.expandHatchGripper();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void DriveToVisionCmd::Execute() {
-  double xAngle = Robot::GetVisionTarget();
-
- if (xAngle > 9000){
-   Robot::drivetrainSub.drive(0.0, 0.0);
- }
- else {
-   Robot::drivetrainSub.drive( 0.5 + xAngle, 0.5 - xAngle);
- }
- 
-}
+void HatchGripperExpandCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool DriveToVisionCmd::IsFinished() { 
-  double xAngle = Robot::GetVisionTarget();
-
-  if (-1 < xAngle < 1){
-    return false;
-  }
-  else {
-    return false;
-  }
-}
+bool HatchGripperExpandCmd::IsFinished() { return true; }
 
 // Called once after isFinished returns true
-void DriveToVisionCmd::End() {
-  Robot::drivetrainSub.drive(0.0, 0.0);
+void HatchGripperExpandCmd::End() {
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void DriveToVisionCmd::Interrupted() {
+void HatchGripperExpandCmd::Interrupted() {
   End();
 }

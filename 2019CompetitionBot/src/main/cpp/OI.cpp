@@ -10,7 +10,6 @@
 #include <frc/WPILib.h>
 #include "Robot.h"
 #include "subsystems/BallIntakeSub.h"
-#include "Commands/CloseHatchPickupCmd.h"
 #include "commands/KillEverythingCmd.h"
 #include "commands/MilkyScoreGrp.h"
 #include "commands/MilkyManipulatorCmd.h"
@@ -23,11 +22,15 @@
 #include "commands/HatchModeGrp.h"
 #include "commands/CargoModeGrp.h"
 #include "commands/DynamicCommandPickerCmd.h"
-#include "commands/ExpandHatchGripperCmd.h"
+#include "commands/HatchGripperExpandCmd.h"
+#include "commands/HatchGripperContractCmd.h"
 #include "commands/frc4917Cmd.h"
 #include "commands/frc4917Grp.h"
 #include "commands/TogglePipeLineCmd.h"
+#include "commands/ToggleManipulatorPositionCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
+#include "commands/ExtendClimbBarsCmd.h"
+#include "commands/SetManipulatorCmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -59,6 +62,9 @@ OI::OI() {
   test1Btn.reset(new frc::JoystickButton(driverController.get(), TEST_1_BTN));
   test1Btn->WhenPressed(new SetElevatorToHeightCmd(1000.0));
 
+  extendClimbBarBtn.reset(new frc::JoystickButton(driverController.get(),EXTEND_CLIMB_BAR_BTN ));
+  extendClimbBarBtn->WhenPressed(new ExtendClimbBarsCmd());
+
   // Operator controller buttons
   elevatorToCargoShipHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_CARGO_SHIP_HEIGHT_BTN));
   elevatorToCargoShipHeightBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Cmd, frc4917Cmd>(new SetElevatorToHeightCmd(ELEVATOR_CARGO_SHIP_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM)));
@@ -72,6 +78,7 @@ OI::OI() {
   elevatorToHighHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_HIGH_HEIGHT_BTN));
   elevatorToHighHeightBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Cmd, frc4917Cmd>(new SetElevatorToHeightCmd(ELEVATOR_ROCKET_HIGH_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_HIGH_HATCH_HEIGHT_MM)));
 
+
   hatchModeBtn.reset(new frc::JoystickButton(operatorController.get(), HATCH_MODE_BTN));
   hatchModeBtn->WhenPressed(new HatchModeGrp());
 
@@ -79,10 +86,12 @@ OI::OI() {
   cargoModeBtn->WhenPressed(new CargoModeGrp());
 
   flipManipulatorBtn.reset(new frc::JoystickButton(operatorController.get(), FLIP_MANIPULATOR_BTN));
+  flipManipulatorBtn->WhenPressed(new ToggleManipulatorPositionCmd());
+  
   //elevatorToHighHeightBtn->WhenPressed(new );
 
   intakeHatchOrCargoBtn.reset(new frc::JoystickButton(operatorController.get(), INTAKE_HATCH_OR_CARGO_BTN));
-  intakeHatchOrCargoBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Grp, frc4917Cmd>(new IntakeBallGrp(), new ExpandHatchGripperCmd()));
+  intakeHatchOrCargoBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Grp, frc4917Cmd>(new IntakeBallGrp(), new HatchGripperExpandCmd()));
 
   multiCommand1Btn.reset(new frc::JoystickButton(operatorController.get(), MULTI_COMMAND_1_BTN));
   multiCommand1Btn->WhenPressed(new MultiButton1Cmd());
@@ -104,18 +113,15 @@ OI::OI() {
 
   // These commands are likley obsolete
 
-  hatchContractBtn.reset(new frc::JoystickButton(operatorController.get(), HATCH_CONTRACT_BTN));
-  hatchContractBtn->WhileHeld(new CloseHatchPickupCmd());
-
   intakeBallBtn.reset(new frc::JoystickButton(operatorController.get(), INTAKE_BALL_BTN));
   intakeBallBtn->WhenPressed(new IntakeBallGrp());
   
   IntakeUntilLimitBtn.reset(new frc::JoystickButton(operatorController.get(), SET_INTAKE_MOTOR_BTN));
   IntakeUntilLimitBtn->WhenPressed(new IntakeBallFromRobotCmd());
-
-  setManipulatorEncoderZeroBtn.reset(new frc::JoystickButton(operatorController.get(), SET_MANIPULATOR_ENCODER_ZERO_BTN));
-  setManipulatorEncoderZeroBtn->WhenPressed(new SetElevatorandManipulatorCmd(0.0, 0.0));
 */
+  manipulatorToVerticalBtn.reset(new frc::JoystickButton(operatorController.get(), MANIPULATOR_TO_VERTICAL_BTN));
+  manipulatorToVerticalBtn->WhenPressed(new SetManipulatorCmd(0.0));
+
 
 }
 
