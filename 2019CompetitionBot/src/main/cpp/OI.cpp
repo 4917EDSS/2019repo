@@ -13,7 +13,7 @@
 #include "commands/KillEverythingCmd.h"
 #include "commands/MilkyScoreGrp.h"
 #include "commands/MilkyManipulatorCmd.h"
-#include "commands/ClimbCmdGroup.h"
+#include "commands/ClimbCmdGrp.h"
 #include "commands/SetElevatorandManipulatorCmd.h"
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/IntakeBallFromRobotCmd.h"

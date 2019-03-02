@@ -310,7 +310,7 @@ bool BallIntakeSub::isIntakeArmBlocked(double currentAngle, double targetAngle) 
 }
 
 double BallIntakeSub::calcIntakeArmHoldPower(double currentAngle, double targetAngle) {
-return (-0.02 / 90)*(-targetAngle)  + ((targetAngle - currentAngle) * 0.0005 );
+return (-0.02 / 90)*(-targetAngle)  + ((targetAngle - currentAngle) * 0.01 );
 
 }
 
@@ -322,12 +322,14 @@ double BallIntakeSub::calcIntakeArmMovePower(double currentAngle, double targetA
     direction = -1.0;
   }
 
+double resultPower = (targetAngle - currentAngle) * 0.04;
+
   // TODO: Use better values
-  if (fabs(currentAngle - targetAngle) > 10) {
+  if (fabs(resultPower) > maxPower) {
     newPower = maxPower * direction;
   }
   else {
-    newPower = std::min(0.05, maxPower) * direction;
+    newPower = resultPower;
   }
 
   return newPower;

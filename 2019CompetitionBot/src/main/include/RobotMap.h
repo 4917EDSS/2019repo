@@ -32,7 +32,7 @@ constexpr int MANIPULATOR_FLIPPER_MOTOR_CAN_ID = 16;
 constexpr int MANIPULATOR_LEFT_INTAKE_MOTOR_CAN_ID = 13;
 constexpr int MANIPULATOR_RIGHT_INTAKE_MOTOR_CAN_ID = 14;
 
-constexpr int CLIMB_MOTOR_CAN_ID = 25;
+constexpr int CLIMB_MOTOR_CAN_ID = 17;
 
 //DIOs
 constexpr int BALL_SENSOR_DIO = 9;
