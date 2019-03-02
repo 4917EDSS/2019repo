@@ -31,12 +31,15 @@ constexpr int MANIPULATOR_FLIPPER_MOTOR_CAN_ID = 16;
 constexpr int MANIPULATOR_LEFT_INTAKE_MOTOR_CAN_ID = 13;
 constexpr int MANIPULATOR_RIGHT_INTAKE_MOTOR_CAN_ID = 14;
 
-constexpr int CLIMB_MOTOR_CAN_ID = 25;
+constexpr int CLIMB_MOTOR_CAN_ID = 17;
 
 //DIOs
 constexpr int BALL_SENSOR_DIO = 9;
 constexpr int INTAKE_MOTOR_ENC1_DIO = 2;
 constexpr int INTAKE_MOTOR_ENC2_DIO = 3;
 constexpr int BALL_INTAKE_ARM_LIMIT_DIO = 4;
-constexpr int MANIPULATOR_LIMIT_DIO = 0;    // TODO: Update
-
+constexpr int MANIPULATOR_LIMIT_DIO = 0;
+//todo: update
+//placeholder IDs
+constexpr int ELEVATOR_LOWER_LIMIT_DIO=6;
+constexpr int ELEVATOR_UPPER_LIMIT_DIO=5;

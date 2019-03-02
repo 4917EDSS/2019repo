@@ -40,6 +40,7 @@ constexpr int DRIVER_KILL_TWO_BTN = 12;
 constexpr int TOGGLE_PIPELINE_BTN = 6;
 constexpr int TEST_1_BTN = 1;
 constexpr int EXTEND_CLIMB_BAR_BTN = 5;
+constexpr int RETRACT_CLIMB_BAR_BTN = 7;
 
 // Driver Axes
 //...
@@ -62,6 +63,7 @@ constexpr int OPERATOR_KILL_TWO_BTN = 12;
 constexpr int OPERATOR_MANIPULATOR_AXIS = 1;
 constexpr int OPERATOR_INTAKE_ARM_AXIS = 2;
 constexpr int OPERATOR_ELEVATOR_AXIS = 3;
+
 
 // POV D-Pad
 constexpr int POV_INACTIVE = -1;
@@ -93,6 +95,7 @@ class OI {
     std::shared_ptr<frc::JoystickButton> togglePipeLineBtn;
     std::shared_ptr<frc::JoystickButton> test1Btn;
     std::shared_ptr<frc::JoystickButton> extendClimbBarBtn;
+    std::shared_ptr<frc::JoystickButton> retractClimbBarBtn;
 
     // Operator controller buttons
     std::shared_ptr<frc::JoystickButton> elevatorToCargoShipHeightBtn;

@@ -13,7 +13,7 @@
 #include "commands/KillEverythingCmd.h"
 #include "commands/MilkyScoreGrp.h"
 #include "commands/MilkyManipulatorCmd.h"
-#include "commands/ClimbCmdGroup.h"
+#include "commands/ClimbExtendGrp.h"
 #include "commands/SetElevatorandManipulatorCmd.h"
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/IntakeBallFromRobotCmd.h"
@@ -31,6 +31,7 @@
 #include "commands/SetElevatorToHeightCmd.h"
 #include "commands/ExtendClimbBarsCmd.h"
 #include "commands/SetManipulatorCmd.h"
+#include "commands/RetractClimbBarsCmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -62,8 +63,11 @@ OI::OI() {
   test1Btn.reset(new frc::JoystickButton(driverController.get(), TEST_1_BTN));
   test1Btn->WhenPressed(new SetElevatorToHeightCmd(1000.0));
 
-  extendClimbBarBtn.reset(new frc::JoystickButton(driverController.get(),EXTEND_CLIMB_BAR_BTN ));
-  extendClimbBarBtn->WhenPressed(new ExtendClimbBarsCmd());
+  extendClimbBarBtn.reset(new frc::JoystickButton(driverController.get(),EXTEND_CLIMB_BAR_BTN));
+  extendClimbBarBtn->WhileHeld(new ExtendClimbBarsCmd());
+
+  retractClimbBarBtn.reset(new frc::JoystickButton(driverController.get(),RETRACT_CLIMB_BAR_BTN));
+  retractClimbBarBtn->WhileHeld(new RetractClimbBarsCmd());
 
   // Operator controller buttons
   elevatorToCargoShipHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_CARGO_SHIP_HEIGHT_BTN));
