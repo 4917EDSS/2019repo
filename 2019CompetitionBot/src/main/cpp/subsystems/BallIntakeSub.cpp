@@ -330,19 +330,17 @@ double speedMult = 0.00;
 double BallIntakeSub::calcIntakeArmMovePower(double currentAngle, double targetAngle, double maxPower) {
   double direction = 1.0;
   double newPower = 0;
-  double negDirection = 1.0;
 
   if (currentAngle > targetAngle) {
     direction = -1.0;
-    negDirection = 1.004;
   }
 
   // TODO: Use better values
   if (fabs(currentAngle - targetAngle) > 10) {
-    newPower = maxPower * direction * negDirection;
+    newPower = maxPower * direction;
   }
   else {
-    newPower = std::min(0.05, maxPower) * direction * negDirection; //check
+    newPower = std::min(0.05, maxPower) * direction; //check
   }
 
   return newPower;
