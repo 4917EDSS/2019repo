@@ -19,7 +19,7 @@
 constexpr double ELEVATOR_POSITION_TOLERANCE_MM = 5.0;
 constexpr double ELEVATOR_VELOCITY_TOLERANCE_MM_S = 45; // TODO Determine value
 constexpr double MANUAL_MODE_POWER_DEADBAND = 0.03;
-constexpr double ELEVATOR_TICK_TO_MM_FACTOR = (28.94679); // TODO Determine value
+constexpr double ELEVATOR_TICK_TO_MM_FACTOR = (6.94); // TODO Determine value
 constexpr double ELEVATOR_IS_DOWN_TOLERANCE_MM = ELEVATOR_POSITION_TOLERANCE_MM + 1.0;
 
 // Elevator state machine states
@@ -39,7 +39,7 @@ ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
   // TODO: Add limit switch
 
   shifterSolenoid.reset(new frc::Solenoid(CLIMB_GEAR_PCM_ID));
-  setShifterHigh(true);
+  setShifterHigh(false);
 
   // Setup Shuffleboard for each input and output device
   frc::ShuffleboardTab &shuffleTab = frc::Shuffleboard::GetTab("Elevator");
@@ -81,13 +81,13 @@ void ElevatorSub::InitDefaultCommand() {
 void ElevatorSub::updateShuffleBoard() {
   nteSparksTwo[0].setPower.SetDouble(elevatorMotor1->Get());
   nteSparksTwo[0].outputCurrent.SetDouble(elevatorMotor1->GetOutputCurrent());
-  nteSparksTwo[0].encoderPosition.SetDouble(elevatorMotor1->GetEncoder().GetPosition());
+  nteSparksTwo[0].encoderPosition.SetDouble(elevatorMotor1->GetEncoder().GetPosition()) + ELEVATOR_MIN_HEIGHT_MM;
   nteSparksTwo[0].encoderVelocity.SetDouble(elevatorMotor1->GetEncoder().GetVelocity());
   nteSparksTwo[0].motorTemperature.SetDouble(elevatorMotor1->GetMotorTemperature());
 
   nteSparksTwo[1].setPower.SetDouble(elevatorMotor2->Get());
   nteSparksTwo[1].outputCurrent.SetDouble(elevatorMotor2->GetOutputCurrent());
-  nteSparksTwo[1].encoderPosition.SetDouble(elevatorMotor2->GetEncoder().GetPosition());
+  nteSparksTwo[1].encoderPosition.SetDouble(elevatorMotor2->GetEncoder().GetPosition() + ELEVATOR_MIN_HEIGHT_MM);
   nteSparksTwo[1].encoderVelocity.SetDouble(elevatorMotor2->GetEncoder().GetVelocity());
   nteSparksTwo[1].motorTemperature.SetDouble(elevatorMotor2->GetMotorTemperature());
 

@@ -10,12 +10,16 @@
 #include <frc/commands/Command.h>
 #include "commands/frc4917Cmd.h"
 
-class SetLowGearWhileHeldCmd : public frc4917Cmd {
+
+class SetElevatorCmd : public frc4917Cmd {
  public:
-  SetLowGearWhileHeldCmd();
-  void Initialize() override;
+  SetElevatorCmd(double targetHeight);
   void Execute() override;
+  void Initialize() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+
+ private:
+  double targetHeight;
 };

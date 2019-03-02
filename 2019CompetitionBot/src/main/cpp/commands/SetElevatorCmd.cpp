@@ -5,45 +5,36 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ChangeGearCmd.h"
-#include "Robot.h"
-bool highGear;
+#include "commands/SetElevatorCmd.h"
+#include "robot.h"
 
-ChangeGearCmd::ChangeGearCmd() {
+
+SetElevatorCmd::SetElevatorCmd(double targetHeight) : targetHeight(targetHeight) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::elevatorSub);
+
 }
 
 // Called just before this Command runs the first time
-void ChangeGearCmd::Initialize() {
-  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-  highGear = Robot::elevatorSub.isShifterHigh();
+void SetElevatorCmd::Initialize() {
+    Robot::elevatorSub.setElevatorHeight(ELEVATOR_MODE_AUTO, 0.5, targetHeight);
+
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ChangeGearCmd::Execute() {
-  if(highGear){
-    Robot::elevatorSub.setShifterHigh(false);
-  } else {
-    Robot::elevatorSub.setShifterHigh(true);
-  }
-}
+void SetElevatorCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool ChangeGearCmd::IsFinished() { 
-   if(highGear != Robot::elevatorSub.isShifterHigh()){
-      return true;
-    } else {
-      return false;
-    }
-  }
+bool SetElevatorCmd::IsFinished() {
+  return Robot::elevatorSub.isElevatorAtTarget();
+}
 
 // Called once after isFinished returns true
-void ChangeGearCmd::End() {}
+void SetElevatorCmd::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ChangeGearCmd::Interrupted() {
+void SetElevatorCmd::Interrupted() {
   End();
 }
