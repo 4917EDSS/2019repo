@@ -4,9 +4,8 @@
 ManipulatorOutCmd::ManipulatorOutCmd(double intakeTime) : intakeTime(intakeTime) {
   Requires(&Robot::manipulatorSub);
 }
-ManipulatorOutCmd::ManipulatorOutCmd() {
+ManipulatorOutCmd::ManipulatorOutCmd() : intakeTime(1.0) {
   Requires(&Robot::manipulatorSub);
-  double intakeTime=1.0;
 }
 
 void ManipulatorOutCmd::Initialize() {
