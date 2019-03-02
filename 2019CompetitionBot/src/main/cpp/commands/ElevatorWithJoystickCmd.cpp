@@ -27,7 +27,7 @@ void ElevatorWithJoystickCmd::Execute() {
   // In normal operation, this controls the elevator but when 'shift' buttons are selected,
   // it operates other mechanisms
   double power = operatorJoystick->GetRawAxis(OPERATOR_ELEVATOR_AXIS) * (-1); // Up is negative
-  power = pow(power, 3) * 0.5;  // Limit power to 50%
+  power = pow(power, 3);
 
   switch(shift) {
   case 0: // No shift, normal elevator operation
