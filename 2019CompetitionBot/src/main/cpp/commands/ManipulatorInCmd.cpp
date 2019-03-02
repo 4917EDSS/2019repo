@@ -1,7 +1,11 @@
 #include "commands/ManipulatorInCmd.h"
 #include "Robot.h"
-ManipulatorInCmd::ManipulatorInCmd () {
+ManipulatorInCmd::ManipulatorInCmd (double intakeTime) : intakeTime(intakeTime) {
   Requires(&Robot::manipulatorSub);
+}
+ManipulatorInCmd::ManipulatorInCmd() {
+  Requires(&Robot::manipulatorSub);
+  double intakeTime=1.0;
 }
 
 void ManipulatorInCmd::Initialize() {
@@ -13,7 +17,7 @@ void ManipulatorInCmd::Initialize() {
 void ManipulatorInCmd::Execute() {}
 
 bool ManipulatorInCmd::IsFinished() {
-  if (TimeSinceInitialized() >= 1.0) {
+  if (TimeSinceInitialized() >= intakeTime) {
     return true;
   }
   return false;

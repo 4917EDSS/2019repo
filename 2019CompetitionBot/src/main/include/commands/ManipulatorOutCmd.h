@@ -4,7 +4,10 @@
 
 class ManipulatorOutCmd : public frc4917Cmd
 {
+  private:
+    double intakeTime;
   public:
+    ManipulatorOutCmd(double intakeTime);
     ManipulatorOutCmd();
     void Initialize() override;
     void Execute() override;
