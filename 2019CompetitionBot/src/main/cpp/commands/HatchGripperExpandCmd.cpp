@@ -24,7 +24,12 @@ void HatchGripperExpandCmd::Initialize() {
 void HatchGripperExpandCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool HatchGripperExpandCmd::IsFinished() { return true; }
+bool HatchGripperExpandCmd::IsFinished() {
+  if(TimeSinceInitialized() >= 0.25) {
+    return true;
+}
+  return false;
+}
 
 // Called once after isFinished returns true
 void HatchGripperExpandCmd::End() {

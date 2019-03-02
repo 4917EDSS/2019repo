@@ -7,10 +7,14 @@
 
 #pragma once
 
-#include <frc/commands/CommandGroup.h>
-#include "commands/frc4917Grp.h"
+#include <frc/commands/Command.h>
 
-class IntakeBallGrp : public frc4917Grp {
+class RetractClimbBarsCmd : public frc::Command {
  public:
-  IntakeBallGrp();
+  RetractClimbBarsCmd();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
 };

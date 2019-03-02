@@ -8,9 +8,8 @@
 #pragma once
 
 #include <frc/commands/CommandGroup.h>
-#include "commands/frc4917Grp.h"
 
-class IntakeBallGrp : public frc4917Grp {
+class ClimbExtendGrp : public frc::CommandGroup {
  public:
-  IntakeBallGrp();
+  ClimbExtendGrp();
 };

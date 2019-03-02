@@ -13,11 +13,12 @@
 #include "commands/KillEverythingCmd.h"
 #include "commands/MilkyScoreGrp.h"
 #include "commands/MilkyManipulatorCmd.h"
-#include "commands/ClimbCmdGroup.h"
+#include "commands/ClimbExtendGrp.h"
 #include "commands/SetElevatorandManipulatorCmd.h"
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/IntakeBallFromRobotCmd.h"
 #include "commands/IntakeBallGrp.h"
+#include "commands/ExpandHatchGripperGrp.h"
 #include "commands/MultiButton1Cmd.h"
 #include "commands/HatchModeGrp.h"
 #include "commands/CargoModeGrp.h"
@@ -31,6 +32,7 @@
 #include "commands/SetElevatorToHeightCmd.h"
 #include "commands/ExtendClimbBarsCmd.h"
 #include "commands/SetManipulatorCmd.h"
+#include "commands/RetractClimbBarsCmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -62,8 +64,11 @@ OI::OI() {
   test1Btn.reset(new frc::JoystickButton(driverController.get(), TEST_1_BTN));
   test1Btn->WhenPressed(new SetElevatorToHeightCmd(1000.0));
 
-  extendClimbBarBtn.reset(new frc::JoystickButton(driverController.get(),EXTEND_CLIMB_BAR_BTN ));
-  extendClimbBarBtn->WhenPressed(new ExtendClimbBarsCmd());
+  extendClimbBarBtn.reset(new frc::JoystickButton(driverController.get(),EXTEND_CLIMB_BAR_BTN));
+  extendClimbBarBtn->WhileHeld(new ExtendClimbBarsCmd());
+
+  retractClimbBarBtn.reset(new frc::JoystickButton(driverController.get(),RETRACT_CLIMB_BAR_BTN));
+  retractClimbBarBtn->WhileHeld(new RetractClimbBarsCmd());
 
   // Operator controller buttons
   elevatorToCargoShipHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_CARGO_SHIP_HEIGHT_BTN));
@@ -91,7 +96,7 @@ OI::OI() {
   //elevatorToHighHeightBtn->WhenPressed(new );
 
   intakeHatchOrCargoBtn.reset(new frc::JoystickButton(operatorController.get(), INTAKE_HATCH_OR_CARGO_BTN));
-  intakeHatchOrCargoBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Grp, frc4917Cmd>(new IntakeBallGrp(), new HatchGripperExpandCmd()));
+  intakeHatchOrCargoBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Grp, frc4917Grp>(new IntakeBallGrp(), new ExpandHatchGripperGrp()));
 
   multiCommand1Btn.reset(new frc::JoystickButton(operatorController.get(), MULTI_COMMAND_1_BTN));
   multiCommand1Btn->WhenPressed(new MultiButton1Cmd());

@@ -36,9 +36,10 @@ ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
   elevatorMotor2->GetEncoder().SetPosition(0); // Not used but good to have as a backup
   elevatorMotor1->GetEncoder().SetPositionConversionFactor(ELEVATOR_TICK_TO_MM_FACTOR);
   elevatorMotor2->GetEncoder().SetPositionConversionFactor(ELEVATOR_TICK_TO_MM_FACTOR);
-
-  // TODO: Add limit switch
-
+//limit switches
+  lowerLimit.reset(new frc::DigitalInput(ELEVATOR_LOWER_LIMIT_DIO));
+  upperLimit.reset(new frc::DigitalInput(ELEVATOR_UPPER_LIMIT_DIO));
+//shifter
   shifterSolenoid.reset(new frc::Solenoid(CLIMB_GEAR_PCM_ID));
   setShifterHigh(false);
 
@@ -305,6 +306,10 @@ bool ElevatorSub::isElevatorBlocked(double currentHeightMm, double targetHeightM
 
   if (currentHeightMm > targetHeightMm) {
     direction = -1.0;
+  }
+
+  if (lowerLimit->Get() && direction < 0) {
+    return true;
   }
 
   if (((currentHeightMm >= ELEVATOR_MAX_HEIGHT_MM) && (direction > 0)) ||

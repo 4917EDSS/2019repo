@@ -17,7 +17,7 @@ constexpr double INTAKE_ARM_MAX_ANGLE = 150; //change
 constexpr double INTAKE_ARM_MIN_ANGLE = 0;
 constexpr double INTAKE_ARM_ANGLE_TOLERANCE = 1.0;
 constexpr double INTAKE_ARM_VELOCITY_TOLERANCE = 45;
-constexpr double INTAKE_ARM_TICK_TO_DEGREE_FACTOR = (-90.0 / 32.0);
+constexpr double INTAKE_ARM_TICK_TO_DEGREE_FACTOR = (90.0 / 19.0);
 constexpr double MANUAL_MODE_POWER_DEADBAND = 0.03;
 
 // Intake arm state machine states
@@ -29,11 +29,11 @@ constexpr int INTAKE_ARM_STATE_INTERRUPTED = 3;
 BallIntakeSub::BallIntakeSub() : Subsystem("BallIntakeSub") {
   flipperMotor.reset(new rev::CANSparkMax(BALL_INTAKE_FLIP_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   intakeArmEnc.reset(new frc::Encoder(INTAKE_MOTOR_ENC1_DIO, INTAKE_MOTOR_ENC2_DIO));
-  intakeArmEnc->SetDistancePerPulse(INTAKE_ARM_TICK_TO_DEGREE_FACTOR);
+  //intakeArmEnc->SetDistancePerPulse(INTAKE_ARM_TICK_TO_DEGREE_FACTOR);
   ballIntakeArmLimit.reset(new frc::DigitalInput(BALL_INTAKE_ARM_LIMIT_DIO));
   intakeFolderSolenoid.reset(new frc::Solenoid(BALL_INTAKE_FOLDER_PCM_ID));
   unfoldIntakeArms();
-
+//19
   ballIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::WPI_VictorSPX(BALL_INTAKE_WHEELS_MOTOR_CAN_ID));
   
   // Setup Shuffleboard for each input and output device
@@ -80,7 +80,7 @@ void BallIntakeSub::updateShuffleBoard() {
   nteFlipperMotor.encoderVelocity.SetDouble(flipperMotor->GetEncoder().GetVelocity());
   nteFlipperMotor.motorTemperature.SetDouble(flipperMotor->GetMotorTemperature());
   
-  nteIntakeArmEncPosition.SetDouble(intakeArmEnc->Get());
+  nteIntakeArmEncPosition.SetDouble(intakeArmEnc->GetDistance());
   nteBallIntakeArmLimit.SetBoolean(ballIntakeArmLimit->Get());
   nteIntakeFolderSolenoid.SetBoolean(intakeFolderSolenoid->Get());
   nteBallIntakeMotor.SetDouble(ballIntakeMotor->Get());
@@ -91,7 +91,7 @@ void BallIntakeSub::setIntakeArmPower(double power) {
 }
 
 double BallIntakeSub::getIntakeArmAngle() {
-  return intakeArmEnc->GetDistance();
+  return flipperMotor->GetEncoder().GetPosition() * INTAKE_ARM_TICK_TO_DEGREE_FACTOR;
 }
 
 double BallIntakeSub::getIntakeArmVelocity() {
@@ -252,7 +252,7 @@ void BallIntakeSub::updateIntakeArmStateMachine() {
   
       newPower = calcIntakeArmHoldPower(currentAngle, intakeArmTargetAngle);
       
-      logger.send(logger.BALLINTAKE, "IASM: Holding (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
+      logger.send(logger.BALLINTAKE, "IASM: Holding (P=%3.4f, S=%d, T=%6.1f, C=%6.1f)\n",
           newPower, intakeArmState, intakeArmTargetAngle, currentAngle);
       break;
 
@@ -315,7 +315,15 @@ bool BallIntakeSub::isIntakeArmBlocked(double currentAngle, double targetAngle) 
 }
 
 double BallIntakeSub::calcIntakeArmHoldPower(double currentAngle, double targetAngle) {
-return (-0.02 / 90)*(-targetAngle)  + ((targetAngle - currentAngle) * 0.003 ); //check
+double speedMult = 0.00;
+  if(currentAngle < 60){
+    speedMult = 0.003;
+  } else {
+    speedMult = -0.003;
+  }
+  std::cout<<"Target: " << targetAngle << "Current: " << currentAngle<< "speedmult: " << speedMult << std::endl;
+  return  ((targetAngle - currentAngle) * speedMult);
+ //check
 
 }
 
@@ -327,12 +335,14 @@ double BallIntakeSub::calcIntakeArmMovePower(double currentAngle, double targetA
     direction = -1.0;
   }
 
+double resultPower = (targetAngle - currentAngle) * 0.04;
+
   // TODO: Use better values
-  if (fabs(currentAngle - targetAngle) > 10) {
+  if (fabs(resultPower) > maxPower) {
     newPower = maxPower * direction;
   }
   else {
-    newPower = std::min(0.05, maxPower) * direction; //check
+    newPower = resultPower;
   }
 
   return newPower;
