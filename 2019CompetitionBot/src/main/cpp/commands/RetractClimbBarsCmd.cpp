@@ -5,50 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/SetIntakeArmAngleCmd.h"
+#include "commands/RetractClimbBarsCmd.h"
+#include "subsystems/ClimbSub.h"
 #include "Robot.h"
-#include <iostream>
 
-SetIntakeArmAngleCmd::SetIntakeArmAngleCmd(bool isClimbing, double angle)  {
+RetractClimbBarsCmd::RetractClimbBarsCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::ballIntakeSub);
-
-  isClimbingNow = isClimbing;
-  targetAngle = angle;
-}
-
-SetIntakeArmAngleCmd::SetIntakeArmAngleCmd(double angle) {
-  SetIntakeArmAngleCmd(false, angle);
 }
 
 // Called just before this Command runs the first time
-void SetIntakeArmAngleCmd::Initialize() {
-  logger.send(logger.CMD_TRACE, "%s : %s | Angle = %.1f\n", __FILE__, __FUNCTION__, targetAngle);
-  
-  if (isClimbingNow) {
-    Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_AUTO, 0.7, targetAngle);
-  } else {
-    Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_AUTO, 0.5, targetAngle);
-  }
-
+void RetractClimbBarsCmd::Initialize() {
+    Robot::climbSub.SetClimbMotor(-1);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void SetIntakeArmAngleCmd::Execute() {
-  
-}
+void RetractClimbBarsCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool SetIntakeArmAngleCmd::IsFinished() {  
-    return Robot::ballIntakeSub.isIntakeArmAtTarget(); 
-}
+bool RetractClimbBarsCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void SetIntakeArmAngleCmd::End() {}
+void RetractClimbBarsCmd::End() {
+      Robot::climbSub.SetClimbMotor(0);
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void SetIntakeArmAngleCmd::Interrupted() {
+void RetractClimbBarsCmd::Interrupted() {
   End();
 }
