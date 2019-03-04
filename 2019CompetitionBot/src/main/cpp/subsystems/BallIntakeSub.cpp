@@ -33,8 +33,8 @@ BallIntakeSub::BallIntakeSub() : Subsystem("BallIntakeSub") {
   ballIntakeArmLimit.reset(new frc::DigitalInput(BALL_INTAKE_ARM_LIMIT_DIO));
   intakeFolderSolenoid.reset(new frc::Solenoid(BALL_INTAKE_FOLDER_PCM_ID));
   unfoldIntakeArms();
-//19
   ballIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::WPI_VictorSPX(BALL_INTAKE_WHEELS_MOTOR_CAN_ID));
+  intakeWheelPower = 0;
   
   // Setup Shuffleboard for each input and output device
   frc::ShuffleboardTab &shuffleTab = frc::Shuffleboard::GetTab("Ball Intake");
@@ -47,7 +47,7 @@ BallIntakeSub::BallIntakeSub() : Subsystem("BallIntakeSub") {
   nteFlipperMotor.encoderVelocity = (shuffleList.Add("Velocity", 0).GetEntry());
   nteFlipperMotor.motorTemperature = (shuffleList.Add("Motor Temp", 0).GetEntry());
   
-  nteIntakeArmEncPosition = (shuffleTab.Add("Intake Position", 0).GetEntry());
+  nteIntakeArmEncPosition = (shuffleTab.Add("Intake Pos", 0).GetEntry());
   nteBallIntakeArmLimit = (shuffleTab.Add("Intake Limit", 0).GetEntry());
   nteIntakeFolderSolenoid = (shuffleTab.Add("Folder", 0).GetEntry());
   nteBallIntakeMotor = (shuffleTab.Add("Intake", 0).GetEntry());
@@ -99,8 +99,6 @@ double BallIntakeSub::getIntakeArmVelocity() {
 }
 
 bool BallIntakeSub::isIntakeAtLimit() {
-  if(!ballIntakeArmLimit->Get()){
-  }
   return !ballIntakeArmLimit->Get();
 }
 
@@ -118,10 +116,13 @@ bool BallIntakeSub::isIntakeUnfolded() {
 
 void BallIntakeSub::setIntakeWheelPower(double power) {
   ballIntakeMotor->Set(ControlMode::PercentOutput, power);
+  intakeWheelPower = power;
 }
 
 double BallIntakeSub::getIntakeWheelPower() {
-  return ballIntakeMotor->Get();
+  return intakeWheelPower;
+  // The Get function seems to be broken.
+  //return ballIntakeMotor->Get();
 }
 
 

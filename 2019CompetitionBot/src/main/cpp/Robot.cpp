@@ -51,7 +51,6 @@ void Robot::RobotInit() {
   logger.addOutputPath(new frc4917::ConsoleOutput());						            // Enable console output and/or
   logger.addOutputPath(new frc4917::SyslogOutput(syslogTargetAddress));		  // Enable syslog output
   logger.send(logger.DEBUGGING, "Robot code started @ %f\n", GetTime());
-  logger.send(logger.ELEVATOR, "Robot code started @ %f\n", GetTime());
 
   std::cout << "Starting version 1.6\n";
 
@@ -183,14 +182,15 @@ void Robot::UpdateSmartDashboard() {
   frc::SmartDashboard::PutNumber("Target's longest side of fitted bounding box", targetLong);
   frc::SmartDashboard::PutNumber("Target's horiz. sidelength of rough bounding box", targetHorizontalLength);
   frc::SmartDashboard::PutNumber("Target's vert. sidelength of rough bounding box", targetVerticalLength);
-  frc::SmartDashboard::PutNumber("Left Drive Motor Enc", drivetrainSub.GetLeftEncoder());
-  frc::SmartDashboard::PutNumber("Right Drive Motor Enc", drivetrainSub.GetRightEncoder());
-  frc::SmartDashboard::PutNumber("Gyro's Angle", drivetrainSub.getAngle());
+  
+  frc::SmartDashboard::PutNumber("Elevator Height", elevatorSub.getElevatorHeight());
+  frc::SmartDashboard::PutNumber("Manip Angle", manipulatorSub.getFlipperAngle());
+  frc::SmartDashboard::PutNumber("Manip Wheels", manipulatorSub.getIntakePower());
+  frc::SmartDashboard::PutBoolean("Gripper Exp.", manipulatorSub.isGripperExpanded());
+  frc::SmartDashboard::PutBoolean("Ball-In Sensor", manipulatorSub.isBallIn());
   frc::SmartDashboard::PutNumber("Intake Arm Angle",ballIntakeSub.getIntakeArmAngle());
-  frc::SmartDashboard::PutNumber("Manipulator Angle", manipulatorSub.getFlipperAngle());
-  frc::SmartDashboard::PutNumber("Elevator Height mm", elevatorSub.getElevatorHeight());
-  frc::SmartDashboard::PutNumber("Ball In Sensor", manipulatorSub.isBallIn());
-  frc::SmartDashboard::PutNumber("O POV", Robot::oi.getOperatorController()->GetPOV());
+  frc::SmartDashboard::PutBoolean("Intake Unfolded",ballIntakeSub.isIntakeUnfolded());
+  frc::SmartDashboard::PutNumber("Yaw Angle", drivetrainSub.getAngle());  
 }
 
 void Robot::pipeLineToggle(bool pipeLine){

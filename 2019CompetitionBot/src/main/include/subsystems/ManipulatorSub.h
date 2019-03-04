@@ -64,6 +64,7 @@ class ManipulatorSub : public frc::Subsystem {
   double getFlipperVelocity();
   bool isFlipperAtLimit();
   void setIntakePower(double power);
+  double getIntakePower();
   bool isBallIn();
   void expandHatchGripper();  
   void contractHatchGripper();

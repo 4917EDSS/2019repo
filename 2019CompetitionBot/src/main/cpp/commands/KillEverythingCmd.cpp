@@ -14,6 +14,7 @@ KillEverythingCmd::KillEverythingCmd() {
   Requires(&Robot::ballIntakeSub);
   Requires(&Robot::drivetrainSub);
   Requires(&Robot::elevatorSub);
+  Requires(&Robot::climbSub);
 }
 
 // Called just before this Command runs the first time

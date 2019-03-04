@@ -21,6 +21,7 @@ constexpr int INTAKE_ARM_MODE_MANUAL = 2;
 class BallIntakeSub : public frc::Subsystem {
  private:
   std::shared_ptr<ctre::phoenix::motorcontrol::can::WPI_VictorSPX> ballIntakeMotor;
+  double intakeWheelPower;
   std::shared_ptr<rev::CANSparkMax> flipperMotor;
   std::shared_ptr<frc::Solenoid> intakeFolderSolenoid;
   std::shared_ptr<frc::Encoder> intakeArmEnc;

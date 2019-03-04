@@ -121,6 +121,10 @@ void ManipulatorSub::setIntakePower(double power) {
   intakeMotorLeft->Set(power);
 }
 
+double ManipulatorSub::getIntakePower() {
+  return intakeMotorLeft->Get();
+}
+
 bool ManipulatorSub::isBallIn() {
   return !intakeFromRobotLimit->Get();
 }
