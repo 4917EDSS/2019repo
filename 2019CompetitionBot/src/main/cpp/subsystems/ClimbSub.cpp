@@ -9,7 +9,7 @@
 #include "RobotMap.h"
 
 ClimbSub::ClimbSub() : Subsystem("ExampleSubsystem") {
-climbMotor.reset(new WPI_VictorSPX(CLIMB_MOTOR_CAN_ID));
+climbMotor.reset(new WPI_TalonSRX(CLIMB_MOTOR_CAN_ID));
 	climbMotor->SetName("Climb");
 }
 
