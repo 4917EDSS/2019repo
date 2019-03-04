@@ -475,72 +475,12 @@
           }
         }
       }
-    },
-    {
-      "title": "Tab 7",
-      "autoPopulate": false,
-      "autoPopulatePrefix": "",
-      "widgetPane": {
-        "gridSize": 128.0,
-        "showGrid": true,
-        "hgap": 16.0,
-        "vgap": 16.0,
-        "tiles": {}
-      }
-    },
-    {
-      "title": "Tab 8",
-      "autoPopulate": false,
-      "autoPopulatePrefix": "",
-      "widgetPane": {
-        "gridSize": 128.0,
-        "showGrid": true,
-        "hgap": 16.0,
-        "vgap": 16.0,
-        "tiles": {}
-      }
-    },
-    {
-      "title": "Tab 9",
-      "autoPopulate": false,
-      "autoPopulatePrefix": "",
-      "widgetPane": {
-        "gridSize": 128.0,
-        "showGrid": true,
-        "hgap": 16.0,
-        "vgap": 16.0,
-        "tiles": {}
-      }
-    },
-    {
-      "title": "Tab 10",
-      "autoPopulate": false,
-      "autoPopulatePrefix": "",
-      "widgetPane": {
-        "gridSize": 128.0,
-        "showGrid": true,
-        "hgap": 16.0,
-        "vgap": 16.0,
-        "tiles": {}
-      }
-    },
-    {
-      "title": "Tab 11",
-      "autoPopulate": false,
-      "autoPopulatePrefix": "",
-      "widgetPane": {
-        "gridSize": 128.0,
-        "showGrid": true,
-        "hgap": 16.0,
-        "vgap": 16.0,
-        "tiles": {}
-      }
     }
   ],
   "windowGeometry": {
     "x": 0.0,
     "y": 0.0,
-    "width": 1920.0,
-    "height": 1040.0
+    "width": 1553.5999755859375,
+    "height": 881.5999755859375
   }
 }
