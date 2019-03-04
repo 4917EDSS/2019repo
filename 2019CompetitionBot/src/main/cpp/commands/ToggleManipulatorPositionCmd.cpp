@@ -18,14 +18,45 @@ ToggleManipulatorPositionCmd::ToggleManipulatorPositionCmd() {
 // Called just before this Command runs the first time
 void ToggleManipulatorPositionCmd::Initialize() {
   double targetAngle;
+  int shift = Robot::oi.getOperatorShiftState();
 
   logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
 
-  if(Robot::manipulatorSub.getFlipperTargetAngle() > 0) {
-    targetAngle = -90;
-  }
-  else {
-    targetAngle = 90;
+  switch(shift) {  
+    case 0:
+      // Toggle between 90 deg forwards or 90 deg backwards
+      if(Robot::manipulatorSub.getFlipperTargetAngle() > 0) {
+        targetAngle = -90;
+      }
+      else {
+        targetAngle = 90;
+      }
+    break;
+
+    case 1:
+      // Shift-Up:  Rotate to vertical
+      targetAngle = 0;
+      break;
+
+    case 2:
+      // Shift-Right:  Rotate to 90 deg forwards
+      targetAngle = 90;
+      break;
+
+    case 4:
+      // Shift-Left:  Rotate to 90 deg backwards
+      targetAngle = -90;
+      break;
+
+    default:
+      // Should never happen
+      if(Robot::manipulatorSub.getFlipperTargetAngle() > 0) {
+        targetAngle = -90;
+      }
+      else {
+        targetAngle = 90;
+      }
+    break;
   }
 
   Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_AUTO, 1.0, targetAngle);

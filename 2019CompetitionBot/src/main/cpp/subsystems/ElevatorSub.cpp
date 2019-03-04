@@ -59,6 +59,16 @@ ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
   }
   nteShifterSolenoid = (shuffleTab.Add("Shiffter", 0).GetEntry());
 
+  frc::ShuffleboardLayout &shuffleList = shuffleTab.GetLayout("State Machine", frc::BuiltInLayouts::kList);
+  shuffleList.WithSize(1, 3);
+  shuffleList.WithPosition(3, 0);
+  nteSmMode = (shuffleList.Add("Mode", 0).GetEntry());
+  nteSmState = (shuffleList.Add("State", 0).GetEntry());
+  nteLastPower = (shuffleList.Add("Power", 0).GetEntry());
+  nteSmMaxPower = (shuffleList.Add("Max Power", 0).GetEntry());
+  nteSmTarget = (shuffleList.Add("Target", 0).GetEntry());
+  nteSmBlockedAt = (shuffleList.Add("Blocked At", 0).GetEntry());
+
   // Initialize elevator state machine
   elevatorNewStateParameters = false;
   elevatorNewControlMode = ELEVATOR_MODE_DISABLED;
@@ -94,6 +104,13 @@ void ElevatorSub::updateShuffleBoard() {
   nteSparksTwo[1].motorTemperature.SetDouble(elevatorMotor2->GetMotorTemperature());
 
   nteShifterSolenoid.SetBoolean(shifterSolenoid->Get());
+
+  nteSmMode.SetDouble(elevatorControlMode);
+  nteSmState.SetDouble(elevatorState);
+  nteLastPower.SetDouble(elevatorLastPower);
+  nteSmMaxPower.SetDouble(elevatorMaxPower);
+  nteSmTarget.SetDouble(elevatorTargetHeightMm);
+  nteSmBlockedAt.SetDouble(elevatorBlockedHeightMm);
 }
 
 void ElevatorSub::setElevatorMotorPower(double power) {

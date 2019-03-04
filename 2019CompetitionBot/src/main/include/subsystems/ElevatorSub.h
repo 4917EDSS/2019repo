@@ -45,6 +45,13 @@ class ElevatorSub : public frc::Subsystem {
   nt::NetworkTableEntry nteIntakeFromRobotLimit;
   nt::NetworkTableEntry nteShifterSolenoid;
 
+  nt::NetworkTableEntry nteSmMode;
+  nt::NetworkTableEntry nteSmState;
+  nt::NetworkTableEntry nteLastPower;
+  nt::NetworkTableEntry nteSmMaxPower;
+  nt::NetworkTableEntry nteSmTarget;
+  nt::NetworkTableEntry nteSmBlockedAt;
+
   // Elevator state machine variables and functions
   bool elevatorNewStateParameters;
   int elevatorNewControlMode;
