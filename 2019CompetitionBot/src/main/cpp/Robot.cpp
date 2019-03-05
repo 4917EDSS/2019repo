@@ -43,7 +43,7 @@ void Robot::RobotInit() {
   //logger.enableChannels(logger.VISION);
   //logger.enableChannels(logger.PERIODIC);
   logger.enableChannels(logger.CMD_TRACE);
-  //logger.enableChannels(logger.ELEVATOR);
+  logger.enableChannels(logger.ELEVATOR);
   //logger.enableChannels(logger.BALLINTAKE);
   //logger.enableChannels(logger.MANIPULATOR);
   //logger.enableChannels(logger.WITH_JOYSTICK_TRACE);
@@ -190,7 +190,7 @@ void Robot::UpdateSmartDashboard() {
   frc::SmartDashboard::PutBoolean("Ball-In Sensor", manipulatorSub.isBallIn());
   frc::SmartDashboard::PutNumber("Intake Arm Angle",ballIntakeSub.getIntakeArmAngle());
   frc::SmartDashboard::PutBoolean("Intake Unfolded",ballIntakeSub.isIntakeUnfolded());
-  frc::SmartDashboard::PutNumber("Yaw Angle", drivetrainSub.getAngle());  
+  frc::SmartDashboard::PutNumber("Yaw Angle", drivetrainSub.getAngle());
 }
 
 void Robot::pipeLineToggle(bool pipeLine){
