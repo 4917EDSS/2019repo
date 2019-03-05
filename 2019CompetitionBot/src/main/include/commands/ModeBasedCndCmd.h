@@ -9,13 +9,8 @@
 
 #include <frc/commands/ConditionalCommand.h>
 
-class DynamicElevatorHeightCnd : public frc::ConditionalCommand {
+class ModeBasedCndCmd : public frc::ConditionalCommand {
  public:
-  DynamicElevatorHeightCnd(Command *onTrue, Command *onFalse);
+  ModeBasedCndCmd(Command *onTrue, Command *onFalse);
   bool Condition() override;
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
 };

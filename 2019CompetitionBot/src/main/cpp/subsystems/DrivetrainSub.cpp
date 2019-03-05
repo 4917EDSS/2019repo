@@ -21,7 +21,6 @@ constexpr float MOTOR_POWER_SCALING_FACTOR = 0.8;  // TODO:  Is this necessary?
 
 DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub"){
 
-  // Todo - use proper CAN ID defines
   rightMotor1.reset(new rev::CANSparkMax(RIGHT_DRIVE_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   rightMotor2.reset(new rev::CANSparkMax(RIGHT_DRIVE_MOTOR_2_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   rightMotor3.reset(new rev::CANSparkMax(RIGHT_DRIVE_MOTOR_3_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
@@ -30,7 +29,6 @@ DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub"){
   leftMotor2.reset(new rev::CANSparkMax(LEFT_DRIVE_MOTOR_2_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   leftMotor3.reset(new rev::CANSparkMax(LEFT_DRIVE_MOTOR_3_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
 
-  // TODO: Determine if this is necessary
   rightMotor1->SetSmartCurrentLimit(50);
   rightMotor2->SetSmartCurrentLimit(50);
   rightMotor3->SetSmartCurrentLimit(50);

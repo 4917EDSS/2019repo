@@ -337,11 +337,9 @@ bool ManipulatorSub::isFlipperBlocked(double currentAngle, double targetAngle) {
 }
 
 double ManipulatorSub::calcFlipperHoldPower(double currentAngle, double targetAngle) {
-  // TODO:  Determine actual value for this.
   // 3% power holds flipper at a 90 degree angle  
   // Make propertional to target.
-  // Take into consideration flipper position
-  return (0.03 / 90) * (-targetAngle) + ((targetAngle - currentAngle) * 0.0005);
+  return ((0.03 / 90) * (-targetAngle)) + ((targetAngle - currentAngle) * 0.0005);
 }
 
 double ManipulatorSub::calcFlipperMovePower(double currentAngle, double targetAngle, double maxPower) {
@@ -351,6 +349,8 @@ double ManipulatorSub::calcFlipperMovePower(double currentAngle, double targetAn
   if(currentAngle > targetAngle) {
     direction = -1.0;
   }
+
+  // Throttle the power once we get to 25 deg from the target
   double resultPower = (targetAngle - currentAngle) * 0.04;
 
   if(fabs(resultPower) > maxPower) {

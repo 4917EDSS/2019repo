@@ -18,9 +18,9 @@
 #include "Robot.h"
 
 constexpr double ELEVATOR_POSITION_TOLERANCE_MM = 10.0;
-constexpr double ELEVATOR_VELOCITY_TOLERANCE_MM_S = 45; // TODO Determine value
+constexpr double ELEVATOR_VELOCITY_TOLERANCE_MM_S = 45;
 constexpr double MANUAL_MODE_POWER_DEADBAND = 0.03;
-constexpr double ELEVATOR_TICK_TO_MM_FACTOR = (6.94); // TODO Determine value
+constexpr double ELEVATOR_TICK_TO_MM_FACTOR = (6.94);
 constexpr double ELEVATOR_IS_DOWN_TOLERANCE_MM = ELEVATOR_POSITION_TOLERANCE_MM + 1.0;
 
 // Elevator state machine states
@@ -227,7 +227,7 @@ void ElevatorSub::setElevatorHeight(int mode, double maxPower, double targetHeig
 bool ElevatorSub::isElevatorAtTarget() {
   if (elevatorNewStateParameters) {
     // Haven't even implemented the new request so we can't be done
-  //  return false;
+    return false;
   }
 
   if ((fabs(elevatorTargetHeightMm - getElevatorHeight()) < ELEVATOR_POSITION_TOLERANCE_MM) &&
@@ -237,8 +237,8 @@ bool ElevatorSub::isElevatorAtTarget() {
     return true;
   }
   else {
-    logger.send(logger.ELEVATOR, "IEAT: Elevator not at target (T=%.1f, C=%.1f, V=%.1f)\n", 
-        elevatorTargetHeightMm, getElevatorHeight(), getElevatorVelocity());
+  // logger.send(logger.ELEVATOR, "IEAT: Elevator not at target (T=%.1f, C=%.1f, V=%.1f)\n", 
+  //      elevatorTargetHeightMm, getElevatorHeight(), getElevatorVelocity());
     return false;
   }
 }
@@ -356,9 +356,6 @@ bool ElevatorSub::isElevatorBlocked(double currentHeightMm, double targetHeightM
 }
 
 double ElevatorSub::calcElevatorHoldPower(double currentHeightMm, double targetHeightMm) {
-  // TODO:  Determine actual value for this.
-  // Make propertional to target.
-  // Take into consideration elevator gear and if carrying hatch/cargo?
   double holdPower = (targetHeightMm - currentHeightMm) * 0.003;
 
   return holdPower;
@@ -372,7 +369,8 @@ double ElevatorSub::calcElevatorMovePower(double currentHeightMm, double targetH
     direction = -1.0;
   }
 
-  double resultPower = (targetHeightMm - currentHeightMm) * 0.02;
+  // Throttle the power once we get to 100mm from the target
+  double resultPower = (targetHeightMm - currentHeightMm) * 0.01;
 
   if(fabs(resultPower) > maxElevatorPower) {
     newPower = maxElevatorPower * direction;
