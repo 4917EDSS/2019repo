@@ -14,6 +14,10 @@
 #include <rev/CANSparkMaxLowLevel.h>
 #include <RobotMap.h>
 #include "SparkShuffleboardEntrySet.h"
+
+constexpr double INTAKE_NEUTRAL_ANGLE = 45; // TODO:  Check and update
+constexpr double INTAKE_CARGO_ANGLE = 90;   // TODO:  Check and update
+
 constexpr int INTAKE_ARM_MODE_DISABLED = 0;
 constexpr int INTAKE_ARM_MODE_AUTO = 1;
 constexpr int INTAKE_ARM_MODE_MANUAL = 2;

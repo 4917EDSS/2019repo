@@ -5,17 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/IntakeBallGrp.h"
-#include "commands/IntakeBallFromRobotCmd.h"
+#include <iostream>
+#include "Robot.h"
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/FoldIntakeCmd.h"
-#include "commands/SetElevatorandManipulatorCmd.h"
-#include <iostream>
+#include "commands/SetElevatorToHeightCmd.h"
+#include "commands/SetManipulatorCmd.h"
+#include "commands/IntakeBallFromRobotCmd.h"
+#include "commands/IntakeBallGrp.h"
+
 IntakeBallGrp::IntakeBallGrp() {
-//false = pnematics pulled in
+  AddSequential(new SetIntakeArmAngleCmd(INTAKE_CARGO_ANGLE));
   AddParallel(new FoldIntakeCmd(false));
-  //AddParallel(new FoldIntakeCmd(false));
-  AddSequential(new SetIntakeArmAngleCmd(90));
-  //std::cout << "intake ball group working";
-  //AddSequential(new IntakeBallFromRobotCmd());
+  AddSequential(new SetElevatorToHeightCmd(ELEVATOR_CARGO_FLOOR_PICKUP_HEIGHT_MM));
+  AddSequential(new SetManipulatorCmd(MANIPULATOR_CARGO_FLOOR_PICKUP_ANGLE));
+  
+  // Enable intake and manipulator wheels, wait for ball detection, disable wheels
+  AddSequential(new IntakeBallFromRobotCmd());
+    
+  AddSequential(new SetManipulatorCmd(-90));
+  AddSequential(new SetElevatorToHeightCmd(ELEVATOR_MIN_HEIGHT_MM));
+  AddSequential(new SetManipulatorCmd(0));
+  AddParallel(new FoldIntakeCmd(true));
+  AddSequential(new SetIntakeArmAngleCmd(INTAKE_NEUTRAL_ANGLE));
 }

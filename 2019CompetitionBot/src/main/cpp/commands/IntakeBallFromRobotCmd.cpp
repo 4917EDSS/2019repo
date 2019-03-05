@@ -6,19 +6,20 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/IntakeBallFromRobotCmd.h"
-#include "subsystems/BallIntakeSub.h"
 #include "Robot.h"
 
 IntakeBallFromRobotCmd::IntakeBallFromRobotCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::manipulatorSub);
+  Requires(&Robot::ballIntakeSub);
 }
 
 // Called just before this Command runs the first time
 void IntakeBallFromRobotCmd::Initialize() {
   logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
   Robot::manipulatorSub.setIntakePower(-0.5);
+  Robot::ballIntakeSub.setIntakeWheelPower(1.0);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -31,6 +32,7 @@ bool IntakeBallFromRobotCmd::IsFinished() {
 
 // Called once after isFinished returns true
 void IntakeBallFromRobotCmd::End() {
+  Robot::ballIntakeSub.setIntakeWheelPower(0.0);
   Robot::manipulatorSub.setIntakePower(0.0);
 }
 

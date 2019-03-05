@@ -18,8 +18,6 @@
 #include "commands/ManipulatorWithJoystickCmd.h"
 #include <Robot.h>
 
-constexpr double FLIPPER_MAX_ANGLE = 90;
-constexpr double FLIPPER_MIN_ANGLE = -100;
 constexpr double FLIPPER_ANGLE_TOLERANCE = 1.0;
 constexpr double FLIPPER_VELOCITY_TOLERANCE = 45;
 constexpr double FLIPPER_TICK_TO_DEGREE_FACTOR = (90/40.1900);
@@ -65,12 +63,12 @@ ManipulatorSub::ManipulatorSub() : Subsystem("ManipulatorSub") {
   flipperNewStateParameters = false;
   flipperNewControlMode = FLIPPER_MODE_DISABLED;
   flipperNewMaxPower = 0.0;
-  flipperNewTargetAngle = FLIPPER_MIN_ANGLE;
+  flipperNewTargetAngle = MANIPULATOR_MIN_ANGLE;
   flipperNewState = FLIPPER_STATE_IDLE;
 
   flipperControlMode = FLIPPER_MODE_DISABLED;
   flipperMaxPower = 0.0;
-  flipperTargetAngle = FLIPPER_MIN_ANGLE;
+  flipperTargetAngle = MANIPULATOR_MIN_ANGLE;
   flipperState = FLIPPER_STATE_IDLE;
   flipperLastPower = 0.0;
   flipperBlockedAngle = 0.0;
@@ -159,7 +157,7 @@ void ManipulatorSub::setFlipperAngle(int mode, double maxPower, double targetAng
       return; 
     }
     if ((mode != FLIPPER_MODE_MANUAL) && 
-        ((targetAngle < FLIPPER_MIN_ANGLE) || (targetAngle > FLIPPER_MAX_ANGLE))) {
+        ((targetAngle < MANIPULATOR_MIN_ANGLE) || (targetAngle > MANIPULATOR_MAX_ANGLE))) {
       logger.send(logger.MANIPULATOR, "SFA: ERROR (#2)!! Angle = %.1f \n", targetAngle);
       return;
     }
@@ -207,7 +205,7 @@ void ManipulatorSub::setFlipperAngle(int mode, double maxPower, double targetAng
           flipperNewState = FLIPPER_STATE_MOVING;
           flipperNewControlMode = mode;
           flipperNewMaxPower = fabs(maxPower);;
-          flipperNewTargetAngle = (maxPower > 0) ? FLIPPER_MAX_ANGLE : FLIPPER_MIN_ANGLE;
+          flipperNewTargetAngle = (maxPower > 0) ? MANIPULATOR_MAX_ANGLE : MANIPULATOR_MIN_ANGLE;
           flipperNewStateParameters = true;    // Only set this to true after all the other parameters have been set 
           logger.send(logger.MANIPULATOR, "SFA: Man - moving (P=%.2f, H=%.1f)\n", 
               flipperNewMaxPower, flipperNewTargetAngle);
@@ -324,8 +322,8 @@ bool ManipulatorSub::isFlipperBlocked(double currentAngle, double targetAngle) {
   }
 
   // TODO: implement all rules
-  if(((currentAngle >= FLIPPER_MAX_ANGLE) && (direction > 0)) || 
-      ((currentAngle < FLIPPER_MIN_ANGLE) && (direction < 0))) {
+  if(((currentAngle >= MANIPULATOR_MAX_ANGLE) && (direction > 0)) || 
+      ((currentAngle < MANIPULATOR_MIN_ANGLE) && (direction < 0))) {
     return true;
   }
   
