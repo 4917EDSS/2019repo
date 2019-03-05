@@ -33,6 +33,7 @@
 #include "commands/ExtendClimbBarsCmd.h"
 #include "commands/SetManipulatorCmd.h"
 #include "commands/RetractClimbBarsCmd.h"
+#include "commands/DynamicElevatorHeightCnd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -72,16 +73,16 @@ OI::OI() {
 
   // Operator controller buttons
   elevatorToCargoShipHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_CARGO_SHIP_HEIGHT_BTN));
-  elevatorToCargoShipHeightBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Cmd, frc4917Cmd>(new SetElevatorToHeightCmd(ELEVATOR_CARGO_SHIP_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM)));
+  elevatorToCargoShipHeightBtn->WhenPressed(new DynamicElevatorHeightCnd(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_CARGO_SHIP_CARGO_HEIGHT_MM)));
 
   elevatorToLowHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_LOW_HEIGHT_BTN));
-  elevatorToLowHeightBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Cmd, frc4917Cmd>(new SetElevatorToHeightCmd(ELEVATOR_ROCKET_LOW_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM)));
+  elevatorToLowHeightBtn->WhenPressed(new DynamicElevatorHeightCnd(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_ROCKET_LOW_CARGO_HEIGHT_MM)));
   
   elevatorToMediumHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_MEDIUM_HEIGHT_BTN));
-  elevatorToMediumHeightBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Cmd, frc4917Cmd>(new SetElevatorToHeightCmd(ELEVATOR_ROCKET_MEDIUM_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_MEDIUM_HATCH_HEIGHT_MM)));
+  elevatorToMediumHeightBtn->WhenPressed(new DynamicElevatorHeightCnd(new SetElevatorToHeightCmd(ELEVATOR_MEDIUM_HATCH_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_ROCKET_MEDIUM_CARGO_HEIGHT_MM)));
 
   elevatorToHighHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_HIGH_HEIGHT_BTN));
-  elevatorToHighHeightBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Cmd, frc4917Cmd>(new SetElevatorToHeightCmd(ELEVATOR_ROCKET_HIGH_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_HIGH_HATCH_HEIGHT_MM)));
+  elevatorToHighHeightBtn->WhenPressed(new DynamicElevatorHeightCnd(new SetElevatorToHeightCmd(ELEVATOR_HIGH_HATCH_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_ROCKET_HIGH_CARGO_HEIGHT_MM)));
 
 
   hatchModeBtn.reset(new frc::JoystickButton(operatorController.get(), HATCH_MODE_BTN));

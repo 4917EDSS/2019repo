@@ -51,6 +51,7 @@ class ElevatorSub : public frc::Subsystem {
   nt::NetworkTableEntry nteSmMaxPower;
   nt::NetworkTableEntry nteSmTarget;
   nt::NetworkTableEntry nteSmBlockedAt;
+  nt::NetworkTableEntry nteSmIsFinished;
 
   // Elevator state machine variables and functions
   bool elevatorNewStateParameters;
