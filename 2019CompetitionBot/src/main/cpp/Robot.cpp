@@ -47,6 +47,7 @@ void Robot::RobotInit() {
   //logger.enableChannels(logger.BALLINTAKE);
   //logger.enableChannels(logger.MANIPULATOR);
   //logger.enableChannels(logger.WITH_JOYSTICK_TRACE);
+  logger.enableChannels(logger.CLIMB);
 
   logger.addOutputPath(new frc4917::ConsoleOutput());						            // Enable console output and/or
   logger.addOutputPath(new frc4917::SyslogOutput(syslogTargetAddress));		  // Enable syslog output

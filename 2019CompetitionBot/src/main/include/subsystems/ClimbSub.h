@@ -11,15 +11,18 @@
 #include <frc/WPILib.h>
 #include <ctre/Phoenix.h>
 
+constexpr double CLIMB_RETRACT_LIMIT_THRESHOLD = 2;
+constexpr double CLIMB_EXTEND_LIMIT_THRESHOLD = 8000;
+
 class ClimbSub : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
 	std::shared_ptr<WPI_TalonSRX> climbMotor;
 
-
  public:
   ClimbSub();
   void InitDefaultCommand() override;
-  void SetClimbMotor(double speed);
+  void SetClimbMotorSpeed(double speed);
+  double getClimbPosition();
 };

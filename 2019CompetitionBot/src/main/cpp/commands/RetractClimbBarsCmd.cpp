@@ -17,18 +17,23 @@ RetractClimbBarsCmd::RetractClimbBarsCmd() {
 
 // Called just before this Command runs the first time
 void RetractClimbBarsCmd::Initialize() {
-    Robot::climbSub.SetClimbMotor(-1);
+    Robot::climbSub.SetClimbMotorSpeed(-1);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void RetractClimbBarsCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool RetractClimbBarsCmd::IsFinished() { return false; }
+bool RetractClimbBarsCmd::IsFinished() {
+  logger.send(logger.CLIMB, "position = %.1f \n", Robot::climbSub.getClimbPosition());
+ 
+  // return Robot::climbSub.getClimbPosition() < CLIMB_RETRACT_LIMIT_THRESHOLD; 
+  return false;
+}
 
 // Called once after isFinished returns true
 void RetractClimbBarsCmd::End() {
-      Robot::climbSub.SetClimbMotor(0);
+      Robot::climbSub.SetClimbMotorSpeed(0);
 }
 
 // Called when another command which requires one or more of the same

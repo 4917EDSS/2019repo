@@ -31,6 +31,7 @@ namespace frc4917 {
 		static constexpr unsigned long BALLINTAKE			= 0x00000200;
 		static constexpr unsigned long MANIPULATOR			= 0x00000400;
 		static constexpr unsigned long WITH_JOYSTICK_TRACE 	= 0x00000800;
+		static constexpr unsigned long CLIMB				= 0x00001000;
 		
 
 		Log();
