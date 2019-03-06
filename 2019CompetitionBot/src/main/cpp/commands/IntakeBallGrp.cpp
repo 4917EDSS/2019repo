@@ -10,22 +10,22 @@
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/FoldIntakeCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
-#include "commands/SetManipulatorCmd.h"
+#include "commands/SetManipulatorAngleCmd.h"
 #include "commands/IntakeBallFromRobotCmd.h"
 #include "commands/IntakeBallGrp.h"
 
 IntakeBallGrp::IntakeBallGrp() {
-  AddSequential(new SetIntakeArmAngleCmd(INTAKE_CARGO_ANGLE));
+  AddSequential(new SetIntakeArmAngleCmd(false, INTAKE_CARGO_ANGLE));
   AddParallel(new FoldIntakeCmd(false));
   AddSequential(new SetElevatorToHeightCmd(ELEVATOR_CARGO_FLOOR_PICKUP_HEIGHT_MM));
-  AddSequential(new SetManipulatorCmd(MANIPULATOR_CARGO_FLOOR_PICKUP_ANGLE));
+  AddSequential(new SetManipulatorAngleCmd(MANIPULATOR_CARGO_FLOOR_PICKUP_ANGLE));
   
   // Enable intake and manipulator wheels, wait for ball detection, disable wheels
   AddSequential(new IntakeBallFromRobotCmd());
     
-  AddSequential(new SetManipulatorCmd(-90));
+  AddSequential(new SetManipulatorAngleCmd(-90));
   AddSequential(new SetElevatorToHeightCmd(ELEVATOR_MIN_HEIGHT_MM));
-  AddSequential(new SetManipulatorCmd(0));
+  AddSequential(new SetManipulatorAngleCmd(0));
   AddParallel(new FoldIntakeCmd(true));
-  AddSequential(new SetIntakeArmAngleCmd(INTAKE_NEUTRAL_ANGLE));
+  AddSequential(new SetIntakeArmAngleCmd(false, INTAKE_NEUTRAL_ANGLE));
 }

@@ -10,17 +10,13 @@
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "networktables/NetworkTableInstance.h"
-#include <iostream>
-#include "subsystems/ElevatorSub.h"
-#include "subsystems/DrivetrainSub.h"
-#include "subsystems/ClimbSub.h"
-
 
 DrivetrainSub Robot::drivetrainSub;
 BallIntakeSub Robot::ballIntakeSub;
 ElevatorSub Robot::elevatorSub;
 ManipulatorSub Robot::manipulatorSub;
 ClimbSub Robot::climbSub;
+VisionSub Robot::visionSub;
 OI Robot::oi;
 
 bool Robot::inBallMode;
@@ -43,7 +39,7 @@ void Robot::RobotInit() {
   //logger.enableChannels(logger.VISION);
   //logger.enableChannels(logger.PERIODIC);
   logger.enableChannels(logger.CMD_TRACE);
-  logger.enableChannels(logger.ELEVATOR);
+  //logger.enableChannels(logger.ELEVATOR);
   //logger.enableChannels(logger.BALLINTAKE);
   //logger.enableChannels(logger.MANIPULATOR);
   //logger.enableChannels(logger.WITH_JOYSTICK_TRACE);
@@ -53,7 +49,7 @@ void Robot::RobotInit() {
   logger.addOutputPath(new frc4917::SyslogOutput(syslogTargetAddress));		  // Enable syslog output
   logger.send(logger.DEBUGGING, "Robot code started @ %f\n", GetTime());
 
-  std::cout << "Starting version 1.6\n";
+  std::cout << "Starting version 1.7\n";
 
   Robot::inBallMode = true;
   Robot::stateMachinesReset = false;
@@ -95,9 +91,7 @@ void Robot::DisabledPeriodic() {
  * the if-else structure below with additional strings & commands.
  */
 void Robot::AutonomousInit() {
-  nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 0);
-  nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
-  nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0);
+  Robot::visionSub.pipeLineToggle(false);
   Robot::ballIntakeSub.foldIntakeArms();
 
   if(!stateMachinesReset) {
@@ -148,6 +142,7 @@ void Robot::TeleopPeriodic() {
   Robot::elevatorSub.updateShuffleBoard();
   Robot::manipulatorSub.updateShuffleBoard();
   Robot::ballIntakeSub.updateShuffleBoard();
+  Robot::climbSub.updateShuffleBoard();
   UpdateSmartDashboard();
 }
 
@@ -194,67 +189,6 @@ void Robot::UpdateSmartDashboard() {
   frc::SmartDashboard::PutNumber("Yaw Angle", drivetrainSub.getAngle());
 }
 
-void Robot::pipeLineToggle(bool pipeLine){
-  
-  if (pipeLine == true) {
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 1);
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 1);
-  } 
-  else{
-      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
-      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 0);
-      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0);
-  }
-}
-
-double Robot::GetVisionTarget() {
-  
-  double xAngle = 9001;
-  // if over 9000, the vision target is not picking up anything.
-  double TargetMarked = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
-
-  if (TargetMarked > 0.5) {
-    xAngle = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx", 0.0);
-  }
-
-  return xAngle;
-}
-
-double Robot::GetDistanceFromVision() {
-  double size=nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("thori",0.0);
-  double a=0.295;
-  double b=-70.6;
-  double c=5234;
-  return a*size*size+b*size+c;
-}
-
-double Robot::GetScoringFaceAngle() {
-  double RobotAngle = Robot::drivetrainSub.getAngle();
-  double TargetAngle[7] = {-151.25, -90, -28.75, 0, 28.75, 90, 151.25};
-  double SmallestAngleDifference = 1000;
-  int BestTarget;
-
-  for(int i = 0; i < 7; i++){
-    double AngleDifference = fabs(RobotAngle - TargetAngle[i]);
-    if(AngleDifference <= SmallestAngleDifference){
-      SmallestAngleDifference = AngleDifference;
-      BestTarget = i;
-      
-    }
-  }
-  return TargetAngle[BestTarget];
-}
-
-double Robot::NormalizeAngle(double targetAngle){
-  while(targetAngle < -180) {
-    targetAngle = targetAngle + 360;
-  }
-  while(targetAngle > 180) {
-    targetAngle = targetAngle - 360;
-  }
-  return targetAngle;
-}
 
 void Robot::resetStateMachines() {
   Robot::elevatorSub.setElevatorHeight(ELEVATOR_MODE_DISABLED, 0, 0);

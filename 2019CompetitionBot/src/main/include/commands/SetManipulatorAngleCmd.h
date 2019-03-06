@@ -8,18 +8,16 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include "commands/frc4917Cmd.h"
 
-class SetElevatorandManipulatorCmd : public frc4917Cmd {
+class SetManipulatorAngleCmd : public frc::Command {
  public:
-  SetElevatorandManipulatorCmd(double targetAngle, double targetHeight);
+  SetManipulatorAngleCmd(double targetAngle);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
 
-  private:
+private:
   double targetAngle;
-  double targetHeight;
 };

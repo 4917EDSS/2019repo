@@ -17,6 +17,12 @@ SetElevatorToHeightCmd::SetElevatorToHeightCmd(double height) : height(height) {
 // Called just before this Command runs the first time
 void SetElevatorToHeightCmd::Initialize() {
   logger.send(logger.CMD_TRACE, "%s : %s | Height = %.1f\n", __FILE__, __FUNCTION__), height;
+
+  // Manipulator is not symetrical.  When facing the rear, the height needs to be adjusted
+  if(Robot::manipulatorSub.getFlipperAngle() < 0) {
+    height += ELEVATOR_REAR_HEIGHT_OFFSET;
+  }
+
   Robot::elevatorSub.setElevatorHeight(ELEVATOR_MODE_AUTO, 1.0, height);
 }
 

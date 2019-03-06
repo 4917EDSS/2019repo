@@ -12,6 +12,7 @@
 #include "subsystems/BallIntakeSub.h"
 #include "commands/KillEverythingCmd.h"
 #include "commands/MilkyScoreGrp.h"
+#include "commands/TestButtonCmd.h"
 #include "commands/ClimbExtendGrp.h"
 #include "commands/IntakeBallFromRobotCmd.h"
 #include "commands/IntakeBallGrp.h"
@@ -23,9 +24,11 @@
 #include "commands/ToggleManipulatorPositionCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
 #include "commands/ExtendClimbBarsCmd.h"
-#include "commands/SetManipulatorCmd.h"
+#include "commands/SetManipulatorAngleCmd.h"
 #include "commands/RetractClimbBarsCmd.h"
 #include "commands/ModeBasedCndCmd.h"
+#include "commands/ClimbCmd.h"
+#include "commands/ClimbReverseCmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -42,26 +45,33 @@ OI::OI() {
   operatorController->SetThrottleChannel(3);
 
   // Driver controller buttons
+  driveToVisionTargetBtn.reset(new frc::JoystickButton(driverController.get(), DRIVE_TO_VISION_TARGET_BTN));
+  driveToVisionTargetBtn->WhenPressed(new MilkyScoreGrp());
+
+  climbBtn.reset(new frc::JoystickButton(driverController.get(), CLIMB_BTN));
+  climbBtn->WhileHeld(new ClimbCmd());
+
+  extendClimbBarsBtn.reset(new frc::JoystickButton(driverController.get(), EXTEND_CLIMB_BARS_BTN));
+  extendClimbBarsBtn->WhileHeld(new ExtendClimbBarsCmd());
+
+  reverseClimbBtn.reset(new frc::JoystickButton(driverController.get(), REVERSE_CLIMB_BTN));
+  reverseClimbBtn->WhileHeld(new ClimbReverseCmd);
+
+  retractClimbBarsBtn.reset(new frc::JoystickButton(driverController.get(), RETRACT_CLIMB_BARS_BTN));
+  retractClimbBarsBtn->WhileHeld(new RetractClimbBarsCmd());
+
   milkyManipulatorBtn.reset(new frc::JoystickButton(driverController.get(),MILKY_MANIPULATOR_BTN));
   milkyManipulatorBtn->WhileHeld( new MilkyScoreGrp());
+
+  // Either add test code to TestButtonCmd or swap TestButtonCmd for another command to test it
+  testBtn.reset(new frc::JoystickButton(driverController.get(), TEST_BTN));
+  testBtn->WhenPressed(new TestButtonCmd());
 
   driverKillBtn1.reset(new frc::JoystickButton(driverController.get(), DRIVER_KILL_ONE_BTN));
   driverKillBtn1->WhenPressed(new KillEverythingCmd());
 
   driverKillBtn2.reset(new frc::JoystickButton(driverController.get(), DRIVER_KILL_TWO_BTN));
   driverKillBtn2->WhenPressed(new KillEverythingCmd());
-
-  togglePipeLineBtn.reset(new frc::JoystickButton(driverController.get(),TOGGLE_PIPELINE_BTN));
-  togglePipeLineBtn->WhenPressed(new TogglePipeLineCmd());
-  
-  test1Btn.reset(new frc::JoystickButton(driverController.get(), TEST_1_BTN));
-  test1Btn->WhenPressed(new SetElevatorToHeightCmd(1000.0));
-
-  extendClimbBarBtn.reset(new frc::JoystickButton(driverController.get(),EXTEND_CLIMB_BAR_BTN));
-  extendClimbBarBtn->WhileHeld(new ExtendClimbBarsCmd());
-
-  retractClimbBarBtn.reset(new frc::JoystickButton(driverController.get(),RETRACT_CLIMB_BAR_BTN));
-  retractClimbBarBtn->WhileHeld(new RetractClimbBarsCmd());
 
   // Operator controller buttons
   elevatorToCargoShipHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_CARGO_SHIP_HEIGHT_BTN));
@@ -89,7 +99,7 @@ OI::OI() {
   intakeHatchOrCargoBtn->WhenPressed(new ModeBasedCndCmd(new ExpandHatchGripperGrp(), new IntakeBallGrp()));
 
   manipulatorToVerticalBtn.reset(new frc::JoystickButton(operatorController.get(), MANIPULATOR_TO_VERTICAL_BTN));
-  manipulatorToVerticalBtn->WhenPressed(new SetManipulatorCmd(0.0));
+  manipulatorToVerticalBtn->WhenPressed(new SetManipulatorAngleCmd(0.0));
 
   multiCommand1Btn.reset(new frc::JoystickButton(operatorController.get(), MULTI_COMMAND_1_BTN));
   multiCommand1Btn->WhenPressed(new MultiButton1Cmd());

@@ -69,12 +69,12 @@ DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub"){
   
 }
 
-double DrivetrainSub::GetRightEncoder()
+double DrivetrainSub::getRightEncoder()
 {
   return -(rightMotor1->GetEncoder().GetPosition());
 }
 
-double DrivetrainSub::GetLeftEncoder()
+double DrivetrainSub::getLeftEncoder()
 {
   return leftMotor1->GetEncoder().GetPosition();
 }
@@ -169,7 +169,9 @@ double DrivetrainSub::getRate()
   return ahrs->GetRate();
 }
 
-
+double DrivetrainSub::getPitchAngle() {
+  return ahrs->GetPitch();  // TODO:  Check NavX orientation.  Might need to use Roll angle.  Might need to change sign.
+}
 
 
 

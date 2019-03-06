@@ -17,7 +17,7 @@ ExtendClimbBarsCmd::ExtendClimbBarsCmd() {
 
 // Called just before this Command runs the first time
 void ExtendClimbBarsCmd::Initialize() {
-  Robot::climbSub.SetClimbMotorSpeed(1);
+  Robot::climbSub.SetClimbMotorPower(1);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -33,7 +33,7 @@ bool ExtendClimbBarsCmd::IsFinished() {
 
 // Called once after isFinished returns true
 void ExtendClimbBarsCmd::End() {
-    Robot::climbSub.SetClimbMotorSpeed(0);
+    Robot::climbSub.SetClimbMotorPower(0);
 }
 
 // Called when another command which requires one or more of the same

@@ -29,7 +29,7 @@ constexpr double ELEVATOR_ROCKET_HIGH_CARGO_HEIGHT_MM = ELEVATOR_MAX_HEIGHT_MM; 
 constexpr double ELEVATOR_CARGO_SHIP_CARGO_HEIGHT_MM = 1009.65;    //Why 1168.4? [800.1 + ((1219.2-800.1)/2)] = 1009.65
 
 // Middle of manipulator is not the same in the back as in the front
-constexpr double ELEVATOR_REAR_HEIGHT_OFFSET = 101.6;   // TODO: Check and update
+constexpr double ELEVATOR_REAR_HEIGHT_OFFSET = 101.6;   // TODO: Check and update, currently 4"
 
 // Elevator height control modes
 constexpr int ELEVATOR_MODE_DISABLED = 0;

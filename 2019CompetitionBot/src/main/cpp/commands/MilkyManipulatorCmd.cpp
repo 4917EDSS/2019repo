@@ -24,10 +24,10 @@ void MilkyManipulatorCmd::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void MilkyManipulatorCmd::Execute() {
-  double targetAngle=Robot::GetVisionTarget();
-  double distance=Robot::GetDistanceFromVision();
+  double targetAngle=Robot::visionSub.getVisionTarget();
+  double distance=Robot::visionSub.getDistanceFromVision();
   double robotAngle=Robot::drivetrainSub.getAngle();
-  double scoringFace=Robot::GetScoringFaceAngle();
+  double scoringFace=Robot::visionSub.getScoringFaceAngle();
   double robotTargetAngle=GetRobotTargetAngle(robotAngle, targetAngle, distance, scoringFace);
 
   double lSpeed=(0.5+(robotAngle-robotTargetAngle)* 0.1);
