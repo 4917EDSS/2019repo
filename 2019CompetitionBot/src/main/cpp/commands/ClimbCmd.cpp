@@ -11,6 +11,7 @@
 constexpr double MAX_ARM_POWER = 0.40;
 constexpr double MIN_ARM_POWER = 0.10;
 constexpr double ARM_POWER_STEP_SIZE = 0.01;
+constexpr double ARM_POWER_ANGLE_TOLERANCE = 2.0;
 
 ClimbCmd::ClimbCmd() {
   // Use Requires() here to declare subsystem dependencies
@@ -37,14 +38,15 @@ void ClimbCmd::Execute() {
   double pitchAngle = Robot::drivetrainSub.getPitchAngle();
 
   // TODO: Might need a smarter control algorithm
-  if(pitchAngle < 0) {
-    // Intake arms aren't keeping up, more power
+  if(pitchAngle > ARM_POWER_ANGLE_TOLERANCE) {
+    // Intake arms aren't keeping up, robot is tipping forward, more power
     lastPower += ARM_POWER_STEP_SIZE;
   }
-  else {
-    // Intake arms are too fast, less power
+  else if(pitchAngle < -ARM_POWER_ANGLE_TOLERANCE) {
+    // Intake arms are too fast, robot is tipping backward, less power
     lastPower -= ARM_POWER_STEP_SIZE;
   }
+  // Otherise, use lastPower without changing it
 
   // Check power limits before setting new power
   if(lastPower > MAX_ARM_POWER) {

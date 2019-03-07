@@ -169,8 +169,9 @@ double DrivetrainSub::getRate()
   return ahrs->GetRate();
 }
 
+// Positive means that the robot is tipping forwards.  Negative means that robot is tipping backwards
 double DrivetrainSub::getPitchAngle() {
-  return ahrs->GetPitch();  // TODO:  Check NavX orientation.  Might need to use Roll angle.  Might need to change sign.
+  return ahrs->GetPitch();
 }
 
 

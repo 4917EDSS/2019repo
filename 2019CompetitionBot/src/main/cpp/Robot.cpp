@@ -93,11 +93,13 @@ void Robot::DisabledPeriodic() {
 void Robot::AutonomousInit() {
   Robot::visionSub.pipeLineToggle(false);
   Robot::ballIntakeSub.foldIntakeArms();
+  Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_AUTO, 0.5, INTAKE_NEUTRAL_ANGLE);
 
   if(!stateMachinesReset) {
     resetStateMachines();
     stateMachinesReset = true;
   }
+
   // No auto command this year
   /*
   m_autonomousCommand = m_chooser.GetSelected();
@@ -105,6 +107,15 @@ void Robot::AutonomousInit() {
     m_autonomousCommand->Start();
   }
   */
+
+  // But probably need to deal with initial game piece
+  // Hatch:
+  //  - inBallMode = false
+  //  - intake hatch (gripper expand, roll wheels back a bit): ExpandHatchGripperGrp
+  // Cargo:
+  //  - inBallMode = true
+  // None:
+  //  - do nothing
 }
 
 void Robot::AutonomousPeriodic() { 
@@ -138,11 +149,12 @@ void Robot::TeleopPeriodic() {
   Robot::manipulatorSub.updateFlipperStateMachine();
   Robot::ballIntakeSub.updateIntakeArmStateMachine();
 
-  Robot::drivetrainSub.updateShuffleBoard();
-  Robot::elevatorSub.updateShuffleBoard();
-  Robot::manipulatorSub.updateShuffleBoard();
-  Robot::ballIntakeSub.updateShuffleBoard();
-  Robot::climbSub.updateShuffleBoard();
+  // Enable these as needed since running them all takes too long
+  // Robot::drivetrainSub.updateShuffleBoard();
+  // Robot::elevatorSub.updateShuffleBoard();
+  // Robot::manipulatorSub.updateShuffleBoard();
+  // Robot::ballIntakeSub.updateShuffleBoard();
+  // Robot::climbSub.updateShuffleBoard();
   UpdateSmartDashboard();
 }
 
