@@ -20,7 +20,7 @@
 constexpr double ELEVATOR_POSITION_TOLERANCE_MM = 10.0;
 constexpr double ELEVATOR_VELOCITY_TOLERANCE_MM_S = 45;
 constexpr double MANUAL_MODE_POWER_DEADBAND = 0.03;
-constexpr double ELEVATOR_TICK_TO_MM_FACTOR = (6.94);
+constexpr double ELEVATOR_TICK_TO_MM_FACTOR = (9.43);
 constexpr double ELEVATOR_IS_DOWN_TOLERANCE_MM = ELEVATOR_POSITION_TOLERANCE_MM + 1.0;
 
 // Elevator state machine states
@@ -356,7 +356,7 @@ bool ElevatorSub::isElevatorBlocked(double currentHeightMm, double targetHeightM
 }
 
 double ElevatorSub::calcElevatorHoldPower(double currentHeightMm, double targetHeightMm) {
-  double holdPower = (targetHeightMm - currentHeightMm) * 0.003;
+  double holdPower = (targetHeightMm - currentHeightMm) * 0.004;
 
   return holdPower;
 }

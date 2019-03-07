@@ -327,8 +327,13 @@ bool ManipulatorSub::isFlipperBlocked(double currentAngle, double targetAngle) {
     return true;
   }
   
-  if (Robot::elevatorSub.getElevatorHeight() > (ELEVATOR_MIN_HEIGHT_MM + 50)){
-    return true;
+  if (Robot::elevatorSub.getElevatorHeight() >= (ELEVATOR_MIN_HEIGHT_MM + 120)) {
+    if (((currentAngle > -90) && (currentAngle < 0)) && (direction < 0)) {
+      return true;
+    }
+    if (((currentAngle > 0) && (currentAngle < 30)) && (direction < 0)) {
+      return true;
+    }
   }
 
   return false;
@@ -337,7 +342,7 @@ bool ManipulatorSub::isFlipperBlocked(double currentAngle, double targetAngle) {
 double ManipulatorSub::calcFlipperHoldPower(double currentAngle, double targetAngle) {
   // 3% power holds flipper at a 90 degree angle  
   // Make propertional to target.
-  return ((0.03 / 90) * (-targetAngle)) + ((targetAngle - currentAngle) * 0.0005);
+  return ((0.025 / 90) * (-targetAngle)) + ((targetAngle - currentAngle) * 0.0005);
 }
 
 double ManipulatorSub::calcFlipperMovePower(double currentAngle, double targetAngle, double maxPower) {
