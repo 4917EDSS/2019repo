@@ -12,7 +12,7 @@
 #include "Robot.h"
 
 CargoModeGrp::CargoModeGrp() {
-  AddSequential(new ManipulatorOutCmd(0.1));
+  //AddSequential(new ManipulatorOutCmd(0.1));
   AddSequential(new HatchGripperContractCmd());
   AddSequential(new ManipulatorInCmd(1.0));
   // Add Commands here:
