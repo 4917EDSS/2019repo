@@ -346,7 +346,7 @@ bool ElevatorSub::isElevatorBlocked(double currentHeightMm, double targetHeightM
     }
 
     if (Robot::manipulatorSub.getFlipperAngle() <= -45) {
-      if (currentHeightMm >= (ELEVATOR_MIN_HEIGHT_MM + 500)) {
+      if (currentHeightMm >= (ELEVATOR_MIN_HEIGHT_MM + 400)) {
         return true;
       }
     }
