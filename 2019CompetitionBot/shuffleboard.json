@@ -176,8 +176,8 @@
               "_type": "Simple Dial",
               "_source0": "network_table:///SmartDashboard/Elevator Height",
               "_title": "Elevator Height",
-              "Range/Min": 485.0,
-              "Range/Max": 1952.0,
+              "Range/Min": 435.0,
+              "Range/Max": 2020.0,
               "Visuals/Show value": true
             }
           },
@@ -270,6 +270,25 @@
               "_type": "Camera Stream",
               "_source0": "camera_server://limelight",
               "_title": "limelight",
+              "Crosshair/Show crosshair": true,
+              "Crosshair/Crosshair color": "#FFFFFFFF",
+              "Controls/Show controls": true,
+              "Controls/Rotation": "NONE",
+              "compression": -1.0,
+              "fps": -1,
+              "imageWidth": 0,
+              "imageHeight": 0
+            }
+          },
+          "6,0": {
+            "size": [
+              3,
+              3
+            ],
+            "content": {
+              "_type": "Camera Stream",
+              "_source0": "camera_server://limelight-two",
+              "_title": "limelight-two",
               "Crosshair/Show crosshair": true,
               "Crosshair/Crosshair color": "#FFFFFFFF",
               "Controls/Show controls": true,
