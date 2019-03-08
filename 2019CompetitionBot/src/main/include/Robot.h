@@ -43,6 +43,7 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
 
   static bool inBallMode;
+  static bool pastNinety;
 
  private:
   static bool stateMachinesReset;
