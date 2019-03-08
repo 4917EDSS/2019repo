@@ -202,7 +202,6 @@ void BallIntakeSub::setIntakeArmAngle(int mode, double maxPower, double targetAn
 // Returns true if the arm angle is within tolerance of the target angle
 bool BallIntakeSub::isIntakeArmAtTarget() {
   if (intakeArmNewStateParameters) {
-    std::cout<<"intake Arm New state Parameters"<<std::endl;
     return false;
   }
 
@@ -211,11 +210,9 @@ bool BallIntakeSub::isIntakeArmAtTarget() {
     logger.send(logger.BALLINTAKE, "IIAAT: Arms at target (T=%.1f, C=%.1f, V=%.1f)\n", 
         intakeArmTargetAngle, getIntakeArmAngle(), getIntakeArmVelocity());
     return true;
-    std::cout<<"Intake arm is  at target angle"<<std::endl;
   }
   else {
-    std::cout<<"default case"<<std::endl;
-    //logger.send(logger.BALLINTAKE, "IIAAT: Arms not at target (T=%.1f, C=%.1f, V=%.1f)\n", 
+        //logger.send(logger.BALLINTAKE, "IIAAT: Arms not at target (T=%.1f, C=%.1f, V=%.1f)\n", 
     //    intakeArmTargetAngle, getIntakeArmAngle(), getIntakeArmVelocity());
     return false;
   }
@@ -317,13 +314,7 @@ bool BallIntakeSub::isIntakeArmBlocked(double currentAngle, double targetAngle) 
 }
 
 double BallIntakeSub::calcIntakeArmHoldPower(double currentAngle, double targetAngle) {
-  if(fabs(targetAngle - currentAngle) < 5){
-  return  (-0.02 / 90)*(targetAngle - 60);
-  } else {
-  return  ((targetAngle - currentAngle) * 0.003) + (-0.02 / 90)*(targetAngle - 60);
-  }
- //check
-
+  return  ((targetAngle - currentAngle) * 0.01) + (-0.02 / 90)*(targetAngle - 60);
 }
 
 double BallIntakeSub::calcIntakeArmMovePower(double currentAngle, double targetAngle, double maxPower) {
