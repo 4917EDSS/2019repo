@@ -17,7 +17,7 @@ constexpr double INTAKE_ARM_MAX_ANGLE = 150; //change
 constexpr double INTAKE_ARM_MIN_ANGLE = 0;
 constexpr double INTAKE_ARM_ANGLE_TOLERANCE = 1.0;
 constexpr double INTAKE_ARM_VELOCITY_TOLERANCE = 45;
-constexpr double INTAKE_ARM_TICK_TO_DEGREE_FACTOR = (-90.0 / 44.86);
+constexpr double INTAKE_ARM_TICK_TO_DEGREE_FACTOR = (-90.0 / 40.86);
 constexpr double MANUAL_MODE_POWER_DEADBAND = 0.03;
 
 // Intake arm state machine states
