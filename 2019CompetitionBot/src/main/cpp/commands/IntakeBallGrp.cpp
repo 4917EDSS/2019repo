@@ -26,6 +26,6 @@ IntakeBallGrp::IntakeBallGrp() {
     
   AddSequential(new SetManipulatorAngleCmd(0));
   AddSequential(new SetElevatorToHeightCmd(ELEVATOR_MIN_HEIGHT_MM));
-  AddParallel(new FoldIntakeCmd(true));
+  AddSequential(new FoldIntakeCmd(true));
   AddSequential(new SetIntakeArmAngleCmd(false, INTAKE_NEUTRAL_ANGLE));
 }
