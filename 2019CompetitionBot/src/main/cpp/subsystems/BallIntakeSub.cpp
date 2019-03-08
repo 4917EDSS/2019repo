@@ -17,7 +17,7 @@ constexpr double INTAKE_ARM_MAX_ANGLE = 150; //change
 constexpr double INTAKE_ARM_MIN_ANGLE = 0;
 constexpr double INTAKE_ARM_ANGLE_TOLERANCE = 1.0;
 constexpr double INTAKE_ARM_VELOCITY_TOLERANCE = 45;
-constexpr double INTAKE_ARM_TICK_TO_DEGREE_FACTOR = (-90.0 / 42.86);
+constexpr double INTAKE_ARM_TICK_TO_DEGREE_FACTOR = (-90.0 / 37.86);
 constexpr double MANUAL_MODE_POWER_DEADBAND = 0.03;
 
 // Intake arm state machine states
@@ -28,6 +28,7 @@ constexpr int INTAKE_ARM_STATE_INTERRUPTED = 3;
 
 BallIntakeSub::BallIntakeSub() : Subsystem("BallIntakeSub") {
   flipperMotor.reset(new rev::CANSparkMax(BALL_INTAKE_FLIP_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  flipperMotor->GetEncoder().SetPosition(0);
   intakeArmEnc.reset(new frc::Encoder(INTAKE_MOTOR_ENC1_DIO, INTAKE_MOTOR_ENC2_DIO));
   //intakeArmEnc->SetDistancePerPulse(INTAKE_ARM_TICK_TO_DEGREE_FACTOR);
   ballIntakeArmLimit.reset(new frc::DigitalInput(BALL_INTAKE_ARM_LIMIT_DIO));
@@ -202,7 +203,6 @@ void BallIntakeSub::setIntakeArmAngle(int mode, double maxPower, double targetAn
 // Returns true if the arm angle is within tolerance of the target angle
 bool BallIntakeSub::isIntakeArmAtTarget() {
   if (intakeArmNewStateParameters) {
-    // Haven't even implemented the new request so we can't be done
     return false;
   }
 
@@ -213,7 +213,7 @@ bool BallIntakeSub::isIntakeArmAtTarget() {
     return true;
   }
   else {
-    //logger.send(logger.BALLINTAKE, "IIAAT: Arms not at target (T=%.1f, C=%.1f, V=%.1f)\n", 
+        //logger.send(logger.BALLINTAKE, "IIAAT: Arms not at target (T=%.1f, C=%.1f, V=%.1f)\n", 
     //    intakeArmTargetAngle, getIntakeArmAngle(), getIntakeArmVelocity());
     return false;
   }
@@ -315,13 +315,7 @@ bool BallIntakeSub::isIntakeArmBlocked(double currentAngle, double targetAngle) 
 }
 
 double BallIntakeSub::calcIntakeArmHoldPower(double currentAngle, double targetAngle) {
-  if(fabs(targetAngle - currentAngle) < 5){
-  return  (-0.02 / 90)*(targetAngle - 60);
-  } else {
-  return  ((targetAngle - currentAngle) * 0.003) + (-0.02 / 90)*(targetAngle - 60);
-  }
- //check
-
+  return  ((targetAngle - currentAngle) * 0.01) + (-0.02 / 90)*(targetAngle - 60);
 }
 
 double BallIntakeSub::calcIntakeArmMovePower(double currentAngle, double targetAngle, double maxPower) {
