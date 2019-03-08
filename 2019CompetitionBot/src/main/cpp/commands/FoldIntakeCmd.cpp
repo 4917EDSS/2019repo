@@ -8,11 +8,10 @@
 #include "commands/FoldIntakeCmd.h"
 #include "Robot.h"
 
-FoldIntakeCmd::FoldIntakeCmd(bool foldIn) {
+FoldIntakeCmd::FoldIntakeCmd(bool foldIn) : foldIn(foldIn) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::ballIntakeSub);
-  foldIn = foldIn;
 }
 
 // Called just before this Command runs the first time
