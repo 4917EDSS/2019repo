@@ -101,11 +101,11 @@ bool BallIntakeSub::isIntakeAtLimit() {
 }
 
 void BallIntakeSub::unfoldIntakeArms() {
-  intakeFolderSolenoid->Set(false);
+  intakeFolderSolenoid->Set(true);
 }
 
 void BallIntakeSub::foldIntakeArms() {
-  intakeFolderSolenoid->Set(true);
+  intakeFolderSolenoid->Set(false);
 }
 
 bool BallIntakeSub::isIntakeUnfolded() {
