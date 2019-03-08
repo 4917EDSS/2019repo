@@ -7,21 +7,10 @@
 
 #pragma once
 
-#include <frc/commands/Command.h>
-#include "commands/frc4917Cmd.h"
+#include <frc/commands/ConditionalCommand.h>
 
-template <typename CBall, typename CHatch>
-class DynamicCommandPickerCmd : public frc4917Cmd {
+class SideBaseCmd : public frc::ConditionalCommand {
  public:
-  DynamicCommandPickerCmd(CBall* ballMode, CHatch* hatchMode);
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
-
-private:
-    bool inBallMode;
-  CBall* ballModeCmd;
-  CHatch* hatchModeCmd;
+  SideBaseCmd(Command *onTrue, Command *onFalse);
+  bool Condition() override;
 };

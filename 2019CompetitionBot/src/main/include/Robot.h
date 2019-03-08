@@ -47,6 +47,7 @@ class Robot : public frc::TimedRobot {
   static void pipeLineFlip(bool pipeLine);
 
   static bool inBallMode;
+  static bool pastNinety;
 
  private:
   static bool stateMachinesReset;
