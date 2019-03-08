@@ -34,13 +34,18 @@ constexpr int DRIVER_CONTROLLER_PORT = 0;
 constexpr int OPERATOR_CONTROLLER_PORT = 1;
 
 // Driver Buttons
-constexpr int MILKY_MANIPULATOR_BTN= 9;
+constexpr int DRIVE_TO_VISION_TARGET_BTN = 1;
+// 2 - free
+// 3 - free
+// 4 - free
+constexpr int CLIMB_BTN = 5;
+constexpr int EXTEND_CLIMB_BARS_BTN = 6;
+constexpr int REVERSE_CLIMB_BTN = 7;
+constexpr int RETRACT_CLIMB_BARS_BTN = 8;
+constexpr int MILKY_MANIPULATOR_BTN = 9;
+constexpr int TEST_BTN = 10;
 constexpr int DRIVER_KILL_ONE_BTN = 11;
 constexpr int DRIVER_KILL_TWO_BTN = 12;
-constexpr int TOGGLE_PIPELINE_BTN = 6;
-constexpr int TEST_1_BTN = 1;
-constexpr int EXTEND_CLIMB_BAR_BTN = 5;
-constexpr int RETRACT_CLIMB_BAR_BTN = 7;
 
 // Driver Axes
 //...
@@ -89,13 +94,16 @@ class OI {
     std::shared_ptr<frc::Joystick> operatorController;
 
     // Driver controller buttons
+    std::shared_ptr<frc::JoystickButton> driveToVisionTargetBtn;
+    std::shared_ptr<frc::JoystickButton> climbBtn;
+    std::shared_ptr<frc::JoystickButton> extendClimbBarsBtn;
+    std::shared_ptr<frc::JoystickButton> reverseClimbBtn;
+    std::shared_ptr<frc::JoystickButton> retractClimbBarsBtn;
     std::shared_ptr<frc::JoystickButton> milkyManipulatorBtn;
+    std::shared_ptr<frc::JoystickButton> testBtn;
     std::shared_ptr<frc::JoystickButton> driverKillBtn1;
     std::shared_ptr<frc::JoystickButton> driverKillBtn2;
-    std::shared_ptr<frc::JoystickButton> togglePipeLineBtn;
-    std::shared_ptr<frc::JoystickButton> test1Btn;
-    std::shared_ptr<frc::JoystickButton> extendClimbBarBtn;
-    std::shared_ptr<frc::JoystickButton> retractClimbBarBtn;
+    
 
     // Operator controller buttons
     std::shared_ptr<frc::JoystickButton> elevatorToCargoShipHeightBtn;

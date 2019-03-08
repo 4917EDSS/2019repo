@@ -18,8 +18,6 @@
 #include "commands/ManipulatorWithJoystickCmd.h"
 #include <Robot.h>
 
-constexpr double FLIPPER_MAX_ANGLE = 90;
-constexpr double FLIPPER_MIN_ANGLE = -100;
 constexpr double FLIPPER_ANGLE_TOLERANCE = 1.0;
 constexpr double FLIPPER_VELOCITY_TOLERANCE = 45;
 constexpr double FLIPPER_TICK_TO_DEGREE_FACTOR = (90/40.1900);
@@ -65,12 +63,12 @@ ManipulatorSub::ManipulatorSub() : Subsystem("ManipulatorSub") {
   flipperNewStateParameters = false;
   flipperNewControlMode = FLIPPER_MODE_DISABLED;
   flipperNewMaxPower = 0.0;
-  flipperNewTargetAngle = FLIPPER_MIN_ANGLE;
+  flipperNewTargetAngle = MANIPULATOR_MIN_ANGLE;
   flipperNewState = FLIPPER_STATE_IDLE;
 
   flipperControlMode = FLIPPER_MODE_DISABLED;
   flipperMaxPower = 0.0;
-  flipperTargetAngle = FLIPPER_MIN_ANGLE;
+  flipperTargetAngle = MANIPULATOR_MIN_ANGLE;
   flipperState = FLIPPER_STATE_IDLE;
   flipperLastPower = 0.0;
   flipperBlockedAngle = 0.0;
@@ -159,7 +157,7 @@ void ManipulatorSub::setFlipperAngle(int mode, double maxPower, double targetAng
       return; 
     }
     if ((mode != FLIPPER_MODE_MANUAL) && 
-        ((targetAngle < FLIPPER_MIN_ANGLE) || (targetAngle > FLIPPER_MAX_ANGLE))) {
+        ((targetAngle < MANIPULATOR_MIN_ANGLE) || (targetAngle > MANIPULATOR_MAX_ANGLE))) {
       logger.send(logger.MANIPULATOR, "SFA: ERROR (#2)!! Angle = %.1f \n", targetAngle);
       return;
     }
@@ -207,7 +205,7 @@ void ManipulatorSub::setFlipperAngle(int mode, double maxPower, double targetAng
           flipperNewState = FLIPPER_STATE_MOVING;
           flipperNewControlMode = mode;
           flipperNewMaxPower = fabs(maxPower);;
-          flipperNewTargetAngle = (maxPower > 0) ? FLIPPER_MAX_ANGLE : FLIPPER_MIN_ANGLE;
+          flipperNewTargetAngle = (maxPower > 0) ? MANIPULATOR_MAX_ANGLE : MANIPULATOR_MIN_ANGLE;
           flipperNewStateParameters = true;    // Only set this to true after all the other parameters have been set 
           logger.send(logger.MANIPULATOR, "SFA: Man - moving (P=%.2f, H=%.1f)\n", 
               flipperNewMaxPower, flipperNewTargetAngle);
@@ -319,8 +317,8 @@ void ManipulatorSub::updateFlipperStateMachine() {
   if(newPower != flipperLastPower) {
     setFlipperPower(newPower);
     flipperLastPower = newPower;
-    //logger.send(logger.MANIPULATOR, "FSM: New power = %f (S=%d, M=%d, P=%.2f, H=%.1f)\n", newPower,
-    //    flipperState, flipperControlMode, flipperNewMaxPower, flipperNewTargetAngle);
+    logger.send(logger.MANIPULATOR, "FSM: New power = %f (S=%d, M=%d, P=%.2f, H=%.1f)\n", newPower,
+        flipperState, flipperControlMode, flipperNewMaxPower, flipperNewTargetAngle);
   }
 }
 
@@ -332,24 +330,27 @@ bool ManipulatorSub::isFlipperBlocked(double currentAngle, double targetAngle) {
   }
 
   // TODO: implement all rules
-  if(((currentAngle >= FLIPPER_MAX_ANGLE) && (direction > 0)) || 
-      ((currentAngle < FLIPPER_MIN_ANGLE) && (direction < 0))) {
+  if(((currentAngle >= MANIPULATOR_MAX_ANGLE) && (direction > 0)) || 
+      ((currentAngle < MANIPULATOR_MIN_ANGLE) && (direction < 0))) {
     return true;
   }
   
-  if (Robot::elevatorSub.getElevatorHeight() > (ELEVATOR_MIN_HEIGHT_MM + 50)){
-    return true;
+  if (Robot::elevatorSub.getElevatorHeight() >= (ELEVATOR_MIN_HEIGHT_MM + 120)) {
+    if (((currentAngle > -90) && (currentAngle < 0)) && (direction < 0)) {
+      return true;
+    }
+    if (((currentAngle > 0) && (currentAngle < 30)) && (direction < 0)) {
+      return true;
+    }
   }
 
   return false;
 }
 
 double ManipulatorSub::calcFlipperHoldPower(double currentAngle, double targetAngle) {
-  // TODO:  Determine actual value for this.
   // 3% power holds flipper at a 90 degree angle  
   // Make propertional to target.
-  // Take into consideration flipper position
-  return (0.03 / 90) * (-targetAngle) + ((targetAngle - currentAngle) * 0.0005);
+  return ((0.025 / 90) * (-targetAngle)) + ((targetAngle - currentAngle) * 0.001);
 }
 
 double ManipulatorSub::calcFlipperMovePower(double currentAngle, double targetAngle, double maxPower) {
@@ -359,6 +360,8 @@ double ManipulatorSub::calcFlipperMovePower(double currentAngle, double targetAn
   if(currentAngle > targetAngle) {
     direction = -1.0;
   }
+
+  // Throttle the power once we get to 25 deg from the target
   double resultPower = (targetAngle - currentAngle) * 0.04;
 
   if(fabs(resultPower) > maxPower) {

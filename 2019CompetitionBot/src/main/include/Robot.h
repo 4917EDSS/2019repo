@@ -18,6 +18,7 @@
 #include "subsystems/ElevatorSub.h"
 #include "subsystems/ManipulatorSub.h"
 #include "subsystems/ClimbSub.h"
+#include "subsystems/VisionSub.h"
 #include "components/Log.h"
 
 class Robot : public frc::TimedRobot {
@@ -27,6 +28,7 @@ class Robot : public frc::TimedRobot {
   static ElevatorSub elevatorSub;
   static ManipulatorSub manipulatorSub;
   static ClimbSub climbSub;
+  static VisionSub visionSub;
   static OI oi;
 
 
@@ -46,12 +48,6 @@ class Robot : public frc::TimedRobot {
 
   static bool inBallMode;
 
-  static double GetDistanceFromVision();
-
-  static double GetScoringFaceAngle();
-
-
-
  private:
   static bool stateMachinesReset;
 
@@ -61,5 +57,4 @@ class Robot : public frc::TimedRobot {
   frc::SendableChooser<frc::Command*> m_chooser;
   void UpdateSmartDashboard();
   static void resetStateMachines();
- 
 };

@@ -7,27 +7,20 @@
 
 #pragma once
 
-#include <frc/commands/Subsystem.h>
 #include <frc/WPILib.h>
-#include <ctre/Phoenix.h>
+#include <frc/commands/Subsystem.h>
 
-constexpr double CLIMB_RETRACT_LIMIT_THRESHOLD = 2;
-constexpr double CLIMB_EXTEND_LIMIT_THRESHOLD = 8000;
-
-class ClimbSub : public frc::Subsystem {
+class VisionSub : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-	std::shared_ptr<WPI_TalonSRX> climbMotor;
-
-  nt::NetworkTableEntry ntePower;
-  nt::NetworkTableEntry ntePosition;
 
  public:
-  ClimbSub();
+  VisionSub();
   void InitDefaultCommand() override;
-  void updateShuffleBoard();
-  int GetClimbEncoder();
-  void SetClimbMotorPower(double power);
-  double getClimbPosition();
+  double getVisionTarget();
+  double normalizeAngle(double targetangle);
+  void pipeLineToggle(bool pipeLine);
+  double getDistanceFromVision();
+  double getScoringFaceAngle();
 };

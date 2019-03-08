@@ -17,18 +17,26 @@ ExtendClimbBarsCmd::ExtendClimbBarsCmd() {
 
 // Called just before this Command runs the first time
 void ExtendClimbBarsCmd::Initialize() {
-  Robot::climbSub.SetClimbMotor(1);
+  Robot::climbSub.SetClimbMotorPower(1);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ExtendClimbBarsCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool ExtendClimbBarsCmd::IsFinished() { return false; }
+bool ExtendClimbBarsCmd::IsFinished() { 
+  logger.send(logger.CLIMB, "position = %.1f \n", Robot::climbSub.getClimbPosition());
+ 
+  // return Robot::climbSub.getClimbPosition() > CLIMB_EXTEND_LIMIT_THRESHOLD; 
+  if (Robot::climbSub.GetClimbEncoder() >= 400 ) {
+    return true;
+}
+  return false;
+}
 
 // Called once after isFinished returns true
 void ExtendClimbBarsCmd::End() {
-    Robot::climbSub.SetClimbMotor(0);
+    Robot::climbSub.SetClimbMotorPower(0);
 }
 
 // Called when another command which requires one or more of the same

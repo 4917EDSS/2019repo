@@ -16,7 +16,7 @@ void DriveStraightCmd::Execute() {
 }
 
 bool DriveStraightCmd::IsFinished() {
-  double distanceTraveled=(Robot::drivetrainSub.GetLeftEncoder()+Robot::drivetrainSub.GetRightEncoder())/2;
+  double distanceTraveled=(Robot::drivetrainSub.getLeftEncoder()+Robot::drivetrainSub.getRightEncoder())/2;
   if (distanceTraveled >= distance) {
     return true;
   }

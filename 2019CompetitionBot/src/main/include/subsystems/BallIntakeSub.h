@@ -14,6 +14,10 @@
 #include <rev/CANSparkMaxLowLevel.h>
 #include <RobotMap.h>
 #include "SparkShuffleboardEntrySet.h"
+
+constexpr double INTAKE_NEUTRAL_ANGLE = 104.03; // Only angle that works
+constexpr double INTAKE_CARGO_ANGLE = 90;   // TODO:  Check and update
+
 constexpr int INTAKE_ARM_MODE_DISABLED = 0;
 constexpr int INTAKE_ARM_MODE_AUTO = 1;
 constexpr int INTAKE_ARM_MODE_MANUAL = 2;
@@ -24,7 +28,6 @@ class BallIntakeSub : public frc::Subsystem {
   double intakeWheelPower;
   std::shared_ptr<rev::CANSparkMax> flipperMotor;
   std::shared_ptr<frc::Solenoid> intakeFolderSolenoid;
-  std::shared_ptr<frc::Encoder> intakeArmEnc;
   std::shared_ptr<frc::DigitalInput> ballIntakeArmLimit;
 
   struct SparkShuffleboardEntrySet nteFlipperMotor;

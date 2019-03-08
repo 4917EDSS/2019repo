@@ -17,10 +17,10 @@
 #include "SparkShuffleboardEntrySet.h"
 #include "Robot.h"
 
-constexpr double ELEVATOR_POSITION_TOLERANCE_MM = 5.0;
-constexpr double ELEVATOR_VELOCITY_TOLERANCE_MM_S = 45; // TODO Determine value
+constexpr double ELEVATOR_POSITION_TOLERANCE_MM = 10.0;
+constexpr double ELEVATOR_VELOCITY_TOLERANCE_MM_S = 45;
 constexpr double MANUAL_MODE_POWER_DEADBAND = 0.03;
-constexpr double ELEVATOR_TICK_TO_MM_FACTOR = (6.94); // TODO Determine value
+constexpr double ELEVATOR_TICK_TO_MM_FACTOR = (9.43);
 constexpr double ELEVATOR_IS_DOWN_TOLERANCE_MM = ELEVATOR_POSITION_TOLERANCE_MM + 1.0;
 
 // Elevator state machine states
@@ -59,6 +59,17 @@ ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
   }
   nteShifterSolenoid = (shuffleTab.Add("Shiffter", 0).GetEntry());
 
+  frc::ShuffleboardLayout &shuffleList = shuffleTab.GetLayout("State Machine", frc::BuiltInLayouts::kList);
+  shuffleList.WithSize(1, 4);
+  shuffleList.WithPosition(3, 0);
+  nteSmMode = (shuffleList.Add("Mode", 0).GetEntry());
+  nteSmState = (shuffleList.Add("State", 0).GetEntry());
+  nteLastPower = (shuffleList.Add("Power", 0).GetEntry());
+  nteSmMaxPower = (shuffleList.Add("Max Power", 0).GetEntry());
+  nteSmTarget = (shuffleList.Add("Target", 0).GetEntry());
+  nteSmBlockedAt = (shuffleList.Add("Blocked At", 0).GetEntry());
+  nteSmIsFinished = (shuffleList.Add("Is Finished", 0).GetEntry());
+
   // Initialize elevator state machine
   elevatorNewStateParameters = false;
   elevatorNewControlMode = ELEVATOR_MODE_DISABLED;
@@ -94,6 +105,14 @@ void ElevatorSub::updateShuffleBoard() {
   nteSparksTwo[1].motorTemperature.SetDouble(elevatorMotor2->GetMotorTemperature());
 
   nteShifterSolenoid.SetBoolean(shifterSolenoid->Get());
+
+  nteSmMode.SetDouble(elevatorControlMode);
+  nteSmState.SetDouble(elevatorState);
+  nteLastPower.SetDouble(elevatorLastPower);
+  nteSmMaxPower.SetDouble(elevatorMaxPower);
+  nteSmTarget.SetDouble(elevatorTargetHeightMm);
+  nteSmBlockedAt.SetDouble(elevatorBlockedHeightMm);
+  nteSmIsFinished.SetBoolean(isElevatorAtTarget());
 }
 
 void ElevatorSub::setElevatorMotorPower(double power) {
@@ -218,8 +237,8 @@ bool ElevatorSub::isElevatorAtTarget() {
     return true;
   }
   else {
-    //logger.send(logger.ELEVATOR, "IEAT: Elevator not at target (T=%.1f, C=%.1f, V=%.1f)\n", 
-    //    elevatorTargetHeightMm, getElevatorHeight(), getElevatorVelocity());
+  // logger.send(logger.ELEVATOR, "IEAT: Elevator not at target (T=%.1f, C=%.1f, V=%.1f)\n", 
+  //      elevatorTargetHeightMm, getElevatorHeight(), getElevatorVelocity());
     return false;
   }
 }
@@ -308,9 +327,9 @@ bool ElevatorSub::isElevatorBlocked(double currentHeightMm, double targetHeightM
     direction = -1.0;
   }
 
-  if (lowerLimit->Get() && direction < 0) {
-    return true;
-  }
+//  if (lowerLimit->Get() && direction < 0) {
+//    return true;
+//  }
 
   if (((currentHeightMm >= ELEVATOR_MAX_HEIGHT_MM) && (direction > 0)) ||
       ((currentHeightMm < ELEVATOR_MIN_HEIGHT_MM) && (direction < 0))) {
@@ -327,7 +346,7 @@ bool ElevatorSub::isElevatorBlocked(double currentHeightMm, double targetHeightM
     }
 
     if (Robot::manipulatorSub.getFlipperAngle() <= -45) {
-      if (currentHeightMm >= (ELEVATOR_MIN_HEIGHT_MM + 500)) {
+      if (currentHeightMm >= (ELEVATOR_MIN_HEIGHT_MM + 400)) {
         return true;
       }
     }
@@ -337,10 +356,7 @@ bool ElevatorSub::isElevatorBlocked(double currentHeightMm, double targetHeightM
 }
 
 double ElevatorSub::calcElevatorHoldPower(double currentHeightMm, double targetHeightMm) {
-  // TODO:  Determine actual value for this.
-  // Make propertional to target.
-  // Take into consideration elevator gear and if carrying hatch/cargo?
-  double holdPower = (targetHeightMm - currentHeightMm) * 0.003;
+  double holdPower = (targetHeightMm - currentHeightMm) * 0.004;
 
   return holdPower;
 }
@@ -353,7 +369,8 @@ double ElevatorSub::calcElevatorMovePower(double currentHeightMm, double targetH
     direction = -1.0;
   }
 
-  double resultPower = (targetHeightMm - currentHeightMm) * 0.02;
+  // Throttle the power once we get to 100mm from the target
+  double resultPower = (targetHeightMm - currentHeightMm) * 0.01;
 
   if(fabs(resultPower) > maxElevatorPower) {
     newPower = maxElevatorPower * direction;

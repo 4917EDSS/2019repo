@@ -35,11 +35,12 @@ class DrivetrainSub : public frc::Subsystem {
   
  public:
   DrivetrainSub();
-  double GetLeftEncoder();
-  double GetRightEncoder();
+  double getLeftEncoder();
+  double getRightEncoder();
   void resetAHRS();
   double getAngle();
   double getRate();
+  double getPitchAngle();
   void InitDefaultCommand() override;
   void drive(double lSpeed, double rSpeed);
   void updateShuffleBoard();

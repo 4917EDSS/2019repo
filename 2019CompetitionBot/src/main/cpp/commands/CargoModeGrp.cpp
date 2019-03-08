@@ -8,11 +8,13 @@
 #include "commands/CargoModeGrp.h"
 #include "commands/ManipulatorInCmd.h"
 #include "commands/HatchGripperContractCmd.h"
+#include "commands/ManipulatorOutCmd.h"
 #include "Robot.h"
 
 CargoModeGrp::CargoModeGrp() {
-  AddSequential(new ManipulatorInCmd());
+  //AddSequential(new ManipulatorOutCmd(0.1));
   AddSequential(new HatchGripperContractCmd());
+  AddSequential(new ManipulatorInCmd(1.0));
   // Add Commands here:
   // e.g. AddSequential(new Command1());
   //      AddSequential(new Command2());

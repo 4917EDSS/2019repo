@@ -12,27 +12,23 @@
 #include "subsystems/BallIntakeSub.h"
 #include "commands/KillEverythingCmd.h"
 #include "commands/MilkyScoreGrp.h"
-#include "commands/MilkyManipulatorCmd.h"
+#include "commands/TestButtonCmd.h"
 #include "commands/ClimbExtendGrp.h"
-#include "commands/SetElevatorandManipulatorCmd.h"
-#include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/IntakeBallFromRobotCmd.h"
 #include "commands/IntakeBallGrp.h"
 #include "commands/ExpandHatchGripperGrp.h"
 #include "commands/MultiButton1Cmd.h"
 #include "commands/HatchModeGrp.h"
 #include "commands/CargoModeGrp.h"
-#include "commands/DynamicCommandPickerCmd.h"
-#include "commands/HatchGripperExpandCmd.h"
-#include "commands/HatchGripperContractCmd.h"
-#include "commands/frc4917Cmd.h"
-#include "commands/frc4917Grp.h"
 #include "commands/TogglePipeLineCmd.h"
 #include "commands/ToggleManipulatorPositionCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
 #include "commands/ExtendClimbBarsCmd.h"
-#include "commands/SetManipulatorCmd.h"
+#include "commands/SetManipulatorAngleCmd.h"
 #include "commands/RetractClimbBarsCmd.h"
+#include "commands/ModeBasedCndCmd.h"
+#include "commands/ClimbCmd.h"
+#include "commands/ClimbReverseCmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -49,8 +45,27 @@ OI::OI() {
   operatorController->SetThrottleChannel(3);
 
   // Driver controller buttons
+  driveToVisionTargetBtn.reset(new frc::JoystickButton(driverController.get(), DRIVE_TO_VISION_TARGET_BTN));
+  driveToVisionTargetBtn->WhenPressed(new MilkyScoreGrp());
+
+  climbBtn.reset(new frc::JoystickButton(driverController.get(), CLIMB_BTN));
+  climbBtn->WhileHeld(new ClimbCmd());
+
+  extendClimbBarsBtn.reset(new frc::JoystickButton(driverController.get(), EXTEND_CLIMB_BARS_BTN));
+  extendClimbBarsBtn->WhileHeld(new ExtendClimbBarsCmd());
+
+  reverseClimbBtn.reset(new frc::JoystickButton(driverController.get(), REVERSE_CLIMB_BTN));
+  reverseClimbBtn->WhileHeld(new ClimbReverseCmd);
+
+  retractClimbBarsBtn.reset(new frc::JoystickButton(driverController.get(), RETRACT_CLIMB_BARS_BTN));
+  retractClimbBarsBtn->WhileHeld(new RetractClimbBarsCmd());
+
   milkyManipulatorBtn.reset(new frc::JoystickButton(driverController.get(),MILKY_MANIPULATOR_BTN));
   milkyManipulatorBtn->WhileHeld( new MilkyScoreGrp());
+
+  // Either add test code to TestButtonCmd or swap TestButtonCmd for another command to test it
+  testBtn.reset(new frc::JoystickButton(driverController.get(), TEST_BTN));
+  testBtn->WhenPressed(new TestButtonCmd());
 
   driverKillBtn1.reset(new frc::JoystickButton(driverController.get(), DRIVER_KILL_ONE_BTN));
   driverKillBtn1->WhenPressed(new KillEverythingCmd());
@@ -58,31 +73,18 @@ OI::OI() {
   driverKillBtn2.reset(new frc::JoystickButton(driverController.get(), DRIVER_KILL_TWO_BTN));
   driverKillBtn2->WhenPressed(new KillEverythingCmd());
 
-  togglePipeLineBtn.reset(new frc::JoystickButton(driverController.get(),TOGGLE_PIPELINE_BTN));
-  togglePipeLineBtn->WhenPressed(new TogglePipeLineCmd());
-  
-  test1Btn.reset(new frc::JoystickButton(driverController.get(), TEST_1_BTN));
-  test1Btn->WhenPressed(new SetElevatorToHeightCmd(1000.0));
-
-  extendClimbBarBtn.reset(new frc::JoystickButton(driverController.get(),EXTEND_CLIMB_BAR_BTN));
-  extendClimbBarBtn->WhileHeld(new ExtendClimbBarsCmd());
-
-  retractClimbBarBtn.reset(new frc::JoystickButton(driverController.get(),RETRACT_CLIMB_BAR_BTN));
-  retractClimbBarBtn->WhileHeld(new RetractClimbBarsCmd());
-
   // Operator controller buttons
   elevatorToCargoShipHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_CARGO_SHIP_HEIGHT_BTN));
-  elevatorToCargoShipHeightBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Cmd, frc4917Cmd>(new SetElevatorToHeightCmd(ELEVATOR_CARGO_SHIP_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM)));
+  elevatorToCargoShipHeightBtn->WhenPressed(new ModeBasedCndCmd(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_CARGO_SHIP_CARGO_HEIGHT_MM)));
 
   elevatorToLowHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_LOW_HEIGHT_BTN));
-  elevatorToLowHeightBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Cmd, frc4917Cmd>(new SetElevatorToHeightCmd(ELEVATOR_ROCKET_LOW_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM)));
+  elevatorToLowHeightBtn->WhenPressed(new ModeBasedCndCmd(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_ROCKET_LOW_CARGO_HEIGHT_MM)));
   
   elevatorToMediumHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_MEDIUM_HEIGHT_BTN));
-  elevatorToMediumHeightBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Cmd, frc4917Cmd>(new SetElevatorToHeightCmd(ELEVATOR_ROCKET_MEDIUM_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_MEDIUM_HATCH_HEIGHT_MM)));
+  elevatorToMediumHeightBtn->WhenPressed(new ModeBasedCndCmd(new SetElevatorToHeightCmd(ELEVATOR_MEDIUM_HATCH_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_ROCKET_MEDIUM_CARGO_HEIGHT_MM)));
 
   elevatorToHighHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_HIGH_HEIGHT_BTN));
-  elevatorToHighHeightBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Cmd, frc4917Cmd>(new SetElevatorToHeightCmd(ELEVATOR_ROCKET_HIGH_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_HIGH_HATCH_HEIGHT_MM)));
-
+  elevatorToHighHeightBtn->WhenPressed(new ModeBasedCndCmd(new SetElevatorToHeightCmd(ELEVATOR_HIGH_HATCH_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_ROCKET_HIGH_CARGO_HEIGHT_MM)));
 
   hatchModeBtn.reset(new frc::JoystickButton(operatorController.get(), HATCH_MODE_BTN));
   hatchModeBtn->WhenPressed(new HatchModeGrp());
@@ -92,11 +94,12 @@ OI::OI() {
 
   flipManipulatorBtn.reset(new frc::JoystickButton(operatorController.get(), FLIP_MANIPULATOR_BTN));
   flipManipulatorBtn->WhenPressed(new ToggleManipulatorPositionCmd());
-  
-  //elevatorToHighHeightBtn->WhenPressed(new );
 
   intakeHatchOrCargoBtn.reset(new frc::JoystickButton(operatorController.get(), INTAKE_HATCH_OR_CARGO_BTN));
-  intakeHatchOrCargoBtn->WhenPressed(new DynamicCommandPickerCmd<frc4917Grp, frc4917Grp>(new IntakeBallGrp(), new ExpandHatchGripperGrp()));
+  intakeHatchOrCargoBtn->WhenPressed(new ModeBasedCndCmd(new ExpandHatchGripperGrp(), new IntakeBallGrp()));
+
+  manipulatorToVerticalBtn.reset(new frc::JoystickButton(operatorController.get(), MANIPULATOR_TO_VERTICAL_BTN));
+  manipulatorToVerticalBtn->WhenPressed(new SetManipulatorAngleCmd(0.0));
 
   multiCommand1Btn.reset(new frc::JoystickButton(operatorController.get(), MULTI_COMMAND_1_BTN));
   multiCommand1Btn->WhenPressed(new MultiButton1Cmd());
@@ -106,7 +109,6 @@ OI::OI() {
 
   operatorKillBtn2.reset(new frc::JoystickButton(operatorController.get(), OPERATOR_KILL_TWO_BTN));
   operatorKillBtn2->WhenPressed(new KillEverythingCmd());
-
 
 
 /*
@@ -124,9 +126,6 @@ OI::OI() {
   IntakeUntilLimitBtn.reset(new frc::JoystickButton(operatorController.get(), SET_INTAKE_MOTOR_BTN));
   IntakeUntilLimitBtn->WhenPressed(new IntakeBallFromRobotCmd());
 */
-  manipulatorToVerticalBtn.reset(new frc::JoystickButton(operatorController.get(), MANIPULATOR_TO_VERTICAL_BTN));
-  manipulatorToVerticalBtn->WhenPressed(new SetManipulatorCmd(0.0));
-
 
 }
 
@@ -145,21 +144,21 @@ int OI::getOperatorShiftState() {
   // POV position is reported in degrees with 0 deg being up and increasing clockwise
   // Positions between Up/down/left/right are ignored (i.e. 45 deg)
   switch(operatorController->GetPOV()) {
-  case POV_INACTIVE:
-    shift = 0;
-    break;
-  case POV_UP:
-    shift = 1;
-    break; 
-  case POV_RIGHT:
-    shift = 2;
-    break;
-  case POV_DOWN:
-    shift = 3;
-    break;
-  case POV_LEFT:
-    shift = 4;
-    break;
+    case POV_INACTIVE:
+      shift = 0;
+      break;
+    case POV_UP:
+      shift = 1;
+      break; 
+    case POV_RIGHT:
+      shift = 2;
+      break;
+    case POV_DOWN:
+      shift = 3;
+      break;
+    case POV_LEFT:
+      shift = 4;
+      break;
   }
 
   return shift;

@@ -11,14 +11,12 @@
 TestButtonCmd::TestButtonCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::ballIntakeSub);
+  
 }
 
 // Called just before this Command runs the first time
 void TestButtonCmd::Initialize() {
   logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-  Robot::ballIntakeSub.setIntakeWheelPower(1.0);
-  Robot::ballIntakeSub.unfoldIntakeArms();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -29,8 +27,7 @@ bool TestButtonCmd::IsFinished() { return false; }
 
 
 void TestButtonCmd::End() {
-  Robot::ballIntakeSub.setIntakeWheelPower(0.0);
-  Robot::ballIntakeSub.foldIntakeArms();
+
 }
 
 // Called when another command which requires one or more of the same

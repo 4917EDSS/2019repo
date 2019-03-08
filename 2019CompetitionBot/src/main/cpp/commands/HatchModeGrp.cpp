@@ -12,7 +12,7 @@
 
 HatchModeGrp::HatchModeGrp() {
   AddSequential(new HatchGripperContractCmd());
-  AddSequential(new ManipulatorOutCmd());
+  AddSequential(new ManipulatorOutCmd(1.5));
   // Add Commands here:
   // e.g. AddSequential(new Command1());
   //      AddSequential(new Command2());

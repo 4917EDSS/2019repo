@@ -9,15 +9,15 @@
 
 #include <frc/commands/Command.h>
 
-class SetManipulatorCmd : public frc::Command {
+class ClimbCmd : public frc::Command {
  public:
-  SetManipulatorCmd(double targetAngle);
+  ClimbCmd();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
 
-private:
-  double targetAngle;
+ private:
+  double lastPower;
 };

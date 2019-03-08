@@ -5,40 +5,41 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/SetElevatorandManipulatorCmd.h"
-#include "robot.h"
+#include "commands/ClimbReverseCmd.h"
+#include "Robot.h"
 
-SetElevatorandManipulatorCmd::SetElevatorandManipulatorCmd(double targetAngle, double targetHeight) : targetAngle(targetAngle), targetHeight(targetHeight){
+ClimbReverseCmd::ClimbReverseCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::elevatorSub);
-  Requires(&Robot::manipulatorSub);
+  Requires(&Robot::climbSub);
+  Requires(&Robot::ballIntakeSub);
 }
 
 // Called just before this Command runs the first time
-void SetElevatorandManipulatorCmd::Initialize() {
-  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-  Robot::elevatorSub.setElevatorHeight(ELEVATOR_MODE_AUTO, 0.5, targetHeight);
-  Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_AUTO, 0.5, targetAngle);
+void ClimbReverseCmd::Initialize() {
+  Robot::climbSub.SetClimbMotorPower(-1.0);
+  Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_AUTO, 0.5, INTAKE_NEUTRAL_ANGLE);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void SetElevatorandManipulatorCmd::Execute() {
-
-}
+void ClimbReverseCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool SetElevatorandManipulatorCmd::IsFinished() { 
-  return Robot::elevatorSub.isElevatorAtTarget() && Robot::manipulatorSub.isFlipperAtTarget();
+bool ClimbReverseCmd::IsFinished() { 
+  if(Robot::climbSub.getClimbPosition() <= CLIMB_RETRACT_LIMIT_THRESHOLD) {
+    return true;
+  }
+  else {
+    return false; 
+  }
 }
 
 // Called once after isFinished returns true
-void SetElevatorandManipulatorCmd::End() {
-  
+void ClimbReverseCmd::End() {
+  Robot::climbSub.SetClimbMotorPower(0.0);
+  Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_MANUAL, 0.0, 0.0);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void SetElevatorandManipulatorCmd::Interrupted() {
-  End();
-}
+void ClimbReverseCmd::Interrupted() {}
