@@ -42,6 +42,7 @@ class Robot : public frc::TimedRobot {
   static double GetVisionTarget();
   static double NormalizeAngle(double targetangle);
   static void pipeLineToggle(bool pipeLine);
+  static void pipeLineFlip(bool pipeLine);
 
   static bool inBallMode;
 

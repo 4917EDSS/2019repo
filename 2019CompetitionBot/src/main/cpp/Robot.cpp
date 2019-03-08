@@ -206,6 +206,21 @@ void Robot::pipeLineToggle(bool pipeLine){
       nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0);
   }
 }
+//Flipping camera orientation
+
+void Robot::pipeLineFlip(bool pipeLineFlip){
+  
+  if (pipeLineFlip) {
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 1);
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 1);
+  } 
+  else{
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 1);
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 2);
+  }
+}
 
 double Robot::GetVisionTarget() {
   

@@ -243,6 +243,14 @@ bool ManipulatorSub::isFlipperAtTarget() {
 void ManipulatorSub::updateFlipperStateMachine() {
   double newPower = 0.0;
   double currentAngle = getFlipperAngle();
+  
+  //Flipping camera orientation when arm switches sides.
+  if (currentAngle >= 0.0) {
+    Robot::pipeLineFlip (true);
+  }else{
+    Robot::pipeLineFlip (false);
+  }
+  
 
   // Apply any new inputs
   if(flipperNewStateParameters) {
