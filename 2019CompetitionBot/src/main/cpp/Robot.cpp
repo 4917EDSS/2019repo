@@ -201,49 +201,6 @@ void Robot::UpdateSmartDashboard() {
   frc::SmartDashboard::PutNumber("Yaw Angle", drivetrainSub.getAngle());  
 }
 
-void Robot::pipeLineToggle(bool pipeLine){
-  
-  if (pipeLine == true) {
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 1);
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 1);
-  } 
-  else{
-      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
-      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 0);
-      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0);
-  }
-}
-//Flipping camera orientation
-
-void Robot::pipeLineFlip(bool pipeLineFlip){
-  
-  if (pipeLineFlip) {
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 1);
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 1);
-  } 
-  else{
-      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
-      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 1);
-      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 2);
-  }
-}
-
-double Robot::GetVisionTarget() {
-  
-  double xAngle = 9001;
-  // if over 9000, the vision target is not picking up anything.
-  double TargetMarked = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
-
-  if (TargetMarked > 0.5) {
-    xAngle = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx", 0.0);
-  }
-
-  return xAngle;
-}
-
-
 void Robot::resetStateMachines() {
   Robot::elevatorSub.setElevatorHeight(ELEVATOR_MODE_DISABLED, 0, 0);
   Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_DISABLED, 0, 0);

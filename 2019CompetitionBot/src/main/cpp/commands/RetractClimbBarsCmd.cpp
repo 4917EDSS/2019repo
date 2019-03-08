@@ -28,7 +28,7 @@ bool RetractClimbBarsCmd::IsFinished() {
   logger.send(logger.CLIMB, "position = %.1f \n", Robot::climbSub.getClimbPosition());
  
   // return Robot::climbSub.getClimbPosition() < CLIMB_RETRACT_LIMIT_THRESHOLD; 
-  if (Robot::climbSub.GetClimbEncoder() <= 0 ) {
+  if (Robot::climbSub.getClimbPosition() <= 0 ) {
     return true;
 }
   return false;

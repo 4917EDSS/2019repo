@@ -33,9 +33,6 @@ void ClimbSub::updateShuffleBoard() {
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
-int ClimbSub::GetClimbEncoder() {
-  return climbMotor->GetSensorCollection().GetQuadraturePosition();
-}
 void ClimbSub::SetClimbMotorPower(double power){
   climbMotor->Set(ControlMode::PercentOutput, -power);
 }

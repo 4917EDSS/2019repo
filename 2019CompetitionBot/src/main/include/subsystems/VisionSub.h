@@ -21,6 +21,7 @@ class VisionSub : public frc::Subsystem {
   double getVisionTarget();
   double normalizeAngle(double targetangle);
   void pipeLineToggle(bool pipeLine);
+  void pipeLineFlip(bool pipeLine);
   double getDistanceFromVision();
   double getScoringFaceAngle();
 };

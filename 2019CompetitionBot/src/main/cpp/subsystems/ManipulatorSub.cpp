@@ -244,9 +244,9 @@ void ManipulatorSub::updateFlipperStateMachine() {
   
   //Flipping camera orientation when arm switches sides.
   if (currentAngle >= 0.0) {
-    Robot::pipeLineFlip (true);
+    Robot::visionSub.pipeLineFlip(true);
   }else{
-    Robot::pipeLineFlip (false);
+    Robot::visionSub.pipeLineFlip(false);
   }
   
 

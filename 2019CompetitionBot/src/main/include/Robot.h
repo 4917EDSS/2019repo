@@ -41,10 +41,8 @@ class Robot : public frc::TimedRobot {
   void TeleopInit() override;
   void TeleopPeriodic() override;
   void TestPeriodic() override;
-  static double GetVisionTarget();
   static double NormalizeAngle(double targetangle);
   static void pipeLineToggle(bool pipeLine);
-  static void pipeLineFlip(bool pipeLine);
 
   static bool inBallMode;
   static bool pastNinety;
