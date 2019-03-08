@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "Robot.h"
+#include "subsystems/BallIntakeSub.h"
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/FoldIntakeCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
@@ -25,6 +26,6 @@ IntakeBallGrp::IntakeBallGrp() {
     
   AddSequential(new SetManipulatorAngleCmd(0));
   AddSequential(new SetElevatorToHeightCmd(ELEVATOR_MIN_HEIGHT_MM));
-  AddParallel(new FoldIntakeCmd(true));
+  AddSequential(new FoldIntakeCmd(true));
   AddSequential(new SetIntakeArmAngleCmd(false, INTAKE_NEUTRAL_ANGLE));
 }

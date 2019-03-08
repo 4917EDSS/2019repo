@@ -1,3 +1,4 @@
+
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
@@ -32,7 +33,9 @@ void ClimbSub::updateShuffleBoard() {
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
-
+int ClimbSub::GetClimbEncoder() {
+  return climbMotor->GetSensorCollection().GetQuadraturePosition();
+}
 void ClimbSub::SetClimbMotorPower(double power){
   climbMotor->Set(ControlMode::PercentOutput, -power);
 }
