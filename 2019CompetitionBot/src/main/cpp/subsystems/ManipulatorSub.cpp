@@ -309,8 +309,8 @@ void ManipulatorSub::updateFlipperStateMachine() {
   if(newPower != flipperLastPower) {
     setFlipperPower(newPower);
     flipperLastPower = newPower;
-    //logger.send(logger.MANIPULATOR, "FSM: New power = %f (S=%d, M=%d, P=%.2f, H=%.1f)\n", newPower,
-    //    flipperState, flipperControlMode, flipperNewMaxPower, flipperNewTargetAngle);
+    logger.send(logger.MANIPULATOR, "FSM: New power = %f (S=%d, M=%d, P=%.2f, H=%.1f)\n", newPower,
+        flipperState, flipperControlMode, flipperNewMaxPower, flipperNewTargetAngle);
   }
 }
 
@@ -342,7 +342,7 @@ bool ManipulatorSub::isFlipperBlocked(double currentAngle, double targetAngle) {
 double ManipulatorSub::calcFlipperHoldPower(double currentAngle, double targetAngle) {
   // 3% power holds flipper at a 90 degree angle  
   // Make propertional to target.
-  return ((0.025 / 90) * (-targetAngle)) + ((targetAngle - currentAngle) * 0.0005);
+  return ((0.025 / 90) * (-targetAngle)) + ((targetAngle - currentAngle) * 0.001);
 }
 
 double ManipulatorSub::calcFlipperMovePower(double currentAngle, double targetAngle, double maxPower) {
