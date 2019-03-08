@@ -202,7 +202,7 @@ void BallIntakeSub::setIntakeArmAngle(int mode, double maxPower, double targetAn
 // Returns true if the arm angle is within tolerance of the target angle
 bool BallIntakeSub::isIntakeArmAtTarget() {
   if (intakeArmNewStateParameters) {
-    // Haven't even implemented the new request so we can't be done
+    std::cout<<"intake Arm New state Parameters"<<std::endl;
     return false;
   }
 
@@ -211,8 +211,10 @@ bool BallIntakeSub::isIntakeArmAtTarget() {
     logger.send(logger.BALLINTAKE, "IIAAT: Arms at target (T=%.1f, C=%.1f, V=%.1f)\n", 
         intakeArmTargetAngle, getIntakeArmAngle(), getIntakeArmVelocity());
     return true;
+    std::cout<<"Intake arm is  at target angle"<<std::endl;
   }
   else {
+    std::cout<<"default case"<<std::endl;
     //logger.send(logger.BALLINTAKE, "IIAAT: Arms not at target (T=%.1f, C=%.1f, V=%.1f)\n", 
     //    intakeArmTargetAngle, getIntakeArmAngle(), getIntakeArmVelocity());
     return false;
