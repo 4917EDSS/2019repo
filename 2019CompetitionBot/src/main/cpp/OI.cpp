@@ -29,6 +29,7 @@
 #include "commands/ModeBasedCndCmd.h"
 #include "commands/ClimbCmd.h"
 #include "commands/ClimbReverseCmd.h"
+#include "commands/SideBaseCmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -78,7 +79,7 @@ OI::OI() {
   elevatorToCargoShipHeightBtn->WhenPressed(new ModeBasedCndCmd(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_CARGO_SHIP_CARGO_HEIGHT_MM)));
 
   elevatorToLowHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_LOW_HEIGHT_BTN));
-  elevatorToLowHeightBtn->WhenPressed(new ModeBasedCndCmd(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_ROCKET_LOW_CARGO_HEIGHT_MM)));
+  elevatorToLowHeightBtn->WhenPressed(new ModeBasedCndCmd(new SideBaseCmd(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM +100)), new SetElevatorToHeightCmd(ELEVATOR_ROCKET_LOW_CARGO_HEIGHT_MM)));
   
   elevatorToMediumHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_MEDIUM_HEIGHT_BTN));
   elevatorToMediumHeightBtn->WhenPressed(new ModeBasedCndCmd(new SetElevatorToHeightCmd(ELEVATOR_MEDIUM_HATCH_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_ROCKET_MEDIUM_CARGO_HEIGHT_MM)));
