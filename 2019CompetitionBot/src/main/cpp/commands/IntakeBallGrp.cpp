@@ -16,8 +16,8 @@
 #include "commands/IntakeBallGrp.h"
 
 IntakeBallGrp::IntakeBallGrp() {
-  AddSequential(new SetIntakeArmAngleCmd(false, INTAKE_CARGO_ANGLE));
-  AddParallel(new FoldIntakeCmd(false));
+  AddSequential(new FoldIntakeCmd(false));
+  AddParallel(new SetIntakeArmAngleCmd(false, INTAKE_CARGO_ANGLE));
   AddSequential(new SetElevatorToHeightCmd(ELEVATOR_MIN_HEIGHT_MM));
   AddSequential(new SetManipulatorAngleCmd(MANIPULATOR_CARGO_FLOOR_PICKUP_ANGLE));
   
