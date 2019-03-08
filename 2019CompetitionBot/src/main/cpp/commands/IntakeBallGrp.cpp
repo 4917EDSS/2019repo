@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "Robot.h"
+#include "subsystems/BallIntakeSub.h"
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/FoldIntakeCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
