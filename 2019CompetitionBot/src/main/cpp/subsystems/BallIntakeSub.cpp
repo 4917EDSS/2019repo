@@ -28,6 +28,7 @@ constexpr int INTAKE_ARM_STATE_INTERRUPTED = 3;
 
 BallIntakeSub::BallIntakeSub() : Subsystem("BallIntakeSub") {
   flipperMotor.reset(new rev::CANSparkMax(BALL_INTAKE_FLIP_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  flipperMotor->GetEncoder().SetPosition(0);
   intakeArmEnc.reset(new frc::Encoder(INTAKE_MOTOR_ENC1_DIO, INTAKE_MOTOR_ENC2_DIO));
   //intakeArmEnc->SetDistancePerPulse(INTAKE_ARM_TICK_TO_DEGREE_FACTOR);
   ballIntakeArmLimit.reset(new frc::DigitalInput(BALL_INTAKE_ARM_LIMIT_DIO));
