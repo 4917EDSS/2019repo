@@ -8,7 +8,7 @@
 #include "commands/ClimbCmd.h"
 #include "Robot.h"
 
-constexpr double MAX_ARM_POWER = 0.40;
+constexpr double MAX_ARM_POWER = 0.80;
 constexpr double MIN_ARM_POWER = 0.10;
 constexpr double ARM_POWER_STEP_SIZE = 0.01;
 constexpr double ARM_POWER_ANGLE_TOLERANCE = 2.0;
@@ -19,7 +19,7 @@ ClimbCmd::ClimbCmd() {
   Requires(&Robot::climbSub);
   Requires(&Robot::ballIntakeSub);
 
-  lastPower = 0.10;
+  lastPower = 0.50;
 }
 
 // Called just before this Command runs the first time
@@ -27,12 +27,15 @@ void ClimbCmd::Initialize() {
   // To climb, unfold the intake arms, start extending the slower climb bars to raise the front of
   // the robot (robot backs in to climb).  Then use the intake arms to raise the rear.  The intake
   // arms are much faster than the climb bars so use the NavX to slow down the intake arms as needed.
-  Robot::ballIntakeSub.unfoldIntakeArms();
-  
-  lastPower = 0.6;
-  Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_MANUAL, lastPower, 0.0);
-}
 
+  if(!IsFinished()){
+    Robot::ballIntakeSub.unfoldIntakeArms();
+    Robot::climbSub.SetClimbMotorPower(1.0);
+    
+    lastPower = 0.8;
+    Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_MANUAL, lastPower, 0.0);
+  }
+}
 // Called repeatedly when this Command is scheduled to run
 void ClimbCmd::Execute() {
   double pitchAngle = Robot::drivetrainSub.getPitchAngle();

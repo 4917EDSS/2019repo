@@ -25,12 +25,6 @@ void RetractClimbBarsCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
 bool RetractClimbBarsCmd::IsFinished() {
-  logger.send(logger.CLIMB, "position = %.1f \n", Robot::climbSub.getClimbPosition());
- 
-  // return Robot::climbSub.getClimbPosition() < CLIMB_RETRACT_LIMIT_THRESHOLD; 
-  if (Robot::climbSub.getClimbPosition() <= 0 ) {
-    return true;
-}
   return false;
 }
 

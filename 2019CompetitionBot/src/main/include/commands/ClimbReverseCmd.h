@@ -10,6 +10,7 @@
 #include <frc/commands/Command.h>
 
 class ClimbReverseCmd : public frc::Command {
+  double lastPower;
  public:
   ClimbReverseCmd();
   void Initialize() override;

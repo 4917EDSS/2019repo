@@ -25,12 +25,6 @@ void ExtendClimbBarsCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
 bool ExtendClimbBarsCmd::IsFinished() { 
-  logger.send(logger.CLIMB, "position = %.1f \n", Robot::climbSub.getClimbPosition());
- 
-  // return Robot::climbSub.getClimbPosition() > CLIMB_EXTEND_LIMIT_THRESHOLD; 
-  if (Robot::climbSub.getClimbPosition() >= 400 ) {
-    return true;
-}
   return false;
 }
 

@@ -50,13 +50,13 @@ OI::OI() {
   driveToVisionTargetBtn->WhenPressed(new MilkyScoreGrp());
 
   climbBtn.reset(new frc::JoystickButton(driverController.get(), CLIMB_BTN));
-  climbBtn->WhileHeld(new ClimbCmd());
+  climbBtn->WhenPressed(new ClimbCmd());
 
   extendClimbBarsBtn.reset(new frc::JoystickButton(driverController.get(), EXTEND_CLIMB_BARS_BTN));
   extendClimbBarsBtn->WhileHeld(new ExtendClimbBarsCmd());
 
   reverseClimbBtn.reset(new frc::JoystickButton(driverController.get(), REVERSE_CLIMB_BTN));
-  reverseClimbBtn->WhileHeld(new ClimbReverseCmd);
+  reverseClimbBtn->WhenPressed(new ClimbReverseCmd);
 
   retractClimbBarsBtn.reset(new frc::JoystickButton(driverController.get(), RETRACT_CLIMB_BARS_BTN));
   retractClimbBarsBtn->WhileHeld(new RetractClimbBarsCmd());

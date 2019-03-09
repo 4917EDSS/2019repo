@@ -31,7 +31,7 @@ BallIntakeSub::BallIntakeSub() : Subsystem("BallIntakeSub") {
   flipperMotor->GetEncoder().SetPosition(0);
   ballIntakeArmLimit.reset(new frc::DigitalInput(BALL_INTAKE_ARM_LIMIT_DIO));
   intakeFolderSolenoid.reset(new frc::Solenoid(BALL_INTAKE_FOLDER_PCM_ID));
-  unfoldIntakeArms();
+  foldIntakeArms();
   ballIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::WPI_VictorSPX(BALL_INTAKE_WHEELS_MOTOR_CAN_ID));
   intakeWheelPower = 0;
   
@@ -101,11 +101,11 @@ bool BallIntakeSub::isIntakeAtLimit() {
 }
 
 void BallIntakeSub::unfoldIntakeArms() {
-  intakeFolderSolenoid->Set(true);
+  intakeFolderSolenoid->Set(false);
 }
 
 void BallIntakeSub::foldIntakeArms() {
-  intakeFolderSolenoid->Set(false);
+  intakeFolderSolenoid->Set(true);
 }
 
 bool BallIntakeSub::isIntakeUnfolded() {

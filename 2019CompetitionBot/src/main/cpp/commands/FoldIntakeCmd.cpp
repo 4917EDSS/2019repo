@@ -19,10 +19,10 @@ void FoldIntakeCmd::Initialize() {
   logger.send(logger.CMD_TRACE, "%s : %s | foldIn = %d\n", __FILE__, __FUNCTION__, foldIn);
  
   if(foldIn) {
-    Robot::ballIntakeSub.unfoldIntakeArms();
+    Robot::ballIntakeSub.foldIntakeArms();
   }
   else {
-    Robot::ballIntakeSub.foldIntakeArms();
+    Robot::ballIntakeSub.unfoldIntakeArms();
   }
 }
 
