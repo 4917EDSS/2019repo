@@ -29,6 +29,7 @@
 #include "commands/ClimbCmd.h"
 #include "commands/ClimbReverseCmd.h"
 #include "commands/SideBaseCmd.h"
+#include "commands/FlipManipulatorGrp.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -93,7 +94,7 @@ OI::OI() {
   cargoModeBtn->WhenPressed(new CargoModeGrp());
 
   flipManipulatorBtn.reset(new frc::JoystickButton(operatorController.get(), FLIP_MANIPULATOR_BTN));
-  flipManipulatorBtn->WhenPressed(new ToggleManipulatorPositionCmd());
+  flipManipulatorBtn->WhenPressed(new FlipManipulatorGrp());
 
   intakeHatchOrCargoBtn.reset(new frc::JoystickButton(operatorController.get(), INTAKE_HATCH_OR_CARGO_BTN));
   intakeHatchOrCargoBtn->WhenPressed(new ModeBasedCndCmd(new ExpandHatchGripperGrp(), new IntakeBallGrp()));
