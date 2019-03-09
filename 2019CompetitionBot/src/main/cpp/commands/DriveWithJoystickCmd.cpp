@@ -8,6 +8,7 @@
 #include "commands/DriveWithJoystickCmd.h"
 #include "OI.h"
 #include "Robot.h"
+#include "subsystems/BallIntakeSub.h"
 
 
 DriveWithJoystickCmd::DriveWithJoystickCmd() {
@@ -34,6 +35,14 @@ void DriveWithJoystickCmd::Execute() {
     double slowSide = -leftStick + fabs(rightStick) * leftStick;
 	double maxPower = 1;
 	double deadBand = 0.01;
+
+	if (Robot::inClimbMode){
+		if (fabs(leftStick) > deadBand) {
+			Robot::ballIntakeSub.setIntakeWheelPower(leftStick);
+		}else{
+			Robot::ballIntakeSub.setIntakeWheelPower(0);
+		}
+	}
 
 	if (fabs(leftStick) < deadBand) {
 
@@ -72,6 +81,7 @@ void DriveWithJoystickCmd::Execute() {
 		}
 		Robot::drivetrainSub.driverDriveStraight(-(leftStick));
 	} else {
+
 		if (wasDrivingStraight > 0) {
 			Robot::drivetrainSub.disableBalancerPID();
 			wasDrivingStraight = 0;

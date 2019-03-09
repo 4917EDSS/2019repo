@@ -12,7 +12,7 @@
 #include "subsystems/DrivetrainSub.h"
 #include "Robot.h"
 
-constexpr double CLIMB_BAR_TICK_TO_MM_FACTOR = 1.0;
+constexpr double CLIMB_BAR_TICK_TO_MM_FACTOR = 0.009021742399;
 
 ClimbSub::ClimbSub() : Subsystem("ExampleSubsystem") {
   climbMotor.reset(new WPI_TalonSRX(CLIMB_MOTOR_CAN_ID));
@@ -24,6 +24,8 @@ ClimbSub::ClimbSub() : Subsystem("ExampleSubsystem") {
   ntePower = (shuffleTab.Add("Power", 0).GetEntry());
   ntePosition = (shuffleTab.Add("Position", 0).GetEntry());
   ntePitch = (shuffleTab.Add("Pitch", 0).GetEntry());
+
+  prevPower = 0;
 }
 
 void ClimbSub::InitDefaultCommand() {
@@ -32,7 +34,7 @@ void ClimbSub::InitDefaultCommand() {
 }
 
 void ClimbSub::updateShuffleBoard() {
-  ntePower.SetDouble(climbMotor->Get());
+  ntePower.SetDouble(prevPower);
   ntePosition.SetDouble(getClimbPosition());
   ntePitch.SetDouble(Robot::drivetrainSub.getPitchAngle());
 }
@@ -41,6 +43,7 @@ void ClimbSub::updateShuffleBoard() {
 // here. Call these from Commands.
 void ClimbSub::SetClimbMotorPower(double power){
   climbMotor->Set(ControlMode::PercentOutput, -power);
+  prevPower = power;
 }
 
 double ClimbSub::getClimbPosition() {

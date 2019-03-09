@@ -20,6 +20,7 @@ VisionSub Robot::visionSub;
 OI Robot::oi;
 
 bool Robot::inBallMode;
+bool Robot::inClimbMode;
 bool Robot::stateMachinesReset;
 
 
@@ -55,6 +56,7 @@ void Robot::RobotInit() {
   std::cout << "Starting version 1.7\n";
 
   Robot::inBallMode = true;
+  Robot::inClimbMode = false;
   Robot::stateMachinesReset = false;
 }
 
@@ -143,6 +145,8 @@ void Robot::TeleopInit() {
 
   if(!stateMachinesReset) {
     resetStateMachines();
+    Robot::visionSub.setBumperPipeline(DRIVER_MODE_NORMAL);
+    Robot::visionSub.setManipulatorPipeline(DRIVER_MODE_NORMAL);
     stateMachinesReset = true;
   }
 }

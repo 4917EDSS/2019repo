@@ -45,6 +45,7 @@ class Robot : public frc::TimedRobot {
   static void pipeLineToggle(bool pipeLine);
 
   static bool inBallMode;
+  static bool inClimbMode;
   static bool pastNinety;
 
  private:

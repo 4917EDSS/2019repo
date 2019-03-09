@@ -12,7 +12,7 @@
 #include <ctre/Phoenix.h>
 
 constexpr double CLIMB_RETRACT_LIMIT_THRESHOLD = 2;
-constexpr double CLIMB_EXTEND_LIMIT_THRESHOLD = 8000;
+constexpr double CLIMB_EXTEND_LIMIT_THRESHOLD = 540;
 
 class ClimbSub : public frc::Subsystem {
  private:
@@ -23,6 +23,8 @@ class ClimbSub : public frc::Subsystem {
   nt::NetworkTableEntry ntePower;
   nt::NetworkTableEntry ntePosition;
   nt::NetworkTableEntry ntePitch;
+
+  double prevPower;
 
  public:
   ClimbSub();

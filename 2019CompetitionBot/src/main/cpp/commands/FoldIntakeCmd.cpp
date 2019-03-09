@@ -19,10 +19,10 @@ void FoldIntakeCmd::Initialize() {
   logger.send(logger.CMD_TRACE, "%s : %s | foldIn = %d\n", __FILE__, __FUNCTION__, foldIn);
  
   if(foldIn) {
-    Robot::ballIntakeSub.unfoldIntakeArms();
+    Robot::ballIntakeSub.foldIntakeArms();
   }
   else {
-    Robot::ballIntakeSub.foldIntakeArms();
+    Robot::ballIntakeSub.unfoldIntakeArms();
   }
 }
 
@@ -31,8 +31,10 @@ void FoldIntakeCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
 bool FoldIntakeCmd::IsFinished() { 
-
-  return true; 
+  if(TimeSinceInitialized() >= 0.5) {
+    return true;
+  }
+  return false; 
 }
 
 // Called once after isFinished returns true
