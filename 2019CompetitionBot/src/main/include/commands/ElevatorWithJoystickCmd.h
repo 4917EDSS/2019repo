@@ -8,9 +8,8 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include "commands/frc4917Cmd.h"
 
-class ElevatorWithJoystickCmd : public frc4917Cmd {
+class ElevatorWithJoystickCmd : public frc::Command {
  public:
   ElevatorWithJoystickCmd();
   void Initialize() override;

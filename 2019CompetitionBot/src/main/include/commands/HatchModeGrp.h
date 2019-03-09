@@ -8,9 +8,8 @@
 #pragma once
 
 #include <frc/commands/CommandGroup.h>
-#include "commands/frc4917Grp.h"
 
-class HatchModeGrp : public frc4917Grp {
+class HatchModeGrp : public frc::CommandGroup {
  public:
   HatchModeGrp();
 };
