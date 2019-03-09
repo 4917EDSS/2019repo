@@ -33,7 +33,7 @@ void DriveWithJoystickCmd::Execute() {
     double fastSide = std::max(fabs(leftStick), fabs(rightStick));
     double slowSide = -leftStick + fabs(rightStick) * leftStick;
 	double maxPower = 1;
-	double deadBand = 0.01
+	double deadBand = 0.01;
 
 	if (fabs(leftStick) < deadBand) {
 
