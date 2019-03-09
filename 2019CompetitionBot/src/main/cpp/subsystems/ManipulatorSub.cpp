@@ -11,6 +11,7 @@
 #include <RobotMap.h>
 #include "subsystems/ManipulatorSub.h"
 #include "subsystems/ElevatorSub.h"
+#include "subsystems/BallIntakeSub.h"
 #include "components/Log.h"
 #include <frc/shuffleboard/Shuffleboard.h>
 #include <frc/shuffleboard/BuiltInLayouts.h>
@@ -346,7 +347,7 @@ bool ManipulatorSub::isFlipperBlocked(double currentAngle, double targetAngle) {
     }
   }
 
-  if (((currentAngle < -45)) && (Robot::elevatorSub.getElevatorHeight() <= ELEVATOR_MIN_SAFE_HEIGHT) && (direction < 0)) {
+  if (((currentAngle < -45)) && (Robot::elevatorSub.getElevatorHeight() <= ELEVATOR_MIN_SAFE_HEIGHT) && (direction < 0) && (Robot::ballIntakeSub.getIntakeArmAngle() < 75)) {
     return true;
   }
 
