@@ -33,16 +33,8 @@ void ClimbReverseCmd::Initialize() {
 void ClimbReverseCmd::Execute() {
     double pitchAngle = Robot::drivetrainSub.getPitchAngle();
 
-  // TODO: Might need a smarter control algorithm
-  if(pitchAngle > ARM_POWER_ANGLE_TOLERANCE) {
-    // Intake arms aren't keeping up, robot is tipping forward, more power
-    lastPower += ARM_POWER_STEP_SIZE;
-  }
-  else if(pitchAngle < -ARM_POWER_ANGLE_TOLERANCE) {
-    // Intake arms are too fast, robot is tipping backward, less power
-    lastPower -= ARM_POWER_STEP_SIZE;
-  }
-  // Otherise, use lastPower without changing it
+  // pitch > 0,  robot is tipping forward, less power to intake arm
+  lastPower = 0.15 - pitchAngle * 0.1;
 
   // Check power limits before setting new power
   if(lastPower > MAX_ARM_POWER) {
