@@ -59,7 +59,7 @@ constexpr int HATCH_MODE_BTN = 5;
 constexpr int CARGO_MODE_BTN = 6;
 constexpr int FLIP_MANIPULATOR_BTN = 7;
 constexpr int INTAKE_HATCH_OR_CARGO_BTN = 8;
-constexpr int MANIPULATOR_TO_VERTICAL_BTN = 9;
+constexpr int ZERO_ALL_SYSTEMS_BTN = 9;
 constexpr int MULTI_COMMAND_1_BTN = 10;
 constexpr int OPERATOR_KILL_ONE_BTN = 11;
 constexpr int OPERATOR_KILL_TWO_BTN = 12;
@@ -114,7 +114,7 @@ class OI {
     std::shared_ptr<frc::JoystickButton> cargoModeBtn;
     std::shared_ptr<frc::JoystickButton> flipManipulatorBtn;
     std::shared_ptr<frc::JoystickButton> intakeHatchOrCargoBtn;
-    std::shared_ptr<frc::JoystickButton> manipulatorToVerticalBtn;
+    std::shared_ptr<frc::JoystickButton> zeroAllSystemsBtn;
     std::shared_ptr<frc::JoystickButton> multiCommand1Btn;    
     std::shared_ptr<frc::JoystickButton> operatorKillBtn1;
     std::shared_ptr<frc::JoystickButton> operatorKillBtn2;
