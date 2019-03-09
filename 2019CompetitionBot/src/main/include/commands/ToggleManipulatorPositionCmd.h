@@ -8,9 +8,8 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include "commands/frc4917Cmd.h"
 
-class ToggleManipulatorPositionCmd : public frc4917Cmd {
+class ToggleManipulatorPositionCmd : public frc::Command {
  public:
   ToggleManipulatorPositionCmd();
   void Initialize() override;

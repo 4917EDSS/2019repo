@@ -8,9 +8,8 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include "commands/frc4917Cmd.h"
 
-class KillEverythingCmd : public frc4917Cmd {
+class KillEverythingCmd : public frc::Command {
  public:
   KillEverythingCmd();
   void Initialize() override;

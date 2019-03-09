@@ -1,8 +1,7 @@
 #pragma once
 #include "frc/commands/Command.h"
-#include "commands/frc4917Cmd.h"
 
-class DriveStraightCmd : public frc4917Cmd {
+class DriveStraightCmd : public frc::Command {
  public:
   DriveStraightCmd(double distance);
   void Initialize() override;
