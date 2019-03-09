@@ -19,7 +19,7 @@ ClimbCmd::ClimbCmd() {
   Requires(&Robot::climbSub);
   Requires(&Robot::ballIntakeSub);
 
-  lastPower = 0;
+  lastPower = 0.10;
 }
 
 // Called just before this Command runs the first time
@@ -58,6 +58,7 @@ void ClimbCmd::Execute() {
   
   Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_MANUAL, lastPower, 0.0);
 }
+
 
 // Make this return true when this Command no longer needs to run execute()
 bool ClimbCmd::IsFinished() { 
