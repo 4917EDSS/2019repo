@@ -8,9 +8,8 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include "commands/frc4917Cmd.h"
 
-class IntakeBallFromRobotCmd : public frc4917Cmd {
+class IntakeBallFromRobotCmd : public frc::Command {
  public:
   IntakeBallFromRobotCmd();
   void Initialize() override;

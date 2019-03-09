@@ -8,9 +8,8 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include "commands/frc4917Cmd.h"
 
-class SetIntakeArmAngleCmd : public frc4917Cmd {
+class SetIntakeArmAngleCmd : public frc::Command {
  public:
   SetIntakeArmAngleCmd(bool isClimbing, double angle);
   SetIntakeArmAngleCmd(double angle);

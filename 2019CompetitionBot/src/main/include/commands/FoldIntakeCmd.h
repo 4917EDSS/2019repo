@@ -8,9 +8,8 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include "commands/frc4917Cmd.h"
 
-class FoldIntakeCmd : public frc4917Cmd {
+class FoldIntakeCmd : public frc::Command {
  public:
   FoldIntakeCmd(bool foldIn);
   void Initialize() override;
