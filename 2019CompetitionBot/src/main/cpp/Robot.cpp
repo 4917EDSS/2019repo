@@ -139,6 +139,8 @@ void Robot::TeleopInit() {
 
   if(!stateMachinesReset) {
     resetStateMachines();
+    Robot::visionSub.setBumperPipeline(DRIVER_MODE_NORMAL);
+    Robot::visionSub.setManipulatorPipeline(DRIVER_MODE_NORMAL);
     stateMachinesReset = true;
   }
 }
