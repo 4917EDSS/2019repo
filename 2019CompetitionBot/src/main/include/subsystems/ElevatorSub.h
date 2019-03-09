@@ -86,8 +86,6 @@ class ElevatorSub : public frc::Subsystem {
   double getElevatorHeight();
   double getElevatorVelocity();
   bool isElevatorDown();
-  void setShifterHigh(bool highGear);
-  bool isShifterHigh();
   void setElevatorHeight(int mode, double maxPower, double targetHeightMm);
   bool isElevatorAtTarget();
 
