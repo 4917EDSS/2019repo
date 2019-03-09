@@ -154,7 +154,7 @@ void Robot::TeleopPeriodic() {
   // Robot::elevatorSub.updateShuffleBoard();
   // Robot::manipulatorSub.updateShuffleBoard();
   // Robot::ballIntakeSub.updateShuffleBoard();
-  // Robot::climbSub.updateShuffleBoard();
+  Robot::climbSub.updateShuffleBoard();
   UpdateSmartDashboard();
 }
 
