@@ -1,8 +1,7 @@
 #pragma once
 #include <frc/commands/Command.h>
-#include "commands/frc4917Cmd.h"
 
-class ManipulatorInCmd : public frc4917Cmd {
+class ManipulatorInCmd : public frc::Command {
   private:
     double intakeTime;
   public:

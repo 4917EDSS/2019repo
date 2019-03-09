@@ -34,7 +34,7 @@ void DriveWithJoystickCmd::Execute() {
     double slowSide = -leftStick + fabs(rightStick) * leftStick;
 	double maxPower = 1;
 
-	if (leftStick < 0.01 && leftStick > -0.01) {
+	if (leftStick < 0.02 && leftStick > -0.02) {
 
 		Robot::drivetrainSub.drive(rightStick, -rightStick);
 		if (wasDrivingStraight > 0) {
@@ -48,7 +48,7 @@ void DriveWithJoystickCmd::Execute() {
 			rightStick = std::max(rightStick, -maxPower);
 		}
 		Robot::drivetrainSub.drive(rightStick, -rightStick);
-	} else if (rightStick < 0.01 && rightStick > -0.01) {
+	} else if (rightStick < 0.02 && rightStick > -0.02) {
 		if (wasDrivingStraight == 0) {
 			timeSinceDrivingStraight = RobotController::GetFPGATime();
 			wasDrivingStraight = 1;
