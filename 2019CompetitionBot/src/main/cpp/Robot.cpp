@@ -91,7 +91,7 @@ void Robot::DisabledPeriodic() {
  * the if-else structure below with additional strings & commands.
  */
 void Robot::AutonomousInit() {
-  Robot::visionSub.pipeLineToggle(false);
+  Robot::visionSub.setBumperPipeline(false);
   Robot::ballIntakeSub.foldIntakeArms();
   Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_AUTO, 0.5, INTAKE_NEUTRAL_ANGLE);
 

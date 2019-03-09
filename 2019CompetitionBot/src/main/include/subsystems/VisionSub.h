@@ -20,8 +20,8 @@ class VisionSub : public frc::Subsystem {
   void InitDefaultCommand() override;
   double getVisionTarget();
   double normalizeAngle(double targetangle);
-  void pipeLineToggle(bool pipeLine);
-  void pipeLineFlip(bool pipeLine);
+  void setBumperPipeline(int pipeLine);
+  void setManipulatorPipeline(int pipeLine);
   double getDistanceFromVision();
   double getScoringFaceAngle();
 };
