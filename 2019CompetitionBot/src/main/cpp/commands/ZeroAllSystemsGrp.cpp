@@ -19,8 +19,8 @@
 
 ZeroAllSystemsGrp::ZeroAllSystemsGrp() {
  AddSequential(new SetElevatorToHeightCmd(ELEVATOR_MID_SAFE_HEIGHT));
- AddSequential(new SetManipulatorAngleCmd(0.0));
+ AddParallel(new SetManipulatorAngleCmd(0.0));
  AddSequential(new FoldIntakeCmd(true));
- AddSequential(new SetIntakeArmAngleCmd(false, 0.0));
+ AddParallel(new SetIntakeArmAngleCmd(false, 0.0));
  AddSequential(new SetElevatorToHeightCmd(ELEVATOR_MIN_HEIGHT_MM));
 }
