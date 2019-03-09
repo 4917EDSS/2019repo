@@ -9,6 +9,10 @@
 #include "subsystems/ClimbSub.h"
 #include "RobotMap.h"
 #include <frc/shuffleboard/Shuffleboard.h>
+#include "subsystems/DrivetrainSub.h"
+#include "Robot.h"
+
+constexpr double CLIMB_BAR_TICK_TO_MM_FACTOR = 1.0;
 
 ClimbSub::ClimbSub() : Subsystem("ExampleSubsystem") {
   climbMotor.reset(new WPI_TalonSRX(CLIMB_MOTOR_CAN_ID));
@@ -19,6 +23,7 @@ ClimbSub::ClimbSub() : Subsystem("ExampleSubsystem") {
 
   ntePower = (shuffleTab.Add("Power", 0).GetEntry());
   ntePosition = (shuffleTab.Add("Position", 0).GetEntry());
+  ntePitch = (shuffleTab.Add("Pitch", 0).GetEntry());
 }
 
 void ClimbSub::InitDefaultCommand() {
@@ -29,6 +34,7 @@ void ClimbSub::InitDefaultCommand() {
 void ClimbSub::updateShuffleBoard() {
   ntePower.SetDouble(climbMotor->Get());
   ntePosition.SetDouble(getClimbPosition());
+  ntePitch.SetDouble(Robot::drivetrainSub.getPitchAngle());
 }
 
 // Put methods for controlling this subsystem
@@ -39,5 +45,5 @@ void ClimbSub::SetClimbMotorPower(double power){
 
 double ClimbSub::getClimbPosition() {
   // TODO:  Return in units of mm and change constants in h file to match
-  return climbMotor->GetSensorCollection().GetQuadraturePosition();
+  return climbMotor->GetSensorCollection().GetQuadraturePosition()*CLIMB_BAR_TICK_TO_MM_FACTOR;
 }
