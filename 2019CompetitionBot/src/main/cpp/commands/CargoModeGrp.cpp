@@ -9,6 +9,7 @@
 #include "commands/ManipulatorInCmd.h"
 #include "commands/HatchGripperContractCmd.h"
 #include "commands/ManipulatorOutCmd.h"
+#include "commands/SetBallModeCmd.h"
 #include "Robot.h"
 
 CargoModeGrp::CargoModeGrp() {
@@ -17,5 +18,5 @@ CargoModeGrp::CargoModeGrp() {
   // When we have a hatch, take the pressure off the gripper by expeling a bit before the contraction.
   AddSequential(new ManipulatorOutCmd(0.1));
   AddSequential(new HatchGripperContractCmd());
-  AddSequential(new ManipulatorInCmd(1.0));
+  AddSequential(new SetBallModeCmd());
 }

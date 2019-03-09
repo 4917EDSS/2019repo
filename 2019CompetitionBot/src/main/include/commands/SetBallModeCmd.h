@@ -5,14 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/HatchModeGrp.h"
-#include "commands/ManipulatorOutCmd.h"
-#include "commands/HatchGripperContractCmd.h"
-#include "commands/SetHatchModeCmd.h"
-#include "Robot.h"
+#pragma once
 
-HatchModeGrp::HatchModeGrp() {
-  // This command expels any loaded cargo and prepares for hatch pick-up
-  AddSequential(new HatchGripperContractCmd());
-  AddSequential(new SetHatchModeCmd());
-}
+#include <frc/commands/Command.h>
+
+class SetBallModeCmd : public frc::Command {
+
+ public:
+  SetBallModeCmd();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
+};
