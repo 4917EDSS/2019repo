@@ -31,8 +31,10 @@ void FoldIntakeCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
 bool FoldIntakeCmd::IsFinished() { 
-
-  return true; 
+  if(TimeSinceInitialized() >= 0.5) {
+    return true;
+  }
+  return false; 
 }
 
 // Called once after isFinished returns true
