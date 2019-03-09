@@ -34,19 +34,8 @@ void MultiButton1Cmd::Initialize() {
         logger.send(logger.CMD_TRACE, "MultiButton1Cmd: Gripper is expanded.\n");
       }
       break;
-    case 1:
-      // Shift elevator into low/high gear
-      if(Robot::elevatorSub.isShifterHigh()) {
-        Robot::elevatorSub.setShifterHigh(false);
-        logger.send(logger.CMD_TRACE, "MultiButton1Cmd: Elevator shifter to low gear.\n");
-      }
-      else {
-        Robot::elevatorSub.setShifterHigh(true);
-        logger.send(logger.CMD_TRACE, "MultiButton1Cmd: Elevator shifter to high gear.\n");
-      }
-      break;
 
-    case 2:
+    case 1:
       // Unfold/fold ball intake
       if(Robot::ballIntakeSub.isIntakeUnfolded()) {
         Robot::ballIntakeSub.foldIntakeArms();
@@ -58,7 +47,7 @@ void MultiButton1Cmd::Initialize() {
       }
       break;
     
-    case 3:
+    case 2:
       // Enable/disable ball intake wheels
       if(Robot::ballIntakeSub.getIntakeWheelPower() == 0) {
         Robot::ballIntakeSub.setIntakeWheelPower(1.0);
