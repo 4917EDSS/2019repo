@@ -55,6 +55,7 @@ class Robot : public frc::TimedRobot {
   // doesn't have undefined behavior and potentially crash.
   frc::Command* m_autonomousCommand = nullptr;
   frc::SendableChooser<frc::Command*> m_chooser;
+  std::shared_ptr<frc::SendableChooser<bool>> modeChooser;
   void UpdateSmartDashboard();
   static void resetStateMachines();
 };

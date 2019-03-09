@@ -25,6 +25,9 @@ bool Robot::stateMachinesReset;
 
 
 void Robot::RobotInit() {
+  modeChooser.reset(new frc::SendableChooser<bool>);
+  modeChooser->AddOption("Ball",true);
+  modeChooser->AddOption("Hatch",false);
   // No Auto command this year
   // frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
@@ -109,6 +112,7 @@ void Robot::AutonomousInit() {
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Start();
   }
+  inBallMode=modeChooser->GetSelected().lock();
   */
 
   // But probably need to deal with initial game piece
