@@ -19,10 +19,10 @@
 constexpr double ELEVATOR_MIN_HEIGHT_MM = 500; //485;    // TODO:  Check and update
 constexpr double ELEVATOR_MAX_HEIGHT_MM = 2020; // TODO:  Check and update
 
-constexpr double ELEVATOR_LOW_HATCH_HEIGHT_MM = 482.6;
+constexpr double ELEVATOR_LOW_HATCH_HEIGHT_MM = ELEVATOR_MIN_HEIGHT_MM;
 constexpr double ELEVATOR_MEDIUM_HATCH_HEIGHT_MM = 1193.8;
 constexpr double ELEVATOR_HIGH_HATCH_HEIGHT_MM = 1905.0;
-constexpr double ELEVATOR_CARGO_FLOOR_PICKUP_HEIGHT_MM = 482.6;
+constexpr double ELEVATOR_CARGO_FLOOR_PICKUP_HEIGHT_MM = ELEVATOR_MIN_HEIGHT_MM;
 constexpr double ELEVATOR_ROCKET_LOW_CARGO_HEIGHT_MM = 698.5;
 constexpr double ELEVATOR_ROCKET_MEDIUM_CARGO_HEIGHT_MM = 1409.7;
 constexpr double ELEVATOR_ROCKET_HIGH_CARGO_HEIGHT_MM = ELEVATOR_MAX_HEIGHT_MM;   // Actually 2120.9mm but we can't get there with the elevator
