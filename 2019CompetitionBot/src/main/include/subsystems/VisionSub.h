@@ -28,6 +28,7 @@ class VisionSub : public frc::Subsystem {
   double normalizeAngle(double targetangle);
   void setBumperPipeline(int pipeLine);
   void setManipulatorPipeline(int pipeLine);
+  bool isTargetVisible();
   double getDistanceFromVision();
   double getScoringFaceAngle();
 };
