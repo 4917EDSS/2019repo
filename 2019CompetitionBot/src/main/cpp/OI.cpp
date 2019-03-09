@@ -20,7 +20,6 @@
 #include "commands/MultiButton1Cmd.h"
 #include "commands/HatchModeGrp.h"
 #include "commands/CargoModeGrp.h"
-#include "commands/TogglePipeLineCmd.h"
 #include "commands/ToggleManipulatorPositionCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
 #include "commands/ExtendClimbBarsCmd.h"

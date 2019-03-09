@@ -244,11 +244,11 @@ void ManipulatorSub::updateFlipperStateMachine() {
   
   //Flipping camera orientation when arm switches sides.
   if ((Robot::visionSub.getManipulatorPipeline() == DRIVER_MODE_NORMAL) && (currentAngle > 2)) {
-    Robot::visionSub.pipeLineFlip(DRIVER_MODE_FLIPPED);
+    Robot::visionSub.setManipulatorPipeline(DRIVER_MODE_FLIPPED);
   }
 
   if ((Robot::visionSub.getManipulatorPipeline() == DRIVER_MODE_FLIPPED) && (currentAngle < -2)) {
-    Robot::visionSub.pipeLineFlip(DRIVER_MODE_NORMAL);
+    Robot::visionSub.setManipulatorPipeline(DRIVER_MODE_NORMAL);
   }
   
 
@@ -337,7 +337,7 @@ bool ManipulatorSub::isFlipperBlocked(double currentAngle, double targetAngle) {
     return true;
   }
   
-  if (Robot::elevatorSub.getElevatorHeight() >= (ELEVATOR_MIN_HEIGHT_MM + 20)) {
+  if (Robot::elevatorSub.getElevatorHeight() >= (ELEVATOR_MIN_HEIGHT_MM + 120)) {
     if (((currentAngle > -90) && (currentAngle < 0)) && (direction < 0)) {
       return true;
     }
