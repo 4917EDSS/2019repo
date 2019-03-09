@@ -20,6 +20,7 @@ VisionSub Robot::visionSub;
 OI Robot::oi;
 
 bool Robot::inBallMode;
+bool Robot::inClimbMode;
 bool Robot::stateMachinesReset;
 
 
@@ -52,6 +53,7 @@ void Robot::RobotInit() {
   std::cout << "Starting version 1.7\n";
 
   Robot::inBallMode = true;
+  Robot::inClimbMode = false;
   Robot::stateMachinesReset = false;
 }
 

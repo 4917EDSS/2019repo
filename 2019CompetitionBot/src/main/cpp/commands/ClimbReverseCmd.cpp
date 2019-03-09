@@ -8,7 +8,7 @@
 #include "commands/ClimbReverseCmd.h"
 #include "Robot.h"
 
-constexpr double MAX_ARM_POWER = 0.40;
+constexpr double MAX_ARM_POWER = 1.0;
 constexpr double MIN_ARM_POWER = 0.10;
 constexpr double ARM_POWER_STEP_SIZE = 0.01;
 constexpr double ARM_POWER_ANGLE_TOLERANCE = 2.0;
@@ -69,6 +69,7 @@ bool ClimbReverseCmd::IsFinished() {
 void ClimbReverseCmd::End() {
   Robot::climbSub.SetClimbMotorPower(0.0);
   Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_MANUAL, 0.0, 0.0);
+  Robot::inClimbMode = false;
 }
 
 // Called when another command which requires one or more of the same

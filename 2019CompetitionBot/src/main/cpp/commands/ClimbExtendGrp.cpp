@@ -9,11 +9,15 @@
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/DriveStraightCmd.h"
 #include "commands/DriveWithIntakeMotorCmd.h"
-#include "commands/ExtendClimbBarsCmd.h"
+#include "commands/FoldIntakeCmd.h"
+#include "commands/ClimbCmd.h"
 
 ClimbExtendGrp::ClimbExtendGrp() {
-  AddParallel(new SetIntakeArmAngleCmd(true, 150));
-  AddSequential(new ExtendClimbBarsCmd());
+  AddSequential(new FoldIntakeCmd(false));
+  AddSequential(new SetIntakeArmAngleCmd(false, 30));
+  AddSequential(new ClimbCmd());
+  AddSequential(new SetIntakeArmAngleCmd(true, 155));
+
 
  
 

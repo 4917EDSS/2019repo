@@ -31,6 +31,7 @@
 #include "commands/SideBaseCmd.h"
 #include "commands/FlipManipulatorGrp.h"
 #include "commands/ZeroAllSystemsGrp.h"
+#include "commands/ClimbRetractGrp.h"
 
 
 OI::OI() {
@@ -52,13 +53,13 @@ OI::OI() {
   driveToVisionTargetBtn->WhenPressed(new MilkyScoreGrp());
 
   climbBtn.reset(new frc::JoystickButton(driverController.get(), CLIMB_BTN));
-  climbBtn->WhenPressed(new ClimbCmd());
+  climbBtn->WhenPressed(new ClimbExtendGrp());
 
   extendClimbBarsBtn.reset(new frc::JoystickButton(driverController.get(), EXTEND_CLIMB_BARS_BTN));
   extendClimbBarsBtn->WhileHeld(new ExtendClimbBarsCmd());
 
   reverseClimbBtn.reset(new frc::JoystickButton(driverController.get(), REVERSE_CLIMB_BTN));
-  reverseClimbBtn->WhenPressed(new ClimbReverseCmd);
+  reverseClimbBtn->WhenPressed(new ClimbRetractGrp);
 
   retractClimbBarsBtn.reset(new frc::JoystickButton(driverController.get(), RETRACT_CLIMB_BARS_BTN));
   retractClimbBarsBtn->WhileHeld(new RetractClimbBarsCmd());

@@ -8,7 +8,7 @@
 #include "commands/ClimbCmd.h"
 #include "Robot.h"
 
-constexpr double MAX_ARM_POWER = 0.80;
+constexpr double MAX_ARM_POWER = 1.0;
 constexpr double MIN_ARM_POWER = 0.10;
 constexpr double ARM_POWER_STEP_SIZE = 0.01;
 constexpr double ARM_POWER_ANGLE_TOLERANCE = 2.0;
@@ -19,7 +19,7 @@ ClimbCmd::ClimbCmd() {
   Requires(&Robot::climbSub);
   Requires(&Robot::ballIntakeSub);
 
-  lastPower = 0.50;
+  Robot::inClimbMode = true;
 }
 
 // Called just before this Command runs the first time
@@ -32,7 +32,7 @@ void ClimbCmd::Initialize() {
     Robot::ballIntakeSub.unfoldIntakeArms();
     Robot::climbSub.SetClimbMotorPower(1.0);
     
-    lastPower = 0.8;
+    lastPower = 0.6;
     Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_MANUAL, lastPower, 0.0);
   }
 }
