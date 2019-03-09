@@ -12,6 +12,7 @@
 VisionSub::VisionSub() : Subsystem("ExampleSubsystem") {}
 
 void VisionSub::InitDefaultCommand() {
+    setManipulatorPipelineState = DRIVER_MODE_NORMAL;
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
 }
