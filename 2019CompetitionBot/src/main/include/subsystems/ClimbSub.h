@@ -22,6 +22,7 @@ class ClimbSub : public frc::Subsystem {
 
   nt::NetworkTableEntry ntePower;
   nt::NetworkTableEntry ntePosition;
+  nt::NetworkTableEntry ntePitch;
 
  public:
   ClimbSub();
