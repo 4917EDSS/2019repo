@@ -12,5 +12,5 @@
 
 MilkyScoreGrp::MilkyScoreGrp() {
   AddSequential(new MilkyManipulatorCmd());
-  AddSequential(new ScoreBallCmd());
+  //AddSequential(new ScoreBallCmd());
 }
