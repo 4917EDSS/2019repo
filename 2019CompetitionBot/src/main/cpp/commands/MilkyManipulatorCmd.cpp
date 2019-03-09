@@ -31,12 +31,13 @@ void MilkyManipulatorCmd::Execute() {
   double scoringFace=Robot::visionSub.getScoringFaceAngle();
   double robotTargetAngle=GetRobotTargetAngle(robotAngle, targetAngle, distance, scoringFace);
 
-  if (Robot::visionSub.isTargetVisible()){
-    double lSpeed=(0.5+(robotAngle-robotTargetAngle)* 0.05);
-    double rSpeed=(0.5-(robotAngle-robotTargetAngle)* 0.05);
+  if (Robot::visionSub.isTargetVisible() ){
+    double lSpeed=(0.3+(targetAngle*0.005));
+    double rSpeed=(0.3-(targetAngle*0.005));
     Robot::drivetrainSub.drive(lSpeed,rSpeed);
-
-  }
+  } else {
+    Robot::drivetrainSub.drive(0,0);    
+  } 
   
 
 }
@@ -48,7 +49,7 @@ bool MilkyManipulatorCmd::IsFinished() { return false; }
 void MilkyManipulatorCmd::End() {
   //MilkyManipulatorCmd.milkyManipulator(0.0);
   Robot::drivetrainSub.drive(0,0);
-    Robot::visionSub.setBumperPipeline(DRIVER_MODE_NORMAL);
+  Robot::visionSub.setBumperPipeline(DRIVER_MODE_NORMAL);
 
 }
 

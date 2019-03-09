@@ -50,12 +50,12 @@ OI::OI() {
 
   // Driver controller buttons
   driveToVisionTargetBtn.reset(new frc::JoystickButton(driverController.get(), DRIVE_TO_VISION_TARGET_BTN));
-  driveToVisionTargetBtn->WhenPressed(new MilkyScoreGrp());
+  driveToVisionTargetBtn->WhileHeld(new MilkyScoreGrp());
 
   climbBtn.reset(new frc::JoystickButton(driverController.get(), CLIMB_BTN));
   climbBtn->WhenPressed(new ClimbExtendGrp());
 
-  extendClimbBarsBtn.reset(new frc::JoystickButton(driverController.get(), EXTEND_CLIMB_BARS_BTN));
+  extendClimbBarsBtn.reset(new frc::JoystickButton(driverController.get(), EXTEND_CLIMB_BARS_BTN)); 
   extendClimbBarsBtn->WhileHeld(new ExtendClimbBarsCmd());
 
   reverseClimbBtn.reset(new frc::JoystickButton(driverController.get(), REVERSE_CLIMB_BTN));

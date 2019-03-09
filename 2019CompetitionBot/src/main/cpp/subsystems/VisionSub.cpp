@@ -74,24 +74,15 @@ int VisionSub::getManipulatorPipeline() {
 }
 
 bool VisionSub::isTargetVisible(){
-  double targetArea = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ta", 0.0);
-  if (targetArea > 0){
+  double targetMarked = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
+  if (targetMarked > 0){
     return true;
   }
   return false;
 }
 
 double VisionSub::getVisionTarget() {
-  
-  double xAngle = 9001;
-  // if over 9000, the vision target is not picking up anything.
-  double TargetMarked = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
-
-  if (TargetMarked > 0.5) {
-    xAngle = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx", 0.0);
-  }
-
-  return xAngle;
+  return nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx", 0.0);
 }
 
 double VisionSub::getDistanceFromVision() {
