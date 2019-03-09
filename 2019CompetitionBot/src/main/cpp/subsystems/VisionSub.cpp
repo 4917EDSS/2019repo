@@ -73,6 +73,14 @@ int VisionSub::getManipulatorPipeline() {
   return setManipulatorPipelineState;
 }
 
+bool VisionSub::isTargetVisible(){
+  double targetArea = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ta", 0.0);
+  if (targetArea > 0){
+    return true;
+  }
+  return false;
+}
+
 double VisionSub::getVisionTarget() {
   
   double xAngle = 9001;

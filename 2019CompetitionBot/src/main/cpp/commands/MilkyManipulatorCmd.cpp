@@ -31,10 +31,14 @@ void MilkyManipulatorCmd::Execute() {
   double scoringFace=Robot::visionSub.getScoringFaceAngle();
   double robotTargetAngle=GetRobotTargetAngle(robotAngle, targetAngle, distance, scoringFace);
 
-  double lSpeed=(0.5+(robotAngle-robotTargetAngle)* 0.1);
-  double rSpeed=(0.5-(robotAngle-robotTargetAngle)* 0.1);
+  if (Robot::visionSub.isTargetVisible()){
+    double lSpeed=(0.5+(robotAngle-robotTargetAngle)* 0.1);
+    double rSpeed=(0.5-(robotAngle-robotTargetAngle)* 0.1);
+    Robot::drivetrainSub.drive(lSpeed,rSpeed);
 
-  Robot::drivetrainSub.drive(lSpeed,rSpeed);
+  }
+  
+
 }
 
 // Make this return true when this Command no longer needs to run execute()
