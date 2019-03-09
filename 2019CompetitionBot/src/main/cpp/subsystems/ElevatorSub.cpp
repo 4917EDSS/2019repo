@@ -36,12 +36,10 @@ ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
   elevatorMotor2->GetEncoder().SetPosition(0); // Not used but good to have as a backup
   elevatorMotor1->GetEncoder().SetPositionConversionFactor(ELEVATOR_TICK_TO_MM_FACTOR);
   elevatorMotor2->GetEncoder().SetPositionConversionFactor(ELEVATOR_TICK_TO_MM_FACTOR);
-//limit switches
+  
+  //limit switches
   lowerLimit.reset(new frc::DigitalInput(ELEVATOR_LOWER_LIMIT_DIO));
   upperLimit.reset(new frc::DigitalInput(ELEVATOR_UPPER_LIMIT_DIO));
-//shifter
-  shifterSolenoid.reset(new frc::Solenoid(CLIMB_GEAR_PCM_ID));
-  setShifterHigh(false);
 
   // Setup Shuffleboard for each input and output device
   frc::ShuffleboardTab &shuffleTab = frc::Shuffleboard::GetTab("Elevator");
@@ -135,15 +133,6 @@ bool ElevatorSub::isElevatorDown() {
   else {
     return false;
   }
-}
-
-// Set true for High Gear, false for Low Gear
-void ElevatorSub::setShifterHigh(bool highGear) {
-  shifterSolenoid->Set(highGear);
-}
-
-bool ElevatorSub::isShifterHigh() {
-  return shifterSolenoid->Get();
 }
 
 // Set the elevator mode and height
