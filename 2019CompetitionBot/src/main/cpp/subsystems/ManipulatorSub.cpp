@@ -243,10 +243,12 @@ void ManipulatorSub::updateFlipperStateMachine() {
   double currentAngle = getFlipperAngle();
   
   //Flipping camera orientation when arm switches sides.
-  if (currentAngle >= 0.0) {
-    Robot::visionSub.pipeLineFlip(true);
-  }else{
-    Robot::visionSub.pipeLineFlip(false);
+  if ((Robot::visionSub.getManipulatorPipeline() == DRIVER_MODE_NORMAL) && (currentAngle > 2)) {
+    Robot::visionSub.pipeLineFlip(DRIVER_MODE_FLIPPED);
+  }
+
+  if ((Robot::visionSub.getManipulatorPipeline() == DRIVER_MODE_FLIPPED) && (currentAngle < -2)) {
+    Robot::visionSub.pipeLineFlip(DRIVER_MODE_NORMAL);
   }
   
 

@@ -10,6 +10,11 @@
 #include <frc/WPILib.h>
 #include <frc/commands/Subsystem.h>
 
+constexpr int DRIVER_MODE_NORMAL = 1;
+constexpr int DRIVER_MODE_FLIPPED = 2;
+constexpr int VISION_MODE_NORMAL = 3;
+constexpr int VISION_MODE_FLIPPED = 4;
+
 class VisionSub : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
@@ -18,10 +23,11 @@ class VisionSub : public frc::Subsystem {
  public:
   VisionSub();
   void InitDefaultCommand() override;
+  int getManipulatorPipeline();
   double getVisionTarget();
   double normalizeAngle(double targetangle);
   void pipeLineToggle(bool pipeLine);
-  void pipeLineFlip(bool pipeLine);
+  void pipeLineFlip(int pipeLine);
   double getDistanceFromVision();
   double getScoringFaceAngle();
 };

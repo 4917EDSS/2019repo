@@ -32,17 +32,21 @@ void VisionSub::pipeLineToggle(bool pipeLine) {
 }
 
 // Flipping camera orientation
-void VisionSub::pipeLineFlip(bool pipeLineFlip){
-  if (pipeLineFlip) {
+void VisionSub::pipeLineFlip(int pipeLineFlip){
+  if (pipeLineFlip == DRIVER_MODE_NORMAL) {
     nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("camMode", 1);
     nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("ledMode", 1);
     nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("pipeline", 1);
   } 
-  else{
+  else if (pipeLineFlip == DRIVER_MODE_FLIPPED) {
       nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("ledMode", 1);
       nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("camMode", 1);
       nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("pipeline", 2);
   }
+}
+
+int VisionSub::getManipulatorPipeline() {
+  return setManipulatorPipeline;
 }
 
 double VisionSub::getVisionTarget() {
