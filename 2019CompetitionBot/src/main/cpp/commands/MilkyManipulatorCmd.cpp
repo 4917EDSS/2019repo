@@ -32,8 +32,8 @@ void MilkyManipulatorCmd::Execute() {
   double robotTargetAngle=GetRobotTargetAngle(robotAngle, targetAngle, distance, scoringFace);
 
   if (Robot::visionSub.isTargetVisible()){
-    double lSpeed=(0.5+(robotAngle-robotTargetAngle)* 0.1);
-    double rSpeed=(0.5-(robotAngle-robotTargetAngle)* 0.1);
+    double lSpeed=(0.5+(robotAngle-robotTargetAngle)* 0.05);
+    double rSpeed=(0.5-(robotAngle-robotTargetAngle)* 0.05);
     Robot::drivetrainSub.drive(lSpeed,rSpeed);
 
   }
