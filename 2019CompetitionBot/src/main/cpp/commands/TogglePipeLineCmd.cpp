@@ -18,7 +18,7 @@ TogglePipeLineCmd::TogglePipeLineCmd() {
 // Called just before this Command runs the first time
 void TogglePipeLineCmd::Initialize() {
   pipeLine = !pipeLine;
-  Robot::visionSub.pipeLineToggle(pipeLine);
+  Robot::visionSub.setBumperPipeline(pipeLine);
 
   logger.send(logger.CMD_TRACE, "%s : %s | Pipeline = %d\n", __FILE__, __FUNCTION__, pipeLine);
 }
