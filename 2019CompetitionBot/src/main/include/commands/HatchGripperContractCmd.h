@@ -8,9 +8,8 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include "commands/frc4917Cmd.h"
 
-class HatchGripperContractCmd : public frc4917Cmd {
+class HatchGripperContractCmd : public frc::Command {
  public:
   HatchGripperContractCmd();
   void Initialize() override;

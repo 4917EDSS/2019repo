@@ -1,8 +1,7 @@
 #pragma once
 #include <frc/commands/Command.h>
-#include "commands/frc4917Cmd.h"
 
-class DriveWithIntakeMotorCmd : public frc4917Cmd {
+class DriveWithIntakeMotorCmd : public frc::Command {
   public:
     DriveWithIntakeMotorCmd();
     void Initialize() override;

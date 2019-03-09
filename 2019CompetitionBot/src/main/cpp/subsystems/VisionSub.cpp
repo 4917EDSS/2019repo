@@ -18,35 +18,58 @@ void VisionSub::InitDefaultCommand() {
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
-void VisionSub::pipeLineToggle(bool pipeLine) {  
-  if (pipeLine == true) {
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 1);
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 1);
-  } 
-  else{
+void VisionSub::setBumperPipeline(int pipeLine) { 
+  switch (pipeLine){
+    case DRIVER_MODE_NORMAL:
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 1);
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 1);
+      break;
+    case VISION_MODE_NORMAL:
       nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
       nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 0);
       nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0);
+      break;
+    
+    default:
+      break;
   }
+  
 }
 
 // Flipping camera orientation
-void VisionSub::pipeLineFlip(int pipeLineFlip){
-  if (pipeLineFlip == DRIVER_MODE_NORMAL) {
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("camMode", 1);
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("ledMode", 1);
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("pipeline", 1);
-  } 
-  else if (pipeLineFlip == DRIVER_MODE_FLIPPED) {
+void VisionSub::setManipulatorPipeline(int pipeLine){
+  switch (pipeLine)
+  {
+    case DRIVER_MODE_NORMAL:
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("camMode", 1);
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("ledMode", 1);
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("pipeline", 1);
+      break;
+    case DRIVER_MODE_FLIPPED:
       nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("ledMode", 1);
       nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("camMode", 1);
       nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("pipeline", 2);
+      break;
+    case VISION_MODE_NORMAL:
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("ledMode", 1);
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("camMode", 1);
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("pipeline", 1);
+      break;
+    case VISION_MODE_FLIPPED:
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("ledMode", 1);
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("camMode", 1);
+      nt::NetworkTableInstance::GetDefault().GetTable("limelight-two")->PutNumber("pipeline", 2);
+      break;
+    default:
+      break;
   }
+  setManipulatorPipelineState = pipeLine;
 }
 
+
 int VisionSub::getManipulatorPipeline() {
-  return setManipulatorPipeline;
+  return setManipulatorPipelineState;
 }
 
 double VisionSub::getVisionTarget() {
