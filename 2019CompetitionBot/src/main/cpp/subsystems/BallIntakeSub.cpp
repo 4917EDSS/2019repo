@@ -13,7 +13,7 @@
 #include "frc/shuffleboard/BuiltInLayouts.h"
 #include <iostream>
 
-constexpr double INTAKE_ARM_MAX_ANGLE = 165; //change
+constexpr double INTAKE_ARM_MAX_ANGLE = 195; //change
 constexpr double INTAKE_ARM_MIN_ANGLE = 0;
 constexpr double INTAKE_ARM_ANGLE_TOLERANCE = 1.0;
 constexpr double INTAKE_ARM_VELOCITY_TOLERANCE = 45;

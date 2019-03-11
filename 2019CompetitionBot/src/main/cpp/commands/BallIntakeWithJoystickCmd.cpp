@@ -30,7 +30,7 @@ void BallIntakeWithJoystickCmd::Execute() {
 
   switch(shift) {
     case 1: // Ball intake in/out flipper
-      Robot::ballIntakeSub.setIntakeArmAngle(ELEVATOR_MODE_MANUAL, verticalStick * 0.6, 0);
+      Robot::ballIntakeSub.setIntakeArmAngle(ELEVATOR_MODE_MANUAL, verticalStick * 1.0, 0);
       logger.send(logger.WITH_JOYSTICK_TRACE, "The ball intake flipper is being controlled @ %f\n", verticalStick);
       break;
     
