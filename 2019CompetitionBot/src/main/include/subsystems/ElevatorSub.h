@@ -46,12 +46,10 @@ class ElevatorSub : public frc::Subsystem {
   std::shared_ptr<frc::Encoder> elevatorMotorEnc;
   std::shared_ptr<frc::DigitalInput> lowerLimit;
   std::shared_ptr<frc::DigitalInput> upperLimit;
-  std::shared_ptr<frc::Solenoid> shifterSolenoid;
 
   struct SparkShuffleboardEntrySet nteSparksTwo[2];
   nt::NetworkTableEntry nteHatchGripperSolenoid;
   nt::NetworkTableEntry nteIntakeFromRobotLimit;
-  nt::NetworkTableEntry nteShifterSolenoid;
 
   nt::NetworkTableEntry nteSmMode;
   nt::NetworkTableEntry nteSmState;
