@@ -46,13 +46,15 @@ void DriveWithJoystickCmd::Execute() {
 
 	if (fabs(leftStick) < deadBand) {
 
-		
+		// Make rotate-only less sensative
+		rightStick *= 0.5;
+
 		if (wasDrivingStraight > 0) {
 			Robot::drivetrainSub.disableBalancerPID();
 			wasDrivingStraight = 0;
 		}
 		if (rightStick >= 0){
-			rightStick = std:: min(rightStick, maxPower);
+			rightStick = std::min(rightStick, maxPower);
 		}
 		else{
 			rightStick = std::max(rightStick, -maxPower);
