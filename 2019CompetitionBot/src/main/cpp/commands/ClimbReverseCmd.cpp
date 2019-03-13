@@ -8,14 +8,10 @@
 #include "commands/ClimbReverseCmd.h"
 #include "Robot.h"
 
-constexpr double MAX_ARM_POWER = 1.0;
-constexpr double MIN_ARM_POWER = 0.10;
-constexpr double ARM_POWER_STEP_SIZE = 0.01;
-constexpr double ARM_POWER_ANGLE_TOLERANCE = 2.0;
+constexpr double MAX_ARM_POWER = 0.05;
+constexpr double MIN_ARM_POWER = -1.0;
 
 ClimbReverseCmd::ClimbReverseCmd() {
-  // Use Requires() here to declare subsystem dependencies
-  // eg. Requires(Robot::chassis.get());
   Requires(&Robot::climbSub);
   Requires(&Robot::ballIntakeSub);
 }
@@ -25,7 +21,7 @@ void ClimbReverseCmd::Initialize() {
   if(!IsFinished()){
     Robot::climbSub.SetClimbMotorPower(-1.0);
   }
-  lastPower = 0.40;
+  lastPower = -0.15;
   Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_AUTO, lastPower, 0.0);
 }
 
@@ -34,7 +30,7 @@ void ClimbReverseCmd::Execute() {
     double pitchAngle = Robot::drivetrainSub.getPitchAngle();
 
   // pitch > 0,  robot is tipping forward, less power to intake arm
-  lastPower = 0.15 - pitchAngle * 0.1;
+  lastPower = -0.15 - pitchAngle * 0.1;
 
   // Check power limits before setting new power
   if(lastPower > MAX_ARM_POWER) {
