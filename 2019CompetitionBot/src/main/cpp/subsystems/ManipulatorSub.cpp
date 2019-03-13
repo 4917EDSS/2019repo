@@ -18,6 +18,7 @@
 #include "SparkShuffleboardEntrySet.h"
 #include "commands/ManipulatorWithJoystickCmd.h"
 #include <Robot.h>
+#include <math.h>
 
 constexpr double FLIPPER_ANGLE_TOLERANCE = 1.0;
 constexpr double FLIPPER_VELOCITY_TOLERANCE = 45;
@@ -357,7 +358,11 @@ bool ManipulatorSub::isFlipperBlocked(double currentAngle, double targetAngle) {
 double ManipulatorSub::calcFlipperHoldPower(double currentAngle, double targetAngle) {
   // 3% power holds flipper at a 90 degree angle  
   // Make propertional to target.
-  return ((0.025 / 90) * (-targetAngle)) + ((targetAngle - currentAngle) * 0.001);
+
+  double antiGravityPower = sin(targetAngle * (M_PI/180)) * (-0.025);
+  return antiGravityPower + ((targetAngle - currentAngle) * 0.001);
+
+
 }
 
 double ManipulatorSub::calcFlipperMovePower(double currentAngle, double targetAngle, double maxPower) {
