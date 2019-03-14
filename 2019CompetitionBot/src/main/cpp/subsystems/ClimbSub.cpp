@@ -50,3 +50,7 @@ double ClimbSub::getClimbPosition() {
   // TODO:  Return in units of mm and change constants in h file to match
   return climbMotor->GetSensorCollection().GetQuadraturePosition()*CLIMB_BAR_TICK_TO_MM_FACTOR;
 }
+
+void ClimbSub::SetClimbEncoderZero(){
+  climbMotor->SetSelectedSensorPosition(0);
+}

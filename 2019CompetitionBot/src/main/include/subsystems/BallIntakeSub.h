@@ -16,7 +16,7 @@
 #include "SparkShuffleboardEntrySet.h"
 
 constexpr double INTAKE_NEUTRAL_ANGLE = 0; // Only angle that works
-constexpr double INTAKE_CARGO_ANGLE = 97;
+constexpr double INTAKE_CARGO_ANGLE = 95;
 
 constexpr int INTAKE_ARM_MODE_DISABLED = 0;
 constexpr int INTAKE_ARM_MODE_AUTO = 1;
@@ -68,6 +68,7 @@ class BallIntakeSub : public frc::Subsystem {
   double getIntakeWheelPower();
   void setIntakeArmAngle(int mode, double maxPower, double targetAngle);
   bool isIntakeArmAtTarget();
+  void SetBallIntakeEncoderZero();
 
   void updateIntakeArmStateMachine();  
 };

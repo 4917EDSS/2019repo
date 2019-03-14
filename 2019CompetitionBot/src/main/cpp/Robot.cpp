@@ -100,6 +100,12 @@ void Robot::AutonomousInit() {
   Robot::visionSub.setManipulatorPipeline(DRIVER_MODE_NORMAL);
   Robot::ballIntakeSub.foldIntakeArms();
   Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_AUTO, 0.5, INTAKE_NEUTRAL_ANGLE);
+  Robot::elevatorSub.SetElevatorEncoderZero();
+  Robot::ballIntakeSub.SetBallIntakeEncoderZero();
+  Robot::manipulatorSub.SetManipulatorEncoderZero();
+  Robot::climbSub.SetClimbEncoderZero();
+  Robot::drivetrainSub.SetDrivetrainEncoderZero();
+
 
   if(!stateMachinesReset) {
     resetStateMachines();
@@ -204,7 +210,8 @@ void Robot::UpdateSmartDashboard() {
   frc::SmartDashboard::PutBoolean("Ball-In Sensor", manipulatorSub.isBallIn());
   frc::SmartDashboard::PutNumber("Intake Arm Angle",ballIntakeSub.getIntakeArmAngle());
   frc::SmartDashboard::PutBoolean("Intake Unfolded",ballIntakeSub.isIntakeUnfolded());
-  frc::SmartDashboard::PutNumber("Yaw Angle", drivetrainSub.getAngle());  
+  frc::SmartDashboard::PutNumber("Yaw Angle", drivetrainSub.getAngle());
+  frc::SmartDashboard::PutNumber("Drivetrain Velocity", drivetrainSub.getVelocity());
 }
 
 void Robot::resetStateMachines() {

@@ -10,18 +10,18 @@
 #include "Robot.h"
 #include "subsystems/BallIntakeSub.h"
 
-constexpr double JOYSTICK_DEADBAND = 0.01;
+constexpr double JOYSTICK_DEADBAND = 0.02;
 constexpr double MAX_POWER = 1.0;
 
 // Tune these parameters to change normal driving sensativity 
 // (i.e. when using left and right joysticks)
 constexpr double DRIVE_MINIMUM_OUTPUT_POWER = 0.0;	// 0.0 = not currently used
-constexpr double DRIVE_POW_EXPONENT = 2.0;			// higher makes it less sensative at the low end but very sensative at the high end
+constexpr double DRIVE_POW_EXPONENT = 3.0;			// higher makes it less sensative at the low end but very sensative at the high end
 
 // Tune these parameters to change rotate-only driving sensativity 
 // (i.e. when only using the right joystick)
 constexpr double ROTATE_MINIMUM_OUTPUT_POWER = 0.0;	// 0.0 = not currently used
-constexpr double ROTATE_POW_EXPONENT = 2.0;			// higher makes it less sensative at the low end but very sensative at the high end
+constexpr double ROTATE_POW_EXPONENT = 3.0;			// higher makes it less sensative at the low end but very sensative at the high end
 
 
 DriveWithJoystickCmd::DriveWithJoystickCmd() {

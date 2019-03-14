@@ -47,4 +47,6 @@ class DrivetrainSub : public frc::Subsystem {
   void driverDriveStraight(float speed);
   void enableBalancerPID(float setPoint);
   void disableBalancerPID();
+  double getVelocity();
+  void SetDrivetrainEncoderZero();
 };
