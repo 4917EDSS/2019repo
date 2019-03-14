@@ -35,7 +35,7 @@ constexpr int OPERATOR_CONTROLLER_PORT = 1;
 
 // Driver Buttons
 constexpr int DRIVE_TO_VISION_TARGET_BTN = 1;
-// 2 - free
+constexpr int DRIVE_TO_VISION_TARGET_WITH_MANIPULATOR_BTN = 1;
 // 3 - free
 // 4 - free
 constexpr int CLIMB_BTN = 5;
