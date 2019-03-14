@@ -14,6 +14,8 @@
 #include "commands/SetManipulatorAngleCmd.h"
 #include "commands/IntakeBallFromRobotCmd.h"
 #include "commands/IntakeBallGrp.h"
+#include "commands/FoldIntakeImmediateCmd.h"
+
 
 IntakeBallGrp::IntakeBallGrp() {
   AddSequential(new FoldIntakeCmd(false));
@@ -27,6 +29,6 @@ IntakeBallGrp::IntakeBallGrp() {
   
   AddParallel(new SetElevatorToHeightCmd(ELEVATOR_MIN_HEIGHT_MM));
   AddSequential(new SetManipulatorAngleCmd(0));
-  AddParallel(new FoldIntakeCmd(true));
+  AddSequential(new FoldIntakeImmediateCmd(true));
   AddSequential(new SetIntakeArmAngleCmd(false, INTAKE_NEUTRAL_ANGLE));
 }
