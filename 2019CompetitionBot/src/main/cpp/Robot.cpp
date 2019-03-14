@@ -46,13 +46,13 @@ void Robot::RobotInit() {
   //logger.enableChannels(logger.BALLINTAKE);
   //logger.enableChannels(logger.MANIPULATOR);
   //logger.enableChannels(logger.WITH_JOYSTICK_TRACE);
-  logger.enableChannels(logger.CLIMB);
+  //logger.enableChannels(logger.CLIMB);
 
   logger.addOutputPath(new frc4917::ConsoleOutput());						            // Enable console output and/or
   logger.addOutputPath(new frc4917::SyslogOutput(syslogTargetAddress));		  // Enable syslog output
   logger.send(logger.DEBUGGING, "Robot code started @ %f\n", GetTime());
 
-  std::cout << "Starting version 1.7\n";
+  std::cout << "Starting version 2.0\n";
 
   Robot::inBallMode = true;
   Robot::inClimbMode = false;
