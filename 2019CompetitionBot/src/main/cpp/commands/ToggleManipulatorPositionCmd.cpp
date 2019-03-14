@@ -34,10 +34,10 @@ void ToggleManipulatorPositionCmd::Initialize() {
         }
       }
       else if(Robot::manipulatorSub.getFlipperTargetAngle() > 5 ) {
-        targetAngle=90;
+        targetAngle=-90;
       }
       else {
-        targetAngle = -90;
+        targetAngle = 90;
       }
       break;
     case 1:
@@ -66,10 +66,10 @@ void ToggleManipulatorPositionCmd::Initialize() {
         }
       }
       else if(Robot::manipulatorSub.getFlipperTargetAngle() > 5) {
-        targetAngle=90;
+        targetAngle=-90;
       }
       else {
-        targetAngle = -90;
+        targetAngle = 90;
       }
       break;
   }
