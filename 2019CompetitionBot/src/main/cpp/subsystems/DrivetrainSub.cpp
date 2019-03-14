@@ -173,8 +173,9 @@ double DrivetrainSub::getRate()
 double DrivetrainSub::getPitchAngle() {
   return ahrs->GetPitch();
 }
-
-
+double DrivetrainSub::getVelocity() {
+  return (leftMotor1->GetEncoder().GetVelocity()+rightMotor1->GetEncoder().GetVelocity())/2;
+}
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
