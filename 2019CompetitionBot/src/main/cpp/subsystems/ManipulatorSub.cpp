@@ -359,7 +359,7 @@ double ManipulatorSub::calcFlipperHoldPower(double currentAngle, double targetAn
   // 3% power holds flipper at a 90 degree angle  
   // Make propertional to target.
 
-  double antiGravityPower = sin(targetAngle * (M_PI/180)) * (-0.025);
+  double antiGravityPower = sin(targetAngle * (M_PI/180)) * (-0.02);
   return antiGravityPower + ((targetAngle - currentAngle) * 0.001);
 
 
