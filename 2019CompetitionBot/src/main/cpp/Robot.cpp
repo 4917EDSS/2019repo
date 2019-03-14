@@ -205,7 +205,8 @@ void Robot::UpdateSmartDashboard() {
   frc::SmartDashboard::PutBoolean("Ball-In Sensor", manipulatorSub.isBallIn());
   frc::SmartDashboard::PutNumber("Intake Arm Angle",ballIntakeSub.getIntakeArmAngle());
   frc::SmartDashboard::PutBoolean("Intake Unfolded",ballIntakeSub.isIntakeUnfolded());
-  frc::SmartDashboard::PutNumber("Yaw Angle", drivetrainSub.getAngle());  
+  frc::SmartDashboard::PutNumber("Yaw Angle", drivetrainSub.getAngle());
+  frc::SmartDashboard::PutNumber("Drivetrain Velocity", drivetrainSub.getVelocity());
 }
 
 void Robot::resetStateMachines() {
