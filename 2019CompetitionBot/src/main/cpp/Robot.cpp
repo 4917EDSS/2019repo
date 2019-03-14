@@ -10,6 +10,7 @@
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "networktables/NetworkTableInstance.h"
+#include "commands/ExpandHatchGripperGrp.h"
 
 DrivetrainSub Robot::drivetrainSub;
 BallIntakeSub Robot::ballIntakeSub;
@@ -106,7 +107,10 @@ void Robot::AutonomousInit() {
   }
 
   inBallMode = modeChooser->GetSelected();
-
+  
+    if (!inBallMode) {
+      (new ExpandHatchGripperGrp())->Start();
+    }
   // But probably need to deal with initial game piece
   // Hatch:
   //  - inBallMode = false
@@ -115,6 +119,7 @@ void Robot::AutonomousInit() {
   //  - inBallMode = true
   // None:
   //  - do nothing
+  
 }
 
 void Robot::AutonomousPeriodic() { 
