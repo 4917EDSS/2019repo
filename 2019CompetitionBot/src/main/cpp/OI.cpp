@@ -53,8 +53,8 @@ OI::OI() {
   driveToVisionTargetBtn.reset(new frc::JoystickButton(driverController.get(), DRIVE_TO_VISION_TARGET_BTN));
   driveToVisionTargetBtn->WhileHeld(new MilkyScoreGrp());
 
-  driveToVisionTargetBtn.reset(new frc::JoystickButton(driverController.get(), DRIVE_TO_VISION_TARGET_WITH_MANIPULATOR_BTN));
-  driveToVisionTargetBtn->WhileHeld(new HatchVisionCmd());
+  driveToVisionTargetWithManipulatorBtn.reset(new frc::JoystickButton(driverController.get(), DRIVE_TO_VISION_TARGET_WITH_MANIPULATOR_BTN));
+  driveToVisionTargetWithManipulatorBtn->WhileHeld(new HatchVisionCmd());
 
   climbBtn.reset(new frc::JoystickButton(driverController.get(), CLIMB_BTN));
   climbBtn->WhenPressed(new ClimbExtendGrp());
