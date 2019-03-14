@@ -17,7 +17,7 @@
 #include "SparkShuffleboardEntrySet.h"
 
 constexpr double MANIPULATOR_MAX_ANGLE = 90;
-constexpr double MANIPULATOR_MIN_ANGLE = -100;
+constexpr double MANIPULATOR_MIN_ANGLE = -105;
 
 constexpr double MANIPULATOR_CARGO_FLOOR_PICKUP_ANGLE = -100;
 

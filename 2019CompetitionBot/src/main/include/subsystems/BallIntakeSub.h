@@ -16,7 +16,7 @@
 #include "SparkShuffleboardEntrySet.h"
 
 constexpr double INTAKE_NEUTRAL_ANGLE = 0; // Only angle that works
-constexpr double INTAKE_CARGO_ANGLE = 105;
+constexpr double INTAKE_CARGO_ANGLE = 97;
 
 constexpr int INTAKE_ARM_MODE_DISABLED = 0;
 constexpr int INTAKE_ARM_MODE_AUTO = 1;

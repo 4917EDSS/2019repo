@@ -15,7 +15,7 @@ SetHatchModeCmd::SetHatchModeCmd() {
 // Called just before this Command runs the first time
 void SetHatchModeCmd::Initialize() {
 
-    Robot::manipulatorSub.setIntakePower(0.5);
+    Robot::manipulatorSub.setIntakePower(1.0);
     Robot::inBallMode = false;
 }
 

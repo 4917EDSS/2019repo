@@ -10,12 +10,8 @@
 
 constexpr double MAX_ARM_POWER = 1.0;
 constexpr double MIN_ARM_POWER = 0.10;
-constexpr double ARM_POWER_STEP_SIZE = 0.03;
-constexpr double ARM_POWER_ANGLE_TOLERANCE = 2.0;
 
 ClimbCmd::ClimbCmd() {
-  // Use Requires() here to declare subsystem dependencies
-  // eg. Requires(Robot::chassis.get());
   Requires(&Robot::climbSub);
   Requires(&Robot::ballIntakeSub);
 }
@@ -40,7 +36,7 @@ void ClimbCmd::Execute() {
   double pitchAngle = Robot::drivetrainSub.getPitchAngle();
 
   // pitch > 0,  robot is tipping forward, less power to intake arm
-  lastPower = 0.2 - pitchAngle * 0.1;
+  lastPower = 0.3 - pitchAngle * 0.1;
 
   // Otherise, use lastPower without changing it
 

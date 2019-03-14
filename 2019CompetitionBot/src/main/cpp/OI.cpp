@@ -32,6 +32,7 @@
 #include "commands/FlipManipulatorGrp.h"
 #include "commands/ZeroAllSystemsGrp.h"
 #include "commands/ClimbRetractGrp.h"
+#include "commands/HatchVisionCmd.h"
 
 
 OI::OI() {
@@ -51,6 +52,9 @@ OI::OI() {
   // Driver controller buttons
   driveToVisionTargetBtn.reset(new frc::JoystickButton(driverController.get(), DRIVE_TO_VISION_TARGET_BTN));
   driveToVisionTargetBtn->WhileHeld(new MilkyScoreGrp());
+
+  driveToVisionTargetWithManipulatorBtn.reset(new frc::JoystickButton(driverController.get(), DRIVE_TO_VISION_TARGET_WITH_MANIPULATOR_BTN));
+  driveToVisionTargetWithManipulatorBtn->WhileHeld(new HatchVisionCmd());
 
   climbBtn.reset(new frc::JoystickButton(driverController.get(), CLIMB_BTN));
   climbBtn->WhenPressed(new ClimbExtendGrp());

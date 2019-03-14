@@ -2,16 +2,16 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-double getCircleCentreX(double targetX, double targetY, double robotX, double robotY, double scoringFaceAngle){
+inline double getCircleCentreX(double targetX, double targetY, double robotX, double robotY, double scoringFaceAngle){
     return ((robotY*robotY) + (2*robotY * targetX * tan(-scoringFaceAngle)) - (2*robotY*targetY) - (2*targetX*targetY*tan(-scoringFaceAngle)) + (robotX*robotX) - (targetX*targetX) + (targetY*targetY))
     / (2*((robotY*tan(-scoringFaceAngle)) - (targetY*tan(-scoringFaceAngle)) + robotX - targetX ));
 }
 
-double getCircleCentreY(double circleCentreX, double scoringFaceAngle, double targetX, double targetY){
+inline double getCircleCentreY(double circleCentreX, double scoringFaceAngle, double targetX, double targetY){
     return (tan(-scoringFaceAngle) * circleCentreX + (targetY - tan(-scoringFaceAngle) * targetX));
 }
 
-double GetRobotTargetAngle(double robotHeading, double cameraAngle, double distance, double scoringFaceAngle){
+inline double GetRobotTargetAngle(double robotHeading, double cameraAngle, double distance, double scoringFaceAngle){
         robotHeading = robotHeading *(M_PI/180);
         cameraAngle = cameraAngle *(M_PI/180);
         scoringFaceAngle = scoringFaceAngle*(M_PI/180);
