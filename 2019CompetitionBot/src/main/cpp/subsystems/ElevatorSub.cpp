@@ -60,7 +60,6 @@ ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
     nteSparksTwo[index].encoderVelocity = (shuffleList.Add("Velocity", 0).GetEntry());
     nteSparksTwo[index].motorTemperature = (shuffleList.Add("Motor Temp", 0).GetEntry());
   }
-  nteShifterSolenoid = (shuffleTab.Add("Shiffter", 0).GetEntry());
 
   frc::ShuffleboardLayout &shuffleList = shuffleTab.GetLayout("State Machine", frc::BuiltInLayouts::kList);
   shuffleList.WithSize(1, 4);
@@ -106,8 +105,6 @@ void ElevatorSub::updateShuffleBoard() {
   nteSparksTwo[1].encoderPosition.SetDouble(elevatorMotor2->GetEncoder().GetPosition() + ELEVATOR_MIN_HEIGHT_MM);
   nteSparksTwo[1].encoderVelocity.SetDouble(elevatorMotor2->GetEncoder().GetVelocity());
   nteSparksTwo[1].motorTemperature.SetDouble(elevatorMotor2->GetMotorTemperature());
-
-  nteShifterSolenoid.SetBoolean(shifterSolenoid->Get());
 
   nteSmMode.SetDouble(elevatorControlMode);
   nteSmState.SetDouble(elevatorState);

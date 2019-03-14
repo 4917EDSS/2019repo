@@ -5,40 +5,31 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/MilkyManipulatorCmd.h"
+#include "commands/HatchVisionCmd.h"
 #include "OI.H"
 #include "Robot.h"
 #include "RobotPathHelpers.h"
 #include <iostream>
 
-constexpr double JOYSTICK_DEADBAND = 0.01;
-
-MilkyManipulatorCmd::MilkyManipulatorCmd() {
+HatchVisionCmd::HatchVisionCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::drivetrainSub);
 }
 
 // Called just before this Command runs the first time
-void MilkyManipulatorCmd::Initialize() {
+void HatchVisionCmd::Initialize() {
   logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-  Robot::visionSub.setBumperPipeline(VISION_MODE_NORMAL);
+  Robot::visionSub.setManipulatorPipeline(VISION_MODE_NORMAL);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void MilkyManipulatorCmd::Execute() {
-  std::shared_ptr<frc::Joystick> driverJoystick = Robot::oi.getDriverController();
-
+void HatchVisionCmd::Execute() {
   double targetAngle=Robot::visionSub.getVisionTarget();
   double distance=Robot::visionSub.getDistanceFromVision();
   double robotAngle=Robot::drivetrainSub.getAngle();
   double scoringFace=Robot::visionSub.getScoringFaceAngle();
   double robotTargetAngle=GetRobotTargetAngle(robotAngle, targetAngle, distance, scoringFace);
-  
-  if(fabs(driverJoystick->GetY()) > JOYSTICK_DEADBAND){
-    robotTargetAngle += (driverJoystick->GetY()*4.0);
-  }
-  
 
   if (Robot::visionSub.isTargetVisible() ){
     double lSpeed=(0.3+(targetAngle*0.007));
@@ -52,18 +43,17 @@ void MilkyManipulatorCmd::Execute() {
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool MilkyManipulatorCmd::IsFinished() { return false; }
+bool HatchVisionCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void MilkyManipulatorCmd::End() {
-  //MilkyManipulatorCmd.milkyManipulator(0.0);
+void HatchVisionCmd::End() {
   Robot::drivetrainSub.drive(0,0);
-  Robot::visionSub.setBumperPipeline(DRIVER_MODE_NORMAL);
+  Robot::visionSub.setManipulatorPipeline(DRIVER_MODE_NORMAL);
 
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void MilkyManipulatorCmd::Interrupted() {
+void HatchVisionCmd::Interrupted() {
   End();
 }

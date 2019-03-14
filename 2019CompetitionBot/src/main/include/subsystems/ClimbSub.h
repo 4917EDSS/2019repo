@@ -11,8 +11,8 @@
 #include <frc/WPILib.h>
 #include <ctre/Phoenix.h>
 
-constexpr double CLIMB_RETRACT_LIMIT_THRESHOLD = 2;
-constexpr double CLIMB_EXTEND_LIMIT_THRESHOLD = 540;
+constexpr double CLIMB_RETRACT_LIMIT_THRESHOLD = 10;
+constexpr double CLIMB_EXTEND_LIMIT_THRESHOLD = 560;
 
 class ClimbSub : public frc::Subsystem {
  private:

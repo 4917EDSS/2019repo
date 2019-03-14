@@ -15,7 +15,7 @@ SetBallModeCmd::SetBallModeCmd() {
 }
 
 void SetBallModeCmd::Initialize() {
-    Robot::manipulatorSub.setIntakePower(-0.5);
+    Robot::manipulatorSub.setIntakePower(-1.0);
     Robot::inBallMode = true;
 }
 

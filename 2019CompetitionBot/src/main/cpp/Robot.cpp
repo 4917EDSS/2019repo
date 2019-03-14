@@ -28,8 +28,7 @@ void Robot::RobotInit() {
   modeChooser.reset(new frc::SendableChooser<bool>);
   modeChooser->AddOption("Ball",true);
   modeChooser->AddOption("Hatch",false);
-  // No Auto command this year
-  // frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+  frc::SmartDashboard::PutData("Auto Modes", modeChooser.get());
 
   // Setup logging system
   std::string syslogTargetAddress = (Preferences::GetInstance())->GetString("SyslogTargetAddress", "10.49.17.30");
@@ -47,13 +46,13 @@ void Robot::RobotInit() {
   //logger.enableChannels(logger.BALLINTAKE);
   //logger.enableChannels(logger.MANIPULATOR);
   //logger.enableChannels(logger.WITH_JOYSTICK_TRACE);
-  logger.enableChannels(logger.CLIMB);
+  //logger.enableChannels(logger.CLIMB);
 
   logger.addOutputPath(new frc4917::ConsoleOutput());						            // Enable console output and/or
   logger.addOutputPath(new frc4917::SyslogOutput(syslogTargetAddress));		  // Enable syslog output
   logger.send(logger.DEBUGGING, "Robot code started @ %f\n", GetTime());
 
-  std::cout << "Starting version 1.7\n";
+  std::cout << "Starting version 2.0\n";
 
   Robot::inBallMode = true;
   Robot::inClimbMode = false;
@@ -112,14 +111,7 @@ void Robot::AutonomousInit() {
     stateMachinesReset = true;
   }
 
-  // No auto command this year
-  /*
-  m_autonomousCommand = m_chooser.GetSelected();
-  if (m_autonomousCommand != nullptr) {
-    m_autonomousCommand->Start();
-  }
-  inBallMode=modeChooser->GetSelected().lock();
-  */
+  inBallMode = modeChooser->GetSelected();
 
   // But probably need to deal with initial game piece
   // Hatch:
@@ -195,16 +187,16 @@ void Robot::UpdateSmartDashboard() {
   double targetHorizontalLength = table->GetNumber("thoriz", 0.0);
   double targetVerticalLength =  table ->GetNumber("tvert", 0.0);
 
-  frc::SmartDashboard::PutNumber("Target Percent Area", targetPerecentArea);
-  frc::SmartDashboard::PutNumber("Target Skew", targetSkew);
-  frc::SmartDashboard::PutNumber("Target Horizontal Offset" ,targetHorizontalOffset);
-  frc::SmartDashboard::PutNumber("Target Vertical Offset" ,targetVerticalOffset);
+  // frc::SmartDashboard::PutNumber("Target Percent Area", targetPerecentArea);
+  // frc::SmartDashboard::PutNumber("Target Skew", targetSkew);
+  // frc::SmartDashboard::PutNumber("Target Horizontal Offset" ,targetHorizontalOffset);
+  // frc::SmartDashboard::PutNumber("Target Vertical Offset" ,targetVerticalOffset);
   frc::SmartDashboard::PutNumber("Target is in view", foundTarget);
-  frc::SmartDashboard::PutNumber("Limelight Latency", limelightLatency);
-  frc::SmartDashboard::PutNumber("Target's shortest side of fitted bounding box", targetShort);
-  frc::SmartDashboard::PutNumber("Target's longest side of fitted bounding box", targetLong);
-  frc::SmartDashboard::PutNumber("Target's horiz. sidelength of rough bounding box", targetHorizontalLength);
-  frc::SmartDashboard::PutNumber("Target's vert. sidelength of rough bounding box", targetVerticalLength);
+  // frc::SmartDashboard::PutNumber("Limelight Latency", limelightLatency);
+  // frc::SmartDashboard::PutNumber("Target's shortest side of fitted bounding box", targetShort);
+  // frc::SmartDashboard::PutNumber("Target's longest side of fitted bounding box", targetLong);
+  // frc::SmartDashboard::PutNumber("Target's horiz. sidelength of rough bounding box", targetHorizontalLength);
+  // frc::SmartDashboard::PutNumber("Target's vert. sidelength of rough bounding box", targetVerticalLength);
   
   frc::SmartDashboard::PutNumber("Elevator Height", elevatorSub.getElevatorHeight());
   frc::SmartDashboard::PutNumber("Manip Angle", manipulatorSub.getFlipperAngle());

@@ -16,20 +16,21 @@
 #include "SparkShuffleboardEntrySet.h"
 
 // Elevator heights
-constexpr double ELEVATOR_MIN_HEIGHT_MM = 500; //485;    // TODO:  Check and update
-constexpr double ELEVATOR_MAX_HEIGHT_MM = 2020; // TODO:  Check and update
+constexpr double ELEVATOR_MIN_HEIGHT_MM = 495; 
+constexpr double ELEVATOR_MAX_HEIGHT_MM = 2020; 
+constexpr double ELEVATOR_MIN_SAFE_HEIGHT = 550;
+constexpr double ELEVATOR_MAX_SAFE_HEIGHT = 570;
+constexpr double ELEVATOR_MID_SAFE_HEIGHT = (ELEVATOR_MIN_SAFE_HEIGHT + ELEVATOR_MAX_SAFE_HEIGHT) / 2;
 
 constexpr double ELEVATOR_LOW_HATCH_HEIGHT_MM = ELEVATOR_MIN_HEIGHT_MM;
 constexpr double ELEVATOR_MEDIUM_HATCH_HEIGHT_MM = 1193.8;
 constexpr double ELEVATOR_HIGH_HATCH_HEIGHT_MM = 1905.0;
-constexpr double ELEVATOR_CARGO_FLOOR_PICKUP_HEIGHT_MM = ELEVATOR_MIN_HEIGHT_MM;
+constexpr double ELEVATOR_CARGO_FLOOR_PICKUP_HEIGHT_MM = 604.0;
 constexpr double ELEVATOR_ROCKET_LOW_CARGO_HEIGHT_MM = 698.5;
 constexpr double ELEVATOR_ROCKET_MEDIUM_CARGO_HEIGHT_MM = 1409.7;
 constexpr double ELEVATOR_ROCKET_HIGH_CARGO_HEIGHT_MM = ELEVATOR_MAX_HEIGHT_MM;   // Actually 2120.9mm but we can't get there with the elevator
-constexpr double ELEVATOR_CARGO_SHIP_CARGO_HEIGHT_MM = 1009.65;
-constexpr double ELEVATOR_MIN_SAFE_HEIGHT = ELEVATOR_MIN_HEIGHT_MM + 110;
-constexpr double ELEVATOR_MAX_SAFE_HEIGHT = ELEVATOR_MIN_HEIGHT_MM + 130;
-constexpr double ELEVATOR_MID_SAFE_HEIGHT = (ELEVATOR_MIN_SAFE_HEIGHT + ELEVATOR_MAX_SAFE_HEIGHT) / 2;
+constexpr double ELEVATOR_CARGO_SHIP_CARGO_HEIGHT_MM = 1109.65;
+
 
 // Middle of manipulator is not the same in the back as in the front
 constexpr double ELEVATOR_REAR_HEIGHT_OFFSET = 101.6;   // TODO: Check and update, currently 4"
@@ -46,12 +47,10 @@ class ElevatorSub : public frc::Subsystem {
   std::shared_ptr<frc::Encoder> elevatorMotorEnc;
   std::shared_ptr<frc::DigitalInput> lowerLimit;
   std::shared_ptr<frc::DigitalInput> upperLimit;
-  std::shared_ptr<frc::Solenoid> shifterSolenoid;
 
   struct SparkShuffleboardEntrySet nteSparksTwo[2];
   nt::NetworkTableEntry nteHatchGripperSolenoid;
   nt::NetworkTableEntry nteIntakeFromRobotLimit;
-  nt::NetworkTableEntry nteShifterSolenoid;
 
   nt::NetworkTableEntry nteSmMode;
   nt::NetworkTableEntry nteSmState;
