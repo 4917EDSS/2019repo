@@ -68,6 +68,7 @@ class BallIntakeSub : public frc::Subsystem {
   double getIntakeWheelPower();
   void setIntakeArmAngle(int mode, double maxPower, double targetAngle);
   bool isIntakeArmAtTarget();
+  void SetBallIntakeEncoderZero();
 
   void updateIntakeArmStateMachine();  
 };

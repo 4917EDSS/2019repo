@@ -90,4 +90,5 @@ class ElevatorSub : public frc::Subsystem {
   bool isElevatorAtTarget();
 
   void updateElevatorStateMachine();
+  void SetElevatorEncoderZero();
 };

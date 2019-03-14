@@ -76,6 +76,7 @@ class ManipulatorSub : public frc::Subsystem {
   bool isGripperExpanded();
   void setFlipperAngle(int mode, double maxPower, double targetAngle);
   bool isFlipperAtTarget();
+  void SetManipulatorEncoderZero();
 
   void updateFlipperStateMachine();
 };

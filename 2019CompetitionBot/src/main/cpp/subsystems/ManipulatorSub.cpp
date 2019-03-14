@@ -30,6 +30,10 @@ constexpr int FLIPPER_STATE_HOLDING = 1;
 constexpr int FLIPPER_STATE_MOVING = 2;
 constexpr int FLIPPER_STATE_INTERRUPTED = 3;
 
+void ManipulatorSub::SetManipulatorEncoderZero(){
+  flipperMotor->GetEncoder().SetPosition(0);
+}
+
 ManipulatorSub::ManipulatorSub() : Subsystem("ManipulatorSub") {
   flipperMotor.reset(new rev::CANSparkMax(MANIPULATOR_FLIPPER_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   flipperMotor->GetEncoder().SetPosition(0);

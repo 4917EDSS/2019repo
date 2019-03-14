@@ -100,6 +100,12 @@ void Robot::AutonomousInit() {
   Robot::visionSub.setManipulatorPipeline(DRIVER_MODE_NORMAL);
   Robot::ballIntakeSub.foldIntakeArms();
   Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_AUTO, 0.5, INTAKE_NEUTRAL_ANGLE);
+  Robot::elevatorSub.SetElevatorEncoderZero();
+  Robot::ballIntakeSub.SetBallIntakeEncoderZero();
+  Robot::manipulatorSub.SetManipulatorEncoderZero();
+  Robot::climbSub.SetClimbEncoderZero();
+  Robot::drivetrainSub.SetDrivetrainEncoderZero();
+
 
   if(!stateMachinesReset) {
     resetStateMachines();
