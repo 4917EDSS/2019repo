@@ -26,6 +26,10 @@ constexpr int INTAKE_ARM_STATE_HOLDING = 1;
 constexpr int INTAKE_ARM_STATE_MOVING = 2;
 constexpr int INTAKE_ARM_STATE_INTERRUPTED = 3;
 
+void BallIntakeSub::SetBallIntakeEncoderZero(){
+  flipperMotor->GetEncoder().SetPosition(0);
+}
+
 BallIntakeSub::BallIntakeSub() : Subsystem("BallIntakeSub") {
   flipperMotor.reset(new rev::CANSparkMax(BALL_INTAKE_FLIP_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   flipperMotor->GetEncoder().SetPosition(0);

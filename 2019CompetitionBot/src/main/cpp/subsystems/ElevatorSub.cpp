@@ -29,6 +29,11 @@ constexpr int ELEVATOR_STATE_HOLDING = 1;
 constexpr int ELEVATOR_STATE_MOVING = 2;
 constexpr int ELEVATOR_STATE_INTERRUPTED = 3;
 
+void ElevatorSub::SetElevatorEncoderZero() {
+  elevatorMotor1->GetEncoder().SetPosition(0); 
+  elevatorMotor2->GetEncoder().SetPosition(0);
+}
+
 ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
   elevatorMotor1.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   elevatorMotor2.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_2_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
