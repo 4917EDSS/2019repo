@@ -19,6 +19,16 @@ constexpr float DRIVE_BALANCE_I = 0;
 constexpr float DRIVE_BALANCE_D = 0;
 constexpr float MOTOR_POWER_SCALING_FACTOR = 1.0;  // TODO:  Is this necessary?
 
+void DrivetrainSub::SetDrivetrainEncoderZero(){
+  rightMotor1->GetEncoder().SetPosition(0);
+  rightMotor2->GetEncoder().SetPosition(0);
+  rightMotor3->GetEncoder().SetPosition(0);
+
+  leftMotor1->GetEncoder().SetPosition(0);
+  leftMotor2->GetEncoder().SetPosition(0);
+  leftMotor3->GetEncoder().SetPosition(0);
+}
+
 DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub"){
 
   rightMotor1.reset(new rev::CANSparkMax(RIGHT_DRIVE_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
@@ -28,6 +38,14 @@ DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub"){
   leftMotor1.reset(new rev::CANSparkMax(LEFT_DRIVE_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   leftMotor2.reset(new rev::CANSparkMax(LEFT_DRIVE_MOTOR_2_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   leftMotor3.reset(new rev::CANSparkMax(LEFT_DRIVE_MOTOR_3_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+
+  rightMotor1->GetEncoder().SetPosition(0);
+  rightMotor2->GetEncoder().SetPosition(0);
+  rightMotor3->GetEncoder().SetPosition(0);
+  
+  leftMotor1->GetEncoder().SetPosition(0);
+  leftMotor2->GetEncoder().SetPosition(0);
+  leftMotor3->GetEncoder().SetPosition(0);
 
   rightMotor1->SetSmartCurrentLimit(50);
   rightMotor2->SetSmartCurrentLimit(50);

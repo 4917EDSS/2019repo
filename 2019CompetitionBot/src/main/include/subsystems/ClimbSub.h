@@ -32,4 +32,5 @@ class ClimbSub : public frc::Subsystem {
   void updateShuffleBoard();
   void SetClimbMotorPower(double power);
   double getClimbPosition();
+  void SetClimbEncoderZero();
 };
