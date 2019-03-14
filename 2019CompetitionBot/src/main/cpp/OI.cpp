@@ -63,7 +63,7 @@ OI::OI() {
   extendClimbBarsBtn->WhileHeld(new ExtendClimbBarsCmd());
 
   reverseClimbBtn.reset(new frc::JoystickButton(driverController.get(), REVERSE_CLIMB_BTN));
-  reverseClimbBtn->WhenPressed(new ClimbRetractGrp);
+  reverseClimbBtn->WhenPressed(new ClimbRetractGrp());
 
   retractClimbBarsBtn.reset(new frc::JoystickButton(driverController.get(), RETRACT_CLIMB_BARS_BTN));
   retractClimbBarsBtn->WhileHeld(new RetractClimbBarsCmd());

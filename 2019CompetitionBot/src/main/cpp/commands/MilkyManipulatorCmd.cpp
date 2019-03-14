@@ -11,6 +11,8 @@
 #include "RobotPathHelpers.h"
 #include <iostream>
 
+constexpr double JOYSTICK_DEADBAND = 0.01;
+
 MilkyManipulatorCmd::MilkyManipulatorCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
@@ -25,11 +27,18 @@ void MilkyManipulatorCmd::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void MilkyManipulatorCmd::Execute() {
+  std::shared_ptr<frc::Joystick> driverJoystick = Robot::oi.getDriverController();
+
   double targetAngle=Robot::visionSub.getVisionTarget();
   double distance=Robot::visionSub.getDistanceFromVision();
   double robotAngle=Robot::drivetrainSub.getAngle();
   double scoringFace=Robot::visionSub.getScoringFaceAngle();
   double robotTargetAngle=GetRobotTargetAngle(robotAngle, targetAngle, distance, scoringFace);
+  
+  if(fabs(driverJoystick->GetY()) > JOYSTICK_DEADBAND){
+    robotTargetAngle += (driverJoystick->GetY()*4.0);
+  }
+  
 
   if (Robot::visionSub.isTargetVisible() ){
     double lSpeed=(0.3+(targetAngle*0.007));
