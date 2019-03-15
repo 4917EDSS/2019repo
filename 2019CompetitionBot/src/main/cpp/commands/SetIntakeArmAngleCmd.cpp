@@ -29,7 +29,7 @@ void SetIntakeArmAngleCmd::Initialize() {
   if (isClimbingNow) {
     Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_AUTO, 1.0, targetAngle);
   } else {
-    Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_AUTO, 0.6, targetAngle);
+    Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_AUTO, 1.0, targetAngle);
   }
 
 }
