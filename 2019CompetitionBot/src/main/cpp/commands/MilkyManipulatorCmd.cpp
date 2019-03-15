@@ -36,7 +36,7 @@ void MilkyManipulatorCmd::Execute() {
   double robotTargetAngle=GetRobotTargetAngle(robotAngle, targetAngle, distance, scoringFace);
   
   if(fabs(driverJoystick->GetY()) > JOYSTICK_DEADBAND){
-    robotTargetAngle += (driverJoystick->GetY()*4.0);
+    targetAngle += (driverJoystick->GetY()*10.0);
   }
   
 

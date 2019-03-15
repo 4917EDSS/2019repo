@@ -10,7 +10,7 @@
 #include "Robot.h"
 #include "subsystems/BallIntakeSub.h"
 
-constexpr double JOYSTICK_DEADBAND = 0.02;
+constexpr double JOYSTICK_DEADBAND = 0.05;
 constexpr double MAX_POWER = 1.0;
 
 // Tune these parameters to change normal driving sensativity 
