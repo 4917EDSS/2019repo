@@ -328,7 +328,7 @@ double BallIntakeSub::calcIntakeArmMovePower(double currentAngle, double targetA
   }
 
   // Throttle the power once we get to 25 deg from the target
-  double resultPower = (targetAngle - currentAngle) * 0.04;
+  double resultPower = (targetAngle - currentAngle) * 0.03;
 
   if (fabs(resultPower) > maxPower) {
     newPower = maxPower * direction;
