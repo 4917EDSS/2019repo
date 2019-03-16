@@ -8,7 +8,6 @@
 #include "commands/MilkyManipulatorCmd.h"
 #include "OI.H"
 #include "Robot.h"
-#include "RobotPathHelpers.h"
 #include <iostream>
 
 constexpr double JOYSTICK_DEADBAND = 0.01;
@@ -30,10 +29,9 @@ void MilkyManipulatorCmd::Execute() {
   std::shared_ptr<frc::Joystick> driverJoystick = Robot::oi.getDriverController();
 
   double targetAngle=Robot::visionSub.getVisionTarget();
-  double distance=Robot::visionSub.getDistanceFromVision();
   double robotAngle=Robot::drivetrainSub.getAngle();
   double scoringFace=Robot::visionSub.getScoringFaceAngle();
-  double robotTargetAngle=GetRobotTargetAngle(robotAngle, targetAngle, distance, scoringFace);
+  double robotTargetAngle=Robot::visionSub.getRobotTargetAngle(robotAngle, targetAngle, scoringFace);
   
   if(fabs(driverJoystick->GetX()) > JOYSTICK_DEADBAND){
     targetAngle += (driverJoystick->GetX()*20.0);

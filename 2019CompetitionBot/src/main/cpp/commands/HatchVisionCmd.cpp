@@ -8,7 +8,6 @@
 #include "commands/HatchVisionCmd.h"
 #include "OI.H"
 #include "Robot.h"
-#include "RobotPathHelpers.h"
 #include <iostream>
 
 HatchVisionCmd::HatchVisionCmd() {
@@ -26,10 +25,9 @@ void HatchVisionCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void HatchVisionCmd::Execute() {
   double targetAngle=Robot::visionSub.getVisionTarget();
-  double distance=Robot::visionSub.getDistanceFromVision();
   double robotAngle=Robot::drivetrainSub.getAngle();
   double scoringFace=Robot::visionSub.getScoringFaceAngle();
-  double robotTargetAngle=GetRobotTargetAngle(robotAngle, targetAngle, distance, scoringFace);
+  double robotTargetAngle=Robot::visionSub.getRobotTargetAngle(robotAngle, targetAngle, scoringFace);
 
   if (Robot::visionSub.isTargetVisible() ){
     double lSpeed=(0.3+(targetAngle*0.007));

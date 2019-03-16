@@ -8,6 +8,8 @@
 #include "Robot.h"
 #include <frc/shuffleboard/Shuffleboard.h>
 #include "subsystems/VisionSub.h"
+#include <cmath>
+#include <vector>
 
 constexpr int VISION_PIPELINE_NORMAL  = 0;
 constexpr int DRIVER_PIPELINE_NORMAL  = 1;
@@ -48,6 +50,16 @@ void VisionSub::setBumperPipeline(int pipeLine) {
       break;
   }
   
+}
+double VisionSub::getRobotTargetAngle(double robotHeading, double cameraAngle, double scoringFaceAngle){
+        double adjustment;
+        std::tie(robotHeading, adjustment) = normalizeAngle(robotHeading);
+        robotHeading -= scoringFaceAngle;// Normalizing angles so we can treat all scoring face angles as 0
+        double angleToPointDirectlyAtTarget = robotHeading + cameraAngle;
+        double targetAngle = 2 * angleToPointDirectlyAtTarget; // This is a geometric proof. See 2019repo/tools/angleproof.png
+        double finalUnadjusted = targetAngle + scoringFaceAngle;
+        finalUnadjusted = normalizeAngle(finalUnadjusted).first;
+        return finalUnadjusted + (360*adjustment); // Bringing us back to reality
 }
 
 // Flipping camera orientation
@@ -97,37 +109,54 @@ double VisionSub::getVisionTarget() {
   return nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx", 0.0);
 }
 
-double VisionSub::getDistanceFromVision() {
-  double size=nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("thori",0.0);
-  double a=0.295;
-  double b=-70.6;
-  double c=5234;
-  return a*size*size+b*size+c;
-}
+
 
 double VisionSub::getScoringFaceAngle() {
-  double RobotAngle = Robot::drivetrainSub.getAngle();
-  double TargetAngle[7] = {-151.25, -90, -28.75, 0, 28.75, 90, 151.25};
-  double SmallestAngleDifference = 1000;
-  int BestTarget;
+  double robotAngle = Robot::drivetrainSub.getAngle();
+  robotAngle = normalizeAngle(robotAngle).first;
+  if (robotAngle > 180){
+    robotAngle -= 360;
+  }else if (robotAngle <-180){
+    robotAngle += 360;
+  }
 
-  for(int i = 0; i < 7; i++){
-    double AngleDifference = fabs(RobotAngle - TargetAngle[i]);
-    if(AngleDifference <= SmallestAngleDifference){
-      SmallestAngleDifference = AngleDifference;
-      BestTarget = i;
-      
+  std::vector<double> targetAngle = {-151.25, -90, -28.75, 0, 28.75, 90, 151.25};
+  double smallestAngleDifference = 1000;
+  int bestTarget;
+  if (Robot::inBallMode){
+    targetAngle = {0.0, 90.0, -90.0};
+  }else if (Robot::manipulatorSub.isGripperExpanded()){
+    if (robotAngle > 135||robotAngle <-135){
+      return 180.0; 
+    }
+    
+  }
+
+  for(int i = 0; i < targetAngle.size(); i++){
+    double angleDifference = fabs(robotAngle - targetAngle[i]);
+    if(angleDifference > 180){
+      angleDifference = fabs(angleDifference-360);
+    }
+    if(angleDifference <= smallestAngleDifference){
+      smallestAngleDifference = angleDifference;
+      bestTarget = i;
     }
   }
-  return TargetAngle[BestTarget];
+  return targetAngle[bestTarget];
 }
 
-double VisionSub::normalizeAngle(double targetAngle){
-  while(targetAngle < -180) {
-    targetAngle = targetAngle + 360;
-  }
-  while(targetAngle > 180) {
-    targetAngle = targetAngle - 360;
-  }
-  return targetAngle;
+std::pair<double,double> VisionSub::normalizeAngle(double angle){
+        double adjustment = 0;
+        double result = angle/360;
+        if (angle>= 360) {
+            adjustment = floor(result);
+        } else if (angle <= -360){
+            adjustment = ceil(result);
+        }
+        double fraction = result - adjustment;
+        angle = fraction *360;
+        
+        
+        return std::make_pair(angle, adjustment); 
 }
+    

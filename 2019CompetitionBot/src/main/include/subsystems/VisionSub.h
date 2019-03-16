@@ -9,6 +9,7 @@
 
 #include <frc/WPILib.h>
 #include <frc/commands/Subsystem.h>
+#include <utility>
 
 constexpr int DRIVER_MODE_NORMAL = 1;
 constexpr int DRIVER_MODE_FLIPPED = 2;
@@ -25,7 +26,8 @@ class VisionSub : public frc::Subsystem {
   void InitDefaultCommand() override;
   int getManipulatorPipeline();
   double getVisionTarget();
-  double normalizeAngle(double targetangle);
+  double getRobotTargetAngle(double robotHeading, double cameraAngle, double scoringFaceAngle);
+  std::pair<double, double> normalizeAngle(double angle);
   void setBumperPipeline(int pipeLine);
   void setManipulatorPipeline(int pipeLine);
   bool isTargetVisible();
