@@ -60,6 +60,7 @@ class BallIntakeSub : public frc::Subsystem {
   void setIntakeArmPower(double power);
   double getIntakeArmAngle();
   double getIntakeArmVelocity();
+  double getFlipperMotorPower();
   bool isIntakeAtLimit();
   void unfoldIntakeArms();
   void foldIntakeArms();

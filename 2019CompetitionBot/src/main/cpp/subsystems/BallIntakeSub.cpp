@@ -88,6 +88,11 @@ void BallIntakeSub::updateShuffleBoard() {
   nteBallIntakeMotor.SetDouble(ballIntakeMotor->Get());
 }
 
+// Just for logging
+double BallIntakeSub::getFlipperMotorPower() {
+  return flipperMotor->Get();
+}
+
 void BallIntakeSub::setIntakeArmPower(double power) {
   flipperMotor->Set(-power);
 }

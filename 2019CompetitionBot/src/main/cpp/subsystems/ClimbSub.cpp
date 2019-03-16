@@ -34,7 +34,7 @@ void ClimbSub::InitDefaultCommand() {
 }
 
 void ClimbSub::updateShuffleBoard() {
-  ntePower.SetDouble(prevPower);
+  ntePower.SetDouble(Robot::ballIntakeSub.getFlipperMotorPower());
   ntePosition.SetDouble(getClimbPosition());
   ntePitch.SetDouble(Robot::drivetrainSub.getPitchAngle());
 }
