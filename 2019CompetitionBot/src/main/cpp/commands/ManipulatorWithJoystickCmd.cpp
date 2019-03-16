@@ -33,7 +33,8 @@ void ManipulatorWithJoystickCmd::Execute() {
 
   switch(shift) {
     case 0: // Elevator (handled in ElevatorWithJoystickCmd)
-    case 1: // Ball intake in/out flipper (handled in BallintakeWithJoystickCmd)  
+    case 1: // Ball intake in/out flipper (handled in BallintakeWithJoystickCmd) 
+      Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_MANUAL, 0.0, 0);
       break;
     
     case 2: // Manipulator flip forward/backward
@@ -41,6 +42,7 @@ void ManipulatorWithJoystickCmd::Execute() {
       break;
 
     default:
+      Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_MANUAL, 0.0, 0);
       break;
   }
 

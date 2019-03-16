@@ -14,6 +14,7 @@ KillEverythingCmd::KillEverythingCmd() {
   Requires(&Robot::ballIntakeSub);
   Requires(&Robot::drivetrainSub);
   Requires(&Robot::elevatorSub);
+  Requires(&Robot::manipulatorSub);
   Requires(&Robot::climbSub);
 }
 
@@ -31,7 +32,9 @@ bool KillEverythingCmd::IsFinished() {
 }
 
 // Called once after isFinished returns true
-void KillEverythingCmd::End() {}
+void KillEverythingCmd::End() {
+  Robot::inClimbMode = false;
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run

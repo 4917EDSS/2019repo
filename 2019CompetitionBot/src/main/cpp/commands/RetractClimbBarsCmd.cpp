@@ -15,13 +15,20 @@ RetractClimbBarsCmd::RetractClimbBarsCmd() {
   Requires(&Robot::climbSub);
 }
 
-// Called just before this Command runs the first time
+// Called just before this Command runs the first time, or repeatedly if whileHeld
 void RetractClimbBarsCmd::Initialize() {
-    Robot::climbSub.SetClimbMotorPower(-1);
+  Robot::climbSub.SetClimbMotorPower(-1);
+  if(Robot::climbSub.getClimbPosition() <= CLIMB_RETRACT_LIMIT_THRESHOLD) {
+      Robot::inClimbMode = false;
+  }
 }
 
 // Called repeatedly when this Command is scheduled to run
-void RetractClimbBarsCmd::Execute() {}
+void RetractClimbBarsCmd::Execute() {
+  if(Robot::climbSub.getClimbPosition() <= CLIMB_RETRACT_LIMIT_THRESHOLD) {
+      Robot::inClimbMode = false;
+  }
+}
 
 // Make this return true when this Command no longer needs to run execute()
 bool RetractClimbBarsCmd::IsFinished() {
