@@ -319,12 +319,13 @@ bool BallIntakeSub::isIntakeArmBlocked(double currentAngle, double targetAngle) 
       (isIntakeAtLimit())*/) {
     return true;
   }
-   if (((Robot::manipulatorSub.getFlipperAngle() < -45)) && 
-       (Robot::elevatorSub.getElevatorHeight() <= ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_TO_REAR) && 
-       (currentAngle < 75) &&
-       (direction < 0)) {
-      return true;
-    }
+  // don't allow the intake to move in either direction if it could interfere with the manipulator
+  // TODO: consider relaxing constraint to allow movements in certain direction depending on angle, elevator may need to be higher
+  if (((Robot::manipulatorSub.getFlipperAngle() < -45)) && 
+      (Robot::elevatorSub.getElevatorHeight() <= ELEVATOR_MIN_SAFE_HEIGHT) && 
+      ((currentAngle > 5) && (currentAngle < 75))) {
+    return true;
+  }
 
   return false;
 }

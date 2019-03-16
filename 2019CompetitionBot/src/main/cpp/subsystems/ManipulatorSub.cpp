@@ -360,9 +360,9 @@ bool ManipulatorSub::isFlipperBlocked(double currentAngle, double targetAngle) {
 
 // Check for Manipulator to ball intake interference
   if (((currentAngle < -45)) && 
-       (Robot::elevatorSub.getElevatorHeight() <= ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_TO_REAR) && 
+       (Robot::elevatorSub.getElevatorHeight() <= ELEVATOR_MIN_SAFE_HEIGHT) && 
        (direction < 0) && 
-       (Robot::ballIntakeSub.getIntakeArmAngle() < 75)) {
+       ((Robot::ballIntakeSub.getIntakeArmAngle() > 5) && (Robot::ballIntakeSub.getIntakeArmAngle() < 75))) {
     return true;
   }
 
