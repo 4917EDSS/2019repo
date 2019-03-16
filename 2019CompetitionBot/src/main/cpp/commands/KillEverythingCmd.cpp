@@ -31,7 +31,9 @@ bool KillEverythingCmd::IsFinished() {
 }
 
 // Called once after isFinished returns true
-void KillEverythingCmd::End() {}
+void KillEverythingCmd::End() {
+  Robot::inClimbMode = false;
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
