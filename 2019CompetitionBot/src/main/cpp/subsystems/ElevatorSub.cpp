@@ -331,15 +331,22 @@ bool ElevatorSub::isElevatorBlocked(double currentHeightMm, double targetHeightM
   if (direction > 0) {
     if ((Robot::manipulatorSub.getFlipperAngle()) < 30 && (Robot::manipulatorSub.getFlipperAngle() > -45)) {
       // Can only move up a bit if the manipulator is close to vertical
-      if (currentHeightMm >= (ELEVATOR_MIN_HEIGHT_MM + 120)) {
+      if (currentHeightMm >= (ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_VERTICAL)) {
         return true;
       }
     }
 
     if (Robot::manipulatorSub.getFlipperAngle() <= -45) {
-      if (currentHeightMm >= (ELEVATOR_MIN_HEIGHT_MM + 400)) {
+      if (currentHeightMm >= (ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_TO_REAR)) {
         return true;
       }
+    }
+  } else {
+    // when moving down, prevent manipulator to ball intake interference
+    if (((Robot::manipulatorSub.getFlipperAngle() < -45)) && 
+       (currentHeightMm <= ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_TO_REAR) && 
+       (Robot::ballIntakeSub.getIntakeArmAngle() < 75)) {
+      return true;
     }
   }
   

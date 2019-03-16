@@ -11,6 +11,9 @@
 #include "SparkShuffleboardEntrySet.h"
 #include <frc/shuffleboard/Shuffleboard.h>
 #include "frc/shuffleboard/BuiltInLayouts.h"
+#include "subsystems/ManipulatorSub.h"
+#include "subsystems/ElevatorSub.h"
+#include <Robot.h>
 #include <iostream>
 
 constexpr double INTAKE_ARM_MAX_ANGLE = 195; //change
@@ -316,6 +319,12 @@ bool BallIntakeSub::isIntakeArmBlocked(double currentAngle, double targetAngle) 
       (isIntakeAtLimit())*/) {
     return true;
   }
+   if (((Robot::manipulatorSub.getFlipperAngle() < -45)) && 
+       (Robot::elevatorSub.getElevatorHeight() <= ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_TO_REAR) && 
+       (currentAngle < 75) &&
+       (direction < 0)) {
+      return true;
+    }
 
   return false;
 }

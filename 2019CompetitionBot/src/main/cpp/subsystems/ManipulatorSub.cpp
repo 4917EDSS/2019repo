@@ -343,16 +343,26 @@ bool ManipulatorSub::isFlipperBlocked(double currentAngle, double targetAngle) {
     return true;
   }
   
-  if (Robot::elevatorSub.getElevatorHeight() >= (ELEVATOR_MAX_SAFE_HEIGHT)) {
-    if (((currentAngle > -90) && (currentAngle < 0)) && (direction > 0)) {
+  if (Robot::elevatorSub.getElevatorHeight() >= (ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_VERTICAL)) {
+    // TODO If height is not near the elevator support on the back of the mast then allow a bigger angle
+    if (((currentAngle > -45) && (currentAngle < 0)) && (direction > 0)) {
       return true;
     }
     if (((currentAngle > 0) && (currentAngle < 30)) && (direction < 0)) {
       return true;
     }
+    if ((currentAngle <= -45) && 
+        (Robot::elevatorSub.getElevatorHeight() >= (ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_TO_REAR)) &&
+        (direction > 0)) {
+      return true;
+    }
   }
 
-  if (((currentAngle < -45)) && (Robot::elevatorSub.getElevatorHeight() <= ELEVATOR_MIN_SAFE_HEIGHT) && (direction < 0) && (Robot::ballIntakeSub.getIntakeArmAngle() < 75)) {
+// Check for Manipulator to ball intake interference
+  if (((currentAngle < -45)) && 
+       (Robot::elevatorSub.getElevatorHeight() <= ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_TO_REAR) && 
+       (direction < 0) && 
+       (Robot::ballIntakeSub.getIntakeArmAngle() < 75)) {
     return true;
   }
 
