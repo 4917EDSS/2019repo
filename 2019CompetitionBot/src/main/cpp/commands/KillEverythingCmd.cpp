@@ -14,6 +14,7 @@ KillEverythingCmd::KillEverythingCmd() {
   Requires(&Robot::ballIntakeSub);
   Requires(&Robot::drivetrainSub);
   Requires(&Robot::elevatorSub);
+  Requires(&Robot::manipulatorSub);
   Requires(&Robot::climbSub);
 }
 
