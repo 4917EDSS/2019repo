@@ -337,7 +337,6 @@ bool ManipulatorSub::isFlipperBlocked(double currentAngle, double targetAngle) {
     direction = -1.0;
   }
 
-  // TODO: implement all rules
   if(((currentAngle >= MANIPULATOR_MAX_ANGLE) && (direction > 0)) || 
       ((currentAngle < MANIPULATOR_MIN_ANGLE) && (direction < 0))) {
     return true;

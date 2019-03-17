@@ -22,7 +22,7 @@ void GlobalLogging::logPeriodicValues() {
 	// Use commas to separate fields to make it easy to import into a spreadsheet
 	//line << "LP:Global,PDP,Volt," << pdp->GetVoltage() << ",Temp," << pdp->GetTemperature();
 	//for(int i = 0; i < 16; i++) {
-//		line << ",CH" << i << " C," << pdp->GetCurrent(i);	// TODO: Fix. This gives a timeout error
+//		line << ",CH" << i << " C," << pdp->GetCurrent(i);	// This gives a timeout error
 	//}
 
 	logger.send(logger.PERIODIC, "%s\n", line.str().c_str());

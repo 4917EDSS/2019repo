@@ -312,11 +312,9 @@ bool BallIntakeSub::isIntakeArmBlocked(double currentAngle, double targetAngle) 
   if (currentAngle > targetAngle) {
     direction = -1.0;
   }
-  isIntakeAtLimit();
-  // TODO: implement all rules
+
   if (((currentAngle >= INTAKE_ARM_MAX_ANGLE) && (direction > 0)) ||
-      ((currentAngle < INTAKE_ARM_MIN_ANGLE) && (direction < 0))/* || 
-      (isIntakeAtLimit())*/) {
+      ((currentAngle < INTAKE_ARM_MIN_ANGLE) && (direction < 0))) {
     return true;
   }
   // don't allow the intake to move in either direction if it could interfere with the manipulator
