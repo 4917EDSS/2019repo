@@ -23,23 +23,7 @@ void ToggleManipulatorPositionCmd::Initialize() {
   logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
 
   switch(shift) {  
-    case 0:
-      // Toggle between 90 deg forwards or 90 deg backwards
-      if(Robot::manipulatorSub.getFlipperTargetAngle() > -5 && Robot::manipulatorSub.getFlipperTargetAngle() < 5) {
-        if( Robot::drivetrainSub.getVelocity() < 0) {
-          targetAngle=-90;
-        }
-        else {
-          targetAngle=90;
-        }
-      }
-      else if(Robot::manipulatorSub.getFlipperTargetAngle() > 5 ) {
-        targetAngle=-90;
-      }
-      else {
-        targetAngle = 90;
-      }
-      break;
+    
     case 1:
       // Shift-Up:  Rotate to vertical
       targetAngle = 0;
@@ -54,19 +38,15 @@ void ToggleManipulatorPositionCmd::Initialize() {
       // Shift-Left:  Rotate to 90 deg backwards
       targetAngle = -90;
       break;
-
+    
+    case 0:
     default:
-      //should never happen.
-      if(Robot::manipulatorSub.getFlipperTargetAngle() > -5 && Robot::manipulatorSub.getFlipperTargetAngle() < 5) {
-        if( Robot::drivetrainSub.getVelocity() < 0) {
-          targetAngle=-90;
-        }
-        else {
-          targetAngle=90;
-        }
+      // Toggle between 90 deg forwards or 90 deg backwards
+      if(Robot::manipulatorSub.getFlipperTargetAngle() >= -5 && Robot::manipulatorSub.getFlipperTargetAngle() <= 5) {
+        targetAngle = 90;
       }
-      else if(Robot::manipulatorSub.getFlipperTargetAngle() > 5) {
-        targetAngle=-90;
+      else if(Robot::manipulatorSub.getFlipperTargetAngle() > 5 ) {
+        targetAngle = -90;
       }
       else {
         targetAngle = 90;
