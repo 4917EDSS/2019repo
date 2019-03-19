@@ -134,15 +134,15 @@ bool ManipulatorSub::isBallIn() {
 }
 
 void ManipulatorSub::expandHatchGripper(){
-  hatchGripperSolenoid->Set(false);
-}
-
-void ManipulatorSub::contractHatchGripper(){
   hatchGripperSolenoid->Set(true);
 }
 
+void ManipulatorSub::contractHatchGripper(){
+  hatchGripperSolenoid->Set(false);
+}
+
 bool ManipulatorSub::isGripperExpanded() {
-  return !hatchGripperSolenoid->Get();
+  return hatchGripperSolenoid->Get();
 }
 
 // Set the flipper mode and angle

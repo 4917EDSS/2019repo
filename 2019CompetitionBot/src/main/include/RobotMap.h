@@ -8,10 +8,11 @@
 #pragma once
 
 // Pneumatic Control Module Outputs
-constexpr int HATCH_GRIPPER_PCM_ID = 1;
-constexpr int BALL_INTAKE_FOLDER_PCM_ID = 3; 
+constexpr int HATCH_GRIPPER_PCM_ID = 3;
+constexpr int BALL_INTAKE_FOLDER_PCM_ID = 1; 
 
 // CanIDs
+
 constexpr int RIGHT_DRIVE_MOTOR_1_CAN_ID = 1;
 constexpr int RIGHT_DRIVE_MOTOR_2_CAN_ID = 2;
 constexpr int RIGHT_DRIVE_MOTOR_3_CAN_ID = 3;
