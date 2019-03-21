@@ -22,7 +22,7 @@ void ClimbReverseCmd::Initialize() {
     Robot::climbSub.SetClimbMotorPower(-1.0);
   }
   lastPower = -0.15;
-  Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_AUTO, lastPower, 0.0);
+  Robot::ballIntakeSub.setIntakeArmAngle(INTAKE_ARM_MODE_AUTO, lastPower, INTAKE_NEUTRAL_ANGLE);
 }
 
 // Called repeatedly when this Command is scheduled to run

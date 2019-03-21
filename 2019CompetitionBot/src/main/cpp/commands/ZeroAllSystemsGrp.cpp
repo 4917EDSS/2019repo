@@ -11,9 +11,7 @@
 #include "commands/SetManipulatorAngleCmd.h"
 #include "commands/FoldIntakeCmd.h"
 #include "commands/SetIntakeArmAngleCmd.h"
-
-
-
+#include "subsystems/BallIntakeSub.h"
 
 
 
@@ -21,6 +19,6 @@ ZeroAllSystemsGrp::ZeroAllSystemsGrp() {
  AddSequential(new SetElevatorToHeightCmd(ELEVATOR_MID_SAFE_HEIGHT));
  AddParallel(new SetManipulatorAngleCmd(0.0));
  AddSequential(new FoldIntakeCmd(true));
- AddParallel(new SetIntakeArmAngleCmd(false, 0.0));
+ AddParallel(new SetIntakeArmAngleCmd(false, INTAKE_NEUTRAL_ANGLE));
  AddSequential(new SetElevatorToHeightCmd(ELEVATOR_MIN_HEIGHT_MM));
 }

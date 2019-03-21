@@ -16,8 +16,6 @@
 #include <Robot.h>
 #include <iostream>
 
-constexpr double INTAKE_ARM_MAX_ANGLE = 195; //change
-constexpr double INTAKE_ARM_MIN_ANGLE = 0;
 constexpr double INTAKE_ARM_ANGLE_TOLERANCE = 1.0;
 constexpr double INTAKE_ARM_VELOCITY_TOLERANCE = 45;
 constexpr double INTAKE_ARM_TICK_TO_DEGREE_FACTOR = (-90.0 / 37.86);
@@ -30,12 +28,12 @@ constexpr int INTAKE_ARM_STATE_MOVING = 2;
 constexpr int INTAKE_ARM_STATE_INTERRUPTED = 3;
 
 void BallIntakeSub::SetBallIntakeEncoderZero(){
-  flipperMotor->GetEncoder().SetPosition(0);
+  flipperMotor->GetEncoder().SetPosition(INTAKE_ARM_MIN_ANGLE);
 }
 
 BallIntakeSub::BallIntakeSub() : Subsystem("BallIntakeSub") {
   flipperMotor.reset(new rev::CANSparkMax(BALL_INTAKE_FLIP_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
-  flipperMotor->GetEncoder().SetPosition(0);
+  flipperMotor->GetEncoder().SetPosition(INTAKE_ARM_MIN_ANGLE);
   ballIntakeArmLimit.reset(new frc::DigitalInput(BALL_INTAKE_ARM_LIMIT_DIO));
   intakeFolderSolenoid.reset(new frc::Solenoid(BALL_INTAKE_FOLDER_PCM_ID));
   foldIntakeArms();
