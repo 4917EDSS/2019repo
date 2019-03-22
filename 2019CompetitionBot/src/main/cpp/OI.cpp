@@ -27,11 +27,10 @@
 #include "commands/RetractClimbBarsCmd.h"
 #include "commands/ModeBasedCndCmd.h"
 #include "commands/ClimbCmd.h"
-#include "commands/ClimbReverseCmd.h"
 #include "commands/SideBaseCmd.h"
 #include "commands/FlipManipulatorGrp.h"
 #include "commands/ZeroAllSystemsGrp.h"
-#include "commands/ClimbRetractGrp.h"
+#include "commands/ClimbBarAutoRetractCmd.h"
 #include "commands/HatchVisionCmd.h"
 
 
@@ -63,7 +62,7 @@ OI::OI() {
   extendClimbBarsBtn->WhileHeld(new ExtendClimbBarsCmd());
 
   reverseClimbBtn.reset(new frc::JoystickButton(driverController.get(), REVERSE_CLIMB_BTN));
-  reverseClimbBtn->WhenPressed(new ClimbRetractGrp());
+  reverseClimbBtn->WhenPressed(new ClimbBarAutoRetractCmd());
 
   retractClimbBarsBtn.reset(new frc::JoystickButton(driverController.get(), RETRACT_CLIMB_BARS_BTN));
   retractClimbBarsBtn->WhileHeld(new RetractClimbBarsCmd());

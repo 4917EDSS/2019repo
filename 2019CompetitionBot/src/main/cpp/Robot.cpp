@@ -210,6 +210,7 @@ void Robot::UpdateSmartDashboard() {
   frc::SmartDashboard::PutBoolean("Intake Unfolded",ballIntakeSub.isIntakeUnfolded());
   frc::SmartDashboard::PutNumber("Yaw Angle", drivetrainSub.getAngle());
   frc::SmartDashboard::PutNumber("Drivetrain Velocity", drivetrainSub.getVelocity());
+  frc::SmartDashboard::PutNumber("Climb Height", climbSub.getClimbPosition());
 }
 
 void Robot::resetStateMachines() {
