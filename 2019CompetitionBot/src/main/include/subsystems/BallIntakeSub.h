@@ -31,7 +31,6 @@ class BallIntakeSub : public frc::Subsystem {
   double intakeWheelPower;
   std::shared_ptr<rev::CANSparkMax> flipperMotor;
   std::shared_ptr<frc::Solenoid> intakeFolderSolenoid;
-  std::shared_ptr<frc::DigitalInput> ballIntakeArmLimit;
 
   struct SparkShuffleboardEntrySet nteFlipperMotor;
   nt::NetworkTableEntry nteBallIntakeMotor;
@@ -64,7 +63,6 @@ class BallIntakeSub : public frc::Subsystem {
   double getIntakeArmAngle();
   double getIntakeArmVelocity();
   double getFlipperMotorPower();
-  bool isIntakeAtLimit();
   void unfoldIntakeArms();
   void foldIntakeArms();
   bool isIntakeUnfolded();

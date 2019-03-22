@@ -32,6 +32,8 @@
 #include "commands/ZeroAllSystemsGrp.h"
 #include "commands/ClimbBarAutoRetractCmd.h"
 #include "commands/HatchVisionCmd.h"
+#include "commands/ClimbRetractGrp.h"
+
 
 
 OI::OI() {
@@ -62,7 +64,7 @@ OI::OI() {
   extendClimbBarsBtn->WhileHeld(new ExtendClimbBarsCmd());
 
   reverseClimbBtn.reset(new frc::JoystickButton(driverController.get(), REVERSE_CLIMB_BTN));
-  reverseClimbBtn->WhenPressed(new ClimbBarAutoRetractCmd());
+  reverseClimbBtn->WhenPressed(new ClimbRetractGrp());
 
   retractClimbBarsBtn.reset(new frc::JoystickButton(driverController.get(), RETRACT_CLIMB_BARS_BTN));
   retractClimbBarsBtn->WhileHeld(new RetractClimbBarsCmd());

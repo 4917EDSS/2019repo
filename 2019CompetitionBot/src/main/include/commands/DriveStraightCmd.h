@@ -11,4 +11,5 @@ class DriveStraightCmd : public frc::Command {
   void Interrupted() override;
  private:
   double distance;
+  double power;
 };

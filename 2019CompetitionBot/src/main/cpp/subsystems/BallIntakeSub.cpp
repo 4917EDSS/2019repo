@@ -34,7 +34,6 @@ void BallIntakeSub::SetBallIntakeEncoderZero(){
 BallIntakeSub::BallIntakeSub() : Subsystem("BallIntakeSub") {
   flipperMotor.reset(new rev::CANSparkMax(BALL_INTAKE_FLIP_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   flipperMotor->GetEncoder().SetPosition(INTAKE_ARM_MIN_ANGLE);
-  ballIntakeArmLimit.reset(new frc::DigitalInput(BALL_INTAKE_ARM_LIMIT_DIO));
   intakeFolderSolenoid.reset(new frc::Solenoid(BALL_INTAKE_FOLDER_PCM_ID));
   foldIntakeArms();
   ballIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::WPI_VictorSPX(BALL_INTAKE_WHEELS_MOTOR_CAN_ID));
@@ -84,7 +83,6 @@ void BallIntakeSub::updateShuffleBoard() {
   nteFlipperMotor.encoderVelocity.SetDouble(flipperMotor->GetEncoder().GetVelocity());
   nteFlipperMotor.motorTemperature.SetDouble(flipperMotor->GetMotorTemperature());
   
-  nteBallIntakeArmLimit.SetBoolean(ballIntakeArmLimit->Get());
   nteIntakeFolderSolenoid.SetBoolean(intakeFolderSolenoid->Get());
   nteBallIntakeMotor.SetDouble(ballIntakeMotor->Get());
 }
@@ -106,9 +104,6 @@ double BallIntakeSub::getIntakeArmVelocity() {
   return flipperMotor->GetEncoder().GetVelocity();
 }
 
-bool BallIntakeSub::isIntakeAtLimit() {
-  return !ballIntakeArmLimit->Get();
-}
 
 void BallIntakeSub::unfoldIntakeArms() {
   intakeFolderSolenoid->Set(false);
