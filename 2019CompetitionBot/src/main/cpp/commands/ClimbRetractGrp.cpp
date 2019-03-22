@@ -15,7 +15,7 @@
 
 ClimbRetractGrp::ClimbRetractGrp() {
 
-  AddSequential(new ClimbBarAutoRetractCmd());
+  AddParallel(new ClimbBarAutoRetractCmd());
   AddSequential(new SetIntakeArmAngleCmd(true, 30));
   // Add Commands here:
   // e.g. AddSequential(new Command1());
