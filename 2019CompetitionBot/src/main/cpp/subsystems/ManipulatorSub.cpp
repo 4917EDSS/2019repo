@@ -46,7 +46,7 @@ ManipulatorSub::ManipulatorSub() : Subsystem("ManipulatorSub") {
   intakeFromRobotLimit.reset(new frc::DigitalInput(BALL_SENSOR_DIO));
 
   hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
-  expandHatchGripper();
+  contractHatchGripper();
 
   // Setup Shuffleboard for each input and output device
   frc::ShuffleboardTab& shuffleTab = frc::Shuffleboard::GetTab("Manipulator");

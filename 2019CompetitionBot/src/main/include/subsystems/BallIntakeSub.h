@@ -19,7 +19,7 @@ constexpr double INTAKE_ARM_MAX_ANGLE = 195;
 constexpr double INTAKE_ARM_MIN_ANGLE = 0;
 
 constexpr double INTAKE_NEUTRAL_ANGLE = INTAKE_ARM_MIN_ANGLE;
-constexpr double INTAKE_CARGO_ANGLE = 112;
+constexpr double INTAKE_CARGO_ANGLE = 110;
 
 constexpr int INTAKE_ARM_MODE_DISABLED = 0;
 constexpr int INTAKE_ARM_MODE_AUTO = 1;

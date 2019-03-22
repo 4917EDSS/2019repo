@@ -39,8 +39,8 @@ ElevatorSub::ElevatorSub() : Subsystem("ElevatorSub") {
   elevatorMotor2.reset(new rev::CANSparkMax(ELEVATOR_MOTOR_2_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   elevatorMotor1->GetEncoder().SetPosition(0); // Positive means rotating towards front
   elevatorMotor2->GetEncoder().SetPosition(0); // Not used but good to have as a backup
-  elevatorMotor1->GetEncoder().SetPositionConversionFactor(ELEVATOR_TICK_TO_MM_FACTOR);
-  elevatorMotor2->GetEncoder().SetPositionConversionFactor(ELEVATOR_TICK_TO_MM_FACTOR);
+ // elevatorMotor1->GetEncoder().SetPositionConversionFactor(ELEVATOR_TICK_TO_MM_FACTOR);
+  //elevatorMotor2->GetEncoder().SetPositionConversionFactor(ELEVATOR_TICK_TO_MM_FACTOR);
   
   //limit switches
   lowerLimit.reset(new frc::DigitalInput(ELEVATOR_LOWER_LIMIT_DIO));
@@ -121,7 +121,7 @@ void ElevatorSub::setElevatorMotorPower(double power) {
 }
 
 double ElevatorSub::getElevatorHeight() {
-  return (-elevatorMotor1->GetEncoder().GetPosition()) + ELEVATOR_MIN_HEIGHT_MM;
+  return (-elevatorMotor1->GetEncoder().GetPosition() * ELEVATOR_TICK_TO_MM_FACTOR) + ELEVATOR_MIN_HEIGHT_MM;
 }
 
 double ElevatorSub::getElevatorVelocity() {

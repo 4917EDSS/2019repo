@@ -17,9 +17,9 @@
 #include "SparkShuffleboardEntrySet.h"
 
 constexpr double MANIPULATOR_MAX_ANGLE = 90;
-constexpr double MANIPULATOR_MIN_ANGLE = -105;
+constexpr double MANIPULATOR_MIN_ANGLE = -109;
 
-constexpr double MANIPULATOR_CARGO_FLOOR_PICKUP_ANGLE = -100;
+constexpr double MANIPULATOR_CARGO_FLOOR_PICKUP_ANGLE = -109;
 
 // Flipper angle control modes
 constexpr int FLIPPER_MODE_DISABLED = 0;
