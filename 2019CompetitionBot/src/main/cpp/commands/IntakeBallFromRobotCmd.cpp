@@ -19,7 +19,7 @@ IntakeBallFromRobotCmd::IntakeBallFromRobotCmd() {
 void IntakeBallFromRobotCmd::Initialize() {
   logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
   Robot::manipulatorSub.setIntakePower(-1.0);
-  Robot::ballIntakeSub.setIntakeWheelPower(1.0);
+  Robot::ballIntakeSub.setIntakeWheelPower(0.6);
 }
 
 // Called repeatedly when this Command is scheduled to run
