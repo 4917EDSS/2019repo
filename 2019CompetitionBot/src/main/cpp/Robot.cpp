@@ -11,6 +11,8 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "networktables/NetworkTableInstance.h"
 #include "commands/ExpandHatchGripperGrp.h"
+#include "commands/SetManipulatorAngleCmd.h"
+
 
 DrivetrainSub Robot::drivetrainSub;
 BallIntakeSub Robot::ballIntakeSub;
@@ -22,6 +24,7 @@ OI Robot::oi;
 
 bool Robot::inBallMode;
 bool Robot::inClimbMode;
+bool Robot::startForwards;
 bool Robot::stateMachinesReset;
 
 
@@ -30,6 +33,10 @@ void Robot::RobotInit() {
   modeChooser->AddOption("Ball",true);
   modeChooser->AddOption("Hatch",false);
   frc::SmartDashboard::PutData("Auto Modes", modeChooser.get());
+  directionChooser.reset(new frc::SendableChooser<bool>);
+  directionChooser->AddOption("Forwards",true);
+  directionChooser->AddOption("Backwards",false);
+  frc::SmartDashboard::PutData("Start Direction", directionChooser.get());
 
   // Setup logging system
   std::string syslogTargetAddress = (Preferences::GetInstance())->GetString("SyslogTargetAddress", "10.49.17.30");
@@ -111,19 +118,16 @@ void Robot::AutonomousInit() {
   }
 
   inBallMode = modeChooser->GetSelected();
+  startForwards = directionChooser->GetSelected();
   
     if (!inBallMode) {
       (new ExpandHatchGripperGrp())->Start();
     }
-  // But probably need to deal with initial game piece
-  // Hatch:
-  //  - inBallMode = false
-  //  - intake hatch (gripper expand, roll wheels back a bit): ExpandHatchGripperGrp
-  // Cargo:
-  //  - inBallMode = true
-  // None:
-  //  - do nothing
-  
+    if (startForwards){
+      (new SetManipulatorAngleCmd(90))->Start();
+    }else{
+      (new SetManipulatorAngleCmd(-90))->Start();
+    }
 }
 
 void Robot::AutonomousPeriodic() { 
