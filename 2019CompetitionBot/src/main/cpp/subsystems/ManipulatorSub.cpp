@@ -22,7 +22,7 @@
 
 constexpr double FLIPPER_ANGLE_TOLERANCE = 1.0;
 constexpr double FLIPPER_VELOCITY_TOLERANCE = 45;
-constexpr double FLIPPER_TICK_TO_DEGREE_FACTOR = (90/40.1900);
+constexpr double FLIPPER_TICK_TO_DEGREE_FACTOR = (90/41.75);
 constexpr double MANUAL_MODE_POWER_DEADBAND = 0.03;
 
 // Manipulator state machine states

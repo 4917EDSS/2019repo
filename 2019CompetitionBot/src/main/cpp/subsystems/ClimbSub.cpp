@@ -12,12 +12,11 @@
 #include "subsystems/DrivetrainSub.h"
 #include "Robot.h"
 
-constexpr double CLIMB_BAR_TICK_TO_MM_FACTOR = 0.009021742399;
+constexpr double CLIMB_BAR_TICK_TO_MM_FACTOR = -0.009021742399;
 
 ClimbSub::ClimbSub() : Subsystem("ExampleSubsystem") {
   climbMotor.reset(new WPI_TalonSRX(CLIMB_MOTOR_CAN_ID));
-	climbMotor->SetName("Climb");
-  climbMotor->ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::QuadEncoder);
+  climbMotor->ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::QuadEncoder, 0, 0);
 
   frc::ShuffleboardTab &shuffleTab = frc::Shuffleboard::GetTab("Climb");
 

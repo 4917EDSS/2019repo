@@ -83,7 +83,7 @@ OI::OI() {
 
   // Operator controller buttons
   elevatorToCargoShipHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_CARGO_SHIP_HEIGHT_BTN));
-  elevatorToCargoShipHeightBtn->WhenPressed(new ModeBasedCndCmd(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM), new SideBaseCmd (new SetElevatorToHeightCmd(ELEVATOR_CARGO_SHIP_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_TO_REAR))));
+  elevatorToCargoShipHeightBtn->WhenPressed( new SideBaseCmd (new SetElevatorToHeightCmd(ELEVATOR_CARGO_SHIP_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_TO_REAR)));
 
   elevatorToLowHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_LOW_HEIGHT_BTN));
   elevatorToLowHeightBtn->WhenPressed(new ModeBasedCndCmd(new SideBaseCmd(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM + 100.0)), new SetElevatorToHeightCmd(ELEVATOR_ROCKET_LOW_CARGO_HEIGHT_MM)));
