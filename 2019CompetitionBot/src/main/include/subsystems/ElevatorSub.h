@@ -17,7 +17,7 @@
 
 // Elevator heights
 constexpr double ELEVATOR_MIN_HEIGHT_MM = 495; 
-constexpr double ELEVATOR_MAX_HEIGHT_MM = (2020 * 1.029); 
+constexpr double ELEVATOR_MAX_HEIGHT_MM = 1950; //* 1.029
 constexpr double ELEVATOR_MIN_SAFE_HEIGHT = 550; // below here manipulator may interfere with the ball intake sub
 constexpr double ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_VERTICAL = 570; // above here manipulator may interfere with elevator when manipulator is near veritical
 constexpr double ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_TO_REAR = ELEVATOR_MIN_HEIGHT_MM + 440;  // above here manipulator may interfere with elevator support bar when manipulator pointed to rear

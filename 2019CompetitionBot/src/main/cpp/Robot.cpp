@@ -123,11 +123,11 @@ void Robot::AutonomousInit() {
     if (!inBallMode) {
       (new ExpandHatchGripperGrp())->Start();
     }
-    if (startForwards){
-      (new SetManipulatorAngleCmd(90))->Start();
-    }else{
-      (new SetManipulatorAngleCmd(-90))->Start();
-    }
+    // if (startForwards){
+    //   (new SetManipulatorAngleCmd(90))->Start();
+    // }else{
+    //   (new SetManipulatorAngleCmd(-90))->Start();
+    // }
 }
 
 void Robot::AutonomousPeriodic() { 

@@ -22,7 +22,7 @@
 
 constexpr double FLIPPER_ANGLE_TOLERANCE = 1.0;
 constexpr double FLIPPER_VELOCITY_TOLERANCE = 45;
-constexpr double FLIPPER_TICK_TO_DEGREE_FACTOR = (90/41.75);
+constexpr double FLIPPER_TICK_TO_DEGREE_FACTOR = (93.0/41.75);
 constexpr double MANUAL_MODE_POWER_DEADBAND = 0.03;
 
 // Manipulator state machine states
@@ -38,7 +38,7 @@ void ManipulatorSub::SetManipulatorEncoderZero(){
 ManipulatorSub::ManipulatorSub() : Subsystem("ManipulatorSub") {
   flipperMotor.reset(new rev::CANSparkMax(MANIPULATOR_FLIPPER_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   flipperMotor->GetEncoder().SetPosition(0);
-  flipperMotor->GetEncoder().SetPositionConversionFactor(FLIPPER_TICK_TO_DEGREE_FACTOR);
+  //flipperMotor->GetEncoder().SetPositionConversionFactor(FLIPPER_TICK_TO_DEGREE_FACTOR);
   flipperLimit.reset(new frc::DigitalInput(MANIPULATOR_LIMIT_DIO));
 
   intakeMotorLeft.reset(new WPI_VictorSPX(MANIPULATOR_LEFT_INTAKE_MOTOR_CAN_ID));
@@ -109,7 +109,7 @@ double ManipulatorSub::getFlipperTargetAngle() {
 }
 
 double ManipulatorSub::getFlipperAngle() {
-  return flipperMotor->GetEncoder().GetPosition();
+  return flipperMotor->GetEncoder().GetPosition() * FLIPPER_TICK_TO_DEGREE_FACTOR;
 }
 
 double ManipulatorSub::getFlipperVelocity() {

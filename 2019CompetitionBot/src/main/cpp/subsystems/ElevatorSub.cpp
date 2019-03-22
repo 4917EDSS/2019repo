@@ -20,7 +20,7 @@
 constexpr double ELEVATOR_POSITION_TOLERANCE_MM = 10.0;
 constexpr double ELEVATOR_VELOCITY_TOLERANCE_MM_S = 45;
 constexpr double MANUAL_MODE_POWER_DEADBAND = 0.03;
-constexpr double ELEVATOR_TICK_TO_MM_FACTOR = (9.43*1.029);
+constexpr double ELEVATOR_TICK_TO_MM_FACTOR = (9.43*0.967);
 constexpr double ELEVATOR_IS_DOWN_TOLERANCE_MM = ELEVATOR_POSITION_TOLERANCE_MM + 1.0;
 
 // Elevator state machine states
@@ -121,11 +121,11 @@ void ElevatorSub::setElevatorMotorPower(double power) {
 }
 
 double ElevatorSub::getElevatorHeight() {
-  return elevatorMotor2->GetEncoder().GetPosition() + ELEVATOR_MIN_HEIGHT_MM;
+  return (-elevatorMotor1->GetEncoder().GetPosition()) + ELEVATOR_MIN_HEIGHT_MM;
 }
 
 double ElevatorSub::getElevatorVelocity() {
-  return elevatorMotor2->GetEncoder().GetVelocity();
+  return elevatorMotor1->GetEncoder().GetVelocity()*(-1);
 }
 
 bool ElevatorSub::isElevatorDown() {
