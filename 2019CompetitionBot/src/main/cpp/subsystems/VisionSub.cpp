@@ -97,7 +97,7 @@ int VisionSub::getManipulatorPipeline() {
   return setManipulatorPipelineState;
 }
 
-bool VisionSub::isTargetVisible(){
+bool VisionSub::isTargetVisible(int camera){
   double targetMarked = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
   if (targetMarked > 0){
     return true;
@@ -105,13 +105,13 @@ bool VisionSub::isTargetVisible(){
   return false;
 }
 
-double VisionSub::getVisionTarget() {
+double VisionSub::getVisionTarget(int camera) {
   return nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx", 0.0);
 }
 
 
 
-double VisionSub::getScoringFaceAngle() {
+double VisionSub::getScoringFaceAngle(int camera) {
   double robotAngle = Robot::drivetrainSub.getAngle();
   robotAngle = normalizeAngle(robotAngle).first;
   if (robotAngle > 180){

@@ -73,25 +73,29 @@ void DriveWithJoystickCmd::Execute() {
 		targetDrivePower = std::min(targetDrivePower, MAX_POWER);	// Ensure that power isn't more than max
 		targetDrivePower *= (leftStick < 0) ? -1.0 : 1.0;	// Now that the math is done, re-add the sign (i.e. direction)
 	}
-	// Decide if we are accelerating or decelerating to zero
-	double driveStepSize = DRIVE_ACCELERATION_STEP;
-	if (fabs(targetDrivePower) < NEAR_ZERO_POWER)  {
-		driveStepSize = DRIVE_DECELERATION_STEP;
+	if(targetDrivePower > 0.9) {
+		currentDrivePower = targetDrivePower;
 	}
-	// Gradually slows or speeds up to make smoother
-	if (targetDrivePower < currentDrivePower) { 
-		currentDrivePower -= driveStepSize;
-		if (targetDrivePower > currentDrivePower) {
-			currentDrivePower = targetDrivePower;
+	else {
+		// Decide if we are accelerating or decelerating to zero
+		double driveStepSize = DRIVE_ACCELERATION_STEP;
+		if (fabs(targetDrivePower) < NEAR_ZERO_POWER)  {
+			driveStepSize = DRIVE_DECELERATION_STEP;
+		}
+		// Gradually slows or speeds up to make smoother
+		if (targetDrivePower < currentDrivePower) { 
+			currentDrivePower -= driveStepSize;
+			if (targetDrivePower > currentDrivePower) {
+				currentDrivePower = targetDrivePower;
+			}
+		}
+		else if (targetDrivePower > currentDrivePower) {
+			currentDrivePower += driveStepSize;
+			if (targetDrivePower < currentDrivePower) {
+				currentDrivePower = targetDrivePower;
+			}
 		}
 	}
-	else if (targetDrivePower > currentDrivePower) {
-		currentDrivePower += driveStepSize;
-		if (targetDrivePower < currentDrivePower) {
-			currentDrivePower = targetDrivePower;
-		}
-	}
-
 	double targetRotatePower = fabs(rightStick);				// Take the sign away so we don't have deal with + vs - right now
 	if (targetRotatePower < JOYSTICK_DEADBAND) {
 		targetRotatePower = 0.0;
