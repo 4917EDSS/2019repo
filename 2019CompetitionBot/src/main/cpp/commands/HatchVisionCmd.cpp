@@ -24,12 +24,12 @@ void HatchVisionCmd::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void HatchVisionCmd::Execute() {
-  double targetAngle=Robot::visionSub.getVisionTarget();
+  double targetAngle=Robot::visionSub.getVisionTarget(BUMPER_CAMERA);
   double robotAngle=Robot::drivetrainSub.getAngle();
-  double scoringFace=Robot::visionSub.getScoringFaceAngle();
+  double scoringFace=Robot::visionSub.getScoringFaceAngle(BUMPER_CAMERA);
   double robotTargetAngle=Robot::visionSub.getRobotTargetAngle(robotAngle, targetAngle, scoringFace);
 
-  if (Robot::visionSub.isTargetVisible() ){
+  if (Robot::visionSub.isTargetVisible(BUMPER_CAMERA) ){
     double lSpeed=(0.3+(targetAngle*0.007));
     double rSpeed=(0.3-(targetAngle*0.007));
     Robot::drivetrainSub.drive(lSpeed,rSpeed);
