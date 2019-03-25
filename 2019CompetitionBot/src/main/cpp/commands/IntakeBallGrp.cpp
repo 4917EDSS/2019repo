@@ -19,10 +19,10 @@
 
 
 IntakeBallGrp::IntakeBallGrp() {
+  AddParallel(new SetManipulatorIntakePowerCmd(-1.0));
   AddSequential(new FoldIntakeCmd(false));
   AddParallel(new SetElevatorToHeightCmd(ELEVATOR_CARGO_FLOOR_PICKUP_HEIGHT_MM)); //510
-  AddSequential(new SetIntakeArmAngleCmd(false, INTAKE_CARGO_ANGLE));
-  AddParallel(new SetManipulatorIntakePowerCmd(1.0));
+  AddParallel(new SetIntakeArmAngleCmd(false, INTAKE_CARGO_ANGLE));
   AddSequential(new SetManipulatorAngleCmd(MANIPULATOR_CARGO_FLOOR_PICKUP_ANGLE));
   
   // Enable intake and manipulator wheels, wait for ball detection, disable wheels
