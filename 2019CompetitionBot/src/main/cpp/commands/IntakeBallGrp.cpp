@@ -15,12 +15,14 @@
 #include "commands/IntakeBallFromRobotCmd.h"
 #include "commands/IntakeBallGrp.h"
 #include "commands/FoldIntakeImmediateCmd.h"
+#include "commands/SetManipulatorIntakePowerCmd.h"
 
 
 IntakeBallGrp::IntakeBallGrp() {
   AddSequential(new FoldIntakeCmd(false));
   AddParallel(new SetElevatorToHeightCmd(ELEVATOR_CARGO_FLOOR_PICKUP_HEIGHT_MM)); //510
   AddSequential(new SetIntakeArmAngleCmd(false, INTAKE_CARGO_ANGLE));
+  AddParallel(new SetManipulatorIntakePowerCmd(1.0));
   AddSequential(new SetManipulatorAngleCmd(MANIPULATOR_CARGO_FLOOR_PICKUP_ANGLE));
   
   // Enable intake and manipulator wheels, wait for ball detection, disable wheels
