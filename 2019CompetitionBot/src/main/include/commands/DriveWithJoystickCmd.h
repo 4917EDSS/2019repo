@@ -19,7 +19,9 @@ class DriveWithJoystickCmd : public frc::Command {
   void End() override;
   void Interrupted() override;
  private:
-    int wasDrivingStraight;
-	  uint64_t timeSinceDrivingStraight;
+  double currentRotatePower;
+  double currentDrivePower;
+  int wasDrivingStraight;
+  uint64_t timeSinceDrivingStraight;
 
 };
