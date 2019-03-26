@@ -22,7 +22,7 @@
 
 constexpr double FLIPPER_ANGLE_TOLERANCE = 1.0;
 constexpr double FLIPPER_VELOCITY_TOLERANCE = 45;
-constexpr double FLIPPER_TICK_TO_DEGREE_FACTOR = (90/40.1900);
+constexpr double FLIPPER_TICK_TO_DEGREE_FACTOR = (93.0/41.75);
 constexpr double MANUAL_MODE_POWER_DEADBAND = 0.03;
 
 // Manipulator state machine states
@@ -38,7 +38,7 @@ void ManipulatorSub::SetManipulatorEncoderZero(){
 ManipulatorSub::ManipulatorSub() : Subsystem("ManipulatorSub") {
   flipperMotor.reset(new rev::CANSparkMax(MANIPULATOR_FLIPPER_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   flipperMotor->GetEncoder().SetPosition(0);
-  flipperMotor->GetEncoder().SetPositionConversionFactor(FLIPPER_TICK_TO_DEGREE_FACTOR);
+  //flipperMotor->GetEncoder().SetPositionConversionFactor(FLIPPER_TICK_TO_DEGREE_FACTOR);
   flipperLimit.reset(new frc::DigitalInput(MANIPULATOR_LIMIT_DIO));
 
   intakeMotorLeft.reset(new WPI_VictorSPX(MANIPULATOR_LEFT_INTAKE_MOTOR_CAN_ID));
@@ -46,7 +46,7 @@ ManipulatorSub::ManipulatorSub() : Subsystem("ManipulatorSub") {
   intakeFromRobotLimit.reset(new frc::DigitalInput(BALL_SENSOR_DIO));
 
   hatchGripperSolenoid.reset(new frc::Solenoid(HATCH_GRIPPER_PCM_ID));
-  expandHatchGripper();
+  contractHatchGripper();
 
   // Setup Shuffleboard for each input and output device
   frc::ShuffleboardTab& shuffleTab = frc::Shuffleboard::GetTab("Manipulator");
@@ -109,7 +109,7 @@ double ManipulatorSub::getFlipperTargetAngle() {
 }
 
 double ManipulatorSub::getFlipperAngle() {
-  return flipperMotor->GetEncoder().GetPosition();
+  return flipperMotor->GetEncoder().GetPosition() * FLIPPER_TICK_TO_DEGREE_FACTOR;
 }
 
 double ManipulatorSub::getFlipperVelocity() {
@@ -347,24 +347,28 @@ bool ManipulatorSub::isFlipperBlocked(double currentAngle, double targetAngle) {
     if (((currentAngle > -45) && (currentAngle < 0)) && (direction > 0)) {
       return true;
     }
-    if (((currentAngle > 0) && (currentAngle < 30)) && (direction < 0)) {
+    if (((currentAngle > 0) && (currentAngle < 45)) && (direction < 0)) {
       return true;
     }
-    if ((currentAngle <= -45) && 
+    if ((currentAngle <= 0) && 
         (Robot::elevatorSub.getElevatorHeight() >= (ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_TO_REAR)) &&
         (direction > 0)) {
       return true;
     }
   }
 
+  if((Robot::elevatorSub.getElevatorHeight() >= ELEVATOR_MAX_HEIGHT_MM / 2.0) && (currentAngle > 0) && (currentAngle < 65) && (direction < 0)) {
+      return true;
+    }
+
 // Check for Manipulator to ball intake interference
-  if (((currentAngle < -45)) && 
-       (Robot::elevatorSub.getElevatorHeight() <= ELEVATOR_MIN_SAFE_HEIGHT) && 
+  if (((currentAngle < -45)) &&
+       (Robot::ballIntakeSub.isIntakeUnfolded()) &&
+       (Robot::elevatorSub.getElevatorHeight() <= 700) && 
        (direction < 0) && 
-       ((Robot::ballIntakeSub.getIntakeArmAngle() > 5) && (Robot::ballIntakeSub.getIntakeArmAngle() < 75))) {
+       (Robot::ballIntakeSub.getIntakeArmAngle() < 75)) {
     return true;
   }
-
   return false;
 }
 

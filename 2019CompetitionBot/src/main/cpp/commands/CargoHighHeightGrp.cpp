@@ -5,23 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
+#include "commands/CargoHighHeightGrp.h"
+#include "commands/SetElevatorToHeightCmd.h"
+#include "commands/SetManipulatorAngleCmd.h"
+#include "subsystems/ElevatorSub.h"
 
-#include <frc/commands/Command.h>
+CargoHighHeightGrp::CargoHighHeightGrp() {
 
-constexpr uint64_t AHRS_DELAY_TIME = 350000;
-class DriveWithJoystickCmd : public frc::Command {
- public:
-  DriveWithJoystickCmd();
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
- private:
-  double currentRotatePower;
-  double currentDrivePower;
-  int wasDrivingStraight;
-  uint64_t timeSinceDrivingStraight;
+  AddSequential(new SetElevatorToHeightCmd(ELEVATOR_ROCKET_HIGH_CARGO_HEIGHT_MM));
+  AddSequential(new SetManipulatorAngleCmd(70));
 
-};
+}

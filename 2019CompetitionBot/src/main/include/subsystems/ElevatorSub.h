@@ -17,16 +17,16 @@
 
 // Elevator heights
 constexpr double ELEVATOR_MIN_HEIGHT_MM = 495; 
-constexpr double ELEVATOR_MAX_HEIGHT_MM = 2020; 
-constexpr double ELEVATOR_MIN_SAFE_HEIGHT = 550; // below here manipulator may interfere with the ball intake sub
-constexpr double ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_VERTICAL = 570; // above here manipulator may interfere with elevator when manipulator is near veritical
+constexpr double ELEVATOR_MAX_HEIGHT_MM = 1950; //* 1.029
+constexpr double ELEVATOR_MIN_SAFE_HEIGHT = 520; // below here manipulator may interfere with the ball intake sub
+constexpr double ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_VERTICAL = 560; // above here manipulator may interfere with elevator when manipulator is near veritical
 constexpr double ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_TO_REAR = ELEVATOR_MIN_HEIGHT_MM + 440;  // above here manipulator may interfere with elevator support bar when manipulator pointed to rear
-constexpr double ELEVATOR_MID_SAFE_HEIGHT = (ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_VERTICAL - 10);
+constexpr double ELEVATOR_MID_SAFE_HEIGHT = (ELEVATOR_MIN_SAFE_HEIGHT + 10);
 
 constexpr double ELEVATOR_LOW_HATCH_HEIGHT_MM = ELEVATOR_MIN_HEIGHT_MM;
 constexpr double ELEVATOR_MEDIUM_HATCH_HEIGHT_MM = 1193.8;
 constexpr double ELEVATOR_HIGH_HATCH_HEIGHT_MM = 1905.0;
-constexpr double ELEVATOR_CARGO_FLOOR_PICKUP_HEIGHT_MM = ELEVATOR_MIN_HEIGHT_MM + 15; // 604.0;
+constexpr double ELEVATOR_CARGO_FLOOR_PICKUP_HEIGHT_MM = ELEVATOR_MIN_HEIGHT_MM + 15;
 constexpr double ELEVATOR_ROCKET_LOW_CARGO_HEIGHT_MM = 698.5;
 constexpr double ELEVATOR_ROCKET_MEDIUM_CARGO_HEIGHT_MM = 1409.7;
 constexpr double ELEVATOR_ROCKET_HIGH_CARGO_HEIGHT_MM = ELEVATOR_MAX_HEIGHT_MM;   // Actually 2120.9mm but we can't get there with the elevator

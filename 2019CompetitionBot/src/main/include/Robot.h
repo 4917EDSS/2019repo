@@ -45,6 +45,7 @@ class Robot : public frc::TimedRobot {
   static void pipeLineToggle(bool pipeLine);
 
   static bool inBallMode;
+  static bool startForwards;
   static bool inClimbMode;
   static bool pastNinety;
 
@@ -56,6 +57,9 @@ class Robot : public frc::TimedRobot {
   frc::Command* m_autonomousCommand = nullptr;
   frc::SendableChooser<frc::Command*> m_chooser;
   std::shared_ptr<frc::SendableChooser<bool>> modeChooser;
+  std::shared_ptr<frc::SendableChooser<bool>> directionChooser;
+
+
   void UpdateSmartDashboard();
   static void resetStateMachines();
 };

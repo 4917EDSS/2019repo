@@ -7,21 +7,9 @@
 
 #pragma once
 
-#include <frc/commands/Command.h>
+#include <frc/commands/CommandGroup.h>
 
-constexpr uint64_t AHRS_DELAY_TIME = 350000;
-class DriveWithJoystickCmd : public frc::Command {
+class LeftRocketCloseHatchGrp : public frc::CommandGroup {
  public:
-  DriveWithJoystickCmd();
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
- private:
-  double currentRotatePower;
-  double currentDrivePower;
-  int wasDrivingStraight;
-  uint64_t timeSinceDrivingStraight;
-
+  LeftRocketCloseHatchGrp();
 };

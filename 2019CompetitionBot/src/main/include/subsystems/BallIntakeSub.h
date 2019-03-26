@@ -19,7 +19,7 @@ constexpr double INTAKE_ARM_MAX_ANGLE = 195;
 constexpr double INTAKE_ARM_MIN_ANGLE = 0;
 
 constexpr double INTAKE_NEUTRAL_ANGLE = INTAKE_ARM_MIN_ANGLE;
-constexpr double INTAKE_CARGO_ANGLE = 112;
+constexpr double INTAKE_CARGO_ANGLE = 110;
 
 constexpr int INTAKE_ARM_MODE_DISABLED = 0;
 constexpr int INTAKE_ARM_MODE_AUTO = 1;
@@ -31,7 +31,6 @@ class BallIntakeSub : public frc::Subsystem {
   double intakeWheelPower;
   std::shared_ptr<rev::CANSparkMax> flipperMotor;
   std::shared_ptr<frc::Solenoid> intakeFolderSolenoid;
-  std::shared_ptr<frc::DigitalInput> ballIntakeArmLimit;
 
   struct SparkShuffleboardEntrySet nteFlipperMotor;
   nt::NetworkTableEntry nteBallIntakeMotor;
@@ -64,7 +63,6 @@ class BallIntakeSub : public frc::Subsystem {
   double getIntakeArmAngle();
   double getIntakeArmVelocity();
   double getFlipperMotorPower();
-  bool isIntakeAtLimit();
   void unfoldIntakeArms();
   void foldIntakeArms();
   bool isIntakeUnfolded();

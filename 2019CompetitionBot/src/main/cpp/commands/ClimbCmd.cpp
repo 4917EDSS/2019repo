@@ -57,6 +57,9 @@ bool ClimbCmd::IsFinished() {
   if(Robot::climbSub.getClimbPosition() >= CLIMB_EXTEND_LIMIT_THRESHOLD) {
     return true;
   }
+  else if(Robot::ballIntakeSub.getIntakeArmAngle() > 174){ // TODO: needs more tuning
+    return true;
+  }
   else {
     return false; 
   }

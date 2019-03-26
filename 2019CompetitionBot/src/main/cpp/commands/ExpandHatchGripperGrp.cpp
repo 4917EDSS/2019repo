@@ -4,5 +4,5 @@
 
 ExpandHatchGripperGrp::ExpandHatchGripperGrp() {
   AddSequential(new HatchGripperExpandCmd());
-  AddSequential( new ManipulatorInCmd(0.4));
+  AddSequential( new ManipulatorInCmd(0.6));
 }

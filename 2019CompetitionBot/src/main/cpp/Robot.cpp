@@ -11,6 +11,10 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "networktables/NetworkTableInstance.h"
 #include "commands/ExpandHatchGripperGrp.h"
+#include "commands/SetManipulatorAngleCmd.h"
+#include "commands/CenterCargoShipLeftHatchGrp.h"
+#include "commands/LeftRocketCloseHatchGrp.h"
+
 
 DrivetrainSub Robot::drivetrainSub;
 BallIntakeSub Robot::ballIntakeSub;
@@ -22,6 +26,7 @@ OI Robot::oi;
 
 bool Robot::inBallMode;
 bool Robot::inClimbMode;
+bool Robot::startForwards;
 bool Robot::stateMachinesReset;
 
 
@@ -30,6 +35,10 @@ void Robot::RobotInit() {
   modeChooser->AddOption("Ball",true);
   modeChooser->AddOption("Hatch",false);
   frc::SmartDashboard::PutData("Auto Modes", modeChooser.get());
+  directionChooser.reset(new frc::SendableChooser<bool>);
+  directionChooser->AddOption("Forwards",true);
+  directionChooser->AddOption("Backwards",false);
+  frc::SmartDashboard::PutData("Start Direction", directionChooser.get());
 
   // Setup logging system
   std::string syslogTargetAddress = (Preferences::GetInstance())->GetString("SyslogTargetAddress", "10.49.17.30");
@@ -111,19 +120,16 @@ void Robot::AutonomousInit() {
   }
 
   inBallMode = modeChooser->GetSelected();
+  startForwards = directionChooser->GetSelected();
   
     if (!inBallMode) {
       (new ExpandHatchGripperGrp())->Start();
     }
-  // But probably need to deal with initial game piece
-  // Hatch:
-  //  - inBallMode = false
-  //  - intake hatch (gripper expand, roll wheels back a bit): ExpandHatchGripperGrp
-  // Cargo:
-  //  - inBallMode = true
-  // None:
-  //  - do nothing
-  
+    // if (startForwards){
+    //   (new SetManipulatorAngleCmd(90))->Start();
+    // }else{
+    //   (new SetManipulatorAngleCmd(-90))->Start();
+    // }
 }
 
 void Robot::AutonomousPeriodic() { 
@@ -210,6 +216,11 @@ void Robot::UpdateSmartDashboard() {
   frc::SmartDashboard::PutBoolean("Intake Unfolded",ballIntakeSub.isIntakeUnfolded());
   frc::SmartDashboard::PutNumber("Yaw Angle", drivetrainSub.getAngle());
   frc::SmartDashboard::PutNumber("Drivetrain Velocity", drivetrainSub.getVelocity());
+  frc::SmartDashboard::PutNumber("Drivetrain Left Encoder", drivetrainSub.getLeftEncoder());
+  frc::SmartDashboard::PutNumber("Drivetrain Right Encoder", drivetrainSub.getRightEncoder());
+  frc::SmartDashboard::PutNumber("Climb Height", climbSub.getClimbPosition());
+  frc::SmartDashboard::PutData("CenterCargoShipLeftHatchGrp", new CenterCargoShipLeftHatchGrp());
+  frc::SmartDashboard::PutData("LeftRocketCloseHatchGrp", new LeftRocketCloseHatchGrp());
 }
 
 void Robot::resetStateMachines() {

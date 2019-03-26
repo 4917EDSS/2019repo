@@ -34,7 +34,6 @@ void BallIntakeSub::SetBallIntakeEncoderZero(){
 BallIntakeSub::BallIntakeSub() : Subsystem("BallIntakeSub") {
   flipperMotor.reset(new rev::CANSparkMax(BALL_INTAKE_FLIP_MOTOR_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   flipperMotor->GetEncoder().SetPosition(INTAKE_ARM_MIN_ANGLE);
-  ballIntakeArmLimit.reset(new frc::DigitalInput(BALL_INTAKE_ARM_LIMIT_DIO));
   intakeFolderSolenoid.reset(new frc::Solenoid(BALL_INTAKE_FOLDER_PCM_ID));
   foldIntakeArms();
   ballIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::WPI_VictorSPX(BALL_INTAKE_WHEELS_MOTOR_CAN_ID));
@@ -84,7 +83,6 @@ void BallIntakeSub::updateShuffleBoard() {
   nteFlipperMotor.encoderVelocity.SetDouble(flipperMotor->GetEncoder().GetVelocity());
   nteFlipperMotor.motorTemperature.SetDouble(flipperMotor->GetMotorTemperature());
   
-  nteBallIntakeArmLimit.SetBoolean(ballIntakeArmLimit->Get());
   nteIntakeFolderSolenoid.SetBoolean(intakeFolderSolenoid->Get());
   nteBallIntakeMotor.SetDouble(ballIntakeMotor->Get());
 }
@@ -106,9 +104,6 @@ double BallIntakeSub::getIntakeArmVelocity() {
   return flipperMotor->GetEncoder().GetVelocity();
 }
 
-bool BallIntakeSub::isIntakeAtLimit() {
-  return !ballIntakeArmLimit->Get();
-}
 
 void BallIntakeSub::unfoldIntakeArms() {
   intakeFolderSolenoid->Set(false);
@@ -317,7 +312,9 @@ bool BallIntakeSub::isIntakeArmBlocked(double currentAngle, double targetAngle) 
   }
   // don't allow the intake to move in either direction if it could interfere with the manipulator
   // TODO: consider relaxing constraint to allow movements in certain direction depending on angle, elevator may need to be higher
-  if (((Robot::manipulatorSub.getFlipperAngle() < -45)) && 
+  if (((Robot::manipulatorSub.getFlipperAngle() < -45)) &&
+      (direction < 0) &&
+      (isIntakeUnfolded()) && 
       (Robot::elevatorSub.getElevatorHeight() <= ELEVATOR_MIN_SAFE_HEIGHT) && 
       ((currentAngle > 5) && (currentAngle < 75))) {
     return true;

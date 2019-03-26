@@ -9,19 +9,12 @@
 
 #include <frc/commands/Command.h>
 
-constexpr uint64_t AHRS_DELAY_TIME = 350000;
-class DriveWithJoystickCmd : public frc::Command {
+class ClimbBarAutoRetractCmd : public frc::Command {
  public:
-  DriveWithJoystickCmd();
+  ClimbBarAutoRetractCmd();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
- private:
-  double currentRotatePower;
-  double currentDrivePower;
-  int wasDrivingStraight;
-  uint64_t timeSinceDrivingStraight;
-
 };

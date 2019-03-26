@@ -5,38 +5,44 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/IntakeBallFromRobotCmd.h"
+#include "commands/ClimbBarAutoRetractCmd.h"
 #include "Robot.h"
+#include "subsystems/ClimbSub.h"
 
-IntakeBallFromRobotCmd::IntakeBallFromRobotCmd() {
+ClimbBarAutoRetractCmd::ClimbBarAutoRetractCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::manipulatorSub);
-  Requires(&Robot::ballIntakeSub);
+  Requires(&Robot::climbSub);
 }
 
 // Called just before this Command runs the first time
-void IntakeBallFromRobotCmd::Initialize() {
-  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-  Robot::ballIntakeSub.setIntakeWheelPower(0.6);
+void ClimbBarAutoRetractCmd::Initialize() {
+  if(!IsFinished()) {
+    Robot::climbSub.SetClimbMotorPower(-1.0);
+  }
 }
 
 // Called repeatedly when this Command is scheduled to run
-void IntakeBallFromRobotCmd::Execute() {}
+void ClimbBarAutoRetractCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool IntakeBallFromRobotCmd::IsFinished() { 
-  return Robot::manipulatorSub.isBallIn();
-}
+bool ClimbBarAutoRetractCmd::IsFinished() { 
+  if(Robot::climbSub.getClimbPosition() <= CLIMB_RETRACT_LIMIT_THRESHOLD) {
+    return true;
+  }
+  else {
+    return false; 
+  }
+ }
 
 // Called once after isFinished returns true
-void IntakeBallFromRobotCmd::End() {
-  Robot::ballIntakeSub.setIntakeWheelPower(0.0);
-  Robot::manipulatorSub.setIntakePower(0.0);
+void ClimbBarAutoRetractCmd::End() {
+  Robot::climbSub.SetClimbMotorPower(0.0);
+  Robot::inClimbMode = false;
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void IntakeBallFromRobotCmd::Interrupted() {
+void ClimbBarAutoRetractCmd::Interrupted() {
   End();
 }

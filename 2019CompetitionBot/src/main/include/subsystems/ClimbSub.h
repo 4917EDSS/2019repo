@@ -12,7 +12,7 @@
 #include <ctre/Phoenix.h>
 
 constexpr double CLIMB_RETRACT_LIMIT_THRESHOLD = 10;
-constexpr double CLIMB_EXTEND_LIMIT_THRESHOLD = 560;
+constexpr double CLIMB_EXTEND_LIMIT_THRESHOLD = 570;
 
 class ClimbSub : public frc::Subsystem {
  private:

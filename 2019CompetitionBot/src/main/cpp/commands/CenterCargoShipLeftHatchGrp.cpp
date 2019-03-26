@@ -5,23 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
+#include "commands/CenterCargoShipLeftHatchGrp.h"
+#include "commands/ExpandHatchGripperGrp.h"
+#include "commands/SetManipulatorAngleCmd.h"
+#include "commands/DriveStraightCmd.h"
+#include "commands/SilkyMotionCmd.h"
 
-#include <frc/commands/Command.h>
+CenterCargoShipLeftHatchGrp::CenterCargoShipLeftHatchGrp() {
 
-constexpr uint64_t AHRS_DELAY_TIME = 350000;
-class DriveWithJoystickCmd : public frc::Command {
- public:
-  DriveWithJoystickCmd();
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
- private:
-  double currentRotatePower;
-  double currentDrivePower;
-  int wasDrivingStraight;
-  uint64_t timeSinceDrivingStraight;
+  AddSequential(new ExpandHatchGripperGrp);
+  AddParallel(new SetManipulatorAngleCmd(90));
+  AddSequential(new SilkyMotionCmd(std::vector<double> {3000}, std::vector<double> {0}));
 
-};
+}

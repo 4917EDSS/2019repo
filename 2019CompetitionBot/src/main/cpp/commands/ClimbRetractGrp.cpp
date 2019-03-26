@@ -10,11 +10,13 @@
 #include "commands/DriveStraightCmd.h"
 #include "commands/DriveWithIntakeMotorCmd.h"
 #include "commands/ClimbReverseCmd.h"
+#include "commands/ClimbBarAutoRetractCmd.h"
+
 
 ClimbRetractGrp::ClimbRetractGrp() {
 
-  AddSequential(new ClimbReverseCmd());
-  AddSequential(new SetIntakeArmAngleCmd(false, 30));
+  AddParallel(new ClimbBarAutoRetractCmd());
+  AddSequential(new SetIntakeArmAngleCmd(true, 30));
   // Add Commands here:
   // e.g. AddSequential(new Command1());
   //      AddSequential(new Command2());

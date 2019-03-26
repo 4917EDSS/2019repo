@@ -16,6 +16,9 @@ constexpr int DRIVER_MODE_FLIPPED = 2;
 constexpr int VISION_MODE_NORMAL = 3;
 constexpr int VISION_MODE_FLIPPED = 4;
 
+constexpr int BUMPER_CAMERA = 1;
+constexpr int MANIPULATOR_CAMERA = 2;
+
 class VisionSub : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
@@ -25,12 +28,11 @@ class VisionSub : public frc::Subsystem {
   VisionSub();
   void InitDefaultCommand() override;
   int getManipulatorPipeline();
-  double getVisionTarget();
+  double getVisionTarget(int camera);
   double getRobotTargetAngle(double robotHeading, double cameraAngle, double scoringFaceAngle);
   std::pair<double, double> normalizeAngle(double angle);
   void setBumperPipeline(int pipeLine);
   void setManipulatorPipeline(int pipeLine);
-  bool isTargetVisible();
-  double getDistanceFromVision();
-  double getScoringFaceAngle();
+  bool isTargetVisible(int camera);
+  double getScoringFaceAngle(int camera);
 };
