@@ -33,6 +33,7 @@
 #include "commands/ClimbBarAutoRetractCmd.h"
 #include "commands/HatchVisionCmd.h"
 #include "commands/ClimbRetractGrp.h"
+#include "commands/CargoHighHeightGrp.h"
 
 
 
@@ -93,7 +94,7 @@ OI::OI() {
   elevatorToMediumHeightBtn->WhenPressed(new ModeBasedCndCmd(new SetElevatorToHeightCmd(ELEVATOR_MEDIUM_HATCH_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_ROCKET_MEDIUM_CARGO_HEIGHT_MM)));
 
   elevatorToHighHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_HIGH_HEIGHT_BTN));
-  elevatorToHighHeightBtn->WhenPressed(new ModeBasedCndCmd(new SetElevatorToHeightCmd(ELEVATOR_HIGH_HATCH_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_ROCKET_HIGH_CARGO_HEIGHT_MM)));
+  elevatorToHighHeightBtn->WhenPressed(new ModeBasedCndCmd(new SetElevatorToHeightCmd(ELEVATOR_HIGH_HATCH_HEIGHT_MM), new CargoHighHeightGrp()));
 
   hatchModeBtn.reset(new frc::JoystickButton(operatorController.get(), HATCH_MODE_BTN));
   hatchModeBtn->WhenPressed(new HatchModeGrp());
