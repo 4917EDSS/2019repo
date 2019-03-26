@@ -18,6 +18,7 @@ constexpr float DRIVE_BALANCE_P = 0;
 constexpr float DRIVE_BALANCE_I = 0;
 constexpr float DRIVE_BALANCE_D = 0;
 constexpr float MOTOR_POWER_SCALING_FACTOR = 1.0;
+constexpr float ENCODER_TICK_TO_MM = 30.928;
 
 void DrivetrainSub::SetDrivetrainEncoderZero(){
   rightMotor1->GetEncoder().SetPosition(0);
@@ -89,12 +90,12 @@ DrivetrainSub::DrivetrainSub() : Subsystem("DrivetrainSub"){
 
 double DrivetrainSub::getRightEncoder()
 {
-  return -(rightMotor1->GetEncoder().GetPosition());
+  return (rightMotor1->GetEncoder().GetPosition()*ENCODER_TICK_TO_MM);
 }
 
 double DrivetrainSub::getLeftEncoder()
 {
-  return leftMotor1->GetEncoder().GetPosition();
+  return -(leftMotor1->GetEncoder().GetPosition()*ENCODER_TICK_TO_MM);
 }
 
 void DrivetrainSub::InitDefaultCommand()

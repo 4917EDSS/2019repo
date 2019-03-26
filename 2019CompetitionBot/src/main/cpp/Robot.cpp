@@ -12,6 +12,8 @@
 #include "networktables/NetworkTableInstance.h"
 #include "commands/ExpandHatchGripperGrp.h"
 #include "commands/SetManipulatorAngleCmd.h"
+#include "commands/CenterCargoShipLeftHatchGrp.h"
+#include "commands/LeftRocketCloseHatchGrp.h"
 
 
 DrivetrainSub Robot::drivetrainSub;
@@ -214,7 +216,11 @@ void Robot::UpdateSmartDashboard() {
   frc::SmartDashboard::PutBoolean("Intake Unfolded",ballIntakeSub.isIntakeUnfolded());
   frc::SmartDashboard::PutNumber("Yaw Angle", drivetrainSub.getAngle());
   frc::SmartDashboard::PutNumber("Drivetrain Velocity", drivetrainSub.getVelocity());
+  frc::SmartDashboard::PutNumber("Drivetrain Left Encoder", drivetrainSub.getLeftEncoder());
+  frc::SmartDashboard::PutNumber("Drivetrain Right Encoder", drivetrainSub.getRightEncoder());
   frc::SmartDashboard::PutNumber("Climb Height", climbSub.getClimbPosition());
+  frc::SmartDashboard::PutData("CenterCargoShipLeftHatchGrp", new CenterCargoShipLeftHatchGrp());
+  frc::SmartDashboard::PutData("LeftRocketCloseHatchGrp", new LeftRocketCloseHatchGrp());
 }
 
 void Robot::resetStateMachines() {
