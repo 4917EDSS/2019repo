@@ -10,7 +10,7 @@
         "hgap": 16.0,
         "vgap": 16.0,
         "tiles": {
-          "9,1": {
+          "3,4": {
             "size": [
               1,
               1
@@ -71,10 +71,10 @@
               "Visuals/Show value": true
             }
           },
-          "0,1": {
+          "8,0": {
             "size": [
-              1,
-              1
+              2,
+              2
             ],
             "content": {
               "_type": "Simple Dial",
@@ -151,10 +151,10 @@
               "_title": "Yaw Angle"
             }
           },
-          "3,0": {
+          "0,3": {
             "size": [
               3,
-              3
+              2
             ],
             "content": {
               "_type": "Camera Stream",
@@ -170,10 +170,10 @@
               "imageHeight": 0
             }
           },
-          "6,0": {
+          "3,0": {
             "size": [
-              3,
-              3
+              5,
+              4
             ],
             "content": {
               "_type": "Camera Stream",
@@ -189,7 +189,7 @@
               "imageHeight": -1
             }
           },
-          "9,0": {
+          "9,2": {
             "size": [
               1,
               1
@@ -209,6 +209,75 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Limelight_Stream",
               "_title": "Limelight_Stream"
+            }
+          },
+          "4,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Limelight_PipelineName",
+              "_title": "Limelight_PipelineName"
+            }
+          },
+          "6,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Limelight_Interface",
+              "_title": "Limelight_Interface"
+            }
+          },
+          "5,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Drivetrain Velocity",
+              "_title": "Drivetrain Velocity"
+            }
+          },
+          "11,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Climb Height",
+              "_title": "Climb Height"
+            }
+          },
+          "2,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///SmartDashboard/Climb Height",
+              "_title": "SmartDashboard/Climb Height",
+              "Range/Min": 0.0,
+              "Range/Max": 620.0,
+              "Visuals/Show value": true
+            }
+          },
+          "8,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///SmartDashboard/Start Direction",
+              "_title": "Start Direction"
             }
           }
         }
@@ -319,6 +388,12 @@
                   "_title": "DigitalInput[9]/Value",
                   "Colors/Color when true": "#7CFC00FF",
                   "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Speed Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Talon SRX [17]",
+                  "_title": "Talon SRX [17]",
+                  "Visuals/Orientation": "HORIZONTAL"
                 }
               ]
             }
@@ -411,7 +486,7 @@
   "windowGeometry": {
     "x": 0.0,
     "y": 0.0,
-    "width": 1597.0,
-    "height": 882.0
+    "width": 1553.5999755859375,
+    "height": 881.5999755859375
   }
 }
