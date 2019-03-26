@@ -15,6 +15,6 @@ LeftRocketCloseHatchGrp::LeftRocketCloseHatchGrp() {
   AddSequential(new ExpandHatchGripperGrp());
   AddParallel(new SetIntakeArmAngleCmd(90));
   AddSequential(new SilkyMotionCmd(std::vector<double> {2500}, std::vector<double> {-35}));
-  AddSequential(new SilkyMotionCmd(std::vector<double> {1400}, std::vector<double> {7}));
+  // AddSequential(new SilkyMotionCmd(std::vector<double> {1400}, std::vector<double> {7}));
 
 }
