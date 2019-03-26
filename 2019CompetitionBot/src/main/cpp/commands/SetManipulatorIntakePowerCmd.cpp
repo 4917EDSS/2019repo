@@ -5,38 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/IntakeBallFromRobotCmd.h"
 #include "Robot.h"
+#include "commands/SetManipulatorIntakePowerCmd.h"
 
-IntakeBallFromRobotCmd::IntakeBallFromRobotCmd() {
+SetManipulatorIntakePowerCmd::SetManipulatorIntakePowerCmd(double power):power(power) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::manipulatorSub);
-  Requires(&Robot::ballIntakeSub);
 }
 
 // Called just before this Command runs the first time
-void IntakeBallFromRobotCmd::Initialize() {
-  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-  Robot::ballIntakeSub.setIntakeWheelPower(0.6);
+void SetManipulatorIntakePowerCmd::Initialize() {
+  Robot::manipulatorSub.setIntakePower(power);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void IntakeBallFromRobotCmd::Execute() {}
+void SetManipulatorIntakePowerCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool IntakeBallFromRobotCmd::IsFinished() { 
-  return Robot::manipulatorSub.isBallIn();
-}
+bool SetManipulatorIntakePowerCmd::IsFinished() { return true; }
 
 // Called once after isFinished returns true
-void IntakeBallFromRobotCmd::End() {
-  Robot::ballIntakeSub.setIntakeWheelPower(0.0);
-  Robot::manipulatorSub.setIntakePower(0.0);
-}
+void SetManipulatorIntakePowerCmd::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void IntakeBallFromRobotCmd::Interrupted() {
-  End();
-}
+void SetManipulatorIntakePowerCmd::Interrupted() {}
