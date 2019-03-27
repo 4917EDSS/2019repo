@@ -9,12 +9,12 @@
 #include "commands/ExpandHatchGripperGrp.h"
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/SilkyMotionCmd.h"
+#include "commands/SetManipulatorAngleCmd.h"
 
 LeftRocketCloseHatchGrp::LeftRocketCloseHatchGrp() {
  
   AddSequential(new ExpandHatchGripperGrp());
-  AddParallel(new SetIntakeArmAngleCmd(90));
-  AddSequential(new SilkyMotionCmd(std::vector<double> {2500}, std::vector<double> {-35}));
-  // AddSequential(new SilkyMotionCmd(std::vector<double> {1400}, std::vector<double> {7}));
+  AddParallel(new SetManipulatorAngleCmd(90));
+  AddSequential(new SilkyMotionCmd(std::vector<double> {3000,1600}, std::vector<double> {-45,17}));
 
 }
