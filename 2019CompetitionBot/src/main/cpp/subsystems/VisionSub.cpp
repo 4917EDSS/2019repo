@@ -122,7 +122,7 @@ double VisionSub::getScoringFaceAngle(int camera) {
 
   std::vector<double> targetAngle = {-151.25, -90, -28.75, 0, 28.75, 90, 151.25};
   double smallestAngleDifference = 1000;
-  int bestTarget;
+  int bestTarget = 0;
   if (Robot::inBallMode){
     targetAngle = {0.0, 90.0, -90.0};
   }else if (Robot::manipulatorSub.isGripperExpanded()){
@@ -132,7 +132,7 @@ double VisionSub::getScoringFaceAngle(int camera) {
     
   }
 
-  for(int i = 0; i < targetAngle.size(); i++){
+  for(unsigned int i = 0; i < targetAngle.size(); i++){
     double angleDifference = fabs(robotAngle - targetAngle[i]);
     if(angleDifference > 180){
       angleDifference = fabs(angleDifference-360);

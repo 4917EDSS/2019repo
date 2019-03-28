@@ -84,4 +84,11 @@ model {
             wpi.deps.vendor.cpp(it)
         }
     }
+    binaries {
+        all {
+            if (it.targetPlatform.operatingSystem.isLinux()) {
+                it.cppCompiler.args  << '-Wall' << '-Wextra'
+            }
+        }
+    }
 }

@@ -29,9 +29,9 @@ void MilkyManipulatorCmd::Execute() {
   std::shared_ptr<frc::Joystick> driverJoystick = Robot::oi.getDriverController();
 
   double targetAngle=Robot::visionSub.getVisionTarget(BUMPER_CAMERA);
-  double robotAngle=Robot::drivetrainSub.getAngle();
-  double scoringFace=Robot::visionSub.getScoringFaceAngle(BUMPER_CAMERA);
-  double robotTargetAngle=Robot::visionSub.getRobotTargetAngle(robotAngle, targetAngle, scoringFace);
+  //double robotAngle=Robot::drivetrainSub.getAngle();
+  //double scoringFace=Robot::visionSub.getScoringFaceAngle(BUMPER_CAMERA);
+  //double robotTargetAngle=Robot::visionSub.getRobotTargetAngle(robotAngle, targetAngle, scoringFace);
   
   if(fabs(driverJoystick->GetX()) > JOYSTICK_DEADBAND){
     targetAngle += (driverJoystick->GetX()*20.0);
