@@ -132,7 +132,7 @@ double VisionSub::getScoringFaceAngle(int camera) {
     
   }
 
-  for(int i = 0; i < (int)targetAngle.size(); i++){
+  for(unsigned int i = 0; i < targetAngle.size(); i++){
     double angleDifference = fabs(robotAngle - targetAngle[i]);
     if(angleDifference > 180){
       angleDifference = fabs(angleDifference-360);
