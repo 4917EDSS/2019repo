@@ -96,7 +96,7 @@ void ElevatorSub::InitDefaultCommand() {
 void ElevatorSub::updateShuffleBoard() {
   nteSparksTwo[0].setPower.SetDouble(elevatorMotor1->Get());
   nteSparksTwo[0].outputCurrent.SetDouble(elevatorMotor1->GetOutputCurrent());
-  nteSparksTwo[0].encoderPosition.SetDouble(elevatorMotor1->GetEncoder().GetPosition()) + ELEVATOR_MIN_HEIGHT_MM;
+  nteSparksTwo[0].encoderPosition.SetDouble(elevatorMotor1->GetEncoder().GetPosition() + ELEVATOR_MIN_HEIGHT_MM);
   nteSparksTwo[0].encoderVelocity.SetDouble(elevatorMotor1->GetEncoder().GetVelocity());
   nteSparksTwo[0].motorTemperature.SetDouble(elevatorMotor1->GetMotorTemperature());
 
@@ -153,7 +153,7 @@ void ElevatorSub::setElevatorHeight(int mode, double maxPower, double targetHeig
       return;
     }
     if ((mode != ELEVATOR_MODE_MANUAL) && 
-        (targetHeightMm < ELEVATOR_MIN_HEIGHT_MM) || (targetHeightMm > ELEVATOR_MAX_HEIGHT_MM)) {
+        ((targetHeightMm < ELEVATOR_MIN_HEIGHT_MM) || (targetHeightMm > ELEVATOR_MAX_HEIGHT_MM))) {
       logger.send(logger.ELEVATOR, "ESH: ERROR (#2)!! Height = %.1f \n", targetHeightMm);
       return;
     }

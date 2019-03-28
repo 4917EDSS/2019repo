@@ -185,16 +185,16 @@ int main() { return frc::StartRobot<Robot>(); }
 void Robot::UpdateSmartDashboard() {
    //Limelight Data
   std::shared_ptr<NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
-  double targetPerecentArea = table->GetNumber("ta", 0.0);
-  double targetSkew = table->GetNumber("ts", 0.0);
-  double targetHorizontalOffset = table->GetNumber("tx", 0.0);
-  double targetVerticalOffset = table -> GetNumber("ty", 0.0);
+  // double targetPerecentArea = table->GetNumber("ta", 0.0);
+  // double targetSkew = table->GetNumber("ts", 0.0);
+  // double targetHorizontalOffset = table->GetNumber("tx", 0.0);
+  // double targetVerticalOffset = table -> GetNumber("ty", 0.0);
   bool foundTarget = table->GetNumber("tv", 0.0);
-  double limelightLatency = table->GetNumber("tl", 0.0);
-  double targetShort = table->GetNumber("tshort", 0.0);
-  double targetLong =table->GetNumber("tlong", 0.0);
-  double targetHorizontalLength = table->GetNumber("thoriz", 0.0);
-  double targetVerticalLength =  table ->GetNumber("tvert", 0.0);
+  // double limelightLatency = table->GetNumber("tl", 0.0);
+  // double targetShort = table->GetNumber("tshort", 0.0);
+  // double targetLong =table->GetNumber("tlong", 0.0);
+  // double targetHorizontalLength = table->GetNumber("thoriz", 0.0);
+  // double targetVerticalLength =  table ->GetNumber("tvert", 0.0);
 
   // frc::SmartDashboard::PutNumber("Target Percent Area", targetPerecentArea);
   // frc::SmartDashboard::PutNumber("Target Skew", targetSkew);

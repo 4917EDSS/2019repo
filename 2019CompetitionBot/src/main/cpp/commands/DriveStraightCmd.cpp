@@ -1,7 +1,7 @@
 #include "commands/DriveStraightCmd.h"
 #include "Robot.h"
 
-DriveStraightCmd::DriveStraightCmd(double distance): distance(distance), power(power) {
+DriveStraightCmd::DriveStraightCmd(double distance, double power): distance(distance), power(power) {
   Requires(&Robot::drivetrainSub);
 }
 
