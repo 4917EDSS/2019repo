@@ -54,11 +54,8 @@ class Robot : public frc::TimedRobot {
 
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
-  frc::Command* m_autonomousCommand = nullptr;
-  frc::SendableChooser<frc::Command*> m_chooser;
-  std::shared_ptr<frc::SendableChooser<bool>> modeChooser;
-  std::shared_ptr<frc::SendableChooser<bool>> directionChooser;
-
+  std::unique_ptr<frc::SendableChooser<std::shared_ptr<frc::Command>> > autoChooser;
+  std::shared_ptr<frc::Command> autoCommand;
 
   void UpdateSmartDashboard();
   static void resetStateMachines();

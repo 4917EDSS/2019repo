@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/LeftRocketCloseHatchGrp.h"
+#include "commands/RightRocketCloseHatchGrp.h"
 #include "commands/ExpandHatchGripperGrp.h"
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/SilkyMotionCmd.h"
@@ -13,11 +13,10 @@
 #include "commands/SetElevatorToHeightCmd.h"
 
 
-LeftRocketCloseHatchGrp::LeftRocketCloseHatchGrp() {
- 
+RightRocketCloseHatchGrp::RightRocketCloseHatchGrp() {
+
   AddSequential(new ExpandHatchGripperGrp());
   AddParallel(new SetManipulatorAngleCmd(90));
   AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM));
-  AddSequential(new SilkyMotionCmd(std::vector<double> {3000,1600}, std::vector<double> {-45,17}));
-
+  AddSequential(new SilkyMotionCmd(std::vector<double> {3000,1600}, std::vector<double> {45,-17}));
 }

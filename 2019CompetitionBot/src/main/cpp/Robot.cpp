@@ -14,6 +14,9 @@
 #include "commands/SetManipulatorAngleCmd.h"
 #include "commands/CenterCargoShipLeftHatchGrp.h"
 #include "commands/LeftRocketCloseHatchGrp.h"
+#include "commands/RightRocketCloseHatchGrp.h"
+#include "commands/SetBallModeCmd.h"
+
 
 
 DrivetrainSub Robot::drivetrainSub;
@@ -31,14 +34,13 @@ bool Robot::stateMachinesReset;
 
 
 void Robot::RobotInit() {
-  modeChooser.reset(new frc::SendableChooser<bool>);
-  modeChooser->AddOption("Ball",true);
-  modeChooser->AddOption("Hatch",false);
-  frc::SmartDashboard::PutData("Auto Modes", modeChooser.get());
-  directionChooser.reset(new frc::SendableChooser<bool>);
-  directionChooser->AddOption("Forwards",true);
-  directionChooser->AddOption("Backwards",false);
-  frc::SmartDashboard::PutData("Start Direction", directionChooser.get());
+  autoChooser.reset(new frc::SendableChooser<std::shared_ptr<frc::Command>>());
+  autoChooser->AddOption("Ball", std::shared_ptr<frc::Command>(new SetBallModeCmd()));
+  autoChooser->AddOption("Hatch do nothing", std::shared_ptr<frc::Command>(new ExpandHatchGripperGrp()));
+  autoChooser->AddOption("Centre Hatch", std::shared_ptr<frc::Command>(new CenterCargoShipLeftHatchGrp()));
+  autoChooser->AddOption("Left Hatch", std::shared_ptr<frc::Command>(new LeftRocketCloseHatchGrp()));
+  autoChooser->AddOption("Right Hatch", std::shared_ptr<frc::Command>(new RightRocketCloseHatchGrp()));
+  frc::SmartDashboard::PutData("Auto Modes", autoChooser.get());
 
   // Setup logging system
   std::string syslogTargetAddress = (Preferences::GetInstance())->GetString("SyslogTargetAddress", "10.49.17.30");
@@ -119,12 +121,10 @@ void Robot::AutonomousInit() {
     stateMachinesReset = true;
   }
 
-  inBallMode = modeChooser->GetSelected();
-  startForwards = directionChooser->GetSelected();
+  autoCommand = autoChooser->GetSelected().lock();
   
-    if (!inBallMode) {
-      (new ExpandHatchGripperGrp())->Start();
-    }
+  autoCommand->Start();
+
     // if (startForwards){
     //   (new SetManipulatorAngleCmd(90))->Start();
     // }else{
@@ -145,10 +145,6 @@ void Robot::TeleopInit() {
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove
   // this line or comment it out.
-  if (m_autonomousCommand != nullptr) {
-    m_autonomousCommand->Cancel();
-    m_autonomousCommand = nullptr;
-  }
 
   if(!stateMachinesReset) {
     resetStateMachines();
