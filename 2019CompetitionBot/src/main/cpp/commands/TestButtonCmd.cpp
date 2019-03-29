@@ -16,7 +16,7 @@ TestButtonCmd::TestButtonCmd() {
 
 // Called just before this Command runs the first time
 void TestButtonCmd::Initialize() {
-  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
+  //logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
 }
 
 // Called repeatedly when this Command is scheduled to run

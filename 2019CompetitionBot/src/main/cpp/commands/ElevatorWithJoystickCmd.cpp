@@ -32,7 +32,7 @@ void ElevatorWithJoystickCmd::Execute() {
   switch(shift) {
   case 0: // No shift, normal elevator operation
     Robot::elevatorSub.setElevatorHeight(ELEVATOR_MODE_MANUAL, power, 0);
-    logger.send(logger.WITH_JOYSTICK_TRACE, "The elevator is being controlled @ %f\n", power);
+    //logger.send(logger.WITH_JOYSTICK_TRACE, "The elevator is being controlled @ %f\n", power);
     break;
 
   // If the joystick is controlling something else, pass in a power of 0.

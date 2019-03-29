@@ -6,7 +6,7 @@ DriveStraightCmd::DriveStraightCmd(double distance, double power): distance(dist
 }
 
 void DriveStraightCmd::Initialize() {
-  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
+  //logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
   Robot::drivetrainSub.enableBalancerPID(Robot::drivetrainSub.getAngle());
   Robot::drivetrainSub.driverDriveStraight(power);
 }

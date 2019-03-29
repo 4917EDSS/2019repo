@@ -8,7 +8,7 @@ DriveWithIntakeMotorCmd::DriveWithIntakeMotorCmd() {
 }
 
 void DriveWithIntakeMotorCmd::Initialize() {
-  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
+  //logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
   Robot::ballIntakeSub.setIntakeWheelPower(1.0);
 }
 

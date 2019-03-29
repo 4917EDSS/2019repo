@@ -8,7 +8,7 @@ ManipulatorInCmd::ManipulatorInCmd() : intakeTime(1.0) {
 }
 
 void ManipulatorInCmd::Initialize() {
-  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
+  //logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
   Robot::manipulatorSub.setIntakePower(-0.5);
 }
 

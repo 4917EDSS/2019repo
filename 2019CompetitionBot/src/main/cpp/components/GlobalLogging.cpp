@@ -25,5 +25,5 @@ void GlobalLogging::logPeriodicValues() {
 //		line << ",CH" << i << " C," << pdp->GetCurrent(i);	// This gives a timeout error
 	//}
 
-	logger.send(logger.PERIODIC, "%s\n", line.str().c_str());
+	//logger.send(logger.PERIODIC, "%s\n", line.str().c_str());
 }

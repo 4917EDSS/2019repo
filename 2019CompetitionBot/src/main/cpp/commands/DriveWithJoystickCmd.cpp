@@ -36,7 +36,7 @@ DriveWithJoystickCmd::DriveWithJoystickCmd() {
 
 // Called just before this Command runs the first time
 void DriveWithJoystickCmd::Initialize() {
-	logger.send(logger.WITH_JOYSTICK_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
+	//logger.send(logger.WITH_JOYSTICK_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
 	currentDrivePower = 0.0;
 	currentRotatePower = 0.0;
 }

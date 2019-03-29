@@ -53,7 +53,7 @@ void Robot::RobotInit() {
   //logger.enableChannels(logger.DRIVETRAIN);
   //logger.enableChannels(logger.VISION);
   //logger.enableChannels(logger.PERIODIC);
-  logger.enableChannels(logger.CMD_TRACE);
+  //logger.enableChannels(logger.CMD_TRACE);
   //logger.enableChannels(logger.ELEVATOR);
   //logger.enableChannels(logger.BALLINTAKE);
   //logger.enableChannels(logger.MANIPULATOR);
@@ -61,7 +61,7 @@ void Robot::RobotInit() {
   //logger.enableChannels(logger.CLIMB);
 
   logger.addOutputPath(new frc4917::ConsoleOutput());						            // Enable console output and/or
-  logger.addOutputPath(new frc4917::SyslogOutput(syslogTargetAddress));		  // Enable syslog output
+  //logger.addOutputPath(new frc4917::SyslogOutput(syslogTargetAddress));		  // Enable syslog output
   logger.send(logger.DEBUGGING, "Robot code started @ %f\n", GetTime());
 
   std::cout << "Starting version 2.0\n";

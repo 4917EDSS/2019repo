@@ -20,7 +20,7 @@ MilkyManipulatorCmd::MilkyManipulatorCmd() {
 
 // Called just before this Command runs the first time
 void MilkyManipulatorCmd::Initialize() {
-  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
+  //logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
   Robot::visionSub.setBumperPipeline(VISION_MODE_NORMAL);
 }
 

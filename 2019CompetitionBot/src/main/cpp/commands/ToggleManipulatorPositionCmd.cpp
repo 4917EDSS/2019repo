@@ -20,7 +20,7 @@ void ToggleManipulatorPositionCmd::Initialize() {
   double targetAngle;
   int shift = Robot::oi.getOperatorShiftState();
 
-  logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
+  //logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
 
   switch(shift) {  
     

@@ -17,7 +17,7 @@ FoldIntakeImmediateCmd::FoldIntakeImmediateCmd(bool foldIn) : foldIn(foldIn) {
 
 // Called just before this Command runs the first time
 void FoldIntakeImmediateCmd::Initialize() {
-   logger.send(logger.CMD_TRACE, "%s : %s | foldIn = %d\n", __FILE__, __FUNCTION__, foldIn);
+   //logger.send(logger.CMD_TRACE, "%s : %s | foldIn = %d\n", __FILE__, __FUNCTION__, foldIn);
  
   if(foldIn) {
     Robot::ballIntakeSub.foldIntakeArms();

@@ -149,12 +149,12 @@ void ElevatorSub::setElevatorHeight(int mode, double maxPower, double targetHeig
 
     // Check input parameters
     if (fabs(maxPower) > 1.0) {
-      logger.send(logger.ELEVATOR, "ESH: ERROR!! Max power = %.2f \n", maxPower);
+      //logger.send(logger.ELEVATOR, "ESH: ERROR!! Max power = %.2f \n", maxPower);
       return;
     }
     if ((mode != ELEVATOR_MODE_MANUAL) && 
         ((targetHeightMm < ELEVATOR_MIN_HEIGHT_MM) || (targetHeightMm > ELEVATOR_MAX_HEIGHT_MM))) {
-      logger.send(logger.ELEVATOR, "ESH: ERROR (#2)!! Height = %.1f \n", targetHeightMm);
+      //logger.send(logger.ELEVATOR, "ESH: ERROR (#2)!! Height = %.1f \n", targetHeightMm);
       return;
     }
 
@@ -166,7 +166,7 @@ void ElevatorSub::setElevatorHeight(int mode, double maxPower, double targetHeig
         elevatorNewMaxPower = 0.0;
         elevatorNewTargetHeightMm = ELEVATOR_MIN_HEIGHT_MM;
         elevatorNewStateParameters = true; // Only set this to true after all the other parameters have been set
-        logger.send(logger.ELEVATOR, "ESH: Disabled\n");
+        //logger.send(logger.ELEVATOR, "ESH: Disabled\n");
         break;
 
       case ELEVATOR_MODE_AUTO:
@@ -176,7 +176,7 @@ void ElevatorSub::setElevatorHeight(int mode, double maxPower, double targetHeig
         elevatorNewMaxPower = fabs(maxPower);
         elevatorNewTargetHeightMm = targetHeightMm;
         elevatorNewStateParameters = true; // Only set this to true after all the other parameters have been set
-        logger.send(logger.ELEVATOR, "ESH: Auto (P=%.2f, H=%.1f)\n", elevatorNewMaxPower, elevatorNewTargetHeightMm);
+        //logger.send(logger.ELEVATOR, "ESH: Auto (P=%.2f, H=%.1f)\n", elevatorNewMaxPower, elevatorNewTargetHeightMm);
         break;
 
     case ELEVATOR_MODE_MANUAL:
@@ -190,7 +190,7 @@ void ElevatorSub::setElevatorHeight(int mode, double maxPower, double targetHeig
           elevatorNewMaxPower = 0.0;
           elevatorNewTargetHeightMm = getElevatorHeight();
           elevatorNewStateParameters = true; // Only set this to true after all the other parameters have been set
-          logger.send(logger.ELEVATOR, "ESH: Man - deadzone start @ %.1f\n", elevatorNewTargetHeightMm);
+          //logger.send(logger.ELEVATOR, "ESH: Man - deadzone start @ %.1f\n", elevatorNewTargetHeightMm);
         }
         else {
           //logger.send(logger.ELEVATOR, "ESH: Holding \n");
@@ -203,14 +203,14 @@ void ElevatorSub::setElevatorHeight(int mode, double maxPower, double targetHeig
         elevatorNewMaxPower = fabs(maxPower);
         elevatorNewTargetHeightMm = (maxPower > 0) ? ELEVATOR_MAX_HEIGHT_MM : ELEVATOR_MIN_HEIGHT_MM;
         elevatorNewStateParameters = true; // Only set this to true after all the other parameters have been set
-        logger.send(logger.ELEVATOR, "ESH: Man - moving (P=%.2f, H=%.1f)\n", 
+        //logger.send(logger.ELEVATOR, "ESH: Man - moving (P=%.2f, H=%.1f)\n", 
             elevatorNewMaxPower, elevatorNewTargetHeightMm);
       }
       break;
     }
   }
   else {
-    logger.send(logger.ELEVATOR, "ESH: No change (M=%d, P=%.2f, H=%.1f)\n", mode, maxPower, targetHeightMm);
+    //logger.send(logger.ELEVATOR, "ESH: No change (M=%d, P=%.2f, H=%.1f)\n", mode, maxPower, targetHeightMm);
   }
 }
 
@@ -223,12 +223,12 @@ bool ElevatorSub::isElevatorAtTarget() {
 
   if ((fabs(elevatorTargetHeightMm - getElevatorHeight()) < ELEVATOR_POSITION_TOLERANCE_MM) &&
       (fabs(getElevatorVelocity()) < ELEVATOR_VELOCITY_TOLERANCE_MM_S)) {
-    logger.send(logger.ELEVATOR, "IEAT: Elevator at target (T=%.1f, C=%.1f, V=%.1f)\n", 
+    //logger.send(logger.ELEVATOR, "IEAT: Elevator at target (T=%.1f, C=%.1f, V=%.1f)\n", 
         elevatorTargetHeightMm, getElevatorHeight(), getElevatorVelocity());
     return true;
   }
   else {
-  // logger.send(logger.ELEVATOR, "IEAT: Elevator not at target (T=%.1f, C=%.1f, V=%.1f)\n", 
+  // //logger.send(logger.ELEVATOR, "IEAT: Elevator not at target (T=%.1f, C=%.1f, V=%.1f)\n", 
   //      elevatorTargetHeightMm, getElevatorHeight(), getElevatorVelocity());
     return false;
   }
@@ -246,7 +246,7 @@ void ElevatorSub::updateElevatorStateMachine() {
     elevatorMaxPower = elevatorNewMaxPower;
     elevatorTargetHeightMm = elevatorNewTargetHeightMm;
     elevatorNewStateParameters = false;
-    logger.send(logger.ELEVATOR, "ESM: New     (P=%3.2f, S=%d, T=%6.1f, C=%6.1f, M=%d)\n", 
+    //logger.send(logger.ELEVATOR, "ESM: New     (P=%3.2f, S=%d, T=%6.1f, C=%6.1f, M=%d)\n", 
         elevatorNewMaxPower, elevatorState, elevatorTargetHeightMm, currentHeightMm, elevatorControlMode);
   }
 
@@ -266,7 +266,7 @@ void ElevatorSub::updateElevatorStateMachine() {
     case ELEVATOR_STATE_HOLDING:
       // Give the motor just enough power to keep the current position
       newPower = calcElevatorHoldPower(currentHeightMm, elevatorTargetHeightMm);
-      logger.send(logger.ELEVATOR, "ESM: Holding (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
+      //logger.send(logger.ELEVATOR, "ESM: Holding (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
           newPower, elevatorState, elevatorTargetHeightMm, currentHeightMm);
       break;
 
@@ -281,7 +281,7 @@ void ElevatorSub::updateElevatorStateMachine() {
       else {
         newPower = calcElevatorMovePower(currentHeightMm, elevatorTargetHeightMm, elevatorMaxPower);
       }
-      logger.send(logger.ELEVATOR, "ESM: Moving  (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
+      //logger.send(logger.ELEVATOR, "ESM: Moving  (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
           newPower, elevatorState, elevatorTargetHeightMm, currentHeightMm);
       break;
 
@@ -292,13 +292,13 @@ void ElevatorSub::updateElevatorStateMachine() {
       else {
         newPower = calcElevatorHoldPower(currentHeightMm, elevatorBlockedHeightMm);
       }
-      logger.send(logger.ELEVATOR, "ESM: Blocked (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
+      //logger.send(logger.ELEVATOR, "ESM: Blocked (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
           newPower, elevatorState, elevatorBlockedHeightMm, currentHeightMm);
       break;
 
     default:
       // This should never happen.  Best thing we can do is hold our current position.
-      logger.send(logger.ASSERTS, "Elevator state machine entered invalid state (%d).  Fix the code!\n", elevatorState);
+      //logger.send(logger.ASSERTS, "Elevator state machine entered invalid state (%d).  Fix the code!\n", elevatorState);
       elevatorState = ELEVATOR_STATE_HOLDING;
       break;
   }
