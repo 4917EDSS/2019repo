@@ -18,6 +18,6 @@ LeftRocketCloseHatchGrp::LeftRocketCloseHatchGrp() {
   AddSequential(new ExpandHatchGripperGrp());
   AddParallel(new SetManipulatorAngleCmd(90));
   AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM));
-  AddSequential(new SilkyMotionCmd(std::vector<double> {3000,1600}, std::vector<double> {-45,17}));
+  AddSequential(new SilkyMotionCmd(std::vector<double> {2800,1500}, std::vector<double> {-52,24}));
 
 }
