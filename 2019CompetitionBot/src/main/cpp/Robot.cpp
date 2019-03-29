@@ -215,8 +215,6 @@ void Robot::UpdateSmartDashboard() {
   frc::SmartDashboard::PutNumber("Drivetrain Left Encoder", drivetrainSub.getLeftEncoder());
   frc::SmartDashboard::PutNumber("Drivetrain Right Encoder", drivetrainSub.getRightEncoder());
   frc::SmartDashboard::PutNumber("Climb Height", climbSub.getClimbPosition());
-  frc::SmartDashboard::PutData("CenterCargoShipLeftHatchGrp", new CenterCargoShipLeftHatchGrp());
-  frc::SmartDashboard::PutData("LeftRocketCloseHatchGrp", new LeftRocketCloseHatchGrp());
 }
 
 void Robot::resetStateMachines() {
