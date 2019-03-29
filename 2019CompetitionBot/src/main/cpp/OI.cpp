@@ -73,10 +73,10 @@ OI::OI() {
   retractClimbBarsBtn->WhileHeld(new RetractClimbBarsCmd());
 
   leftRocketCloseHatchPart2GrpBtn.reset(new frc::JoystickButton(driverController.get(), CONTINUE_LEFT_AUTO_BTN));
-  leftRocketCloseHatchPart2GrpBtn->WhenPressed(new LeftRocketCloseHatchPart2Grp);
+  leftRocketCloseHatchPart2GrpBtn->WhenPressed(new LeftRocketCloseHatchPart2Grp());
   
   rightRocketCloseHatchPart2GrpBtn.reset(new frc::JoystickButton(driverController.get(), CONTINUE_RIGHT_AUTO_BTN));
-  rightRocketCloseHatchPart2GrpBtn->WhenPressed(new RightRocketCloseHatchPart2Grp);
+  rightRocketCloseHatchPart2GrpBtn->WhenPressed(new RightRocketCloseHatchPart2Grp());
 
   driverKillBtn1.reset(new frc::JoystickButton(driverController.get(), DRIVER_KILL_ONE_BTN));
   driverKillBtn1->WhenPressed(new KillEverythingCmd());
