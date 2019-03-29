@@ -214,7 +214,7 @@ void ManipulatorSub::setFlipperAngle(int mode, double maxPower, double targetAng
           flipperNewTargetAngle = (maxPower > 0) ? MANIPULATOR_MAX_ANGLE : MANIPULATOR_MIN_ANGLE;
           flipperNewStateParameters = true;    // Only set this to true after all the other parameters have been set 
           //logger.send(logger.MANIPULATOR, "SFA: Man - moving (P=%.2f, H=%.1f)\n", 
-              flipperNewMaxPower, flipperNewTargetAngle);
+          //    flipperNewMaxPower, flipperNewTargetAngle);
         }
         break;
     }
@@ -234,7 +234,7 @@ bool ManipulatorSub::isFlipperAtTarget() {
   if ((fabs(flipperTargetAngle - getFlipperAngle()) < FLIPPER_ANGLE_TOLERANCE) && 
       (fabs(getFlipperVelocity()) < FLIPPER_VELOCITY_TOLERANCE)) {
       //logger.send(logger.MANIPULATOR, "IFAT: Flipper at target (T=%.1f, C=%.1f, V=%.1f)\n", 
-        flipperTargetAngle, getFlipperAngle(), getFlipperVelocity());
+      //  flipperTargetAngle, getFlipperAngle(), getFlipperVelocity());
       return true;
   } else {
     //logger.send(logger.MANIPULATOR, "IFAT: Flipper not at target (T=%.1f, C=%.1f, V=%.1f)\n", 
@@ -266,7 +266,7 @@ void ManipulatorSub::updateFlipperStateMachine() {
     flipperTargetAngle = flipperNewTargetAngle;
     flipperNewStateParameters = false;
     //logger.send(logger.MANIPULATOR, "FSM: New     (P=%3.2f, S=%d, T=%6.1f, C=%6.1f, M=%d)\n", 
-        flipperNewMaxPower, flipperState, flipperTargetAngle, currentAngle, flipperControlMode);
+    //    flipperNewMaxPower, flipperState, flipperTargetAngle, currentAngle, flipperControlMode);
   }
 
   // In auto mode
@@ -286,7 +286,7 @@ void ManipulatorSub::updateFlipperStateMachine() {
       // Give the motor just enough power to keep the current position
       newPower = calcFlipperHoldPower(currentAngle, flipperTargetAngle);
       //logger.send(logger.MANIPULATOR, "FSM: Holding (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
-          newPower, flipperState, flipperTargetAngle, currentAngle);
+      //    newPower, flipperState, flipperTargetAngle, currentAngle);
       break;
 
     case FLIPPER_STATE_MOVING:
@@ -301,7 +301,7 @@ void ManipulatorSub::updateFlipperStateMachine() {
         newPower = calcFlipperMovePower(currentAngle, flipperTargetAngle, flipperMaxPower);
       }
       //logger.send(logger.MANIPULATOR, "FSM: Moving  (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
-          newPower, flipperState, flipperTargetAngle, currentAngle);
+      //    newPower, flipperState, flipperTargetAngle, currentAngle);
       break;
 
     case FLIPPER_STATE_INTERRUPTED:
@@ -312,7 +312,7 @@ void ManipulatorSub::updateFlipperStateMachine() {
          newPower = calcFlipperHoldPower(currentAngle, flipperBlockedAngle);
       }
       //logger.send(logger.MANIPULATOR, "FSM: Blocked (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
-          newPower, flipperState, flipperBlockedAngle, currentAngle);
+      //    newPower, flipperState, flipperBlockedAngle, currentAngle);
       break;
 
     default:
@@ -326,7 +326,7 @@ void ManipulatorSub::updateFlipperStateMachine() {
     setFlipperPower(newPower);
     flipperLastPower = newPower;
     //logger.send(logger.MANIPULATOR, "FSM: New power = %f (S=%d, M=%d, P=%.2f, H=%.1f)\n", newPower,
-        flipperState, flipperControlMode, flipperNewMaxPower, flipperNewTargetAngle);
+    //    flipperState, flipperControlMode, flipperNewMaxPower, flipperNewTargetAngle);
   }
 }
 

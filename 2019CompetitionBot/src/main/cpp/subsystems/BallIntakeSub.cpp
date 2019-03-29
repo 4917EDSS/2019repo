@@ -192,7 +192,7 @@ void BallIntakeSub::setIntakeArmAngle(int mode, double maxPower, double targetAn
           intakeArmNewTargetAngle = (maxPower > 0) ? INTAKE_ARM_MAX_ANGLE : INTAKE_ARM_MIN_ANGLE;
           intakeArmNewStateParameters = true; // Only set this to true after all the other parameters have been set
           //logger.send(logger.BALLINTAKE, "SIA: Man - moving (P=%.2f, H=%.1f)\n", 
-              intakeArmNewMaxPower, intakeArmNewTargetAngle);
+              //intakeArmNewMaxPower, intakeArmNewTargetAngle);
         }
         break;
     }
@@ -211,7 +211,7 @@ bool BallIntakeSub::isIntakeArmAtTarget() {
   if ((fabs(intakeArmTargetAngle - getIntakeArmAngle()) < INTAKE_ARM_ANGLE_TOLERANCE) &&
       (fabs(getIntakeArmVelocity()) < INTAKE_ARM_VELOCITY_TOLERANCE)) {
     //logger.send(logger.BALLINTAKE, "IIAAT: Arms at target (T=%.1f, C=%.1f, V=%.1f)\n", 
-        intakeArmTargetAngle, getIntakeArmAngle(), getIntakeArmVelocity());
+    //    intakeArmTargetAngle, getIntakeArmAngle(), getIntakeArmVelocity());
     return true;
   }
   else {
@@ -233,7 +233,7 @@ void BallIntakeSub::updateIntakeArmStateMachine() {
     intakeArmTargetAngle = intakeArmNewTargetAngle;
     intakeArmNewStateParameters = false;
     //logger.send(logger.BALLINTAKE, "IASM: New     (P=%3.2f, S=%d, T=%6.1f, C=%6.1f, M=%d)\n", 
-        intakeArmNewMaxPower, intakeArmState, intakeArmTargetAngle, currentAngle, intakeArmControlMode);
+      //  intakeArmNewMaxPower, intakeArmState, intakeArmTargetAngle, currentAngle, intakeArmControlMode);
   }
 
   // In auto mode
@@ -255,7 +255,7 @@ void BallIntakeSub::updateIntakeArmStateMachine() {
       newPower = calcIntakeArmHoldPower(currentAngle, intakeArmTargetAngle);
       
       //logger.send(logger.BALLINTAKE, "IASM: Holding (P=%3.4f, S=%d, T=%6.1f, C=%6.1f)\n",
-          newPower, intakeArmState, intakeArmTargetAngle, currentAngle);
+        //  newPower, intakeArmState, intakeArmTargetAngle, currentAngle);
       break;
 
     case INTAKE_ARM_STATE_MOVING:
@@ -270,7 +270,7 @@ void BallIntakeSub::updateIntakeArmStateMachine() {
         newPower = calcIntakeArmMovePower(currentAngle, intakeArmTargetAngle, intakeArmMaxPower);
       }
       //logger.send(logger.BALLINTAKE, "IASM: Moving  (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
-          newPower, intakeArmState, intakeArmTargetAngle, currentAngle);
+        //  newPower, intakeArmState, intakeArmTargetAngle, currentAngle);
       break;
 
     case INTAKE_ARM_STATE_INTERRUPTED:
@@ -281,7 +281,7 @@ void BallIntakeSub::updateIntakeArmStateMachine() {
         newPower = calcIntakeArmHoldPower(currentAngle, intakeArmBlockedAngle);
       }
       //logger.send(logger.BALLINTAKE, "IASM: Blocked (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
-          newPower, intakeArmState, intakeArmTargetAngle, currentAngle);
+         // newPower, intakeArmState, intakeArmTargetAngle, currentAngle);
       break;
 
     default:

@@ -204,7 +204,7 @@ void ElevatorSub::setElevatorHeight(int mode, double maxPower, double targetHeig
         elevatorNewTargetHeightMm = (maxPower > 0) ? ELEVATOR_MAX_HEIGHT_MM : ELEVATOR_MIN_HEIGHT_MM;
         elevatorNewStateParameters = true; // Only set this to true after all the other parameters have been set
         //logger.send(logger.ELEVATOR, "ESH: Man - moving (P=%.2f, H=%.1f)\n", 
-            elevatorNewMaxPower, elevatorNewTargetHeightMm);
+        //    elevatorNewMaxPower, elevatorNewTargetHeightMm);
       }
       break;
     }
@@ -224,7 +224,7 @@ bool ElevatorSub::isElevatorAtTarget() {
   if ((fabs(elevatorTargetHeightMm - getElevatorHeight()) < ELEVATOR_POSITION_TOLERANCE_MM) &&
       (fabs(getElevatorVelocity()) < ELEVATOR_VELOCITY_TOLERANCE_MM_S)) {
     //logger.send(logger.ELEVATOR, "IEAT: Elevator at target (T=%.1f, C=%.1f, V=%.1f)\n", 
-        elevatorTargetHeightMm, getElevatorHeight(), getElevatorVelocity());
+     //   elevatorTargetHeightMm, getElevatorHeight(), getElevatorVelocity());
     return true;
   }
   else {
@@ -247,7 +247,7 @@ void ElevatorSub::updateElevatorStateMachine() {
     elevatorTargetHeightMm = elevatorNewTargetHeightMm;
     elevatorNewStateParameters = false;
     //logger.send(logger.ELEVATOR, "ESM: New     (P=%3.2f, S=%d, T=%6.1f, C=%6.1f, M=%d)\n", 
-        elevatorNewMaxPower, elevatorState, elevatorTargetHeightMm, currentHeightMm, elevatorControlMode);
+    //    elevatorNewMaxPower, elevatorState, elevatorTargetHeightMm, currentHeightMm, elevatorControlMode);
   }
 
   // In auto mode
@@ -267,7 +267,7 @@ void ElevatorSub::updateElevatorStateMachine() {
       // Give the motor just enough power to keep the current position
       newPower = calcElevatorHoldPower(currentHeightMm, elevatorTargetHeightMm);
       //logger.send(logger.ELEVATOR, "ESM: Holding (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
-          newPower, elevatorState, elevatorTargetHeightMm, currentHeightMm);
+        //  newPower, elevatorState, elevatorTargetHeightMm, currentHeightMm);
       break;
 
     case ELEVATOR_STATE_MOVING:
@@ -282,7 +282,7 @@ void ElevatorSub::updateElevatorStateMachine() {
         newPower = calcElevatorMovePower(currentHeightMm, elevatorTargetHeightMm, elevatorMaxPower);
       }
       //logger.send(logger.ELEVATOR, "ESM: Moving  (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
-          newPower, elevatorState, elevatorTargetHeightMm, currentHeightMm);
+      //    newPower, elevatorState, elevatorTargetHeightMm, currentHeightMm);
       break;
 
     case ELEVATOR_STATE_INTERRUPTED:
@@ -293,7 +293,7 @@ void ElevatorSub::updateElevatorStateMachine() {
         newPower = calcElevatorHoldPower(currentHeightMm, elevatorBlockedHeightMm);
       }
       //logger.send(logger.ELEVATOR, "ESM: Blocked (P=%3.2f, S=%d, T=%6.1f, C=%6.1f)\n",
-          newPower, elevatorState, elevatorBlockedHeightMm, currentHeightMm);
+      //    newPower, elevatorState, elevatorBlockedHeightMm, currentHeightMm);
       break;
 
     default:
