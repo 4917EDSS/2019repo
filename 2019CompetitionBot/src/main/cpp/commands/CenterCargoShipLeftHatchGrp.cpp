@@ -18,6 +18,6 @@ CenterCargoShipLeftHatchGrp::CenterCargoShipLeftHatchGrp() {
   AddSequential(new ExpandHatchGripperGrp());
   AddParallel(new SetManipulatorAngleCmd(90));
   AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM));
-  AddSequential(new SilkyMotionCmd(std::vector<double> {3000}, std::vector<double> {0}));
+  AddSequential(new SilkyMotionCmd(std::vector<double> {3500}, std::vector<double> {0}));
 
 }
