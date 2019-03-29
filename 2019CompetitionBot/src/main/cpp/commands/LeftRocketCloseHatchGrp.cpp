@@ -11,9 +11,7 @@
 #include "commands/SilkyMotionCmd.h"
 #include "commands/SetManipulatorAngleCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
-#include "commands/CargoModeGrp.h"
-#include "commands/FlipManipulatorGrp.h"
-#include "commands/HatchModeGrp.h"
+
 
 
 LeftRocketCloseHatchGrp::LeftRocketCloseHatchGrp() {
@@ -22,14 +20,5 @@ LeftRocketCloseHatchGrp::LeftRocketCloseHatchGrp() {
   AddParallel(new SetManipulatorAngleCmd(90));
   AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM));
   AddSequential(new SilkyMotionCmd(std::vector<double> {2800,1500}, std::vector<double> {-49,21}));
-
-/*
-  AddSequential(new CargoModeGrp());
-  AddParallel(new SilkyMotionCmd(std::vector<double> {-500,-4500}, std::vector<double> {33,-5}));
-  AddSequential(new frc::WaitCommand(0.5));
-  AddSequential(new FlipManipulatorGrp());
-  AddSequential(new HatchModeGrp());
-  AddSequential(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM));
-  */
 
 }

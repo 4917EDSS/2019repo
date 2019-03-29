@@ -42,8 +42,8 @@ constexpr int CLIMB_BTN = 5;
 constexpr int EXTEND_CLIMB_BARS_BTN = 6;
 constexpr int REVERSE_CLIMB_BTN = 7;
 constexpr int RETRACT_CLIMB_BARS_BTN = 8;
-constexpr int MILKY_MANIPULATOR_BTN = 9;
-constexpr int TEST_BTN = 10;
+constexpr int CONTINUE_LEFT_AUTO_BTN = 9;
+constexpr int CONTINUE_RIGHT_AUTO_BTN = 10;
 constexpr int DRIVER_KILL_ONE_BTN = 11;
 constexpr int DRIVER_KILL_TWO_BTN = 12;
 
@@ -100,8 +100,8 @@ class OI {
     std::shared_ptr<frc::JoystickButton> extendClimbBarsBtn;
     std::shared_ptr<frc::JoystickButton> reverseClimbBtn;
     std::shared_ptr<frc::JoystickButton> retractClimbBarsBtn;
-    std::shared_ptr<frc::JoystickButton> milkyManipulatorBtn;
-    std::shared_ptr<frc::JoystickButton> testBtn;
+    std::shared_ptr<frc::JoystickButton> leftRocketCloseHatchPart2GrpBtn;
+    std::shared_ptr<frc::JoystickButton> rightRocketCloseHatchPart2GrpBtn;
     std::shared_ptr<frc::JoystickButton> driverKillBtn1;
     std::shared_ptr<frc::JoystickButton> driverKillBtn2;
     
