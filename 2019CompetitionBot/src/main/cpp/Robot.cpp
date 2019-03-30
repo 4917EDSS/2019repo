@@ -18,7 +18,8 @@
 #include "commands/SetBallModeCmd.h"
 #include "commands/AutoSecondLevelLeftRocketHatchGrp.h"
 #include "commands/AutoSecondLevelRightRocketHatchGrp.h"
-
+#include "commands/AutoSecondLevelLeftCargoHatchGrp.h"
+#include "commands/AutoSecondLevelRightCargoHatchGrp.h"
 
 
 
@@ -43,9 +44,10 @@ void Robot::RobotInit() {
   autoChooser->AddOption("Centre Hatch", std::shared_ptr<frc::Command>(new CenterCargoShipLeftHatchGrp()));
   autoChooser->AddOption("Left Hatch", std::shared_ptr<frc::Command>(new LeftRocketCloseHatchGrp()));
   autoChooser->AddOption("Right Hatch", std::shared_ptr<frc::Command>(new RightRocketCloseHatchGrp()));
-  autoChooser->AddOption("2 lvl Left Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelLeftRocketHatchGrp()));
-  autoChooser->AddOption("2 lvl Right Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelRightRocketHatchGrp()));
-
+  autoChooser->AddOption("2 lvl L Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelLeftRocketHatchGrp()));
+  autoChooser->AddOption("2 lvl R Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelRightRocketHatchGrp()));
+  autoChooser->AddOption("2 lvl L Cargo Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelLeftCargoHatchGrp()));
+  autoChooser->AddOption("2 lvl R Cargo Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelRightCargoHatchGrp()));
   frc::SmartDashboard::PutData("Auto Modes", autoChooser.get());
 
   // Setup logging system
