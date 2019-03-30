@@ -17,6 +17,6 @@ AutoSecondLevelRightCargoHatchGrp::AutoSecondLevelRightCargoHatchGrp() {
   AddSequential(new ExpandHatchGripperGrp());
   AddParallel(new SetManipulatorAngleCmd(90));
   AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM));
-  AddSequential(new SilkyMotionCmd(std::vector<double> {550, -550, 3000, 2000}, std::vector<double> {0, 0, 40, -130}));
+  AddSequential(new SilkyMotionCmd(std::vector<double> {550, -550, 3850, 2000, 500}, std::vector<double> {0, 0, 35, -125, 0}));
 
 }
