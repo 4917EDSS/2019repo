@@ -18,6 +18,6 @@ RightRocketCloseHatchPart2Grp::RightRocketCloseHatchPart2Grp() {
   AddParallel(new SilkyMotionCmd(std::vector<double> {-500,-4200}, std::vector<double> {-33,5}));
   AddSequential(new frc::WaitCommand(0.5));
   AddSequential(new FlipManipulatorGrp());
-  AddSequential(new HatchModeGrp());
+  AddParallel(new HatchModeGrp());
   AddSequential(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM + 100.0));
 }
