@@ -223,6 +223,7 @@ void Robot::UpdateSmartDashboard() {
   frc::SmartDashboard::PutNumber("Drivetrain Left Encoder", drivetrainSub.getLeftEncoder());
   frc::SmartDashboard::PutNumber("Drivetrain Right Encoder", drivetrainSub.getRightEncoder());
   frc::SmartDashboard::PutNumber("Climb Height", climbSub.getClimbPosition());
+  frc::SmartDashboard::PutNumber("Pitch", drivetrainSub.getPitchAngle());
 }
 
 void Robot::resetStateMachines() {
