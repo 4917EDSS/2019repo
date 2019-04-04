@@ -280,7 +280,7 @@
               "_title": "Start Direction"
             }
           },
-          "10,0": {
+          "10,3": {
             "size": [
               1,
               1
@@ -322,6 +322,42 @@
               "_type": "Command",
               "_source0": "network_table:///SmartDashboard/LeftRocketCloseHatchGrp",
               "_title": "LeftRocketCloseHatchGrp"
+            }
+          },
+          "2,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///SmartDashboard/Pitch",
+              "_title": "Pitch",
+              "Range/Min": -20.0,
+              "Range/Max": 20.0,
+              "Visuals/Show value": true
+            }
+          },
+          "10,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Current Error: ",
+              "_title": "Current Error: "
+            }
+          },
+          "0,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Angle Error: ",
+              "_title": "Angle Error: "
             }
           }
         }
