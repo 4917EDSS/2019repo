@@ -9,6 +9,7 @@
 #include "Robot.h"
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include "subsystems/DrivetrainSub.h"
 #include "networktables/NetworkTableInstance.h"
 #include "commands/ExpandHatchGripperGrp.h"
 #include "commands/SetManipulatorAngleCmd.h"
@@ -128,6 +129,7 @@ void Robot::AutonomousInit() {
     resetStateMachines();
     stateMachinesReset = true;
   }
+  Robot::drivetrainSub.resetAHRS();
 
   autoCommand = autoChooser->GetSelected().lock();
   

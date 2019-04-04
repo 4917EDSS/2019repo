@@ -36,7 +36,7 @@ void ClimbCmd::Execute() {
   double pitchAngle = Robot::drivetrainSub.getPitchAngle();
 
   // pitch > 0,  robot is tipping forward, less power to intake arm
-  lastPower = 0.3 - pitchAngle * 0.1;
+  lastPower = 0.5 - pitchAngle * 0.1;
 
   // Otherise, use lastPower without changing it
 
