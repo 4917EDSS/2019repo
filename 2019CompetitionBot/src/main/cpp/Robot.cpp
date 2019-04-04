@@ -116,6 +116,7 @@ void Robot::DisabledPeriodic() {
  * the if-else structure below with additional strings & commands.
  */
 void Robot::AutonomousInit() {
+  Robot::drivetrainSub.resetAHRS();
   Robot::visionSub.setBumperPipeline(DRIVER_MODE_NORMAL);
   Robot::visionSub.setManipulatorPipeline(DRIVER_MODE_NORMAL);
   Robot::ballIntakeSub.foldIntakeArms();
@@ -129,8 +130,7 @@ void Robot::AutonomousInit() {
     resetStateMachines();
     stateMachinesReset = true;
   }
-  Robot::drivetrainSub.resetAHRS();
-
+  
   autoCommand = autoChooser->GetSelected().lock();
   
   autoCommand->Start();
