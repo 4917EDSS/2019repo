@@ -64,7 +64,7 @@ bool MilkyManipulatorCmd::IsFinished() { return false; }
 void MilkyManipulatorCmd::End() {
   //MilkyManipulatorCmd.milkyManipulator(0.0);
   Robot::drivetrainSub.drive(0,0);
-  Robot::visionSub.setBumperPipeline(DRIVER_MODE_NORMAL);
+  Robot::visionSub.setManipulatorPipeline(DRIVER_MODE_NORMAL);
 
 }
 
