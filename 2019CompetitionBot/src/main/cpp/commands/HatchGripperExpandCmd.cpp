@@ -18,6 +18,7 @@ HatchGripperExpandCmd::HatchGripperExpandCmd() {
 void HatchGripperExpandCmd::Initialize() {
   //logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
   Robot::manipulatorSub.expandHatchGripper();
+  Robot::manipulatorSub.setIntakePower(1.0);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -33,6 +34,7 @@ bool HatchGripperExpandCmd::IsFinished() {
 
 // Called once after isFinished returns true
 void HatchGripperExpandCmd::End() {
+  Robot::manipulatorSub.setIntakePower(0);
 }
 
 // Called when another command which requires one or more of the same
