@@ -38,9 +38,10 @@ void MilkyManipulatorCmd::Execute() {
   }
   
 
-  if (Robot::visionSub.isTargetVisible(BUMPER_CAMERA) ){
-    double lSpeed=(0.3+(targetAngle*0.007));
-    double rSpeed=(0.3-(targetAngle*0.007));
+  if (Robot::visionSub.isTargetVisible(MANIPULATOR_CAMERA) ){
+    double lSpeed=((targetAngle*0.007));
+    double rSpeed=(-(targetAngle*0.007));
+    std::cout << targetAngle << std::endl;
     Robot::drivetrainSub.drive(lSpeed,rSpeed);
   } else {
     Robot::drivetrainSub.drive(0,0);    
