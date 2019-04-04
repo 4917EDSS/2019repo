@@ -21,7 +21,15 @@ MilkyManipulatorCmd::MilkyManipulatorCmd() {
 // Called just before this Command runs the first time
 void MilkyManipulatorCmd::Initialize() {
   //logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-  Robot::visionSub.setBumperPipeline(VISION_MODE_NORMAL);
+  if (Robot::manipulatorSub.getFlipperAngle() > 0) {
+    Robot::visionSub.setManipulatorPipeline(VISION_MODE_NORMAL); 
+  }
+  else{
+    Robot::visionSub.setManipulatorPipeline(VISION_MODE_FLIPPED);
+  }
+  
+  
+ 
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -57,7 +65,7 @@ bool MilkyManipulatorCmd::IsFinished() { return false; }
 void MilkyManipulatorCmd::End() {
   //MilkyManipulatorCmd.milkyManipulator(0.0);
   Robot::drivetrainSub.drive(0,0);
-  Robot::visionSub.setBumperPipeline(DRIVER_MODE_NORMAL);
+  Robot::visionSub.setManipulatorPipeline(DRIVER_MODE_NORMAL);
 
 }
 
