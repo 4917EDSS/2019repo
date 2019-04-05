@@ -14,7 +14,7 @@
 #include "frc/shuffleboard/BuiltInLayouts.h"
 
 constexpr float DRIVE_BALANCE_TOLERANCE = 0.5;
-constexpr float DRIVE_BALANCE_P = 0;
+constexpr float DRIVE_BALANCE_P = 0.009;
 constexpr float DRIVE_BALANCE_I = 0;
 constexpr float DRIVE_BALANCE_D = 0;
 constexpr float MOTOR_POWER_SCALING_FACTOR = 1.0;
