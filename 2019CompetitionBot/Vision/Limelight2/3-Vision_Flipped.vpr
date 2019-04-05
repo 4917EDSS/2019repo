@@ -22,8 +22,8 @@ dilation_steps:0
 direction_filter:0
 erosion_steps:0
 exposure:2
-hue_max:77
-hue_min:55
+hue_max:109
+hue_min:53
 image_flip:1
 image_source:0
 img_to_show:0
@@ -33,7 +33,7 @@ pipeline_res:0
 pipeline_type:0
 red_balance:1200
 sat_max:255
-sat_min:143
+sat_min:171
 send_corners:0
 send_raw_contours:0
 solve3d:0
@@ -43,6 +43,6 @@ solve3d_error:8
 solve3d_guess:0
 solve3d_iterations:50
 val_max:255
-val_min:109
+val_min:182
 y_max:1.000000
 y_min:-1.000000
