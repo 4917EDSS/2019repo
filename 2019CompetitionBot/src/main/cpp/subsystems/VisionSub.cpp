@@ -11,7 +11,7 @@
 #include <cmath>
 #include <vector>
 
-constexpr int VISION_PIPELINE_NORMAL  = 0;
+constexpr int VISION_PIPELINE_NORMAL  = 4;
 constexpr int DRIVER_PIPELINE_NORMAL  = 1;
 constexpr int DRIVER_PIPELINE_FLIPPED = 2;
 constexpr int VISION_PIPELINE_FLIPPED = 3;

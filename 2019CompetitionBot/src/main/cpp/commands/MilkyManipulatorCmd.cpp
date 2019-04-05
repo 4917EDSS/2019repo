@@ -27,19 +27,16 @@ void MilkyManipulatorCmd::Initialize() {
   else{
     Robot::visionSub.setManipulatorPipeline(VISION_MODE_FLIPPED);
   }
-  
-  
- 
 }
 
 // Called repeatedly when this Command is scheduled to run
+// USE HATCH VISION COMMAND AND NOT THIS ONE
+// THIS ONE DOES NOT DO THE RIGHT THING
+//IT IS LOW-KEY CLAPPED SO JUST DON'T
 void MilkyManipulatorCmd::Execute() {
   std::shared_ptr<frc::Joystick> driverJoystick = Robot::oi.getDriverController();
 
   double targetAngle=Robot::visionSub.getVisionTarget(BUMPER_CAMERA);
-  //double robotAngle=Robot::drivetrainSub.getAngle();
-  //double scoringFace=Robot::visionSub.getScoringFaceAngle(BUMPER_CAMERA);
-  //double robotTargetAngle=Robot::visionSub.getRobotTargetAngle(robotAngle, targetAngle, scoringFace);
   
   if(fabs(driverJoystick->GetX()) > JOYSTICK_DEADBAND){
     targetAngle += (driverJoystick->GetX()*20.0);
@@ -47,15 +44,20 @@ void MilkyManipulatorCmd::Execute() {
   
 
   if (Robot::visionSub.isTargetVisible(MANIPULATOR_CAMERA) ){
-    double lSpeed=((targetAngle*0.007));
-    double rSpeed=(-(targetAngle*0.007));
-    std::cout << targetAngle << std::endl;
+    double lSpeed=(0);
+    double rSpeed=(0);
+
+    if (Robot::manipulatorSub.getFlipperAngle() > 0) {
+      lSpeed=((targetAngle*0.007));
+      rSpeed=(-(targetAngle*0.007));
+    } else {
+      lSpeed=(-(targetAngle*0.007));
+      rSpeed=((targetAngle*0.007));
+    }
     Robot::drivetrainSub.drive(lSpeed,rSpeed);
   } else {
     Robot::drivetrainSub.drive(0,0);    
   } 
-  
-
 }
 
 // Make this return true when this Command no longer needs to run execute()

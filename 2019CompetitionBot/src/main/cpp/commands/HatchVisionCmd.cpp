@@ -10,6 +10,7 @@
 #include "Robot.h"
 #include <iostream>
 
+constexpr double JOYSTICK_DEADBAND = 0.01;
 HatchVisionCmd::HatchVisionCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
@@ -19,25 +20,40 @@ HatchVisionCmd::HatchVisionCmd() {
 // Called just before this Command runs the first time
 void HatchVisionCmd::Initialize() {
   //logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-  Robot::visionSub.setManipulatorPipeline(VISION_MODE_NORMAL);
+  if (Robot::manipulatorSub.getFlipperAngle() < 0) {
+    Robot::visionSub.setManipulatorPipeline(VISION_MODE_NORMAL); 
+  }
+  else{
+    Robot::visionSub.setManipulatorPipeline(VISION_MODE_FLIPPED);
+  }
 }
 
 // Called repeatedly when this Command is scheduled to run
 void HatchVisionCmd::Execute() {
-  double targetAngle=Robot::visionSub.getVisionTarget(BUMPER_CAMERA);
-  //double robotAngle=Robot::drivetrainSub.getAngle();
-  //double scoringFace=Robot::visionSub.getScoringFaceAngle(BUMPER_CAMERA);
-  //double robotTargetAngle=Robot::visionSub.getRobotTargetAngle(robotAngle, targetAngle, scoringFace);
+  
+  std::shared_ptr<frc::Joystick> driverJoystick = Robot::oi.getDriverController();
 
-  if (Robot::visionSub.isTargetVisible(BUMPER_CAMERA) ){
-    double lSpeed=(0.3+(targetAngle*0.007));
-    double rSpeed=(0.3-(targetAngle*0.007));
+  double targetAngle=Robot::visionSub.getVisionTarget(MANIPULATOR_CAMERA);
+  
+  if(fabs(driverJoystick->GetX()) > JOYSTICK_DEADBAND){
+    targetAngle += (driverJoystick->GetX()*20.0);
+  }
+
+  if (Robot::visionSub.isTargetVisible(MANIPULATOR_CAMERA) ){
+    double lSpeed=(0);
+    double rSpeed=(0);
+
+    if (Robot::manipulatorSub.getFlipperAngle() > 0) {
+      lSpeed=(0.1+(targetAngle*0.015));
+      rSpeed=(0.1-(targetAngle*0.015));
+    } else {
+      lSpeed=(-0.1+(targetAngle*0.015));
+      rSpeed=(-0.1-(targetAngle*0.015));
+    }
     Robot::drivetrainSub.drive(lSpeed,rSpeed);
   } else {
     Robot::drivetrainSub.drive(0,0);    
   } 
-  
-
 }
 
 // Make this return true when this Command no longer needs to run execute()
