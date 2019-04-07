@@ -9,7 +9,7 @@
 
 #include <frc/commands/CommandGroup.h>
 
-class CenterCargoShipLeftHatchGrp : public frc::CommandGroup {
+class AutoCenterCargoShipLeftHatchGrp : public frc::CommandGroup {
  public:
-  CenterCargoShipLeftHatchGrp();
+  AutoCenterCargoShipLeftHatchGrp();
 };

@@ -5,19 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/CenterCargoShipLeftHatchGrp.h"
+#include "commands/AutoLeftRocketCloseHatchGrp.h"
 #include "commands/ExpandHatchGripperGrp.h"
-#include "commands/SetManipulatorAngleCmd.h"
-#include "commands/DriveStraightCmd.h"
+#include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/SilkyMotionCmd.h"
+#include "commands/SetManipulatorAngleCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
 
 
-CenterCargoShipLeftHatchGrp::CenterCargoShipLeftHatchGrp() {
 
+AutoLeftRocketCloseHatchGrp::AutoLeftRocketCloseHatchGrp() {
+ 
   AddSequential(new ExpandHatchGripperGrp());
   AddParallel(new SetManipulatorAngleCmd(90));
   AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM));
-  AddSequential(new SilkyMotionCmd(std::vector<double> {3550}, std::vector<double> {0}));
+  AddSequential(new SilkyMotionCmd(std::vector<double> {2800,1500}, std::vector<double> {-49,21}));
 
 }

@@ -9,7 +9,7 @@
 
 #include <frc/commands/CommandGroup.h>
 
-class RightRocketCloseHatchPart2Grp : public frc::CommandGroup {
+class AutoRightRocketCloseHatchGrp : public frc::CommandGroup {
  public:
-  RightRocketCloseHatchPart2Grp();
+  AutoRightRocketCloseHatchGrp();
 };

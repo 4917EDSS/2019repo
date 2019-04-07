@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/RightRocketCloseHatchGrp.h"
+#include "commands/AutoRightRocketCloseHatchGrp.h"
 #include "commands/ExpandHatchGripperGrp.h"
 #include "commands/SetIntakeArmAngleCmd.h"
 #include "commands/SilkyMotionCmd.h"
@@ -13,7 +13,7 @@
 #include "commands/SetElevatorToHeightCmd.h"
 
 
-RightRocketCloseHatchGrp::RightRocketCloseHatchGrp() {
+AutoRightRocketCloseHatchGrp::AutoRightRocketCloseHatchGrp() {
 
   AddSequential(new ExpandHatchGripperGrp());
   AddParallel(new SetManipulatorAngleCmd(90));
