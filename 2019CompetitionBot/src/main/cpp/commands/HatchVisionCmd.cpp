@@ -41,7 +41,7 @@ void HatchVisionCmd::Execute() {
     targetAngle += (driverJoystick->GetX()*20.0);
   }
 
-  if (Robot::visionSub.isTargetVisible(MANIPULATOR_CAMERA) && verticalOffset > -23.00 && !noLongerSeesTarget){
+  if (Robot::visionSub.isTargetVisible(MANIPULATOR_CAMERA) && (verticalOffset > -23.00) && !noLongerSeesTarget) {
     double lSpeed=(0);
     double rSpeed=(0);
 
@@ -53,11 +53,11 @@ void HatchVisionCmd::Execute() {
       rSpeed=(-0.2-(targetAngle*0.015));
     }
     Robot::drivetrainSub.drive(lSpeed,rSpeed);
-  } else{
-	if (TimeSinceInitalized() > 0.5){
-		noLongerSeesTarget = true;
+  } else {
+	  if (TimeSinceInitialized() > 0.5){
+		  noLongerSeesTarget = true;
     }
-	Robot::drivetrainSub.drive(0.3,0.3);
+	  Robot::drivetrainSub.drive(0.3,0.3);
   } 
 }
 
