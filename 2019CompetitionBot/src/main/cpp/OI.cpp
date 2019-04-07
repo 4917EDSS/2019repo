@@ -34,8 +34,8 @@
 #include "commands/HatchVisionCmd.h"
 #include "commands/ClimbRetractGrp.h"
 #include "commands/CargoHighHeightGrp.h"
-#include "commands/LeftRocketCloseHatchPart2Grp.h"
-#include "commands/RightRocketCloseHatchPart2Grp.h"
+#include "commands/AutoLeftRocketCloseHatchPart2Grp.h"
+#include "commands/AutoRightRocketCloseHatchPart2Grp.h"
 
 
 
@@ -72,11 +72,11 @@ OI::OI() {
   retractClimbBarsBtn.reset(new frc::JoystickButton(driverController.get(), RETRACT_CLIMB_BARS_BTN));
   retractClimbBarsBtn->WhileHeld(new RetractClimbBarsCmd());
 
-  leftRocketCloseHatchPart2GrpBtn.reset(new frc::JoystickButton(driverController.get(), CONTINUE_LEFT_AUTO_BTN));
-  leftRocketCloseHatchPart2GrpBtn->WhenPressed(new LeftRocketCloseHatchPart2Grp());
+  AutoLeftRocketCloseHatchPart2GrpBtn.reset(new frc::JoystickButton(driverController.get(), CONTINUE_LEFT_AUTO_BTN));
+  AutoLeftRocketCloseHatchPart2GrpBtn->WhenPressed(new AutoLeftRocketCloseHatchPart2Grp());
   
-  rightRocketCloseHatchPart2GrpBtn.reset(new frc::JoystickButton(driverController.get(), CONTINUE_RIGHT_AUTO_BTN));
-  rightRocketCloseHatchPart2GrpBtn->WhenPressed(new RightRocketCloseHatchPart2Grp());
+  AutoRightRocketCloseHatchPart2GrpBtn.reset(new frc::JoystickButton(driverController.get(), CONTINUE_RIGHT_AUTO_BTN));
+  AutoRightRocketCloseHatchPart2GrpBtn->WhenPressed(new AutoRightRocketCloseHatchPart2Grp());
 
   driverKillBtn1.reset(new frc::JoystickButton(driverController.get(), DRIVER_KILL_ONE_BTN));
   driverKillBtn1->WhenPressed(new KillEverythingCmd());

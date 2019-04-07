@@ -100,8 +100,8 @@ class OI {
     std::shared_ptr<frc::JoystickButton> extendClimbBarsBtn;
     std::shared_ptr<frc::JoystickButton> reverseClimbBtn;
     std::shared_ptr<frc::JoystickButton> retractClimbBarsBtn;
-    std::shared_ptr<frc::JoystickButton> leftRocketCloseHatchPart2GrpBtn;
-    std::shared_ptr<frc::JoystickButton> rightRocketCloseHatchPart2GrpBtn;
+    std::shared_ptr<frc::JoystickButton> AutoLeftRocketCloseHatchPart2GrpBtn;
+    std::shared_ptr<frc::JoystickButton> AutoRightRocketCloseHatchPart2GrpBtn;
     std::shared_ptr<frc::JoystickButton> driverKillBtn1;
     std::shared_ptr<frc::JoystickButton> driverKillBtn2;
     
