@@ -20,6 +20,7 @@ HatchVisionCmd::HatchVisionCmd() {
 // Called just before this Command runs the first time
 void HatchVisionCmd::Initialize() {
   //logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
+  noLongerSeesTarget = false;
   if (Robot::manipulatorSub.getFlipperAngle() < 0) {
     Robot::visionSub.setManipulatorPipeline(VISION_MODE_NORMAL); 
   }
@@ -34,25 +35,29 @@ void HatchVisionCmd::Execute() {
   std::shared_ptr<frc::Joystick> driverJoystick = Robot::oi.getDriverController();
 
   double targetAngle=Robot::visionSub.getVisionTarget(MANIPULATOR_CAMERA);
+  double verticalOffset = Robot::visionSub.getVerticalOffset(MANIPULATOR_CAMERA);
   
   if(fabs(driverJoystick->GetX()) > JOYSTICK_DEADBAND){
     targetAngle += (driverJoystick->GetX()*20.0);
   }
 
-  if (Robot::visionSub.isTargetVisible(MANIPULATOR_CAMERA) ){
+  if (Robot::visionSub.isTargetVisible(MANIPULATOR_CAMERA) && verticalOffset > -23.00 && !noLongerSeesTarget){
     double lSpeed=(0);
     double rSpeed=(0);
 
     if (Robot::manipulatorSub.getFlipperAngle() > 0) {
-      lSpeed=(0.1+(targetAngle*0.015));
-      rSpeed=(0.1-(targetAngle*0.015));
+      lSpeed=(0.2+(targetAngle*0.015));
+      rSpeed=(0.2-(targetAngle*0.015));
     } else {
-      lSpeed=(-0.1+(targetAngle*0.015));
-      rSpeed=(-0.1-(targetAngle*0.015));
+      lSpeed=(-0.2+(targetAngle*0.015));
+      rSpeed=(-0.2-(targetAngle*0.015));
     }
     Robot::drivetrainSub.drive(lSpeed,rSpeed);
-  } else {
-    Robot::drivetrainSub.drive(0,0);    
+  } else{
+	if (TimeSinceInitalized() > 0.5){
+		noLongerSeesTarget = true;
+    }
+	Robot::drivetrainSub.drive(0.3,0.3);
   } 
 }
 
