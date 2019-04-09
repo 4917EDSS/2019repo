@@ -54,21 +54,33 @@ void HatchVisionCmd::Execute() {
     }
     Robot::drivetrainSub.drive(lSpeed,rSpeed);
   } else {
-	  if (TimeSinceInitialized() > 0.5){
-		  noLongerSeesTarget = true;
+	  if (TimeSinceInitialized() > 0.3){
+      if (!noLongerSeesTarget){
+        noLongerSeesTarget = true;
+        Robot::drivetrainSub.enableBalancerPID();
+      }
+      Robot::drivetrainSub.driverDriveStraight(0.3);
+    } else {
+      Robot::drivetrainSub.drive(0.3,0.3);
     }
-	  Robot::drivetrainSub.drive(0.3,0.3);
   } 
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool HatchVisionCmd::IsFinished() { return false; }
+bool HatchVisionCmd::IsFinished() { 
+  if (Robot::visionSub.getHorizontalWidth(MANIPULATOR_CAMERA) > 250) {
+    return true;
+  }
+  else {
+    return false; 
+  }
+}
 
 // Called once after isFinished returns true
 void HatchVisionCmd::End() {
   Robot::drivetrainSub.drive(0,0);
   Robot::visionSub.setManipulatorPipeline(DRIVER_MODE_NORMAL);
-
+  Robot::drivetrainSub.disableBalancerPID();
 }
 
 // Called when another command which requires one or more of the same

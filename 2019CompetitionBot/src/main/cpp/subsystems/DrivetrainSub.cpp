@@ -156,7 +156,7 @@ void DrivetrainSub::updateShuffleBoard(){
   nteYaw.SetDouble(getAngle());
   nteRoll.SetDouble(ahrs->GetRoll());
 }
-void DrivetrainSub::enableBalancerPID(float setPoint){
+void DrivetrainSub::enableBalancerPID(){
   resetAHRS();
   Preferences *prefs = Preferences::GetInstance();
 	driveBalancePID->SetPID(prefs->GetFloat("DriveBalanceP", DRIVE_BALANCE_P), prefs->GetFloat("DriveBalanceI", DRIVE_BALANCE_I), prefs->GetFloat("DriveBalanceD", DRIVE_BALANCE_D));

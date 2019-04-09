@@ -122,6 +122,9 @@ double VisionSub::getVerticalOffset(int camera){
 	return getTable(camera)->GetNumber("ty", 0.0);
 }
 
+double VisionSub::getHorizontalWidth(int camera){
+  return getTable(camera)->GetNumber("thor", 0.0);
+}
 
 
 double VisionSub::getScoringFaceAngle(int camera) {
