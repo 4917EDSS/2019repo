@@ -14,7 +14,7 @@
 #include "frc/shuffleboard/BuiltInLayouts.h"
 
 constexpr float DRIVE_BALANCE_TOLERANCE = 0.5;
-constexpr float DRIVE_BALANCE_P = 0;
+constexpr float DRIVE_BALANCE_P = 0.018;
 constexpr float DRIVE_BALANCE_I = 0;
 constexpr float DRIVE_BALANCE_D = 0;
 constexpr float MOTOR_POWER_SCALING_FACTOR = 1.0;
@@ -157,10 +157,11 @@ void DrivetrainSub::updateShuffleBoard(){
   nteRoll.SetDouble(ahrs->GetRoll());
 }
 void DrivetrainSub::enableBalancerPID(float setPoint){
+  resetAHRS();
   Preferences *prefs = Preferences::GetInstance();
 	driveBalancePID->SetPID(prefs->GetFloat("DriveBalanceP", DRIVE_BALANCE_P), prefs->GetFloat("DriveBalanceI", DRIVE_BALANCE_I), prefs->GetFloat("DriveBalanceD", DRIVE_BALANCE_D));
 	driveBalancePID->SetAbsoluteTolerance(prefs->GetFloat("DriveBalanceTolerance", DRIVE_BALANCE_TOLERANCE));
-	driveBalancePID->SetSetpoint(setPoint);
+	driveBalancePID->SetSetpoint(0);
 	driveBalancer->Reset();
 	driveBalancePID->Enable();
 }
