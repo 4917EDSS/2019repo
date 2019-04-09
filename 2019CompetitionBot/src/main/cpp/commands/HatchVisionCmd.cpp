@@ -41,7 +41,7 @@ void HatchVisionCmd::Execute() {
     targetAngle += (driverJoystick->GetX()*20.0);
   }
 
-  if (Robot::visionSub.isTargetVisible(MANIPULATOR_CAMERA) && (verticalOffset > -23.00) && !noLongerSeesTarget) {
+  if (Robot::visionSub.isTargetVisible(MANIPULATOR_CAMERA) && (verticalOffset < 20.00) && !noLongerSeesTarget) {
     double lSpeed=(0);
     double rSpeed=(0);
 
