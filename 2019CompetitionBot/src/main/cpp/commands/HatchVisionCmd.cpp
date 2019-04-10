@@ -59,21 +59,20 @@ void HatchVisionCmd::Execute() {
         noLongerSeesTarget = true;
         Robot::drivetrainSub.enableBalancerPID();
       }
-        if (Robot::manipulatorSub.getFlipperAngle() > 0){
-          Robot::drivetrainSub.driverDriveStraight(0.3);
-        }
-        else {
-          Robot::drivetrainSub.driverDriveStraight(-0.3);
-        }
-        
-       
-    } else {
       if (Robot::manipulatorSub.getFlipperAngle() > 0){
-          Robot::drivetrainSub.drive(0.3,0.3);
-        }
-        else {
-          Robot::drivetrainSub.drive(-0.3,-0.3);
-        }
+        Robot::drivetrainSub.driverDriveStraight(0.3);
+      }
+      else {
+        Robot::drivetrainSub.driverDriveStraight(-0.3);
+      } 
+    } 
+    else {
+      if (Robot::manipulatorSub.getFlipperAngle() > 0){
+        Robot::drivetrainSub.drive(0.3,0.3);
+      }
+      else {
+        Robot::drivetrainSub.drive(-0.3,-0.3);
+      }
       
     }
   } 
