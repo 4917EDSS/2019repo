@@ -15,7 +15,7 @@
 #include <RobotMap.h>
 #include "SparkShuffleboardEntrySet.h"
 
-constexpr double INTAKE_ARM_MAX_ANGLE = 195;
+constexpr double INTAKE_ARM_MAX_ANGLE = 220;
 constexpr double INTAKE_ARM_MIN_ANGLE = 0;
 
 constexpr double INTAKE_NEUTRAL_ANGLE = INTAKE_ARM_MIN_ANGLE;

@@ -16,7 +16,7 @@ ClimbExtendGrp::ClimbExtendGrp() {
   AddSequential(new FoldIntakeCmd(false));
   AddSequential(new SetIntakeArmAngleCmd(false, 30));
   AddSequential(new ClimbCmd());
-  AddSequential(new SetIntakeArmAngleCmd(false, 175));
+  AddSequential(new SetIntakeArmAngleCmd(false, 190));
 
 
  
