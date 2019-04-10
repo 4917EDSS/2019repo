@@ -46,11 +46,11 @@ void HatchVisionCmd::Execute() {
     double rSpeed=(0);
 
     if (Robot::manipulatorSub.getFlipperAngle() > 0) {
-      lSpeed=(0.2+(targetAngle*0.015));
-      rSpeed=(0.2-(targetAngle*0.015));
+      lSpeed=(0.4+(targetAngle*0.015));
+      rSpeed=(0.4-(targetAngle*0.015));
     } else {
-      lSpeed=(-0.2+(targetAngle*0.015));
-      rSpeed=(-0.2-(targetAngle*0.015));
+      lSpeed=(-0.4+(targetAngle*0.015));
+      rSpeed=(-0.4-(targetAngle*0.015));
     }
     Robot::drivetrainSub.drive(lSpeed,rSpeed);
   } else {
