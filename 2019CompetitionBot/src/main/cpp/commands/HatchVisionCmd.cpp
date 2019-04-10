@@ -27,6 +27,7 @@ void HatchVisionCmd::Initialize() {
   else{
     Robot::visionSub.setManipulatorPipeline(VISION_MODE_FLIPPED);
   }
+  timeSinceTargetSeen = 99999;
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -57,6 +58,7 @@ void HatchVisionCmd::Execute() {
 	  if (TimeSinceInitialized() > 0.3){
       if (!noLongerSeesTarget){
         noLongerSeesTarget = true;
+        timeSinceTargetSeen = TimeSinceInitialized();
         Robot::drivetrainSub.enableBalancerPID();
       }
       if (Robot::manipulatorSub.getFlipperAngle() > 0){
@@ -81,6 +83,12 @@ void HatchVisionCmd::Execute() {
 // Make this return true when this Command no longer needs to run execute()
 bool HatchVisionCmd::IsFinished() { 
   if (Robot::visionSub.getHorizontalWidth(MANIPULATOR_CAMERA) > 250) {
+    return true;
+  }
+  else if(TimeSinceInitialized() - timeSinceTargetSeen > 0.25){
+    return true;
+  }
+  else if (TimeSinceInitialized() > 4){
     return true;
   }
   else {

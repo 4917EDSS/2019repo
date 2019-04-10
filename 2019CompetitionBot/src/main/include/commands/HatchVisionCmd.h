@@ -18,5 +18,6 @@ class HatchVisionCmd : public frc::Command {
   void End();
   void Interrupted();
   private: 
+  double timeSinceTargetSeen; 
   bool noLongerSeesTarget;
 };
