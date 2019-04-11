@@ -30,6 +30,7 @@ void HatchVisionCmd::Initialize() {
   }
   timeSinceTargetSeen = 99999;
   Robot::manipulatorSub.setIntakePower(0.5);
+  Robot::manipulatorSub.contractHatchGripper();
 }
 
 // Called repeatedly when this Command is scheduled to run
