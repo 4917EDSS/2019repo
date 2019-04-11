@@ -15,6 +15,7 @@ HatchVisionCmd::HatchVisionCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::drivetrainSub);
+  Requires(&Robot::manipulatorSub);
 }
 
 // Called just before this Command runs the first time
@@ -28,6 +29,7 @@ void HatchVisionCmd::Initialize() {
     Robot::visionSub.setManipulatorPipeline(VISION_MODE_FLIPPED);
   }
   timeSinceTargetSeen = 99999;
+  Robot::manipulatorSub.setIntakePower(0.5);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -48,14 +50,14 @@ void HatchVisionCmd::Execute() {
     double percent;
     double difference;
     percent = Robot::visionSub.getHorizontalWidth(MANIPULATOR_CAMERA)/250.0;
-    difference = 0.3 * percent;
-    double power = 0.5 - difference;
+    difference = 0.35 * percent;
+    double power = 0.6 - difference;
     if (Robot::manipulatorSub.getFlipperAngle() > 0) {
-      lSpeed=(power+(targetAngle*0.015));
-      rSpeed=(power-(targetAngle*0.015));
+      lSpeed=(power+(targetAngle*0.017));
+      rSpeed=(power-(targetAngle*0.017));
     } else {
-      lSpeed=(-power+(targetAngle*0.015));
-      rSpeed=(-power-(targetAngle*0.015));
+      lSpeed=(-power+(targetAngle*0.017));
+      rSpeed=(-power-(targetAngle*0.017));
     }
     Robot::drivetrainSub.drive(lSpeed,rSpeed);
   } else {
@@ -105,6 +107,7 @@ void HatchVisionCmd::End() {
   Robot::drivetrainSub.drive(0,0);
   Robot::visionSub.setManipulatorPipeline(DRIVER_MODE_NORMAL);
   Robot::drivetrainSub.disableBalancerPID();
+  Robot::manipulatorSub.setIntakePower(0.0);
 }
 
 // Called when another command which requires one or more of the same
