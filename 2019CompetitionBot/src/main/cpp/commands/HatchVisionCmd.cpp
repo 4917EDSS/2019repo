@@ -59,7 +59,7 @@ void HatchVisionCmd::Execute() {
     }
     Robot::drivetrainSub.drive(lSpeed,rSpeed);
   } else {
-	  if (TimeSinceInitialized() > 0.3){
+	  if (TimeSinceInitialized() > 0.6){
       if (!noLongerSeesTarget){
         noLongerSeesTarget = true;
         timeSinceTargetSeen = TimeSinceInitialized();
