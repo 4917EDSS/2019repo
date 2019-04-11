@@ -36,6 +36,7 @@
 #include "commands/AutoLeftRocketCloseHatchPart2Grp.h"
 #include "commands/AutoRightRocketCloseHatchPart2Grp.h"
 #include "commands/VisionHatchPickupGrp.h"
+#include "commands/VisionScoringCmd.h"
 
 
 
@@ -55,7 +56,7 @@ OI::OI() {
 
   // Driver controller buttons
   driveToVisionTargetBtn.reset(new frc::JoystickButton(driverController.get(), DRIVE_TO_VISION_TARGET_BTN));
-  driveToVisionTargetBtn->WhileHeld(new MilkyScoreGrp());
+  driveToVisionTargetBtn->WhenPressed(new VisionScoringCmd());
 
   driveToVisionTargetWithManipulatorBtn.reset(new frc::JoystickButton(driverController.get(), DRIVE_TO_VISION_TARGET_WITH_MANIPULATOR_BTN));
   driveToVisionTargetWithManipulatorBtn->WhenPressed(new VisionHatchPickupGrp());

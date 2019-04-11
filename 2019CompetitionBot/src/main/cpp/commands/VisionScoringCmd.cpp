@@ -57,21 +57,12 @@ void VisionScoringCmd::Execute() {
         timeSinceTargetSeen = TimeSinceInitialized();
         Robot::drivetrainSub.enableBalancerPID();
       }
-      if (Robot::manipulatorSub.getFlipperAngle() > 0){
-        Robot::drivetrainSub.driverDriveStraight(0.2);
-      }
       else {
-        Robot::drivetrainSub.driverDriveStraight(-0.2);
+        Robot::drivetrainSub.driverDriveStraight(0.2);
       } 
     } 
     else {
-      if (Robot::manipulatorSub.getFlipperAngle() > 0){
         Robot::drivetrainSub.drive(0.2,0.2);
-      }
-      else {
-        Robot::drivetrainSub.drive(-0.2,-0.2);
-      }
-      
     }
   } 
 }
