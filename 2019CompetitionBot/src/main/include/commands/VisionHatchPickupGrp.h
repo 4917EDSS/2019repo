@@ -7,18 +7,9 @@
 
 #pragma once
 
-#include <frc/commands/Command.h>
+#include <frc/commands/CommandGroup.h>
 
-class SetManipulatorAngleCmd : public frc::Command {
+class VisionHatchPickupGrp : public frc::CommandGroup {
  public:
-  SetManipulatorAngleCmd(double targetAngle);
-  SetManipulatorAngleCmd(double targetAngle, bool sneakyBoi);
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
-
-private:
-  double targetAngle;
+  VisionHatchPickupGrp();
 };

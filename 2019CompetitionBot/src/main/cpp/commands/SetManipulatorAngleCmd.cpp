@@ -14,6 +14,10 @@ SetManipulatorAngleCmd::SetManipulatorAngleCmd(double targetAngle) : targetAngle
     Requires(&Robot::manipulatorSub);
 }
 
+SetManipulatorAngleCmd::SetManipulatorAngleCmd(double targetAngle, bool sneakyBoi) : targetAngle(targetAngle) {
+  //We are not doing any requires, do not use for normal operations
+}
+
 // Called just before this Command runs the first time
 void SetManipulatorAngleCmd::Initialize() {
   Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_AUTO, 1.0, targetAngle);

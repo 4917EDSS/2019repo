@@ -7,7 +7,6 @@
 
 #include "commands/ClimbExtendGrp.h"
 #include "commands/SetIntakeArmAngleCmd.h"
-#include "commands/DriveStraightCmd.h"
 #include "commands/DriveWithIntakeMotorCmd.h"
 #include "commands/FoldIntakeCmd.h"
 #include "commands/ClimbCmd.h"
@@ -22,7 +21,6 @@ ClimbExtendGrp::ClimbExtendGrp() {
  
 
   //AddSequential(new DriveWithIntakeMotorCmd());
-  //AddSequential(new DriveStraightCmd(1.0));
  
   // Add Commands here:
   // e.g. AddSequential(new Command1());

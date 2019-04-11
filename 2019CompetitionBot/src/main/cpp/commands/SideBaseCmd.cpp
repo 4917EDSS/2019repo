@@ -13,7 +13,6 @@
 
 SideBaseCmd::SideBaseCmd(Command *onTrue, Command *onFalse) : frc::ConditionalCommand(onTrue, onFalse) {}
 
-// First parameter (onTrue) is hatch height.  Second parameter (onFalse) is cargo height
 bool SideBaseCmd::Condition() {
-  return Robot::manipulatorSub.getFlipperAngle() > 0;
+  return Robot::manipulatorSub.getFlipperAngle() >= 0;
 }

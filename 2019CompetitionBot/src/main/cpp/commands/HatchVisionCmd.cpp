@@ -45,13 +45,17 @@ void HatchVisionCmd::Execute() {
   if (Robot::visionSub.isTargetVisible(MANIPULATOR_CAMERA) && (verticalOffset < 20.00) && !noLongerSeesTarget) {
     double lSpeed=(0);
     double rSpeed=(0);
-
+    double percent;
+    double difference;
+    percent = Robot::visionSub.getHorizontalWidth(MANIPULATOR_CAMERA)/250.0;
+    difference = 0.3 * percent;
+    double power = 0.5 - difference;
     if (Robot::manipulatorSub.getFlipperAngle() > 0) {
-      lSpeed=(0.4+(targetAngle*0.015));
-      rSpeed=(0.4-(targetAngle*0.015));
+      lSpeed=(power+(targetAngle*0.015));
+      rSpeed=(power-(targetAngle*0.015));
     } else {
-      lSpeed=(-0.4+(targetAngle*0.015));
-      rSpeed=(-0.4-(targetAngle*0.015));
+      lSpeed=(-power+(targetAngle*0.015));
+      rSpeed=(-power-(targetAngle*0.015));
     }
     Robot::drivetrainSub.drive(lSpeed,rSpeed);
   } else {
@@ -62,18 +66,18 @@ void HatchVisionCmd::Execute() {
         Robot::drivetrainSub.enableBalancerPID();
       }
       if (Robot::manipulatorSub.getFlipperAngle() > 0){
-        Robot::drivetrainSub.driverDriveStraight(0.3);
+        Robot::drivetrainSub.driverDriveStraight(0.2);
       }
       else {
-        Robot::drivetrainSub.driverDriveStraight(-0.3);
+        Robot::drivetrainSub.driverDriveStraight(-0.2);
       } 
     } 
     else {
       if (Robot::manipulatorSub.getFlipperAngle() > 0){
-        Robot::drivetrainSub.drive(0.3,0.3);
+        Robot::drivetrainSub.drive(0.2,0.2);
       }
       else {
-        Robot::drivetrainSub.drive(-0.3,-0.3);
+        Robot::drivetrainSub.drive(-0.2,-0.2);
       }
       
     }

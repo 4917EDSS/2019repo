@@ -7,7 +7,6 @@
 
 #include "commands/ClimbRetractGrp.h"
 #include "commands/SetIntakeArmAngleCmd.h"
-#include "commands/DriveStraightCmd.h"
 #include "commands/DriveWithIntakeMotorCmd.h"
 #include "commands/ClimbReverseCmd.h"
 #include "commands/ClimbBarAutoRetractCmd.h"

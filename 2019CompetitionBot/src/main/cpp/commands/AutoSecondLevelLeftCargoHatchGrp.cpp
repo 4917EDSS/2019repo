@@ -8,7 +8,6 @@
 #include "commands/AutoSecondLevelLeftCargoHatchGrp.h"
 #include "commands/ExpandHatchGripperGrp.h"
 #include "commands/SetManipulatorAngleCmd.h"
-#include "commands/DriveStraightCmd.h"
 #include "commands/SilkyMotionCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
 

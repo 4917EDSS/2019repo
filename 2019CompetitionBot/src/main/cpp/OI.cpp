@@ -31,11 +31,11 @@
 #include "commands/FlipManipulatorGrp.h"
 #include "commands/ZeroAllSystemsGrp.h"
 #include "commands/ClimbBarAutoRetractCmd.h"
-#include "commands/HatchVisionCmd.h"
 #include "commands/ClimbRetractGrp.h"
 #include "commands/CargoHighHeightGrp.h"
 #include "commands/AutoLeftRocketCloseHatchPart2Grp.h"
 #include "commands/AutoRightRocketCloseHatchPart2Grp.h"
+#include "commands/VisionHatchPickupGrp.h"
 
 
 
@@ -58,7 +58,7 @@ OI::OI() {
   driveToVisionTargetBtn->WhileHeld(new MilkyScoreGrp());
 
   driveToVisionTargetWithManipulatorBtn.reset(new frc::JoystickButton(driverController.get(), DRIVE_TO_VISION_TARGET_WITH_MANIPULATOR_BTN));
-  driveToVisionTargetWithManipulatorBtn->WhenPressed(new HatchVisionCmd());
+  driveToVisionTargetWithManipulatorBtn->WhenPressed(new VisionHatchPickupGrp());
 
   climbBtn.reset(new frc::JoystickButton(driverController.get(), CLIMB_BTN));
   climbBtn->WhenPressed(new ClimbExtendGrp());
