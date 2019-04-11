@@ -9,15 +9,16 @@
 #include "commands/SetElevatorToHeightCmd.h"
 #include "commands/CargoModeGrp.h"
 #include "commands/FlipManipulatorGrp.h"
-#include "commands/HatchModeGrp.h"
+#include "commands/HatchModeGrp.h" 
 #include "commands/SilkyMotionCmd.h"
+#include "commands/VisionHatchPickupGrp.h"
 
 AutoRightRocketCloseHatchPart2Grp::AutoRightRocketCloseHatchPart2Grp() {
   
   AddSequential(new CargoModeGrp());
-  AddParallel(new SilkyMotionCmd(std::vector<double> {-500,-4200}, std::vector<double> {-33,5}));
+  AddParallel(new SilkyMotionCmd(std::vector<double> {-500,-2000}, std::vector<double> {-33,5}));
   AddSequential(new frc::WaitCommand(0.5));
   AddSequential(new FlipManipulatorGrp());
-  AddParallel(new HatchModeGrp());
   AddSequential(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM + 100.0));
+  AddSequential(new VisionHatchPickupGrp());
 }
