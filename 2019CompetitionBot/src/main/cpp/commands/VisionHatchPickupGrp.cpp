@@ -10,7 +10,6 @@
 #include "commands/DriveStraightCmd.h"
 #include "commands/ExpandHatchGripperGrp.h"
 #include "commands/FlipManipulatorGrp.h"
-#include "commands/HatchModeGrp.h"
 #include "commands/ModeBasedCndCmd.h"
 #include "frc/commands/InstantCommand.h"
 #include "commands/SetElevatorToHeightCmd.h"
@@ -20,7 +19,6 @@
 
 VisionHatchPickupGrp::VisionHatchPickupGrp() {
 
-AddParallel(new ModeBasedCndCmd(new frc::InstantCommand(), new HatchModeGrp()));
 AddParallel(new SideBaseCmd(new SetElevatorToHeightCmd(ELEVATOR_MIN_SAFE_HEIGHT), new frc::InstantCommand()));
 AddSequential(new SetManipulatorAngleCmd(-90, true)); // Second  parameter removes the "requires Manipulator Sub" 
 AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM + 100.0));

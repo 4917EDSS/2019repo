@@ -28,6 +28,6 @@ FlipManipulatorGrp::FlipManipulatorGrp() {
   // a CommandGroup containing them would require both the chassis and the
   // arm.
 
-  AddSequential(new SetElevatorToHeightCmd(ELEVATOR_MID_SAFE_HEIGHT));
+  AddParallel(new SetElevatorToHeightCmd(ELEVATOR_MID_SAFE_HEIGHT));
   AddSequential(new ToggleManipulatorPositionCmd());
 }
