@@ -5,17 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/AutoSecondLevelLeftCargoHatchGrp.h"
+#include "commands/AutoVision2ndLevelLCargoHatchGrp.h"
 #include "commands/ExpandHatchGripperGrp.h"
 #include "commands/SetManipulatorAngleCmd.h"
 #include "commands/SilkyMotionCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
 
+AutoVision2ndLevelLCargoHatchGrp::AutoVision2ndLevelLCargoHatchGrp() {
 
-AutoSecondLevelLeftCargoHatchGrp::AutoSecondLevelLeftCargoHatchGrp() {
   AddSequential(new ExpandHatchGripperGrp());
   AddParallel(new SetManipulatorAngleCmd(90));
-  AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM));
+  AddParallel(new SetElevatorToHeightCmd(ELEVATOR_MEDIUM_HATCH_HEIGHT_MM));
   AddSequential(new SilkyMotionCmd(std::vector<double> {550, -550, 4000, 2000, 500}, std::vector<double> {0, 0, -30, 120, 0}));
 
 }

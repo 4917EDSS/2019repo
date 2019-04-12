@@ -37,7 +37,7 @@ void VisionScoringCmd::Execute() {
     targetAngle += (driverJoystick->GetX()*20.0);
   }
 
-  if (Robot::visionSub.isTargetVisible(BUMPER_CAMERA) && (verticalOffset < 20.00) && !noLongerSeesTarget) {
+  if (Robot::visionSub.isTargetVisible(BUMPER_CAMERA) && (verticalOffset < 13.00) && !noLongerSeesTarget) {
     double lSpeed=(0);
     double rSpeed=(0);
     double percent;
