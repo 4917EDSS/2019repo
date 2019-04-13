@@ -21,6 +21,7 @@
 #include "commands/AutoSecondLevelRightRocketHatchGrp.h"
 #include "commands/AutoSecondLevelLeftCargoHatchGrp.h"
 #include "commands/AutoSecondLevelRightCargoHatchGrp.h"
+#include "commands/AutoVision2ndLevelLCargoHatchGrp.h"
 
 
 
@@ -49,6 +50,8 @@ void Robot::RobotInit() {
   autoChooser->AddOption("2 lvl R Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelRightRocketHatchGrp()));
   autoChooser->AddOption("2 lvl L Cargo Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelLeftCargoHatchGrp()));
   autoChooser->AddOption("2 lvl R Cargo Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelRightCargoHatchGrp()));
+  autoChooser->AddOption("Vision L Cargo", std::shared_ptr<frc::Command>(new AutoVision2ndLevelLCargoHatchGrp()));
+
   frc::SmartDashboard::PutData("Auto Modes", autoChooser.get());
 
   // Setup logging system

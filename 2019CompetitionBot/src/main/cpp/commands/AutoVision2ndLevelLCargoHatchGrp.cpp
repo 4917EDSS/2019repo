@@ -10,16 +10,19 @@
 #include "commands/SetManipulatorAngleCmd.h"
 #include "commands/SilkyMotionCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
+#include "commands/VisionScoringCmd.h"
 
 AutoVision2ndLevelLCargoHatchGrp::AutoVision2ndLevelLCargoHatchGrp() {
 
   AddSequential(new ExpandHatchGripperGrp());
-  AddParallel(new SetManipulatorAngleCmd(90));
   AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM));
-  AddSequential(new SilkyMotionCmd(std::vector<double> {550, -200, 4000}, std::vector<double> {0, 0, -30}));
-  AddParallel(new SetElevatorToHeightCmd(ELEVATOR_MEDIUM_HATCH_HEIGHT_MM));
-  AddSequential(new SilkyMotionCmd(std::vector<double> { 2000, 500}, std::vector<double> {120, 0}));
+  AddParallel(new SetManipulatorAngleCmd(0));
+  AddSequential(new SilkyMotionCmd(std::vector<double> {550, -550, 5000, 500}, std::vector<double> {0, 0, -35, 115}));
+
   // Vision to close-to-ship
-  // Lower elevator
+  AddSequential(new VisionScoringCmd());
+  AddSequential(new SilkyMotionCmd(std::vector<double> {-400}, std::vector<double> {0}));
+  AddSequential(new SetManipulatorAngleCmd(90));
+  AddSequential(new SilkyMotionCmd(std::vector<double> {450}, std::vector<double> {0}));
   // Forward to ship
 }
