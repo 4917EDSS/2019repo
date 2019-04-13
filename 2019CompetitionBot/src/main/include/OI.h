@@ -37,7 +37,7 @@ constexpr int OPERATOR_CONTROLLER_PORT = 1;
 constexpr int DRIVE_TO_VISION_TARGET_BTN = 1;
 constexpr int DRIVE_TO_VISION_TARGET_WITH_MANIPULATOR_BTN = 2;
 // 3 - free
-// 4 - free
+constexpr int CLIMB_AGAIN_BTN = 4;
 constexpr int CLIMB_BTN = 5;
 constexpr int EXTEND_CLIMB_BARS_BTN = 6;
 constexpr int REVERSE_CLIMB_BTN = 7;
@@ -104,6 +104,8 @@ class OI {
     std::shared_ptr<frc::JoystickButton> AutoRightRocketCloseHatchPart2GrpBtn;
     std::shared_ptr<frc::JoystickButton> driverKillBtn1;
     std::shared_ptr<frc::JoystickButton> driverKillBtn2;
+    std::shared_ptr<frc::JoystickButton> climbAgainBtn;
+
     
 
     // Operator controller buttons

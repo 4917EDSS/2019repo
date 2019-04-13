@@ -37,6 +37,7 @@
 #include "commands/AutoRightRocketCloseHatchPart2Grp.h"
 #include "commands/VisionHatchPickupGrp.h"
 #include "commands/VisionScoringCmd.h"
+#include "commands/ClimbAgainGrp.h"
 
 
 
@@ -85,6 +86,8 @@ OI::OI() {
   driverKillBtn2.reset(new frc::JoystickButton(driverController.get(), DRIVER_KILL_TWO_BTN));
   driverKillBtn2->WhenPressed(new KillEverythingCmd());
 
+  climbAgainBtn.reset(new frc::JoystickButton(driverController.get(), CLIMB_AGAIN_BTN));
+  climbAgainBtn->WhenPressed(new ClimbAgainGrp());
   // Operator controller buttons
   elevatorToCargoShipHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_CARGO_SHIP_HEIGHT_BTN));
   elevatorToCargoShipHeightBtn->WhenPressed( new SideBaseCmd (new SetElevatorToHeightCmd(ELEVATOR_CARGO_SHIP_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_TO_REAR-1.0)));
