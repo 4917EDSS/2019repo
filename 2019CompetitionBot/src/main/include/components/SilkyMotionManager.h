@@ -13,6 +13,11 @@
 #include <vector>
 #include <utility>
 
+// These constants are here so the offline test/visualization programs can get to them
+const double MAX_LIN_ACCEL=2200.0;
+const double MAX_LIN_DECEL=3000.0;
+const double MAX_LIN_VEL=1800.0;
+const double MAX_ANG_ACCEL=800.0;
 
 struct PathInfo {
 	double dis;
