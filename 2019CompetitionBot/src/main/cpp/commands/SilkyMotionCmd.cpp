@@ -4,6 +4,11 @@
 #include <algorithm>
 #include <math.h>
 
+const double MAX_LIN_ACCEL=2200.0;
+const double MAX_LIN_DECEL=3000.0;
+const double MAX_LIN_VEL=1800.0;
+const double MAX_ANG_ACCEL=800.0;
+
 const double P_DIS=0.0015;
 const double D_DIS=0.000002;
 const double A_DIS=0.125*(0.8/MAX_LIN_VEL);
