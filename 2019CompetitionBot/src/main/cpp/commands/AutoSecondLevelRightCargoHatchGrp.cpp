@@ -8,7 +8,6 @@
 #include "commands/AutoSecondLevelRightCargoHatchGrp.h"
 #include "commands/ExpandHatchGripperGrp.h"
 #include "commands/SetManipulatorAngleCmd.h"
-#include "commands/DriveStraightCmd.h"
 #include "commands/SilkyMotionCmd.h"
 #include "commands/SetElevatorToHeightCmd.h"
 
@@ -17,6 +16,6 @@ AutoSecondLevelRightCargoHatchGrp::AutoSecondLevelRightCargoHatchGrp() {
   AddSequential(new ExpandHatchGripperGrp());
   AddParallel(new SetManipulatorAngleCmd(90));
   AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM));
-  AddSequential(new SilkyMotionCmd(std::vector<double> {550, -550, 4250, 2000, 500}, std::vector<double> {0, 0, 30, -120, 0}));
+  AddSequential(new SilkyMotionCmd(std::vector<double> {550, -550, 4050, 2000}, std::vector<double> {0, 0, 30, -120}));
 
 }

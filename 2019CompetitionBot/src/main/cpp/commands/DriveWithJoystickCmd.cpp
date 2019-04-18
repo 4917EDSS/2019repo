@@ -151,7 +151,7 @@ void DriveWithJoystickCmd::Execute() {
 		}
 		if (((RobotController::GetFPGATime() - timeSinceDrivingStraight) >= AHRS_DELAY_TIME) && wasDrivingStraight == 1) {
 			// Ready to use AHRS to keep us straight
-			Robot::drivetrainSub.enableBalancerPID(Robot::drivetrainSub.getAngle()); //getAngle() should display above 360
+			Robot::drivetrainSub.enableBalancerPID(); //getAngle() should display above 360
 			wasDrivingStraight = 2;
 		}
 
@@ -195,6 +195,7 @@ void DriveWithJoystickCmd::End() {
 	currentDrivePower = 0.0;
 	currentRotatePower = 0.0;
 	Robot::drivetrainSub.drive(0, 0);
+	Robot::drivetrainSub.disableBalancerPID();
 }
 
 // Called when another command which requires one or more of the same

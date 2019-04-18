@@ -13,7 +13,6 @@
 #include <vector>
 #include <utility>
 
-
 struct PathInfo {
 	double dis;
 	double ang;
@@ -28,7 +27,7 @@ private:
 	std::vector<double> actualSpeed;
 	std::vector<double> timestamps;
 	std::vector<double> dis;
-  std::vector<bool> negatives;
+  	std::vector<bool> negatives;
 	std::vector<double> ang;
 	double maxLinAccel, maxLinDecel, maxLinVel, maxAngAccel;
 	double stoppingDistanceTolerance, stoppingSpeedTolerance, stoppingAngleTolerance;

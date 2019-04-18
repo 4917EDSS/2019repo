@@ -10,6 +10,7 @@ class DriveStraightCmd : public frc::Command {
   void End() override;
   void Interrupted() override;
  private:
-  double distance;
+  double time;
   double power;
+  double timeSinceStarted;
 };

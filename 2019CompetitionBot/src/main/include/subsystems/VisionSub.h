@@ -35,5 +35,7 @@ class VisionSub : public frc::Subsystem {
   void setManipulatorPipeline(int pipeLine);
   bool isTargetVisible(int camera);
   double getScoringFaceAngle(int camera);
+  double getVerticalOffset(int camera);
+  double getHorizontalWidth(int camera);
   std::shared_ptr<NetworkTable> getTable(int camera);
 };

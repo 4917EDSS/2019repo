@@ -1,25 +1,25 @@
 #include "commands/DriveStraightCmd.h"
 #include "Robot.h"
 
-DriveStraightCmd::DriveStraightCmd(double distance, double power): distance(distance), power(power) {
+DriveStraightCmd::DriveStraightCmd(double time, double power): time(time), power(power) {
   Requires(&Robot::drivetrainSub);
 }
 
 void DriveStraightCmd::Initialize() {
   //logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-  Robot::drivetrainSub.enableBalancerPID(Robot::drivetrainSub.getAngle());
-  Robot::drivetrainSub.driverDriveStraight(power);
+  Robot::drivetrainSub.drive(power, power);
 }
 
 void DriveStraightCmd::Execute() {
 }
 
 bool DriveStraightCmd::IsFinished() {
-  double distanceTraveled=(Robot::drivetrainSub.getLeftEncoder() + Robot::drivetrainSub.getRightEncoder()) / 2;
-  if (distanceTraveled >= distance) {
+  if(TimeSinceInitialized() > time) {
     return true;
   }
-  return false;
+  else {
+    return false;
+  }
 }
 
 void DriveStraightCmd::End() {

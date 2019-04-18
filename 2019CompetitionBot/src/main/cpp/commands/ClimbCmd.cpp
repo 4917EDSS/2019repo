@@ -36,7 +36,7 @@ void ClimbCmd::Execute() {
   double pitchAngle = Robot::drivetrainSub.getPitchAngle();
 
   // pitch > 0,  robot is tipping forward, less power to intake arm
-  lastPower = 0.5 - pitchAngle * 0.1;
+  lastPower = 0.4 - pitchAngle * 0.1;
 
   // Otherise, use lastPower without changing it
 
@@ -57,7 +57,7 @@ bool ClimbCmd::IsFinished() {
   if(Robot::climbSub.getClimbPosition() >= CLIMB_EXTEND_LIMIT_THRESHOLD) {
     return true;
   }
-  else if(Robot::ballIntakeSub.getIntakeArmAngle() > 174){ // TODO: needs more tuning
+  else if(Robot::ballIntakeSub.getIntakeArmAngle() > 190){ // TODO: needs more tuning
     return true;
   }
   else {

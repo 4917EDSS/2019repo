@@ -7,7 +7,6 @@
 
 #include "commands/ClimbRetractGrp.h"
 #include "commands/SetIntakeArmAngleCmd.h"
-#include "commands/DriveStraightCmd.h"
 #include "commands/DriveWithIntakeMotorCmd.h"
 #include "commands/ClimbReverseCmd.h"
 #include "commands/ClimbBarAutoRetractCmd.h"
@@ -16,7 +15,7 @@
 ClimbRetractGrp::ClimbRetractGrp() {
 
   AddParallel(new ClimbBarAutoRetractCmd());
-  AddSequential(new SetIntakeArmAngleCmd(true, 30));
+  AddSequential(new SetIntakeArmAngleCmd(true, 0));
   // Add Commands here:
   // e.g. AddSequential(new Command1());
   //      AddSequential(new Command2());

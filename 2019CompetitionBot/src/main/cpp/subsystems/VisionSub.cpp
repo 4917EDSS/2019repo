@@ -62,6 +62,7 @@ double VisionSub::getRobotTargetAngle(double robotHeading, double cameraAngle, d
         return finalUnadjusted + (360*adjustment); // Bringing us back to reality
 }
 
+
 std::shared_ptr<NetworkTable> VisionSub::getTable(int camera) {
   if (camera == 1) {
     return nt::NetworkTableInstance::GetDefault().GetTable("limelight");
@@ -117,6 +118,13 @@ double VisionSub::getVisionTarget(int camera) {
   return getTable(camera)->GetNumber("tx", 0.0);
 }
 
+double VisionSub::getVerticalOffset(int camera){
+	return getTable(camera)->GetNumber("ty", 0.0);
+}
+
+double VisionSub::getHorizontalWidth(int camera){
+  return getTable(camera)->GetNumber("thor", 0.0);
+}
 
 
 double VisionSub::getScoringFaceAngle(int camera) {

@@ -12,6 +12,7 @@
 class SetManipulatorAngleCmd : public frc::Command {
  public:
   SetManipulatorAngleCmd(double targetAngle);
+  SetManipulatorAngleCmd(double targetAngle, bool sneakyBoi);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
