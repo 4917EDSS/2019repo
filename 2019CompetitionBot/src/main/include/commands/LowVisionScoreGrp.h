@@ -7,15 +7,9 @@
 
 #pragma once
 
-#include <frc/commands/Command.h>
+#include <frc/commands/CommandGroup.h>
 
-class VisionScoringCmd : public frc::Command {
+class LowVisionScoreGrp : public frc::CommandGroup {
  public:
-  VisionScoringCmd();
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
-  bool noLongerSeesTarget;
+  LowVisionScoreGrp();
 };

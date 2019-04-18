@@ -22,20 +22,13 @@ void VisionScoringCmd::Initialize() {
   //logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
   noLongerSeesTarget = false;
   Robot::visionSub.setBumperPipeline(VISION_MODE_NORMAL); 
-  timeSinceTargetSeen = 99999;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void VisionScoringCmd::Execute() {
   
-  std::shared_ptr<frc::Joystick> driverJoystick = Robot::oi.getDriverController();
-
   double targetAngle=Robot::visionSub.getVisionTarget(BUMPER_CAMERA);
   double verticalOffset = Robot::visionSub.getVerticalOffset(BUMPER_CAMERA);
-  
-  if(fabs(driverJoystick->GetX()) > JOYSTICK_DEADBAND){
-    targetAngle += (driverJoystick->GetX()*20.0);
-  }
 
   if (Robot::visionSub.isTargetVisible(BUMPER_CAMERA) && (verticalOffset < 13.00) && !noLongerSeesTarget) {
     double lSpeed=(0);
@@ -54,7 +47,6 @@ void VisionScoringCmd::Execute() {
 	  if (TimeSinceInitialized() > 0.6){
       if (!noLongerSeesTarget){
         noLongerSeesTarget = true;
-        timeSinceTargetSeen = TimeSinceInitialized();
         Robot::drivetrainSub.enableBalancerPID();
       }
       else {
@@ -69,13 +61,9 @@ void VisionScoringCmd::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool VisionScoringCmd::IsFinished() { 
-  if (Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA) > 250) {
+  if (Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA) > 100) {
     return true;
-  }
-  else if(TimeSinceInitialized() - timeSinceTargetSeen > 0.25){
-    return true;
-  }
-  else if (TimeSinceInitialized() > 4){
+  } else if (TimeSinceInitialized() > 4){
     return true;
   }
   else {
