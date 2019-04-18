@@ -12,6 +12,7 @@
 class VisionScoringCmd : public frc::Command {
  public:
   VisionScoringCmd();
+  VisionScoringCmd(bool driveAllTheWay);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
@@ -19,4 +20,6 @@ class VisionScoringCmd : public frc::Command {
   void Interrupted() override;
   double timeSinceTargetSeen; 
   bool noLongerSeesTarget;
+private:
+  bool driveAllTheWay;
 };
