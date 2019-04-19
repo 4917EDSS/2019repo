@@ -4,16 +4,13 @@
 #include <algorithm>
 #include <math.h>
 
-const double MAX_LIN_ACCEL=2200.0;
-const double MAX_LIN_DECEL=3000.0;
-const double MAX_LIN_VEL=1800.0;
-const double MAX_ANG_ACCEL=800.0;
 
-const double P_DIS=0.0015;
-const double D_DIS=0.000002;
-const double A_DIS=0.125*(0.8/MAX_LIN_VEL);
-const double V_DIS=0.6/MAX_LIN_VEL;
-const double P_ANG=0.013;
+
+const double P_DIS=0.0;//0.0015;
+const double D_DIS=0.0;//0.000002;
+const double A_DIS=0.11*(0.8/MAX_LIN_VEL);
+const double V_DIS=1.1/MAX_LIN_VEL;
+const double P_ANG=0.0;//0.013;
 //When we drove at these speeds we were at 1.0 power we got 360 degrees per second
 const double V_ANG=1.1*(1.0/360.0);
 

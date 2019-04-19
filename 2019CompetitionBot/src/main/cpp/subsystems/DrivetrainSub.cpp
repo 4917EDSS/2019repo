@@ -194,7 +194,7 @@ double DrivetrainSub::getPitchAngle() {
   return ahrs->GetPitch();
 }
 double DrivetrainSub::getVelocity() {
-  return ENCODER_TICK_TO_MM*(-leftMotor1->GetEncoder().GetVelocity()+rightMotor1->GetEncoder().GetVelocity())/2;
+  return MAX_LIN_VEL*((-leftMotor1->GetEncoder().GetVelocity()+rightMotor1->GetEncoder().GetVelocity())/2)/(4790.0);
 }
 
 // Put methods for controlling this subsystem

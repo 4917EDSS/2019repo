@@ -16,6 +16,11 @@
 #include "components/MotorBalancer.h"
 #include "SparkShuffleboardEntrySet.h"
 
+const double MAX_LIN_ACCEL=2700.0;
+const double MAX_LIN_DECEL=3300.0;
+const double MAX_LIN_VEL=2700.0;
+const double MAX_ANG_ACCEL=800.0;
+
 class DrivetrainSub : public frc::Subsystem {
  private:
   std::shared_ptr <rev::CANSparkMax> leftMotor1;

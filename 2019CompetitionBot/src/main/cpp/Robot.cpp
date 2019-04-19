@@ -22,6 +22,7 @@
 #include "commands/AutoSecondLevelLeftCargoHatchGrp.h"
 #include "commands/AutoSecondLevelRightCargoHatchGrp.h"
 #include "commands/AutoVision2ndLevelLCargoHatchGrp.h"
+#include "commands/SilkyMotionCmd.h"
 
 
 
@@ -51,6 +52,9 @@ void Robot::RobotInit() {
   autoChooser->AddOption("2 lvl L Cargo Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelLeftCargoHatchGrp()));
   autoChooser->AddOption("2 lvl R Cargo Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelRightCargoHatchGrp()));
   autoChooser->AddOption("Vision L Cargo", std::shared_ptr<frc::Command>(new AutoVision2ndLevelLCargoHatchGrp()));
+
+  SmartDashboard::PutData("SilkyMotionStraightCmd", new SilkyMotionCmd(std::vector<double> {5000}, std::vector<double> {0}));
+	
 
   frc::SmartDashboard::PutData("Auto Modes", autoChooser.get());
 
@@ -229,6 +233,8 @@ void Robot::UpdateSmartDashboard() {
   frc::SmartDashboard::PutNumber("Drivetrain Right Encoder", drivetrainSub.getRightEncoder());
   frc::SmartDashboard::PutNumber("Climb Height", climbSub.getClimbPosition());
   frc::SmartDashboard::PutNumber("Pitch", drivetrainSub.getPitchAngle());
+  frc::SmartDashboard::PutNumber("Speedometer", drivetrainSub.getVelocity());
+
 }
 
 void Robot::resetStateMachines() {
