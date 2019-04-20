@@ -10,6 +10,8 @@
 #include "commands/SetManipulatorAngleCmd.h"
 #include "commands/DriveStraightCmd.h"
 #include "commands/CargoModeGrp.h"
+#include "commands/SetElevatorToHeightCmd.h"
+#include "subsystems/ElevatorSub.h"
 
 LowVisionScoreGrp::LowVisionScoreGrp() {
   // Add Commands here:
@@ -29,8 +31,11 @@ LowVisionScoreGrp::LowVisionScoreGrp() {
   // a CommandGroup containing them would require both the chassis and the
   // arm.
 
-  AddSequential(new VisionScoringCmd());
-  AddSequential(new SetManipulatorAngleCmd(90));
-  AddSequential(new DriveStraightCmd(1,0.6));
+  //****UNCOMMENT THE BELOW LINE FOR THE REAL BOT****
+  //AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM));
+  AddSequential(new SetManipulatorAngleCmd(0));
+  AddSequential(new VisionScoringCmd(false));
+  AddParallel(new SetManipulatorAngleCmd(90));
+  AddSequential(new DriveStraightCmd(0.75,0.3));
   AddSequential(new CargoModeGrp());
 }

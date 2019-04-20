@@ -36,7 +36,7 @@ constexpr int OPERATOR_CONTROLLER_PORT = 1;
 // Driver Buttons
 constexpr int DRIVE_TO_VISION_TARGET_BTN = 1;
 constexpr int DRIVE_TO_VISION_TARGET_WITH_MANIPULATOR_BTN = 2;
-// 3 - free
+constexpr int SCORE_LOW_WITH_VISION_BTN = 3;
 constexpr int CLIMB_AGAIN_BTN = 4;
 constexpr int CLIMB_BTN = 5;
 constexpr int EXTEND_CLIMB_BARS_BTN = 6;
@@ -105,6 +105,7 @@ class OI {
     std::shared_ptr<frc::JoystickButton> driverKillBtn1;
     std::shared_ptr<frc::JoystickButton> driverKillBtn2;
     std::shared_ptr<frc::JoystickButton> climbAgainBtn;
+    std::shared_ptr<frc::JoystickButton> scoreLowVision;
 
     
 

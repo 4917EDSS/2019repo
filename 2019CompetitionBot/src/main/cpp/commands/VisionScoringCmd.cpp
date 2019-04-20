@@ -11,6 +11,7 @@
 #include <iostream>
 
 constexpr double JOYSTICK_DEADBAND = 0.01;
+double maxWidth = 100;
 VisionScoringCmd::VisionScoringCmd(): VisionScoringCmd(false) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
@@ -24,7 +25,8 @@ VisionScoringCmd::VisionScoringCmd(bool driveAllTheWay): driveAllTheWay(driveAll
 void VisionScoringCmd::Initialize() {
   //logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
   noLongerSeesTarget = false;
-  Robot::visionSub.setBumperPipeline(VISION_MODE_NORMAL); 
+  Robot::visionSub.setBumperPipeline(VISION_MODE_NORMAL);
+  timeSinceTargetSeen = 9999999; 
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -38,12 +40,12 @@ void VisionScoringCmd::Execute() {
     double rSpeed=(0);
     double percent;
     double difference;
-    percent = Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA)/250.0;
+    percent = Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA)/maxWidth;
     difference = 0.35 * percent;
-    double power = 0.6 - difference;
+    double power = 0.5 - difference;
     
-    lSpeed=(power+(targetAngle*0.017));
-    rSpeed=(power-(targetAngle*0.017));
+    lSpeed=(power+(targetAngle*0.01));
+    rSpeed=(power-(targetAngle*0.01));
     
     Robot::drivetrainSub.drive(lSpeed,rSpeed);
   } else {
@@ -65,7 +67,7 @@ void VisionScoringCmd::Execute() {
 // Make this return true when this Command no longer needs to run execute()
 bool VisionScoringCmd::IsFinished() { 
   if(driveAllTheWay){
-    if (Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA) > 150) {
+    if ((Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA) > maxWidth) && fabs(Robot::visionSub.getVisionTarget(BUMPER_CAMERA)) < 10) {
       return true;
     }
     else if(TimeSinceInitialized() - timeSinceTargetSeen > 0.75){
@@ -75,10 +77,10 @@ bool VisionScoringCmd::IsFinished() {
       return true;
     }
   }else{
-    if (Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA) > 150) {
+    if ((Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA) > maxWidth) && fabs(Robot::visionSub.getVisionTarget(BUMPER_CAMERA)) < 10) {
       return true;
     }else if (TimeSinceInitialized() > timeSinceTargetSeen){
-    return true;
+      return true;
     }else if (TimeSinceInitialized() > 4){
       return true;
     }

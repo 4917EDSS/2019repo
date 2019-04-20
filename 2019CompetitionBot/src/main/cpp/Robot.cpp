@@ -53,7 +53,8 @@ void Robot::RobotInit() {
   autoChooser->AddOption("2 lvl R Cargo Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelRightCargoHatchGrp()));
   autoChooser->AddOption("Vision L Cargo", std::shared_ptr<frc::Command>(new AutoVision2ndLevelLCargoHatchGrp()));
 
-  SmartDashboard::PutData("SilkyMotionStraightCmd", new SilkyMotionCmd(std::vector<double> {5000}, std::vector<double> {0}));
+  SmartDashboard::PutData("Turning", new SilkyMotionCmd(std::vector<double> {2000, 2000}, std::vector<double> {45, -45}));
+	SmartDashboard::PutData("Straight", new SilkyMotionCmd(std::vector<double> {5000}, std::vector<double> {0}));
 	
 
   frc::SmartDashboard::PutData("Auto Modes", autoChooser.get());

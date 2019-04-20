@@ -6,13 +6,13 @@
 
 
 
-const double P_DIS=0.0;//0.0015;
-const double D_DIS=0.0;//0.000002;
-const double A_DIS=0.11*(0.8/MAX_LIN_VEL);
-const double V_DIS=1.1/MAX_LIN_VEL;
-const double P_ANG=0.0;//0.013;
+const double P_DIS=0.004;
+const double D_DIS=0.000002;
+const double A_DIS=0.2*(0.8/MAX_LIN_VEL);
+const double V_DIS=0.9/MAX_LIN_VEL;
+const double P_ANG=0.02;
 //When we drove at these speeds we were at 1.0 power we got 360 degrees per second
-const double V_ANG=1.1*(1.0/360.0);
+const double V_ANG=1.0*(1.0/360.0);
 
 constexpr float DRIVE_DISTANCE_TOLERANCE = 15.0;
 constexpr float DISTANCE_SPEED_TOLERANCE = 10.0;

@@ -38,6 +38,7 @@
 #include "commands/VisionHatchPickupGrp.h"
 #include "commands/VisionScoringCmd.h"
 #include "commands/ClimbAgainGrp.h"
+#include "commands/LowVisionScoreGrp.h"
 
 
 
@@ -61,6 +62,9 @@ OI::OI() {
 
   driveToVisionTargetWithManipulatorBtn.reset(new frc::JoystickButton(driverController.get(), DRIVE_TO_VISION_TARGET_WITH_MANIPULATOR_BTN));
   driveToVisionTargetWithManipulatorBtn->WhenPressed(new VisionHatchPickupGrp());
+
+  scoreLowVision.reset(new frc::JoystickButton(driverController.get(), SCORE_LOW_WITH_VISION_BTN));
+  scoreLowVision->WhenPressed(new LowVisionScoreGrp());
 
   climbBtn.reset(new frc::JoystickButton(driverController.get(), CLIMB_BTN));
   climbBtn->WhenPressed(new ClimbExtendGrp());
@@ -124,6 +128,7 @@ OI::OI() {
 
   operatorKillBtn2.reset(new frc::JoystickButton(operatorController.get(), OPERATOR_KILL_TWO_BTN));
   operatorKillBtn2->WhenPressed(new KillEverythingCmd());
+
 
 
 /*
