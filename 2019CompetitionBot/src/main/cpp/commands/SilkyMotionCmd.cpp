@@ -6,7 +6,7 @@
 
 
 
-const double P_DIS=0.004;
+const double P_DIS=0.003;
 const double D_DIS=0.000002;
 const double A_DIS=0.2*(0.8/MAX_LIN_VEL);
 const double V_DIS=0.9/MAX_LIN_VEL;
