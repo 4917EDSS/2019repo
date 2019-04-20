@@ -36,6 +36,6 @@ LowVisionScoreGrp::LowVisionScoreGrp() {
   AddSequential(new SetManipulatorAngleCmd(0));
   AddSequential(new VisionScoringCmd(false));
   AddParallel(new SetManipulatorAngleCmd(90));
-  AddSequential(new DriveStraightCmd(0.75,0.3));
+  AddSequential(new DriveStraightCmd(0.8,0.25));
   AddSequential(new CargoModeGrp());
 }

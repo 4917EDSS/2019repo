@@ -24,6 +24,7 @@
 #include "commands/AutoVision2ndLevelLCargoHatchGrp.h"
 #include "commands/SilkyMotionCmd.h"
 #include "commands/AutoVisionFirstLevelLeftRocketTwoHatchGrp.h"
+#include "commands/AutoSecondLevelLeftCargoAndRocketHatchGrp.h"
 
 
 
@@ -54,6 +55,7 @@ void Robot::RobotInit() {
   autoChooser->AddOption("2 lvl R Cargo Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelRightCargoHatchGrp()));
   autoChooser->AddOption("Vision L Cargo", std::shared_ptr<frc::Command>(new AutoVision2ndLevelLCargoHatchGrp()));
   autoChooser->AddOption("1 lvl L Rocket 2 Hatch", std::shared_ptr<frc::Command>(new AutoVisionFirstLevelLeftRocketTwoHatchGrp()));
+  autoChooser->AddOption("2 L Cargo Rocket Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelLeftCargoAndRocketHatchGrp()));
 
   SmartDashboard::PutData("Turning", new SilkyMotionCmd(std::vector<double> {2000, 2000}, std::vector<double> {45, -45}));
 	SmartDashboard::PutData("Straight", new SilkyMotionCmd(std::vector<double> {5000}, std::vector<double> {0}));

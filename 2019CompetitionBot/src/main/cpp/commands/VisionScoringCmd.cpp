@@ -41,7 +41,7 @@ void VisionScoringCmd::Execute() {
     double percent;
     double difference;
     percent = Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA)/maxWidth;
-    difference = 0.35 * percent;
+    difference = 0.4 * percent;
     double power = 0.5 - difference;
     
     lSpeed=(power+(targetAngle*0.01));
@@ -67,7 +67,7 @@ void VisionScoringCmd::Execute() {
 // Make this return true when this Command no longer needs to run execute()
 bool VisionScoringCmd::IsFinished() { 
   if(driveAllTheWay){
-    if ((Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA) > maxWidth) && fabs(Robot::visionSub.getVisionTarget(BUMPER_CAMERA)) < 10) {
+    if ((Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA) > maxWidth) && (fabs(Robot::visionSub.getVisionTarget(BUMPER_CAMERA)) < 2)) {
       return true;
     }
     else if(TimeSinceInitialized() - timeSinceTargetSeen > 0.75){
@@ -77,7 +77,7 @@ bool VisionScoringCmd::IsFinished() {
       return true;
     }
   }else{
-    if ((Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA) > maxWidth) && fabs(Robot::visionSub.getVisionTarget(BUMPER_CAMERA)) < 10) {
+    if ((Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA) > maxWidth) && (fabs(Robot::visionSub.getVisionTarget(BUMPER_CAMERA)) < 2)) {
       return true;
     }else if (TimeSinceInitialized() > timeSinceTargetSeen){
       return true;

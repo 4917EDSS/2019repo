@@ -7,10 +7,11 @@ DriveStraightCmd::DriveStraightCmd(double time, double power): time(time), power
 
 void DriveStraightCmd::Initialize() {
   //logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
-  Robot::drivetrainSub.drive(power, power);
+  Robot::drivetrainSub.enableBalancerPID();
 }
 
 void DriveStraightCmd::Execute() {
+  Robot::drivetrainSub.driverDriveStraight(power);
 }
 
 bool DriveStraightCmd::IsFinished() {
@@ -24,6 +25,7 @@ bool DriveStraightCmd::IsFinished() {
 
 void DriveStraightCmd::End() {
   Robot::drivetrainSub.drive(0,0);
+  Robot::drivetrainSub.disableBalancerPID();
 }
 
 void DriveStraightCmd::Interrupted() {
