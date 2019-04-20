@@ -35,7 +35,7 @@ pipeline_res:0
 pipeline_type:0
 red_balance:1200
 sat_max:255
-sat_min:111
+sat_min:161
 send_corners:0
 send_raw_contours:0
 solve3d:0
