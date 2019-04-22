@@ -67,7 +67,8 @@ void VisionScoringCmd::Execute() {
 // Make this return true when this Command no longer needs to run execute()
 bool VisionScoringCmd::IsFinished() { 
   if(driveAllTheWay){
-    if ((Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA) > maxWidth) && (fabs(Robot::visionSub.getVisionTarget(BUMPER_CAMERA)) < 2)) {
+    //Adding 20 since we are going "all the way" to the scoring target
+    if ((Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA) > maxWidth + 20) && (fabs(Robot::visionSub.getVisionTarget(BUMPER_CAMERA)) < 2)) {
       return true;
     }
     else if(TimeSinceInitialized() - timeSinceTargetSeen > 0.75){
