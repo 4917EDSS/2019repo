@@ -31,9 +31,8 @@ LowVisionScoreGrp::LowVisionScoreGrp() {
   // a CommandGroup containing them would require both the chassis and the
   // arm.
 
-  //****UNCOMMENT THE BELOW LINE FOR THE REAL BOT****
-  //AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM));
-  AddSequential(new SetManipulatorAngleCmd(0));
+  AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM));
+  AddSequential(new SetManipulatorAngleCmd(45));
   AddSequential(new VisionScoringCmd(false));
   AddParallel(new SetManipulatorAngleCmd(90));
   AddSequential(new DriveStraightCmd(0.8,0.25));
