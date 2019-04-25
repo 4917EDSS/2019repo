@@ -10,5 +10,5 @@
 #include "commands/DriveStraightCmd.h"
 VisionHatchPickupBtnGrp::VisionHatchPickupBtnGrp() {
   AddSequential(new VisionHatchPickupGrp());
-  AddSequential(new DriveStraightCmd(-0.5, 0.25));
+  AddSequential(new DriveStraightCmd(0.25, -1.0));
 }

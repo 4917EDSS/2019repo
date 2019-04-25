@@ -14,6 +14,11 @@
 #include "commands/CargoModeGrp.h"
 #include "commands/VisionHatchPickupGrp.h"
 
+#include "commands/VisionScoringCmd.h"
+#include "commands/SetManipulatorIntakePowerCmd.h"
+#include "commands/HatchGripperContractCmd.h"
+#include "commands/ManipulatorInCmd.h"
+
 AutoVisionFirstLevelLeftRocketTwoHatchGrp::AutoVisionFirstLevelLeftRocketTwoHatchGrp() {
   AddSequential(new ExpandHatchGripperGrp());
   AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM));
@@ -24,8 +29,11 @@ AutoVisionFirstLevelLeftRocketTwoHatchGrp::AutoVisionFirstLevelLeftRocketTwoHatc
   AddSequential(new SetManipulatorAngleCmd(90));
   AddSequential(new VisionScoringCmd(true));
   //Forward to ship
-  AddSequential(new CargoModeGrp());
-  //Drop off hatch
+  AddSequential(new SetManipulatorIntakePowerCmd(1.0));
+  AddSequential(new frc::WaitCommand(0.15));
+  AddSequential(new HatchGripperContractCmd());
+  AddSequential(new ManipulatorInCmd(0.2));
+    //Drop off hatch
   AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM + 100.0));
   AddParallel(new SetManipulatorAngleCmd(-90));
   //drop down to low height, return manipulator to middle

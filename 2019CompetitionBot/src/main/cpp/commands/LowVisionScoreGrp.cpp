@@ -40,7 +40,7 @@ LowVisionScoreGrp::LowVisionScoreGrp() {
   AddParallel(new SetManipulatorAngleCmd(90, 0.50));
   AddSequential(new DriveStraightCmd(0.8,0.25));
   AddSequential(new SetManipulatorIntakePowerCmd(1.0));
-  AddSequential(new frc::WaitCommand(0.1));
+  AddSequential(new frc::WaitCommand(0.15));
   AddSequential(new HatchGripperContractCmd());
   AddSequential(new ManipulatorInCmd(0.2));
 }

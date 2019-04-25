@@ -11,7 +11,7 @@
 #include <iostream>
 
 constexpr double JOYSTICK_DEADBAND = 0.01;
-double maxWidth = 172;
+double maxWidth = 175;
 VisionScoringCmd::VisionScoringCmd(): VisionScoringCmd(false) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
@@ -35,14 +35,14 @@ void VisionScoringCmd::Execute() {
   double targetAngle=Robot::visionSub.getVisionTarget(BUMPER_CAMERA);
   double verticalOffset = Robot::visionSub.getVerticalOffset(BUMPER_CAMERA);
 
-  if (Robot::visionSub.isTargetVisible(BUMPER_CAMERA) && (verticalOffset < 13.00) && !noLongerSeesTarget) {
+  if (Robot::visionSub.isTargetVisible(BUMPER_CAMERA) && (verticalOffset < 10.90) && !noLongerSeesTarget) {
     double lSpeed=(0);
     double rSpeed=(0);
     double percent;
     double difference;
     percent = Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA)/maxWidth;
     difference = 0.3 * percent;
-    double power = 0.45 - difference;
+    double power = 0.5 - difference;
     
     lSpeed=(power+(targetAngle*0.01));
     rSpeed=(power-(targetAngle*0.01));
@@ -53,6 +53,8 @@ void VisionScoringCmd::Execute() {
       if (!noLongerSeesTarget){
         noLongerSeesTarget = true;
         Robot::drivetrainSub.enableBalancerPID();
+        Robot::drivetrainSub.driverDriveStraight(0.2);
+
       }
       else {
         Robot::drivetrainSub.driverDriveStraight(0.2);
@@ -78,7 +80,7 @@ bool VisionScoringCmd::IsFinished() {
     }
   }else{  
     // Subtracting 20 since we are not going all the way to the scoring target
-    if ((Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA) > maxWidth - 72) && (fabs(Robot::visionSub.getVisionTarget(BUMPER_CAMERA)) < 2)) {
+    if ((Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA) > maxWidth - 75) && (fabs(Robot::visionSub.getVisionTarget(BUMPER_CAMERA)) < 2)) {
       return true;
     }else if (TimeSinceInitialized() > timeSinceTargetSeen){
       return true;
