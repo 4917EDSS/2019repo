@@ -5,22 +5,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
-
-#include <frc/commands/Command.h>
-
-class SetManipulatorAngleCmd : public frc::Command {
- public:
-  SetManipulatorAngleCmd(double targetAngle);
-  SetManipulatorAngleCmd(double targetAngle, double maxPower);
-  SetManipulatorAngleCmd(double targetAngle, bool sneakyBoi);
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
-
-private:
-  double targetAngle;
-  double maxPower; 
-};
+#include "commands/VisionHatchPickupBtnGrp.h"
+#include "commands/VisionHatchPickupGrp.h"
+#include "commands/DriveStraightCmd.h"
+VisionHatchPickupBtnGrp::VisionHatchPickupBtnGrp() {
+  AddSequential(new VisionHatchPickupGrp());
+  AddSequential(new DriveStraightCmd(-0.5, 0.25));
+}

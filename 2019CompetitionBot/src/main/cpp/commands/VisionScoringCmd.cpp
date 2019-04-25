@@ -11,7 +11,7 @@
 #include <iostream>
 
 constexpr double JOYSTICK_DEADBAND = 0.01;
-double maxWidth = 120;
+double maxWidth = 172;
 VisionScoringCmd::VisionScoringCmd(): VisionScoringCmd(false) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
@@ -41,8 +41,8 @@ void VisionScoringCmd::Execute() {
     double percent;
     double difference;
     percent = Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA)/maxWidth;
-    difference = 0.4 * percent;
-    double power = 0.5 - difference;
+    difference = 0.3 * percent;
+    double power = 0.45 - difference;
     
     lSpeed=(power+(targetAngle*0.01));
     rSpeed=(power-(targetAngle*0.01));
@@ -78,7 +78,7 @@ bool VisionScoringCmd::IsFinished() {
     }
   }else{  
     // Subtracting 20 since we are not going all the way to the scoring target
-    if ((Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA) > maxWidth - 20) && (fabs(Robot::visionSub.getVisionTarget(BUMPER_CAMERA)) < 2)) {
+    if ((Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA) > maxWidth - 72) && (fabs(Robot::visionSub.getVisionTarget(BUMPER_CAMERA)) < 2)) {
       return true;
     }else if (TimeSinceInitialized() > timeSinceTargetSeen){
       return true;

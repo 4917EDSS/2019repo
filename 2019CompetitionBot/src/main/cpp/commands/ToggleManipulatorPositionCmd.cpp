@@ -33,7 +33,10 @@ void ToggleManipulatorPositionCmd::Initialize() {
       // Shift-Right:  Rotate to 90 deg forwards
       targetAngle = 90;
       break;
-
+    case 3:
+      //Shift-Down: Rotate to 50 degrees forwards
+      targetAngle = 50;
+      break;
     case 4:
       // Shift-Left:  Rotate to 90 deg backwards
       targetAngle = -90;

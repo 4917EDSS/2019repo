@@ -8,19 +8,24 @@
 #include "commands/SetManipulatorAngleCmd.h"
 #include "Robot.h"
 
-SetManipulatorAngleCmd::SetManipulatorAngleCmd(double targetAngle) : targetAngle(targetAngle) {
+SetManipulatorAngleCmd::SetManipulatorAngleCmd(double targetAngle) : targetAngle(targetAngle), maxPower(1.0) {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
     Requires(&Robot::manipulatorSub);
 }
 
-SetManipulatorAngleCmd::SetManipulatorAngleCmd(double targetAngle, bool sneakyBoi) : targetAngle(targetAngle) {
+SetManipulatorAngleCmd::SetManipulatorAngleCmd(double targetAngle, double maxPower) : targetAngle(targetAngle), maxPower(maxPower) {
+  // Use Requires() here to declare subsystem dependencies
+  // eg. Requires(Robot::chassis.get());
+    Requires(&Robot::manipulatorSub);
+}
+SetManipulatorAngleCmd::SetManipulatorAngleCmd(double targetAngle, bool sneakyBoi) : targetAngle(targetAngle), maxPower(1.0) {
   //We are not doing any requires, do not use for normal operations
 }
 
 // Called just before this Command runs the first time
 void SetManipulatorAngleCmd::Initialize() {
-  Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_AUTO, 1.0, targetAngle);
+  Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_AUTO, maxPower, targetAngle);
 }
 
 // Called repeatedly when this Command is scheduled to run

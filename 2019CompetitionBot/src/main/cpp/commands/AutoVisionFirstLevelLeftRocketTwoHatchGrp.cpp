@@ -22,7 +22,7 @@ AutoVisionFirstLevelLeftRocketTwoHatchGrp::AutoVisionFirstLevelLeftRocketTwoHatc
   // Vision to close-to-ship
   AddParallel(new SetElevatorToHeightCmd(ELEVATOR_MEDIUM_HATCH_HEIGHT_MM));
   AddSequential(new SetManipulatorAngleCmd(90));
-  AddSequential(new VisionScoringCmd());
+  AddSequential(new VisionScoringCmd(true));
   //Forward to ship
   AddSequential(new CargoModeGrp());
   //Drop off hatch
@@ -39,7 +39,7 @@ AutoVisionFirstLevelLeftRocketTwoHatchGrp::AutoVisionFirstLevelLeftRocketTwoHatc
   //move to infront of rocket
   AddParallel(new SetElevatorToHeightCmd(ELEVATOR_MEDIUM_HATCH_HEIGHT_MM));
   AddSequential(new SetManipulatorAngleCmd(90));
-  AddSequential(new VisionScoringCmd());
+  AddSequential(new VisionScoringCmd(true));
   //drop that hatch off again
   AddSequential(new CargoModeGrp());
 }

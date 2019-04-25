@@ -12,6 +12,9 @@
 #include "commands/CargoModeGrp.h"
 #include "commands/SetElevatorToHeightCmd.h"
 #include "subsystems/ElevatorSub.h"
+#include "commands/SetManipulatorIntakePowerCmd.h"
+#include "commands/HatchGripperContractCmd.h"
+#include "commands/ManipulatorInCmd.h"
 
 LowVisionScoreGrp::LowVisionScoreGrp() {
   // Add Commands here:
@@ -32,9 +35,12 @@ LowVisionScoreGrp::LowVisionScoreGrp() {
   // arm.
 
   AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM));
-  AddSequential(new SetManipulatorAngleCmd(45));
+  AddSequential(new SetManipulatorAngleCmd(50));
   AddSequential(new VisionScoringCmd(false));
-  AddParallel(new SetManipulatorAngleCmd(90));
+  AddParallel(new SetManipulatorAngleCmd(90, 0.50));
   AddSequential(new DriveStraightCmd(0.8,0.25));
-  AddSequential(new CargoModeGrp());
+  AddSequential(new SetManipulatorIntakePowerCmd(1.0));
+  AddSequential(new frc::WaitCommand(0.1));
+  AddSequential(new HatchGripperContractCmd());
+  AddSequential(new ManipulatorInCmd(0.2));
 }
