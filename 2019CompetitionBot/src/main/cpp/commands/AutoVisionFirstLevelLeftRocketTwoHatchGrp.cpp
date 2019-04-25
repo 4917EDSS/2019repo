@@ -32,7 +32,7 @@ AutoVisionFirstLevelLeftRocketTwoHatchGrp::AutoVisionFirstLevelLeftRocketTwoHatc
   AddSequential(new SetManipulatorIntakePowerCmd(1.0));
   AddSequential(new frc::WaitCommand(0.15));
   AddSequential(new HatchGripperContractCmd());
-  AddSequential(new ManipulatorInCmd(0.2));
+  AddSequential(new ManipulatorInCmd(0.3));
     //Drop off hatch
   AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM + 100.0));
   AddParallel(new SetManipulatorAngleCmd(-90));

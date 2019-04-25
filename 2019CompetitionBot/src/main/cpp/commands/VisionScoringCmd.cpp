@@ -53,15 +53,16 @@ void VisionScoringCmd::Execute() {
       if (!noLongerSeesTarget){
         noLongerSeesTarget = true;
         Robot::drivetrainSub.enableBalancerPID();
+        timeSinceTargetSeen = TimeSinceInitialized();
         Robot::drivetrainSub.driverDriveStraight(0.2);
 
       }
       else {
-        Robot::drivetrainSub.driverDriveStraight(0.2);
+        Robot::drivetrainSub.driverDriveStraight(0.3);
       } 
     } 
     else {
-        Robot::drivetrainSub.drive(0.2,0.2);
+        Robot::drivetrainSub.drive(0.3, 0.3);
     }
   } 
 }
@@ -69,10 +70,10 @@ void VisionScoringCmd::Execute() {
 // Make this return true when this Command no longer needs to run execute()
 bool VisionScoringCmd::IsFinished() { 
   if(driveAllTheWay){
-    if ((Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA) > maxWidth) && (fabs(Robot::visionSub.getVisionTarget(BUMPER_CAMERA)) < 2)) {
+    if ((Robot::visionSub.getHorizontalWidth(BUMPER_CAMERA) > maxWidth + 10) && (fabs(Robot::visionSub.getVisionTarget(BUMPER_CAMERA)) < 2)) {
       return true;
     }
-    else if(TimeSinceInitialized() - timeSinceTargetSeen > 0.75){
+    else if(TimeSinceInitialized() - timeSinceTargetSeen > 0.5){
       return true;
     }
     else if (TimeSinceInitialized() > 4){

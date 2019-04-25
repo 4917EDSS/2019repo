@@ -43,7 +43,7 @@ void VisionSub::setBumperPipeline(int pipeLine) {
     case VISION_MODE_NORMAL:
       getTable(BUMPER_CAMERA)->PutNumber("ledMode", LED_MODE_ON);
       getTable(BUMPER_CAMERA)->PutNumber("camMode", VISION_CAMMODE);
-      getTable(BUMPER_CAMERA)->PutNumber("pipeline", VISION_PIPELINE_NORMAL);
+      getTable(BUMPER_CAMERA)->PutNumber("pipeline", 3);
       break;
     
     default:

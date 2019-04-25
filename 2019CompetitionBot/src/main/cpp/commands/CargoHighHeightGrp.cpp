@@ -11,7 +11,7 @@
 #include "subsystems/ElevatorSub.h"
 
 CargoHighHeightGrp::CargoHighHeightGrp() {
-  AddParallel(new SetManipulatorAngleCmd(70));
+  AddParallel(new SetManipulatorAngleCmd(65));
   AddSequential(new SetElevatorToHeightCmd(ELEVATOR_ROCKET_HIGH_CARGO_HEIGHT_MM));
 
 }
