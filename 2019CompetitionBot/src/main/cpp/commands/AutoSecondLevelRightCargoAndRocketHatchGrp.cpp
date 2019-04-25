@@ -16,7 +16,7 @@
 AutoSecondLevelRightCargoAndRocketHatchGrp::AutoSecondLevelRightCargoAndRocketHatchGrp() {
   AddSequential(new ExpandHatchGripperGrp());
   AddParallel(new SetManipulatorAngleCmd(50.0));
-  AddSequential(new SilkyMotionCmd(std::vector<double> {-1700, -3400, -900}, std::vector<double> {0, 30, 60}));
+  AddSequential(new SilkyMotionCmd(std::vector<double> {-1800, -3400, -900}, std::vector<double> {0, 30, 60}));
   AddSequential(new LowVisionScoreGrp()); 
   AddParallel(new SetManipulatorAngleCmd(-90.0));
   AddSequential(new SilkyMotionCmd(std::vector<double> {-1500, -2200, -1000}, std::vector<double> {60, 0, 30}));

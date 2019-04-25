@@ -18,7 +18,7 @@
 
 LowVisionScoreGrp::LowVisionScoreGrp() {
 
-  AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM));
+  AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM + 20));
   AddSequential(new SetManipulatorAngleCmd(50));
   AddSequential(new VisionScoringCmd(false));
   AddParallel(new SetManipulatorAngleCmd(90, 0.50));

@@ -26,6 +26,7 @@
 #include "commands/AutoVisionFirstLevelLeftRocketTwoHatchGrp.h"
 #include "commands/AutoSecondLevelLeftCargoAndRocketHatchGrp.h"
 #include "commands/AutoSecondLevelRightCargoAndRocketHatchGrp.h"
+#include "commands/AutoVisionFirstLevelRightRocketTwoHatchGrp.h"
 
 
 
@@ -52,9 +53,8 @@ void Robot::RobotInit() {
   autoChooser->AddOption("Right Hatch", std::shared_ptr<frc::Command>(new AutoRightRocketCloseHatchGrp()));
   autoChooser->AddOption("2 lvl L Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelLeftRocketHatchGrp()));
   autoChooser->AddOption("2 lvl R Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelRightRocketHatchGrp()));
-  autoChooser->AddOption("2 lvl L Cargo Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelLeftCargoHatchGrp()));
-  autoChooser->AddOption("2 lvl R Cargo Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelRightCargoHatchGrp()));
   autoChooser->AddOption("1 lvl L Rocket 2 Hatch", std::shared_ptr<frc::Command>(new AutoVisionFirstLevelLeftRocketTwoHatchGrp()));
+  autoChooser->AddOption("1 lvl R Rocket 2 Hatch", std::shared_ptr<frc::Command>(new AutoVisionFirstLevelRightRocketTwoHatchGrp()));
   autoChooser->AddOption("2 L Cargo Rocket Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelLeftCargoAndRocketHatchGrp()));
   autoChooser->AddOption("2 R Cargo Rocket Hatch", std::shared_ptr<frc::Command>(new AutoSecondLevelRightCargoAndRocketHatchGrp()));
 
