@@ -21,8 +21,8 @@ LowVisionScoreGrp::LowVisionScoreGrp() {
   AddParallel(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM + 20));
   AddSequential(new SetManipulatorAngleCmd(50));
   AddSequential(new VisionScoringCmd(false));
-  AddParallel(new SetManipulatorAngleCmd(90, 0.50));
-  AddSequential(new DriveStraightCmd(0.8,0.25));
+  AddSequential(new SetManipulatorAngleCmd(90, 0.50));
+  AddSequential(new DriveStraightCmd(0.4,0.25));
   AddSequential(new SetManipulatorIntakePowerCmd(1.0));
   AddSequential(new frc::WaitCommand(0.15));
   AddSequential(new HatchGripperContractCmd());
