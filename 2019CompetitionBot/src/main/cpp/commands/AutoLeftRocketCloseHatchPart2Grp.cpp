@@ -9,18 +9,24 @@
 #include "commands/SetElevatorToHeightCmd.h"
 #include "commands/CargoModeGrp.h"
 #include "commands/FlipManipulatorGrp.h"
-#include "commands/HatchModeGrp.h"
+#include "commands/HatchModeGrp.h" 
 #include "commands/SilkyMotionCmd.h"
 #include "commands/VisionHatchPickupGrp.h"
-
+#include "commands/SetManipulatorAngleCmd.h"
+#include "commands/LowVisionScoreGrp.h"
+#include "commands/SetManipulatorIntakePowerCmd.h"
+#include "commands/HatchGripperContractCmd.h"
+#include "commands/ManipulatorInCmd.h"
 
 AutoLeftRocketCloseHatchPart2Grp::AutoLeftRocketCloseHatchPart2Grp() {
-
-  AddSequential(new CargoModeGrp());
-  AddParallel(new SilkyMotionCmd(std::vector<double> {-500,-2000}, std::vector<double> {33,-5}));
-  AddSequential(new frc::WaitCommand(0.5));
-  AddSequential(new FlipManipulatorGrp());
-  AddSequential(new SetElevatorToHeightCmd(ELEVATOR_LOW_HATCH_HEIGHT_MM + 100.0));
+  AddSequential(new SetManipulatorIntakePowerCmd(1.0));
+  AddSequential(new frc::WaitCommand(0.15));
+  AddSequential(new HatchGripperContractCmd());
+  AddSequential(new ManipulatorInCmd(0.3));
+  AddParallel(new SetManipulatorAngleCmd(-90.0));
+  AddSequential(new SilkyMotionCmd(std::vector<double> {-1500, -1800, -1000}, std::vector<double> {-65, 0, -25}));
   AddSequential(new VisionHatchPickupGrp());
-
+  AddParallel(new SetManipulatorAngleCmd(50.0));
+  AddSequential(new SilkyMotionCmd(std::vector<double> {1500, 1000}, std::vector<double> {20, -48}));
+  AddSequential(new LowVisionScoreGrp());
 }
