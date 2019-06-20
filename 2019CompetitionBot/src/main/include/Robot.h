@@ -48,6 +48,7 @@ class Robot : public frc::TimedRobot {
   static bool startForwards;
   static bool inClimbMode;
   static bool pastNinety;
+  static bool demoMode;   // Set to true (via dashboard) when robot is being driven by inexperienced drivers
 
  private:
   static bool stateMachinesReset;

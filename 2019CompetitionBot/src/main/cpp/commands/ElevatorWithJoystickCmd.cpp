@@ -29,6 +29,11 @@ void ElevatorWithJoystickCmd::Execute() {
   double power = operatorJoystick->GetRawAxis(OPERATOR_ELEVATOR_AXIS) * (-1); // Up is negative
   power = pow(power, 3);
 
+  if(Robot::demoMode) {
+		// Slow down the drivetrain for inexperienced drivers
+		power *= 0.5;
+	}
+
   switch(shift) {
   case 0: // No shift, normal elevator operation
     Robot::elevatorSub.setElevatorHeight(ELEVATOR_MODE_MANUAL, power, 0);

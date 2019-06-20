@@ -42,6 +42,7 @@ bool Robot::inBallMode;
 bool Robot::inClimbMode;
 bool Robot::startForwards;
 bool Robot::stateMachinesReset;
+bool Robot::demoMode;
 
 
 void Robot::RobotInit() {
@@ -88,6 +89,7 @@ void Robot::RobotInit() {
   Robot::inBallMode = true;
   Robot::inClimbMode = false;
   Robot::stateMachinesReset = false;
+  Robot::demoMode = false;
 }
 
 /**
@@ -237,6 +239,8 @@ void Robot::UpdateSmartDashboard() {
   frc::SmartDashboard::PutNumber("Climb Height", climbSub.getClimbPosition());
   frc::SmartDashboard::PutNumber("Pitch", drivetrainSub.getPitchAngle());
   frc::SmartDashboard::PutNumber("Speedometer", drivetrainSub.getVelocity());
+
+  Robot::demoMode = frc::SmartDashboard::GetBoolean("Demo Mode", false);
 
 }
 

@@ -49,6 +49,12 @@ void DriveWithJoystickCmd::Execute() {
     double rightStick = driverJoystick->GetZ();
     double leftStick = driverJoystick->GetY();
 
+	if(Robot::demoMode) {
+		// Slow down the drivetrain for inexperienced drivers
+		rightStick *= 0.5;
+		leftStick *= 0.5;
+	}
+
 	// In climb mode the intake wheels are used as extra drive wheels
 	if (Robot::inClimbMode) {
 		if (fabs(leftStick) > JOYSTICK_DEADBAND) {
