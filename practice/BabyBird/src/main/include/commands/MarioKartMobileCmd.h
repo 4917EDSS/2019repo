@@ -5,17 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "OI.h"
+#pragma once
 
-#include <frc/WPILib.h>
+#include <frc/commands/Command.h>
 
-OI::OI() {
-  // Process operator interface input here.
-  driverController.reset(new frc::Joystick(DRIVER_CONTROLLER_PORT));
-
-}
-std::shared_ptr<frc::Joystick> OI::getDriverController() {
-
-  return driverController;
-  
-}
+class MarioKartMobileCmd : public frc::Command {
+ public:
+  MarioKartMobileCmd();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
+};
