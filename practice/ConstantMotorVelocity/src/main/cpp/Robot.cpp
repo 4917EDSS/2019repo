@@ -15,6 +15,26 @@ void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+
+  // TODO:  Create all motors here
+  leftMotor1.reset(new rev::CANSparkMax(LEFT_DRIVE_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  rightMotor1.reset(new rev::CANSparkMax(RIGHT_DRIVE_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  currentPower = 0;
+}
+
+void Robot::setPowerOnAllMotors(double power) {
+  if(power > 1.0) {
+    power = 1.0;
+  }
+  else if(power < -1.0) {
+    power = -1.0;
+  }
+
+  // TODO: Set same power for all motors and make sure direction is correct for each motor
+  leftMotor1->Set(power);
+  rightMotor1->Set(-power); // Assume that motor needs to turn in opposite direction from left side to go forward
+
+  currentPower = power;
 }
 
 /**
@@ -49,6 +69,9 @@ void Robot::AutonomousInit() {
   } else {
     // Default Auto goes here
   }
+
+  // ADDED: This is where we set all the motors' power.  This probably doesn't need to change.
+  setPowerOnAllMotors(TEST_STARTING_MOTOR_POWER);
 }
 
 void Robot::AutonomousPeriodic() {
@@ -56,6 +79,22 @@ void Robot::AutonomousPeriodic() {
     // Custom Auto goes here
   } else {
     // Default Auto goes here
+  }
+
+  // TODO: Modify this control loop as needed
+  //   Notes - This is a super cheesy way to implement a control loop.  A PID would be better
+  //           but that requires a lot of tuning for each experiment setup.
+  //         - Don't set the ticks/sec to distance/time conversion on motor controller, it can 
+  //           loose this conversion factor during brown-outs.  Use raw encoder ticks and 
+  //           convert right here if necessary
+  //           (i.e. if you want something like mm/s instead of raw RPM units)
+  if( leftMotor1->GetEncoder().GetVelocity() > TEST_TARGET_VELOCITY ) {
+    // Going too fast, slow down
+    setPowerOnAllMotors(currentPower - POWER_ADJUSTMENT_STEP);
+  }
+  else {
+    // Going too slow, speed up
+    setPowerOnAllMotors(currentPower + POWER_ADJUSTMENT_STEP);
   }
 }
 
