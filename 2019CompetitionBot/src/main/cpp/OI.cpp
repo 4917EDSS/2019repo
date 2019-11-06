@@ -12,6 +12,7 @@
 #include "subsystems/BallIntakeSub.h"
 #include "commands/KillEverythingCmd.h"
 #include "commands/MilkyScoreGrp.h"
+#include "commands/YeetCmd.h"
 #include "commands/TestButtonCmd.h"
 #include "commands/ClimbExtendGrp.h"
 #include "commands/IntakeBallFromRobotCmd.h"
@@ -92,8 +93,8 @@ OI::OI() {
   driverKillBtn2.reset(new frc::JoystickButton(driverController.get(), DRIVER_KILL_TWO_BTN));
   driverKillBtn2->WhenPressed(new KillEverythingCmd());
 
-  climbAgainBtn.reset(new frc::JoystickButton(driverController.get(), CLIMB_AGAIN_BTN));
-  climbAgainBtn->WhenPressed(new ClimbAgainGrp());
+  climbAgainBtn.reset(new frc::JoystickButton(driverController.get(), YEET_BTN));
+  climbAgainBtn->WhileHeld(new YeetCmd());
   // Operator controller buttons
   elevatorToCargoShipHeightBtn.reset(new frc::JoystickButton(operatorController.get(), ELEVATOR_TO_CARGO_SHIP_HEIGHT_BTN));
   elevatorToCargoShipHeightBtn->WhenPressed( new SideBaseCmd (new SetElevatorToHeightCmd(ELEVATOR_CARGO_SHIP_CARGO_HEIGHT_MM), new SetElevatorToHeightCmd(ELEVATOR_MAX_SAFE_HEIGHT_MANIPULATOR_TO_REAR-1.0)));

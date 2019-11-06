@@ -5,40 +5,32 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/IntakeBallFromRobotCmd.h"
+#include "commands/YeetCmd.h"
 #include "Robot.h"
 
-IntakeBallFromRobotCmd::IntakeBallFromRobotCmd() {
+YeetCmd::YeetCmd() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  
   Requires(&Robot::manipulatorSub);
-  Requires(&Robot::ballIntakeSub);
 }
-#include<iostream>
+
 // Called just before this Command runs the first time
-void IntakeBallFromRobotCmd::Initialize() {
-  //logger.send(logger.CMD_TRACE, "%s : %s\n", __FILE__, __FUNCTION__);
+void YeetCmd::Initialize() {
+  Robot::ballIntakeSub.setIntakeWheelPower(1.0);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void IntakeBallFromRobotCmd::Execute() {
-  
-  Robot::ballIntakeSub.setIntakeWheelPower(0.9 + Robot::drivetrainSub.getVelocity()/2700.0);
-}
+void YeetCmd::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool IntakeBallFromRobotCmd::IsFinished() { 
-  return Robot::manipulatorSub.isBallIn();
-}
+bool YeetCmd::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void IntakeBallFromRobotCmd::End() {
+void YeetCmd::End() {
   Robot::ballIntakeSub.setIntakeWheelPower(0.0);
-  Robot::manipulatorSub.setIntakePower(0.0);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void IntakeBallFromRobotCmd::Interrupted() {
-  End();
-}
+void YeetCmd::Interrupted() { End(); }

@@ -52,7 +52,7 @@ void Robot::Autonomous() {
   m_robotDrive.SetSafetyEnabled(false);
 
   leftMotor1->Set(1.0);
-  rightMotor1->Set(1.0);
+  //rightMotor1->Set(1.0);
 }
 
 /**

@@ -18,7 +18,7 @@
 #include <rev/CANSparkMax.h>
 #include <rev/CANSparkMaxLowLevel.h>
 
-constexpr int LEFT_DRIVE_MOTOR_1_CAN_ID = 1;
+constexpr int LEFT_DRIVE_MOTOR_1_CAN_ID = 8;
 constexpr int RIGHT_DRIVE_MOTOR_1_CAN_ID = 2;
 
 constexpr int MAX_CURRENT = 20;
