@@ -23,7 +23,7 @@ void IntakeBallFromRobotCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void IntakeBallFromRobotCmd::Execute() {
   
-  Robot::ballIntakeSub.setIntakeWheelPower(0.9 + Robot::drivetrainSub.getVelocity()/2700.0);
+  Robot::ballIntakeSub.setIntakeWheelPower(0.8 + Robot::drivetrainSub.getVelocity()/2700.0);
 }
 
 // Make this return true when this Command no longer needs to run execute()

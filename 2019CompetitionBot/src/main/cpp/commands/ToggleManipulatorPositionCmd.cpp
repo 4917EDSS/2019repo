@@ -56,7 +56,9 @@ void ToggleManipulatorPositionCmd::Initialize() {
       }
       break;
   }
-
+  if (!Robot::inBallMode) {
+    Robot::manipulatorSub.setIntakePower(-0.4);
+  }
   Robot::manipulatorSub.setFlipperAngle(FLIPPER_MODE_AUTO, 1.0, targetAngle);
 }
 
@@ -71,7 +73,10 @@ bool ToggleManipulatorPositionCmd::IsFinished() {
 }
 
 // Called once after isFinished returns true
-void ToggleManipulatorPositionCmd::End() {}
+void ToggleManipulatorPositionCmd::End() {
+  
+    Robot::manipulatorSub.setIntakePower(0.0);
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
