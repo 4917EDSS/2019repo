@@ -18,7 +18,11 @@ void Robot::RobotInit() {
 
   // TODO:  Create all motors here
   leftMotor1.reset(new rev::CANSparkMax(LEFT_DRIVE_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  leftMotor2.reset(new rev::CANSparkMax(LEFT_DRIVE_MOTOR_2_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  leftMotor3.reset(new rev::CANSparkMax(LEFT_DRIVE_MOTOR_3_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   rightMotor1.reset(new rev::CANSparkMax(RIGHT_DRIVE_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  rightMotor2.reset(new rev::CANSparkMax(RIGHT_DRIVE_MOTOR_2_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
+  rightMotor3.reset(new rev::CANSparkMax(RIGHT_DRIVE_MOTOR_3_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
   currentPower = 0;
 }
 
@@ -32,7 +36,11 @@ void Robot::setPowerOnAllMotors(double power) {
 
   // TODO: Set same power for all motors and make sure direction is correct for each motor
   leftMotor1->Set(power);
-  rightMotor1->Set(-power); // Assume that motor needs to turn in opposite direction from left side to go forward
+  leftMotor2->Set(power);
+  leftMotor3->Set(power);
+  rightMotor1->Set(-power);
+  rightMotor2->Set(-power);
+  rightMotor3->Set(-power); // Assume that motor needs to turn in opposite direction from left side to go forward
 
   currentPower = power;
 }
@@ -80,7 +88,7 @@ void Robot::AutonomousPeriodic() {
   } else {
     // Default Auto goes here
   }
-
+  std::cout << leftMotor1->GetEncoder().GetVelocity() << "\n";
   // TODO: Modify this control loop as needed
   //   Notes - This is a super cheesy way to implement a control loop.  A PID would be better
   //           but that requires a lot of tuning for each experiment setup.

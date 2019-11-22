@@ -17,12 +17,16 @@
 
 // TODO: List all motor CAN IDs here (you have to set the CAN IDs on the motor controllers to match)
 constexpr int LEFT_DRIVE_MOTOR_1_CAN_ID = 1;
-constexpr int RIGHT_DRIVE_MOTOR_1_CAN_ID = 2;
+constexpr int LEFT_DRIVE_MOTOR_2_CAN_ID = 2;
+constexpr int LEFT_DRIVE_MOTOR_3_CAN_ID = 3;
+constexpr int RIGHT_DRIVE_MOTOR_1_CAN_ID = 5;
+constexpr int RIGHT_DRIVE_MOTOR_2_CAN_ID = 6;
+constexpr int RIGHT_DRIVE_MOTOR_3_CAN_ID = 7;
 
 // TODO: Adjust these test parameters as needed
 constexpr double TEST_STARTING_MOTOR_POWER = 1.0;   // Initial motor power before control loop kicks in (-1.0 to 1.0)
-constexpr double TEST_TARGET_VELOCITY = 1000;       // Target speed in whatever units the motor encoder reports (this is a wild guess, need to experiment)
-constexpr double POWER_ADJUSTMENT_STEP = 0.05;      // Amount of power we add/subtract each iteration when we're going too slow/fast (-1.0 to 1.0)
+constexpr double TEST_TARGET_VELOCITY = 3000;       // Target speed in whatever units the motor encoder reports (this is a wild guess, need to experiment)
+constexpr double POWER_ADJUSTMENT_STEP = 0.0005;      // Amount of power we add/subtract each iteration when we're going too slow/fast (-1.0 to 1.0)
 
 
 class Robot : public frc::TimedRobot {
@@ -47,5 +51,9 @@ class Robot : public frc::TimedRobot {
 
   // TODO:  Create all motor pointers here
   std::shared_ptr <rev::CANSparkMax> leftMotor1;
+  std::shared_ptr <rev::CANSparkMax> leftMotor2;
+  std::shared_ptr <rev::CANSparkMax> leftMotor3;
   std::shared_ptr <rev::CANSparkMax> rightMotor1;
+  std::shared_ptr <rev::CANSparkMax> rightMotor2;
+  std::shared_ptr <rev::CANSparkMax> rightMotor3;
 };
