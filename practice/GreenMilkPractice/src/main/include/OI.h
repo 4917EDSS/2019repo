@@ -32,10 +32,14 @@
 // Controllers (aka Joysticks)
 constexpr int CONTROLLER_PORT = 0;
 
+constexpr int GRIPPER_TOGGLE_BTN = 1;   // X (blue)
+
 class OI {
  public:
   OI();
 
  private:
     std::shared_ptr<frc::Joystick> controller;
+
+    std::shared_ptr<frc::JoystickButton> gripperToggleBtn;
 };

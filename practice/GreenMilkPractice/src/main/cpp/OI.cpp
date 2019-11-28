@@ -10,6 +10,7 @@
 #include <frc/WPILib.h>
 #include "Robot.h"
 #include "subsystems/BallIntakeSub.h"
+#include "commands/GripperToggleCmd.h"
 
 OI::OI() {
   // Process operator interface input here.
@@ -19,5 +20,7 @@ OI::OI() {
   controller->SetZChannel(2);
   controller->SetThrottleChannel(3);
 
+  gripperToggleBtn.reset(new frc::JoystickButton(controller.get(), GRIPPER_TOGGLE_BTN));
+  gripperToggleBtn->WhenPressed(new GripperToggleCmd());
 }
 
